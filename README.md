@@ -90,7 +90,7 @@ constrained to  − 1 lower bound). Last, these weighted context clusters
 by the square root of the word count (√*w*<sub>*i**j**n*</sub>) yielding
 an unbounded polarity score (*δ*<sub>*i**j*</sub>) for each sentence.
 
-*δ*<sub>*i**j*</sub>=*c*â<U+0080>²<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
+*δ*<sub>*i**j*</sub>=<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
 
 Where:
 
