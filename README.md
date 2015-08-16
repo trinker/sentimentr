@@ -73,3 +73,20 @@ You are welcome to:
 
 Examples
 ========
+
+    if (!require("pacman")) install.packages("pacman")
+    pacman::p_load(sentimentr)
+
+    mytext <- c(
+        'do you like it?  But I hate really bad dogs',
+        'I am the best friend.',
+        'Do you really like it?  I\'m not a fan'
+    )
+    sentiment(mytext)
+
+    ##    element_id sentence_id word_count  sentiment
+    ## 1:          1           1          4  0.5000000
+    ## 2:          1           2          6 -1.4696938
+    ## 3:          2           1          5  0.4472136
+    ## 4:          3           1          5  0.8049845
+    ## 5:          3           2          4  0.0000000

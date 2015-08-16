@@ -46,5 +46,15 @@ You are welcome to:
 # Examples
 
 ```{r}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(sentimentr)
+```
 
+```{r}
+mytext <- c(
+    'do you like it?  But I hate really bad dogs',
+    'I am the best friend.',
+    'Do you really like it?  I\'m not a fan'
+)
+sentiment(mytext)
 ```
