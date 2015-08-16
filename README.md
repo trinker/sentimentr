@@ -92,7 +92,7 @@ by the square root of the word count
 score (*δ*<sub>*i**j*</sub>) for each sentence.
 
 $$
-\\delta\_{ij}=\\frac{c'\_{ij}}{w\_{ijn}}}
+\\delta\_{ij}=\\frac{c'\_{ij}}{w\_{ijn}}
 $$
 
 Where:
