@@ -91,7 +91,7 @@ by the square root of the word count (&radic*w*<sub>*i**j**n*</sub>)
 yielding an unbounded polarity score (*δ*<sub>*i**j*</sub>) for each
 sentence.
 
-$$\\delta\_{ij}=c'\_{ij}/&radic{w\_{ijn}$$
+*δ*<sub>*i**j*</sub>=*c*â<U+0080>²<sub>*i**j*/&radic*w*<sub>*i**j**n*</sub>
 
 Where:
 
