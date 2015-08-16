@@ -11,7 +11,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 <a href="https://img.shields.io/badge/Version-0.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.1-orange.svg" alt="Version"/></a>
 </p>
-<img src="inst/sentimentr_logo/r_sentimentr.png" width="100" alt="readability Logo">
+<img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
 **sentimentr** is designed to quickly calulate text polarity sentiment
 at the sentence level and optionally aggregate by rows or grouping
@@ -45,6 +45,7 @@ Table of Contents
 
 -   [Installation](#installation)
 -   [Contact](#contact)
+-   [Examples](#examples)
 
 Installation
 ============
@@ -68,3 +69,7 @@ You are welcome to:
 * submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues> 
 * send a pull request on: <https://github.com/trinker/sentimentr/> 
 * compose a friendly e-mail to: <tyler.rinker@gmail.com>
+
+
+Examples
+========

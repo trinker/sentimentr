@@ -19,7 +19,7 @@ verbadge <- sprintf('<a href="https://img.shields.io/badge/Version-%s-orange.svg
 [![Coverage Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 `r verbadge`
 
-<img src="inst/sentimentr_logo/r_sentimentr.png" width="100" alt="readability Logo">  
+<img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">  
 
 **sentimentr** is designed to quickly calulate text polarity sentiment at the sentence level and optionally aggregate by rows or grouping variable(s).
 
