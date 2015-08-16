@@ -87,12 +87,11 @@ The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to  − 1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i**j**l*</sub>) are summed (*c*′<sub>*i**j*</sub>) and divided
-by the square root of the word count (*w*<sub>*i**j**n*</sub>) yielding
-an unbounded polarity score (*δ*<sub>*i**j*</sub>) for each sentence.
+by the square root of the word count (&radic*w*<sub>*i**j**n*</sub>)
+yielding an unbounded polarity score (*δ*<sub>*i**j*</sub>) for each
+sentence.
 
-$$x = \\frac{a}{b}$$
-
-$$\\delta\_{ij}=\\frac{c'\_{ij}}{w\_{ijn}}$$
+$$\\delta\_{ij}=c'\_{ij}/&radic{w\_{ijn}$$
 
 Where:
 
