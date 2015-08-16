@@ -37,7 +37,9 @@ negatives qual a positive, 3 negatives a negative and so on.
 
 The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{ijl}$) are summed ($c'_{ij}$) and divided by the square root of the word count (<sqrt><em>w_<sub>ijn</sub></em></sqrt>) yielding an unbounded polarity score ($\delta_{ij}$) for each sentence.
 
-$$\delta_{ij}=\frac{c'_{ij}}{w_{ijn}}}$$
+$$
+\delta_{ij}=\frac{c'_{ij}}{w_{ijn}}}
+$$
 
 Where:
 
