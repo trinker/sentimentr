@@ -35,10 +35,10 @@ amplifier ($w_{ijk}^{a}$), or de-amplifier ($w_{ijk}^{d}$). Neutral words hold n
 The core value in the cluster, the polarized word is acted uppon by valence shifters. Amplifiers increas the polarity by 1.8 (.8 is the default weight ($z$)).  Amplifiers ($w_{ijk}^{a}$) become de-amplifiers if the clontext cluster contains an odd number of negators ($w_{ijk}^{n}$).  De-amplifiers work to decrease decrease the polarity.  Negation ($w_{ijk}^{n}$) acts on amplifiers/de-amplifiers as discussed but also flip the sign of the polarized word.  Negation is determined by raising $-1$ to the power of the number of negators ($w_{ijk}^{n}$).  Simply, this is a result of a belief that two
 negatives qual a positive, 3 negatives a negative and so on.
 
-The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{ijl}$) are summed ($c'_{ij}$) and divided by the square root of the word count (&radic$w_{ijn}$) yielding an unbounded polarity score ($\delta_{ij}$) for each sentence.
+The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{ijl}$) are summed ($c'_{ij}$) and divided by the square root of the word count (&radic;$w_{ijn}$) yielding an unbounded polarity score ($\delta_{ij}$) for each sentence.
 
 
-$\delta$<sub>*i**j*</sub>=*c*′<sub>*i**j*/&radic*w*<sub>*i**j**n*</sub>
+$\delta$<sub>*i**j*</sub>=*c*′<sub>*i**j*/&radic;*w*<sub>*i**j**n*</sub>
 
 
 Where:
