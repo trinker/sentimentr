@@ -1,0 +1,16 @@
+citHeader("To cite sentimentr in publications, please use:")
+
+
+citEntry(entry = "manual",
+    title = "{sentimentr}: A ...",
+    author = "Tyler W. Rinker",
+    organization = "University at Buffalo/SUNY",
+    address = "Buffalo, New York",
+    note = "version 0.1.0",
+    year = "2015",
+    url = "http://github.com/trinker/sentimentr", 
+    textVersion  = paste("Rinker, T. W. (2015).",
+        "sentimentr: ...",
+        "version 0.1.0. University at Buffalo. Buffalo, New York.",
+        "http://github.com/trinker/sentimentr")
+)
