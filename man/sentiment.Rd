@@ -22,7 +22,7 @@ weights with x and y as column names..}
 can alter a polarized word's meaning and a numic key for negators (1),
 amplifiers(2), and de-amplifiers (3) with x and y as column names.}
 
-\item{amplifier.weight}{The weight to apply to amplifiers/deamplifiers (values
+\item{amplifier.weight}{The weight to apply to amplifiers/de-amplifiers (values
 from 0 to 1).  This value will multiply the polarized terms by 1 + this
 value.}
 
@@ -57,37 +57,79 @@ aggregate by rows or grouping variable(s).
 \details{
 The equation used by the algorithm to assign value to polarity of
 each sentence fist utilizes the sentiment dictionary (Hu and Liu, 2004) to
-tag polarized words.  A context cluster (\eqn{x_i^{T}}{x_i^T}) of words is
-pulled from around this polarized word (default 4 words before and two words
-after) to be considered as valence shifters.  The words in this context
-cluster are tagged as neutral (\eqn{x_i^{0}}{x_i^0}), negator
-(\eqn{x_i^{N}}{x_i^N}), amplifier (\eqn{x_i^{a}}{x_i^a}), or de-amplifier
-(\eqn{x_i^{d}}{x_i^d}). Neutral words hold no value
-in the equation but do affect word count (\eqn{n}).  Each polarized word is
-then weighted \eqn{w} based on the weights from the \code{polarity.frame}
-argument and then further weighted by the number and position of the valence
-shifters directly surrounding the positive or negative word.  The researcher
-may provide a weight \eqn{c} to be utilized with amplifiers/de-amplifiers
-(default is .8; deamplifier weight is constrained to -1 lower bound).  Last,
-these context cluster (\eqn{x_i^{T}}{x_i^T}) are summed and divided by the
-square root of the word count (\eqn{\sqrt{n}}{\sqrtn}) yielding an unbounded
-polarity score (\eqn{\delta}{C}).  Note that context clusters containing a
-comma before the polarized word will only consider words found after the
-comma.
+tag polarized words.  Each paragraph
+(\eqn{p_i = \{s_1, s_2, ..., s_n\}}{p_i = \{s_1, s_2, ... s_n\}}) composed of
+sentences, is broken into element sentences
+(\eqn{s_ij = \{w_1, w_2, ..., w_n\}}{s_ij = \{w_1, w_2, ... w_n\}}) where \eqn{w}
+are the words within sentences.  Each sentence (\eqn{s_j}) is broken into a
+an ordered bag of words.  Punctuation is removed with the exception of pause
+punctuations (commas, colons, semicolons) which are considered a word within
+the sentence.  I will denote pause words as \eqn{cw} (comma words) for
+convience.  We can represent these words as an ijk notation as
+\eqn{w_{ijk}}.  For example \eqn{w_{325}} would be the fifth word of the
+second sentence of the third paragraph.  While I use the term paragraph this
+merely represent a complete turn of talk.  For example t may be a cell level
+response in a questionare comprosed of sentences.
 
-\deqn{\delta=\frac{x_i^T}{\sqrt{n}}}{C=x_i^2/\sqrt(n)}
+The words in each sentence (\eqn{w_{ijk}}) are searched and compared to a
+modified version of Hu, M., & Liu, B.'s (2004) dictionary of polarized words.
+Positive (\eqn{w_{ijk}^{+}}{w_ijk^+}) and negative
+(\eqn{w_{ijk}^{-}}{w_ijk^-}) words are tagged with a \eqn{+1} and \eqn{-1}
+respectively.  I will denote polarized words as \eqn{pw} for convience. These
+will form a polar cluster (\eqn{c_{ijl}}{c_ijl}) which is a subset of the a
+sentence (\eqn{c_{ijl} \subseteq s_ij }{l_ijl \subseteq s_ij}).
+
+The polarized context cluster (\eqn{c_{ijl}}) of words is pulled from around
+the polarized word (\eqn{pw}) and defaults to 4 words before and two words
+after \eqn{pw}) to be considered as valence shifters.  The cluster can be represented as
+(\eqn{c_{ijl} = \{pw_{ijk - nb}, ..., pw_{ijk} , ..., pw_{ijk - na}\}}{c_ijl = \{pw_ijk - nb, ..., pw_ijk , ..., pw_ijk - na\}}),
+where \eqn{nb} & \eqn{na} are the parameters \code{n.before} and \code{n.after}
+set by the user.  The words in this polarized context cluster are tagged as
+neutral (\eqn{w_{ijk}^{0}}{w_ijk^0}), negator (\eqn{w_{ijk}^{n}}{w_ijk^n}),
+amplifier (\eqn{w_{ijk}^{a}}{w_ijk^a}), or de-amplifier
+(\eqn{w_{ijk}^{d}}{w_ijk^d}). Neutral words hold no value in the equation but
+do affect word count (\eqn{n}).  Each polarized word is then weighted (\eqn{w})
+based on the weights from the \code{polarity_dt} argument and then further
+weighted by the function and number of the valence shifters directly surrounding the
+positive or negative word (\eqn{pw}).  Pause (\eqn{cw}) locations
+(punctuation that denotes a pause including commas, colons, and semicolons)
+are indexed and considered in calculating the upper and lower bounds in the
+polarized context cluster. This is because these marks indicate a change in
+thought and words prior are not necessarily connected with words after these
+punctuation marks.  The lower bound of the polarized context cluster is
+constrained to \eqn{\max \{pw_{ijk - nb}, 1, \max \{cw_{ijk} < pw_{ijk}\}\}} and the upper bound is
+constrained to \eqn{\min \{pw_{ijk + na}, w_{ijn}, \min \{cw_{ijk} > pw_{ijk}\}\}}
+where \eqn{w_{ijn}} is the number of words in the sentence.
+
+The core value in the cluster, the polarized word is acted uppon by valence
+shifters. Amplifiers increas the polarity by 1.8 (.8 is the default weight
+(\eqn{z})).  Amplifiers (\eqn{w_{ijk}^{a}}) become de-amplifiers if the clontext cluster
+contains an odd number of negators (\eqn{w_{ijk}^{n}}).  De-amplifiers work
+to decrease decrease the polarity.  Negation (\eqn{w_{ijk}^{n}}) acts on
+amplifiers/de-amplifiers as discussed but also flip the sign of the polarized
+word.  Negation is determined by raising -1 to the power of the number of
+negators (\eqn{w_{ijk}^{n}}).  Simply, this is a result of a belief that two
+negatives qual a positive, 3 negatives a negative and so on.
+
+The researcher may provide a weight \eqn{z} to be utilized with
+amplifiers/de-amplifiers (default is .8; de-amplifier weight is constrained
+to -1 lower bound).  Last, these weighted context clusters (\eqn{c_{ijl}}{c_ijl}) are
+summed (\eqn{c'_{ij}}{c'_ij}) and divided by the square root of the word count (\eqn{\sqrt{w_{ijn}}}{\sqrtn w_ijn}) yielding an unbounded
+polarity score (\eqn{\delta}{C}) for each sentence.
+
+\deqn{\delta=\frac{c'_{ij}}{\sqrt{w_{ijn}}}}{C=c'_ijl/\sqrt(w_ijn)}
 
 Where:
 
-\deqn{x_i^T=\sum{((1 + c(x_i^{A} - x_i^{D}))\cdot w(-1)^{\sum{x_i^{N}}})}}{x_i^T=\sum((1 + c * (x_i^A - x_i^D)) * w(-1)^(\sumx_i^N))}
+\deqn{c'_{ij}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{ijk}^{p}(-1)^{\sum{w_{ijk}^{n}}})}}
 
-\deqn{x_i^{A}=\sum{(w_{neg}\cdot x_i^{a})}}{x_i^A=\sum(w_neg * x_i^a)}
+\deqn{w_{amp}=\sum{(w_{neg}\cdot (z \cdot w_{ijk}^{a}))}}
 
-\deqn{x_i^D = \max(x_i^{D'}, -1)}{x_i^D = max(x_i^D', -1)}
+\deqn{w_{deamp} = \max(w_{deamp'}, -1)}
 
-\deqn{x_i^{D'}= \sum{(- w_{neg}\cdot x_i^{a} + x_i^{d})}}{x_i^D'=\sum(- w_neg * x_i^a + x_i^d)}
+\deqn{w_{deamp'}= \sum{(z(- w_{neg}\cdot w_{ijk}^{a} + w_{ijk}^{d}))}}
 
-\deqn{w_{neg}= \left(\sum{x_i^{N}}\right) \bmod {2}}{w_neg= (\sumx_i^N) mod 2}
+\deqn{w_{neg}= \left(\sum{w_{ijk}^{n}}\right) \bmod {2}}
 }
 \note{
 The polarity score is dependent upon the polarity dictionary used.
