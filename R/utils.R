@@ -151,8 +151,8 @@ comma_reducer <- function(wrds, cl, pl, len, nb, na){
         ind <- lower:upper
 
 	    ind <- ind[!ind %in% pl2]
-	    if(identical(integer(0), ind)) return(wrds2[-pl2])
-        wrds2[ind]
+	    if(identical(integer(0), ind)) return(c("", wrds2[-pl2]))
+      wrds2[ind]
 	}, wrds, cl, pl, len)
 }
 

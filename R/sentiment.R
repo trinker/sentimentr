@@ -190,7 +190,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
     	comma_loc = unlist(comma_loc), P = unlist(P),
     	lens = sapply(words, length)), by = c('id', 'id2')])
-
+#browser()
     ## Grab the cluster of non-polarity words (n.before/n.after taking into account [,;:]
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
     word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
