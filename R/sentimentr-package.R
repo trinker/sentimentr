@@ -3,8 +3,8 @@
 #' Calulate text polarity sentiment at the sentence level and optionally
 #' aggregate by rows or grouping variable(s).
 #' @docType package
-#' @name sentiment
-#' @aliases sentiment package-sentiment
+#' @name sentimentr
+#' @aliases sentimentr package-sentiment
 NULL
 
 #' Polarity Lookup Key

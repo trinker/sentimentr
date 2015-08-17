@@ -15,9 +15,11 @@
 #' from 0 to 1).  This value will multiply the polarized terms by 1 + this
 #' value.
 #' @param n.before The number of words to consider as valence shifters before
-#' the polarized word.
+#' the polarized word.  To consider the entire beginning portion of a sentence 
+#' use \code{n.before = Inf}.
 #' @param n.after The number of words to consider as valence shifters after
-#' the polarized word.
+#' the polarized word.  To consider the entire ending portion of a sentence 
+#' use \code{n.after = Inf}.
 #' @param question.weight The weighting of questions (values from 0 to 1).
 #' Default is 1.  A 0 corresponds with the belief that questions (pure questions)
 #' are not polarized.  A weight may be applied based on the evidence that the
@@ -38,6 +40,7 @@
 #' \url{http://hedonometer.org/papers.html} Links to papers on hedonometrics
 #' @keywords sentiment, polarity
 #' @export
+#' @family sentiment functions
 #' @seealso \url{https://github.com/trestletech/Sermon-Sentiment-Analysis}
 #' @note The polarity score is dependent upon the polarity dictionary used.
 #' This function defaults to the word polarity dictionary used by Hu, M., &
@@ -134,6 +137,10 @@
 #' sentiment(mytext, question.weight = 0)
 #'
 #' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am))
+#' 
+#' y <- "He was not the sort of man that one would describe as especially handsome."
+#' sentiment(y)
+#' sentiment(y, n.before=Inf)
 sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "", 
     amplifier.weight = .8, n.before = 4, n.after = 2, question.weight = 1, ...){

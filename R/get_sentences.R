@@ -39,3 +39,10 @@ get_sentences.sentiment <- function(x, ...) {
 	  attributes(x)[["sentences"]][["sentences"]]
 }
 
+#' @export
+#' @method get_sentences sentiment_by
+get_sentences.sentiment_by <- function(x, ...) {
+	  y <- attributes(x)[["sentiment"]][["sentiment"]]
+	  attributes(y)[["sentences"]][["sentences"]]
+}
+
