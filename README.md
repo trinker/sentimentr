@@ -22,93 +22,98 @@ sentence fist utilizes the sentiment dictionary (Hu and Liu, 2004) to
 tag polarized words. Each paragraph
 (*p*<sub>*i*</sub> = {*s*<sub>1</sub>, *s*<sub>2</sub>, ..., *s*<sub>*n*</sub>})
 composed of sentences, is broken into element sentences
-(*s*<sub>*i*</sub>*j* = {*w*<sub>1</sub>, *w*<sub>2</sub>, ..., *w*<sub>*n*</sub>})
+(*s*<sub>*i*</sub>, *j* = {*w*<sub>1</sub>, *w*<sub>2</sub>, ..., *w*<sub>*n*</sub>})
 where *w* are the words within sentences. Each sentence
 (*s*<sub>*j*</sub>) is broken into a an ordered bag of words.
 Punctuation is removed with the exception of pause punctuations (commas,
 colons, semicolons) which are considered a word within the sentence. I
 will denote pause words as *c**w* (comma words) for convience. We can
-represent these words as an ijk notation as *w*<sub>*i**j**k*</sub>. For
-example *w*<sub>325</sub> would be the fifth word of the second sentence
-of the third paragraph. While I use the term paragraph this merely
-represent a complete turn of talk. For example t may be a cell level
-response in a questionare comprosed of sentences.
+represent these words as an i,j,k notation as
+*w*<sub>*i*, *j*, *k*</sub>. For example *w*<sub>325</sub> would be the
+fifth word of the second sentence of the third paragraph. While I use
+the term paragraph this merely represent a complete turn of talk. For
+example t may be a cell level response in a questionare comprosed of
+sentences.
 
-The words in each sentence (*w*<sub>*i**j**k*</sub>) are searched and
-compared to a modified version of Hu, M., & Liu, B.'s (2004) dictionary
-of polarized words. Positive (*w*<sub>*i**j**k*</sub><sup> + </sup>) and
-negative (*w*<sub>*i**j**k*</sub><sup> − </sup>) words are tagged with a
- + 1 and  − 1 respectively (or other positive/negative weighting if the
-user provides the sentiment dictionary). I will denote polarized words
-as *p**w* for convience. These will form a polar cluster
-(*c*<sub>*i**j**l*</sub>) which is a subset of the a sentence
-(*c*<sub>*i**j**l*</sub> ⊆ *s*<sub>*i*</sub>*j*).
+The words in each sentence (*w*<sub>*i*, *j*, *k*</sub>) are searched
+and compared to a modified version of Hu, M., & Liu, B.'s (2004)
+dictionary of polarized words. Positive
+(*w*<sub>*i*, *j*, *k*</sub><sup> + </sup>) and negative
+(*w*<sub>*i*, *j*, *k*</sub><sup> − </sup>) words are tagged with a  + 1
+and  − 1 respectively (or other positive/negative weighting if the user
+provides the sentiment dictionary). I will denote polarized words as
+*p**w* for convience. These will form a polar cluster
+(*c*<sub>*i*, *j*, *l*</sub>) which is a subset of the a sentence
+(*c*<sub>*i*, *j*, *l*</sub> ⊆ *s*<sub>*i*</sub>, *j*).
 
-The polarized context cluster (*c*<sub>*i**j**l*</sub>) of words is
+The polarized context cluster (*c*<sub>*i*, *j*, *l*</sub>) of words is
 pulled from around the polarized word ($pw}) and defaults to 4 words
 before and two words after *p**w*) to be considered as valence shifters.
 The cluster can be represented as
-(*c*<sub>*i**j**l*</sub> = {*p**w*<sub>*i**j**k* − *n**b*</sub>, ..., *p**w*<sub>*i**j**k*</sub>, ..., *p**w*<sub>*i**j**k* − *n**a*</sub>}),
+(*c*<sub>*i*, *j*, *l*</sub> = {*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, ..., *p**w*<sub>*i*, *j*, *k*</sub>, ..., *p**w*<sub>*i*, *j*, *k* − *n**a*</sub>}),
 where *n**b* & *n**a* are the parameters `n.before` and `n.after` set by
 the user. The words in this polarized context cluster are tagged as
-neutral (*w*<sub>*i**j**k*</sub><sup>0</sup>), negator
-(*w*<sub>*i**j**k*</sub><sup>*n*</sup>), amplifier
-(*w*<sub>*i**j**k*</sub><sup>*a*</sup>), or de-amplifier
-(*w*<sub>*i**j**k*</sub><sup>*d*</sup>). Neutral words hold no value in
-the equation but do affect word count (*n*). Each polarized word is then
-weighted (*w*) based on the weights from the `polarity_dt` argument and
-then further weighted by the function and number of the valence shifters
-directly surrounding the positive or negative word (*p**w*). Pause
-(*c**w*) locations (punctuation that denotes a pause including commas,
-colons, and semicolons) are indexed and considered in calculating the
-upper and lower bounds in the polarized context cluster. This is because
-these marks indicate a change in thought and words prior are not
-necessarily connected with words after these punctuation marks. The
-lower bound of the polarized context cluster is constrained to
-max{*p**w*<sub>*i**j**k* − *n**b*</sub>, 1, max{*c**w*<sub>*i**j**k*</sub> \< *p**w*<sub>*i**j**k*</sub>}}
+neutral (*w*<sub>*i*, *j*, *k*</sub><sup>0</sup>), negator
+(*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>), amplifier
+(*w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>), or de-amplifier
+(*w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>). Neutral words hold no value
+in the equation but do affect word count (*n*). Each polarized word is
+then weighted (*w*) based on the weights from the `polarity_dt` argument
+and then further weighted by the function and number of the valence
+shifters directly surrounding the positive or negative word (*p**w*).
+Pause (*c**w*) locations (punctuation that denotes a pause including
+commas, colons, and semicolons) are indexed and considered in
+calculating the upper and lower bounds in the polarized context cluster.
+This is because these marks indicate a change in thought and words prior
+are not necessarily connected with words after these punctuation marks.
+The lower bound of the polarized context cluster is constrained to
+max{*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, 1, max{*c**w*<sub>*i*, *j*, *k*</sub> \< *p**w*<sub>*i*, *j*, *k*</sub>}}
 and the upper bound is constrained to
-min{*p**w*<sub>*i**j**k* + *n**a*</sub>, *w*<sub>*i**j**n*</sub>, min{*c**w*<sub>*i**j**k*</sub> \> *p**w*<sub>*i**j**k*</sub>}}
-where *w*<sub>*i**j**n*</sub> is the number of words in the sentence.
+min{*p**w*<sub>*i*, *j*, *k* + *n**a*</sub>, *w*<sub>*i*, *j**n*</sub>, min{*c**w*<sub>*i*, *j*, *k*</sub> \> *p**w*<sub>*i*, *j*, *k*</sub>}}
+where *w*<sub>*i*, *j**n*</sub> is the number of words in the sentence.
 
 The core value in the cluster, the polarized word is acted uppon by
 valence shifters. Amplifiers increas the polarity by 1.8 (.8 is the
 default weight (*z*)). Amplifiers
-(*w*<sub>*i**j**k*</sub><sup>*a*</sup>) become de-amplifiers if the
+(*w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>) become de-amplifiers if the
 clontext cluster contains an odd number of negators
-(*w*<sub>*i**j**k*</sub><sup>*n*</sup>). De-amplifiers work to decrease
-decrease the polarity. Negation (*w*<sub>*i**j**k*</sub><sup>*n*</sup>)
-acts on amplifiers/de-amplifiers as discussed but also flip the sign of
-the polarized word. Negation is determined by raising  − 1 to the power
-of the number of negators (*w*<sub>*i**j**k*</sub><sup>*n*</sup>).
+(*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>). De-amplifiers work to
+decrease decrease the polarity. Negation
+(*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) acts on
+amplifiers/de-amplifiers as discussed but also flip the sign of the
+polarized word. Negation is determined by raising  − 1 to the power of
+the number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>).
 Simply, this is a result of a belief that two negatives qual a positive,
 3 negatives a negative and so on.
 
 The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to  − 1 lower bound). Last, these weighted context clusters
-(*c*<sub>*i**j**l*</sub>) are summed (*c*′<sub>*i**j*</sub>) and divided
-by the square root of the word count (√*w*<sub>*i**j**n*</sub>) yielding
-an unbounded polarity score (*δ*<sub>*i**j*</sub>) for each sentence.
+(*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
+divided by the square root of the word count
+(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
 <em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
 
 Where:
 
-*c*′<sub>*i**j*</sub> = ∑((1 + *w*<sub>*a**m**p*</sub> + *w*<sub>*d**e**a**m**p*</sub>) ⋅ *w*<sub>*i**j**k*</sub><sup>*p*</sup>( − 1)<sup>∑*w*<sub>*i**j**k*</sub><sup>*n*</sup></sup>)
+*c*′<sub>*i*, *j*</sub> = ∑((1 + *w*<sub>*a**m**p*</sub> + *w*<sub>*d**e**a**m**p*</sub>) ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>( − 1)<sup>∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup></sup>)
 
-*w*<sub>*a**m**p*</sub> = ∑(*w*<sub>*n**e**g*</sub> ⋅ (*z* ⋅ *w*<sub>*i**j**k*</sub><sup>*a*</sup>))
+*w*<sub>*a**m**p*</sub> = ∑(*w*<sub>*n**e**g*</sub> ⋅ (*z* ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>))
 
 *w*<sub>*d**e**a**m**p*</sub> = max(*w*<sub>*d**e**a**m**p*′</sub>,  − 1)
 
-*w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i**j**k*</sub><sup>*a*</sup> + *w*<sub>*i**j**k*</sub><sup>*d*</sup>))
+*w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup> + *w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>))
 
-*w*<sub>*d**e**a**m**p*′</sub> = (∑*w*<sub>*i**j**k*</sub><sup>*n*</sup>
-) mod 2
+*w*<sub>*d**e**a**m**p*′</sub> =
+(∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> ) mod 2
 
-To get the mean of all sentences (*s*<sub>*i**j*</sub>) within a
+To get the mean of all sentences (*s*<sub>*i*, *j*</sub>) within a
 paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
-$p\_{i, \\delta\_{ij}$ = 1/n  ⋅  $\\sum\\limits\_{i=1}^n \\delta\_{ij}$.
+*p*<sub>*i*, *δ*<sub>*i*, *j*</sub></sub> = 1/n  ⋅  ∑
+*δ*<sub>*i*, *j*</sub>.
 
 
 Table of Contents
