@@ -53,6 +53,8 @@ $$w_{deamp'} = \sum{(z(- w_{neg}\cdot w_{ijk}^{a} + w_{ijk}^{d}))}$$
 
 $w_{deamp'}$ = ($\sum{w_{ijk}^{n}}$ ) mod 2
 
+To get the mean of all sentences ($s_{ij}$) within a paragraph ($p_{i}$) simply take the average sentiment score 
+$p_{i, \delta_{ij}$ = 1/n $\cdot$ $\sum\limits_{i=1}^n \delta_{ij}$.
 
 # Installation
 

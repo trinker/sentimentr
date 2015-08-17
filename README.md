@@ -106,6 +106,10 @@ Where:
 *w*<sub>*d**e**a**m**p*′</sub> = (∑*w*<sub>*i**j**k*</sub><sup>*n*</sup>
 ) mod 2
 
+To get the mean of all sentences (*s*<sub>*i**j*</sub>) within a
+paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
+$p\_{i, \\delta\_{ij}$ = 1/n  ⋅  $\\sum\\limits\_{i=1}^n \\delta\_{ij}$.
+
 
 Table of Contents
 ============
