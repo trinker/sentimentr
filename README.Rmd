@@ -51,7 +51,7 @@ $$w_{deamp} = \max(w_{deamp'}, -1)$$
 
 $$w_{deamp'}= \sum{(z(- w_{neg}\cdot w_{ijk}^{a} + w_{ijk}^{d}))}$$
 
-*w*<sub>*d**e**a**m**p*′</sub>=($\sum{w_{ijk}^{n}}$ ) %% 2
+*w*<sub>*d**e**a**m*<em>p</em>′</sub>=($\sum{w_{ijk}^{n}}$ ) %% 2
 
 
 # Installation
