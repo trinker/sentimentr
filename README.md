@@ -102,7 +102,7 @@ Where:
 
 *w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i**j**k*</sub><sup>*a*</sup> + *w*<sub>*i**j**k*</sub><sup>*d*</sup>))
 
-*w*<sub>*deamp*â<U+0080>²</sub>=(∑*w*<sub>*i**j**k*</sub><sup>*n*</sup>
+*w*<sub>*d**e**a**m**p*′</sub></sub>=(∑*w*<sub>*i**j**k*</sub><sup>*n*</sup>
 ) %% 2
 
 
