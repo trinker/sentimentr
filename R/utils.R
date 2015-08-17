@@ -41,9 +41,11 @@ sent_regex <- sprintf("((?<=\\b(%s))\\.)|%s|(%s)",
 )
 
 get_sents <- function(x) {
+	  if (is(x, "get_sentences")) return(x)
     x <- stringi::stri_replace_all_regex(stringi::stri_trans_tolower(x), sent_regex, "")
     stringi::stri_split_regex(x, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
 }
+
 
 add_row_id <- function(x){
     lens <- lapply(x, length)
