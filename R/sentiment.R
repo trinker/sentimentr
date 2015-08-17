@@ -189,12 +189,12 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     ## save just polarized data for later merge
     pol_dat <- word_dat[, c("id", "id2", "pol_loc", "P"), with=FALSE]
 
-    ## grabd just desired columns needed for valence shifters and stretch by words
+    ## grab just desired columns needed for valence shifters and stretch by words
     word_dat <- word_dat[, .(non_pol = unlist(non_pol)), by = c("id", "id2", "pol_loc")]
 
     ## tag nonpol cluster as negator (1) , amplifier (2), or deamplifier (3)
     word_dat[, "cluster_tag"] <- valence_shifters_dt[word_dat[["non_pol"]]][[2]]
-
+browser()
     ## Get counts of negators (neg), amplifiers (a), and deamplifiers (d)
     ## neg is changed to a simple 0/1 if it flips the sign or not
     word_dat <- word_dat[, list(

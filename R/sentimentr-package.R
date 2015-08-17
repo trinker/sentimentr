@@ -63,7 +63,7 @@ NULL
 #' @keywords datasets
 #' @name valence_shifters_table
 #' @usage data(valence_shifters_table)
-#' @format A data frame with 84 rows and 2 variables
+#' @format A data frame with 85 rows and 2 variables
 NULL
 
 
