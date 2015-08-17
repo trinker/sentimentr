@@ -228,45 +228,12 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
      }
 
      # By sentence
-     stats::setNames(sent_dat[, c("id", "id2", "N", "sentiment"), with = FALSE],
+     out <- stats::setNames(sent_dat[, c("id", "id2", "N", "sentiment"), with = FALSE],
          c("element_id", "sentence_id", "word_count", "sentiment"))
+
+     class(out) <- unique(c("sentiment", class(out)))
+     out
 }
 
 
-abbr_rep <- lapply(list(
-  Titles   = c('jr', 'mr', 'mrs', 'ms', 'dr', 'prof', 'sr', 'sen', 'rep',
-         'rev', 'gov', 'atty', 'supt', 'det', 'rev', 'col','gen', 'lt',
-         'cmdr', 'adm', 'capt', 'sgt', 'cpl', 'maj'),
 
-  Entities = c('dept', 'univ', 'uni', 'assn', 'bros', 'inc', 'ltd', 'co',
-         'corp', 'plc'),
-
-  Months   = c('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul',
-         'aug', 'sep', 'oct', 'nov', 'dec', 'sept'),
-
-  Days     = c('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'),
-
-  Misc     = c('vs', 'etc', 'no', 'esp', 'cf', 'al', 'mt'),
-
-  Streets  = c('ave', 'bld', 'blvd', 'cl', 'ct', 'cres', 'dr', 'rd', 'st')
-), function(x){
-    fl <- sub("(^[a-z])(.+)", "\\1", x)
-    sprintf("[%s%s]%s", fl, toupper(fl), sub("(^[a-z])(.+)", "\\2", x))
-})
-
-period_reg <- paste0(
-    "(?:(?<=[a-z])\\.\\s(?=[a-z]\\.))",
-        "|",
-    "(?:(?<=([ .][a-z]))\\.)(?!(?:\\s[A-Z]|$)|(?:\\s\\s))",
-        "|",
-    "(?:(?<=[A-Z])\\.\\s(?=[A-Z]\\.))",
-        "|",
-    "(?:(?<=[A-Z])\\.(?=\\s[A-Z][A-Za-z]))"
-)
-
-
-sent_regex <- sprintf("((?<=\\b(%s))\\.)|%s|(%s)",
-    paste(unlist(abbr_rep), collapse = "|"),
-    period_reg,
-	'\\.(?=\\d+)'
-)

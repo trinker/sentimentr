@@ -18,8 +18,9 @@ at the sentence level and optionally aggregate by rows or grouping
 variable(s).
 
 The equation used by the algorithm to assign value to polarity of each
-sentence fist utilizes the sentiment dictionary (Hu and Liu, 2004) to
-tag polarized words. Each paragraph
+sentence fist utilizes the sentiment dictionary (Hu and Liu,
+[2004](http://www.cs.uic.edu/~liub/publications/kdd04-revSummary.pdf))
+to tag polarized words. Each paragraph
 (*p*<sub>*i*</sub> = {*s*<sub>1</sub>, *s*<sub>2</sub>, ..., *s*<sub>*n*</sub>})
 composed of sentences, is broken into element sentences
 (*s*<sub>*i*</sub>, *j* = {*w*<sub>1</sub>, *w*<sub>2</sub>, ..., *w*<sub>*n*</sub>})
