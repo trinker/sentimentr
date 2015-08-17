@@ -29,10 +29,10 @@ Punctuation is removed with the exception of pause punctuations (commas,
 colons, semicolons) which are considered a word within the sentence. I
 will denote pause words as *c**w* (comma words) for convience. We can
 represent these words as an i,j,k notation as
-*w*<sub>*i*, *j*, *k*</sub>. For example *w*<sub>325</sub> would be the
-fifth word of the second sentence of the third paragraph. While I use
-the term paragraph this merely represent a complete turn of talk. For
-example t may be a cell level response in a questionare comprosed of
+*w*<sub>*i*, *j*, *k*</sub>. For example *w*<sub>3, 2, 5</sub> would be
+the fifth word of the second sentence of the third paragraph. While I
+use the term paragraph this merely represent a complete turn of talk.
+For example t may be a cell level response in a questionare comprosed of
 sentences.
 
 The words in each sentence (*w*<sub>*i*, *j*, *k*</sub>) are searched
