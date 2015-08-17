@@ -31,8 +31,7 @@ The words in each sentence ($w_{i,j,k}$) are searched and compared to a modified
 The polarized context cluster ($c_{i,j,l}$) of words is pulled from around the polarized word ($pw}) and defaults to 4 words before and two words after $pw$) to be considered as valence shifters.  The cluster can be represented as ($c_{i,j,l} = \{pw_{i,j,k - nb}, ..., pw_{i,j,k} , ..., pw_{i,j,k - na}\}$), where $nb$ & $na$ are the parameters `n.before` and `n.after` set by the user.  The words in this polarized context cluster are tagged as neutral ($w_{i,j,k}^{0}$), negator ($w_{i,j,k}^{n}$),
 amplifier ($w_{i,j,k}^{a}$), or de-amplifier ($w_{i,j,k}^{d}$). Neutral words hold no value in the equation but do affect word count ($n$).  Each polarized word is then weighted ($w$) based on the weights from the `polarity_dt` argument and then further weighted by the function and number of the valence shifters directly surrounding the positive or negative word ($pw$).  Pause ($cw$) locations (punctuation that denotes a pause including commas, colons, and semicolons) are indexed and considered in calculating the upper and lower bounds in the polarized context cluster. This is because these marks indicate a change in thought and words prior are not necessarily connected with words after these punctuation marks.  The lower bound of the polarized context cluster is constrained to $\max \{pw_{i,j,k - nb}, 1, \max \{cw_{i,j,k} < pw_{i,j,k}\}\}$ and the upper bound is constrained to $\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,j,k}\}\}$ where $w_{i,jn}$ is the number of words in the sentence.
 
-The core value in the cluster, the polarized word is acted uppon by valence shifters. Amplifiers increas the polarity by 1.8 (.8 is the default weight ($z$)).  Amplifiers ($w_{i,j,k}^{a}$) become de-amplifiers if the clontext cluster contains an odd number of negators ($w_{i,j,k}^{n}$).  De-amplifiers work to decrease decrease the polarity.  Negation ($w_{i,j,k}^{n}$) acts on amplifiers/de-amplifiers as discussed but also flip the sign of the polarized word.  Negation is determined by raising $-1$ to the power of the number of negators ($w_{i,j,k}^{n}$).  Simply, this is a result of a belief that two
-negatives qual a positive, 3 negatives a negative and so on.
+The core value in the cluster, the polarized word is acted uppon by valence shifters. Amplifiers increas the polarity by 1.8 (.8 is the default weight ($z$)).  Amplifiers ($w_{i,j,k}^{a}$) become de-amplifiers if the clontext cluster contains an odd number of negators ($w_{i,j,k}^{n}$).  De-amplifiers work to decrease decrease the polarity.  Negation ($w_{i,j,k}^{n}$) acts on amplifiers/de-amplifiers as discussed but also flip the sign of the polarized word.  Negation is determined by raising $-1$ to the power of the number of negators ($w_{i,j,k}^{n}$) plus $2$.  Simply, this is a result of a belief that two negatives qual a positive, 3 negatives a negative and so on.
 
 The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{i,j,l}$) are summed ($c'_{i,j}$) and divided by the square root of the word count (&radic;$w_{i,jn}$) yielding an unbounded polarity score ($\delta_{i,j}$) for each sentence.
 
@@ -42,7 +41,7 @@ $\delta$<sub>*i**j*</sub> = <em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n
 
 Where:
 
-$$c'_{i,j} = \sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{\sum{w_{i,j,k}^{n}}})}$$
+$$c'_{i,j} = \sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}}})}$$
 
 $$w_{amp} = \sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}$$
 

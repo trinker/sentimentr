@@ -8,6 +8,9 @@
 #' @param valence_shifters_dt A \pkg{data.table} of valence shifters that
 #' can alter a polarized word's meaning and a numic key for negators (1),
 #' amplifiers(2), and de-amplifiers (3) with x and y as column names.
+#' @param hyphen The character string to replace hyphens with.  Default repalces
+#' with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
+#' would result in a space between words (e.g., 'sugar free').
 #' @param amplifier.weight The weight to apply to amplifiers/de-amplifiers (values
 #' from 0 to 1).  This value will multiply the polarized terms by 1 + this
 #' value.
@@ -97,7 +100,7 @@
 #' to decrease decrease the polarity.  Negation (\eqn{w_{i,j,k}^{n}}) acts on
 #' amplifiers/de-amplifiers as discussed but also flip the sign of the polarized
 #' word.  Negation is determined by raising -1 to the power of the number of
-#' negators (\eqn{w_{i,j,k}^{n}}).  Simply, this is a result of a belief that two
+#' negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that two
 #' negatives qual a positive, 3 negatives a negative and so on.
 #'
 #' The researcher may provide a weight \eqn{z} to be utilized with
@@ -110,7 +113,7 @@
 #'
 #' Where:
 #'
-#' \deqn{c'_{i,j}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{\sum{w_{i,j,k}^{n}}})}}
+#' \deqn{c'_{i,j}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}})}}
 #'
 #' \deqn{w_{amp}=\sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}}
 #'
@@ -132,7 +135,7 @@
 #'
 #' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am))
 sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
-    valence_shifters_dt = sentimentr::valence_shifters_table,
+    valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "", 
     amplifier.weight = .8, n.before = 4, n.after = 2, question.weight = 1, ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
@@ -154,7 +157,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     # space fill (~~), break into words
     sents <- get_sents(text.var)
     sent_dat <- make_sentence_df2(sents)
-    sent_dat[, 'words' := make_words(space_fill(sentences, space_words))]
+    sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 
     # make sentence id for each row id
     sent_dat[, id2:=seq_len(.N), by='id']
@@ -183,7 +186,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 
     ## Grab the cluster of non-polarity words (n.before/n.after taking into account [,;:]
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
-    word_dat <- word_dat[, non_pol :=  comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after)][,
+    word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
     	list(words, non_pol, lens = sapply(words, length)), by = cols2]
 
     ## save just polarized data for later merge
@@ -194,7 +197,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 
     ## tag nonpol cluster as negator (1) , amplifier (2), or deamplifier (3)
     word_dat[, "cluster_tag"] <- valence_shifters_dt[word_dat[["non_pol"]]][[2]]
-browser()
+
     ## Get counts of negators (neg), amplifiers (a), and deamplifiers (d)
     ## neg is changed to a simple 0/1 if it flips the sign or not
     word_dat <- word_dat[, list(
@@ -212,7 +215,7 @@ browser()
      ## add the amplifier/deamplifier & total raw sentiment scores
      sent_dat[, A :=  ((1  - w_neg) * a)* amplifier.weight][,
      	D := ((-w_neg)*a - d) * amplifier.weight][, D := ifelse(D < -1, -1, D)][,
-     		T := (1 + c(A + D))*(P*((-1)^(sum(neg))))]
+     		T := (1 + c(A + D))*(P*((-1)^(2 + w_neg)))]
 
      ## Aggregate (sum) at the sentence level
      sent_dat <- sent_dat[, list(T_sum=sum(T), N = unique(wc)), by=list(id, id2)]
@@ -232,6 +235,9 @@ browser()
          c("element_id", "sentence_id", "word_count", "sentiment"))
 
      class(out) <- unique(c("sentiment", class(out)))
+     sentences <- new.env(FALSE)
+     sentences[["sentences"]] <- sents
+     attributes(out)[["sentences"]] <- sentences    
      out
 }
 

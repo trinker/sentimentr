@@ -8,7 +8,7 @@
 \title{Polarity Score (Sentiment Analysis)}
 \usage{
 sentiment(text.var, polarity_dt = sentimentr::polarity_table,
-  valence_shifters_dt = sentimentr::valence_shifters_table,
+  valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
   amplifier.weight = 0.8, n.before = 4, n.after = 2,
   question.weight = 1, ...)
 }
@@ -21,6 +21,10 @@ weights with x and y as column names..}
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
 can alter a polarized word's meaning and a numic key for negators (1),
 amplifiers(2), and de-amplifiers (3) with x and y as column names.}
+
+\item{hyphen}{The character string to replace hyphens with.  Default repalces
+with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
+would result in a space between words (e.g., 'sugar free').}
 
 \item{amplifier.weight}{The weight to apply to amplifiers/de-amplifiers (values
 from 0 to 1).  This value will multiply the polarized terms by 1 + this
@@ -108,7 +112,7 @@ contains an odd number of negators (\eqn{w_{i,j,k}^{n}}).  De-amplifiers work
 to decrease decrease the polarity.  Negation (\eqn{w_{i,j,k}^{n}}) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the polarized
 word.  Negation is determined by raising -1 to the power of the number of
-negators (\eqn{w_{i,j,k}^{n}}).  Simply, this is a result of a belief that two
+negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that two
 negatives qual a positive, 3 negatives a negative and so on.
 
 The researcher may provide a weight \eqn{z} to be utilized with
@@ -121,7 +125,7 @@ polarity score (\eqn{\delta}{C}) for each sentence.
 
 Where:
 
-\deqn{c'_{i,j}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{\sum{w_{i,j,k}^{n}}})}}
+\deqn{c'_{i,j}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}})}}
 
 \deqn{w_{amp}=\sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}}
 

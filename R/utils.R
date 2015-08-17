@@ -54,7 +54,8 @@ count_words <- function(x){
     stringi::stri_count_words(x)
 }
 
-make_words <- function(x){
+make_words <- function(x, hyphen = ""){
+	  if (hyphen != "") x <- gsub("-", hyphen, x)
     lapply(stringi::stri_split_regex(gsub("^\\s+|\\s+$", "", x), "[[:space:]]|(?=[,;:])"), function(y) gsub('~{2,}', ' ', y))
 }
 
@@ -71,7 +72,7 @@ make_sentence_df <- function(x){
 
     sents <- get_sents(x)
     ids <- add_row_id(sents)
-    text.var <- gsub("[^a-z,;: ]|\\d:\\d|\\d ", "", unlist(sents))
+    text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", unlist(sents))
     dat <- data.frame(
         id = ids,
         sentences = text.var,
@@ -90,11 +91,11 @@ make_sentence_df2 <- function(sents){
     indx <- wc <- NULL
 
     ids <- add_row_id(sents)
-    text.var <- gsub("[^a-z,;: ]|\\d:\\d|\\d ", "", unlist(sents))
+    text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", unlist(sents))
     dat <- data.frame(
         id = ids,
         sentences = text.var,
-    	wc = count_words(text.var),
+    	  wc = count_words(text.var),
         stringsAsFactors = FALSE
     )
     data.table::setDT(dat)
@@ -128,7 +129,8 @@ space_fill <- function(x, doubles){
 comma_reducer <- function(wrds, cl, pl, len, nb, na){
 	Map(function(wrds2, cl2, pl2, len2){
 
-        if (is.na(pl2) | is.na(cl2)) return(wrds2[-pl2])
+	      ## just retun the words if no pol location
+        if (is.na(pl2)) return(wrds2[-pl2])
 
         # Find the upper and lower bound using words n.before and n. after
         lb <- pl2 - nb
@@ -136,11 +138,14 @@ comma_reducer <- function(wrds, cl, pl, len, nb, na){
         ub <- pl2 + na
         ub[ub > len2] <- len2
 
+        max_cl_lower <- any(cl2 < pl2)
+        min_cl_upper <- any(cl2 > pl2)
+        
         # take into account upper and lower looking for [,:;]
-		lower <- ifelse(any(cl2 < pl2), max(cl2[cl2 < pl2]) + 1, lb)
-	    upper <- ifelse(any(cl2 > pl2), min(cl2[cl2 > pl2]) - 1, ub)
+		    lower <- ifelse(!is.na(max_cl_lower) && max_cl_lower, max(cl2[cl2 < pl2]) + 1, lb)
+	      upper <- ifelse(!is.na(min_cl_upper) && min_cl_upper, min(cl2[cl2 > pl2]) - 1, ub)
 
-	    ## grab these words in the upper and lower w/o the polarized word
+	      ## grab these words in the upper and lower w/o the polarized word
         ind <- lower:upper
 
 	    ind <- ind[!ind %in% pl2]
