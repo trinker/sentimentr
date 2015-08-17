@@ -102,9 +102,8 @@ Where:
 
 *w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i**j**k*</sub><sup>*a*</sup> + *w*<sub>*i**j**k*</sub><sup>*d*</sup>))
 
-$$latex
-w\_{neg}= \\left(\\sum{w\_{ijk}^{n}}\\right) \\bmod {2}
-$$
+*w*<sub>*d**e**a**m**p*â<U+0080>²</sub>=(∑*w*<sub>*i**j**k*</sub><sup>*n*</sup>
+) %% 2
 
 
 Table of Contents
