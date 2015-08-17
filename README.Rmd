@@ -51,7 +51,9 @@ $$w_{deamp} = \max(w_{deamp'}, -1)$$
 
 $$w_{deamp'}= \sum{(z(- w_{neg}\cdot w_{ijk}^{a} + w_{ijk}^{d}))}$$
 
-$$w_{neg}= \left(\sum{w_{ijk}^{n}}\right) \bmod {2}$$
+$$latex
+w_{neg}= \left(\sum{w_{ijk}^{n}}\right) \bmod {2}
+$$
 
 
 # Installation
