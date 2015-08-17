@@ -104,7 +104,7 @@ Where:
 *w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i**j**k*</sub><sup>*a*</sup> + *w*<sub>*i**j**k*</sub><sup>*d*</sup>))
 
 *w*<sub>*d**e**a**m**p*′</sub> = (∑*w*<sub>*i**j**k*</sub><sup>*n*</sup>
-) %% 2
+) mod 2
 
 
 Table of Contents
