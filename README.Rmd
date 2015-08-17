@@ -43,15 +43,15 @@ $\delta$<sub>*i**j*</sub>=<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*<
 
 Where:
 
-$$c'_{ij}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{ijk}^{p}(-1)^{\sum{w_{ijk}^{n}}})}$$
+$$c'_{ij} = \sum{((1 + w_{amp} + w_{deamp})\cdot w_{ijk}^{p}(-1)^{\sum{w_{ijk}^{n}}})}$$
 
-$$w_{amp}=\sum{(w_{neg}\cdot (z \cdot w_{ijk}^{a}))}$$
+$$w_{amp} = \sum{(w_{neg}\cdot (z \cdot w_{ijk}^{a}))}$$
 
 $$w_{deamp} = \max(w_{deamp'}, -1)$$
 
-$$w_{deamp'}= \sum{(z(- w_{neg}\cdot w_{ijk}^{a} + w_{ijk}^{d}))}$$
+$$w_{deamp'} = \sum{(z(- w_{neg}\cdot w_{ijk}^{a} + w_{ijk}^{d}))}$$
 
-$w_{deamp'}$</sub>=($\sum{w_{ijk}^{n}}$ ) %% 2
+$w_{deamp'}$ = ($\sum{w_{ijk}^{n}}$ ) %% 2
 
 
 # Installation
