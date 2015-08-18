@@ -86,3 +86,22 @@ mytext <- c(
 )
 sentiment(mytext)
 ```
+
+To combine by element (column cell or vector element) use `sentiment_by` with `by = NULL`.
+
+```{r}
+mytext <- c(
+    'do you like it?  But I hate really bad dogs',
+    'I am the best friend.',
+    'Do you really like it?  I\'m not a fan'
+)
+sentiment_by(mytext)
+```
+
+To combine by grouping variables use `sentiment_by` using the `by` argument.
+
+```{r}
+with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
+```
+
+

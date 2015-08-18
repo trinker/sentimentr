@@ -83,9 +83,9 @@ decrease decrease the polarity. Negation
 (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the
 polarized word. Negation is determined by raising  − 1 to the power of
-the number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>).
-Simply, this is a result of a belief that two negatives qual a positive,
-3 negatives a negative and so on.
+the number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) plus
+2. Simply, this is a result of a belief that two negatives qual a
+positive, 3 negatives a negative and so on.
 
 The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
@@ -100,7 +100,7 @@ divided by the square root of the word count
 
 Where:
 
-*c*′<sub>*i*, *j*</sub> = ∑((1 + *w*<sub>*a**m**p*</sub> + *w*<sub>*d**e**a**m**p*</sub>) ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>( − 1)<sup>∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup></sup>)
+$$c'\_{i,j} = \\sum{((1 + w\_{amp} + w\_{deamp})\\cdot w\_{i,j,k}^{p}(-1)^{2 + w\_{neg}}})}$$
 
 *w*<sub>*a**m**p*</sub> = ∑(*w*<sub>*n**e**g*</sub> ⋅ (*z* ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>))
 
@@ -167,3 +167,35 @@ Examples
     ## 3:          2           1          5  0.4472136
     ## 4:          3           1          5  0.8049845
     ## 5:          3           2          4  0.0000000
+
+To combine by element (column cell or vector element) use `sentiment_by`
+with `by = NULL`.
+
+    mytext <- c(
+        'do you like it?  But I hate really bad dogs',
+        'I am the best friend.',
+        'Do you really like it?  I\'m not a fan'
+    )
+    sentiment_by(mytext)
+
+    ##    element_id word_count       sd ave_sentiment
+    ## 1:          1         10 1.392784    -0.4848469
+    ## 2:          2          5       NA     0.4472136
+    ## 3:          3          9 0.569210     0.4024922
+
+To combine by grouping variables use `sentiment_by` using the `by`
+argument.
+
+    with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
+
+    ##        person   time word_count        sd ave_sentiment
+    ##  1:     OBAMA time 1       3598 0.4239016    0.11486444
+    ##  2:     OBAMA time 2       7476 0.3478965    0.07853295
+    ##  3:     OBAMA time 3       7241 0.3877668    0.09330235
+    ##  4:    ROMNEY time 1       4085 0.3424956    0.06462922
+    ##  5:    ROMNEY time 2       7534 0.2880493    0.05417516
+    ##  6:    ROMNEY time 3       8302 0.3619940    0.06916677
+    ##  7:   CROWLEY time 2       1672 0.2125288    0.05531121
+    ##  8:    LEHRER time 1        765 0.3415224    0.10374333
+    ##  9:  QUESTION time 2        583 0.3034280    0.02579568
+    ## 10: SCHIEFFER time 3       1445 0.3361366    0.07554469
