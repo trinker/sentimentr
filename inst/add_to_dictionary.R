@@ -5,7 +5,7 @@ pacman::p_load_gh("trinker/sentimentr", "trinker/pax")
 #====================================================
 #polarity table
 
-word <- "contradicted"
+word <- "effective"
 value <- -1
 
 # check if word is already there
