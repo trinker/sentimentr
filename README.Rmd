@@ -41,7 +41,7 @@ $\delta$<sub>*i**j*</sub> = <em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n
 
 Where:
 
-$$c'_{i,j} = \sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}}})}$$
+$$c'_{i,j} = \sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}})}$$
 
 $$w_{amp} = \sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}$$
 
@@ -87,7 +87,7 @@ mytext <- c(
 sentiment(mytext)
 ```
 
-To combine by element (column cell or vector element) use `sentiment_by` with `by = NULL`.
+To aggregate by element (column cell or vector element) use `sentiment_by` with `by = NULL`.
 
 ```{r}
 mytext <- c(
@@ -98,7 +98,7 @@ mytext <- c(
 sentiment_by(mytext)
 ```
 
-To combine by grouping variables use `sentiment_by` using the `by` argument.
+To aggregate by grouping variables use `sentiment_by` using the `by` argument.
 
 ```{r}
 with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))

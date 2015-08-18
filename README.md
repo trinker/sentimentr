@@ -100,7 +100,7 @@ divided by the square root of the word count
 
 Where:
 
-$$c'\_{i,j} = \\sum{((1 + w\_{amp} + w\_{deamp})\\cdot w\_{i,j,k}^{p}(-1)^{2 + w\_{neg}}})}$$
+*c*′<sub>*i*, *j*</sub> = ∑((1 + *w*<sub>*a**m**p*</sub> + *w*<sub>*d**e**a**m**p*</sub>) ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>( − 1)<sup>2 + *w*<sub>*n**e**g*</sub></sup>)
 
 *w*<sub>*a**m**p*</sub> = ∑(*w*<sub>*n**e**g*</sub> ⋅ (*z* ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>))
 
@@ -168,8 +168,8 @@ Examples
     ## 4:          3           1          5  0.8049845
     ## 5:          3           2          4  0.0000000
 
-To combine by element (column cell or vector element) use `sentiment_by`
-with `by = NULL`.
+To aggregate by element (column cell or vector element) use
+`sentiment_by` with `by = NULL`.
 
     mytext <- c(
         'do you like it?  But I hate really bad dogs',
@@ -183,7 +183,7 @@ with `by = NULL`.
     ## 2:          2          5       NA     0.4472136
     ## 3:          3          9 0.569210     0.4024922
 
-To combine by grouping variables use `sentiment_by` using the `by`
+To aggregate by grouping variables use `sentiment_by` using the `by`
 argument.
 
     with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
