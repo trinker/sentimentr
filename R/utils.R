@@ -142,7 +142,7 @@ comma_reducer <- function(wrds, cl, pl, len, nb, na){
 
         max_cl_lower <- any(cl2 < pl2)
         min_cl_upper <- any(cl2 > pl2)
-        
+
         # take into account upper and lower looking for [,:;]
 		    lower <- ifelse(!is.na(max_cl_lower) && max_cl_lower, max(cl2[cl2 < pl2]) + 1, lb)
 	      upper <- ifelse(!is.na(min_cl_upper) && min_cl_upper, min(cl2[cl2 > pl2]) - 1, ub)

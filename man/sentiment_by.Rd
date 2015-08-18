@@ -4,7 +4,7 @@
 \alias{sentiment_by}
 \title{Polarity Score (Sentiment Analysis) By Groups}
 \usage{
-sentiment_by(text.var, by = NULL, ...)
+sentiment_by(text.var, by = NULL, group.names, ...)
 }
 \arguments{
 \item{text.var}{The text variable.}
@@ -14,12 +14,16 @@ row/element indices; if you used a column of 12 rows for \code{text.var}
 these 12 rows will be used as the grouping variable.  Also takes a single
 grouping variable or a list of 1 or more grouping variables.}
 
+\item{group.names}{A vector of names that corresponds to group.  Generally
+for internal use.}
+
 \item{\ldots}{Other arguments passed to \code{\link[sentimentr]{sentiment}}.}
 }
 \value{
 Returns a \pkg{data.table} with grouping variables plus:
 \itemize{
   \item  element_id - The id number of the original vector passed to \code{sentiment}
+  \item  sentence_id - The id number of the sentences within each \code{element_id}
   \item  word_count - Word count \code{\link[base]{sum}}med by grouping variable
   \item  sd - Standard deviation (\code{\link[stats]{sd}}) of the sentiment/polarity score by grouping variable
   \item  ave_sentiment - Sentiment/polarity score \code{\link[base]{mean}} average by grouping variable
@@ -42,6 +46,9 @@ get_sentences(sentiment_by(mytext))
 (mysentiment <- sentiment_by(mytext, question.weight = 0))
 stats::setNames(get_sentences(sentiment_by(mytext, question.weight = 0)),
     round(mysentiment[["ave_sentiment"]], 3))
+
+with(presidential_debates_2012, sentiment_by(dialogue, person))
+with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
 }
 \seealso{
 Other sentiment.functions: \code{\link{sentiment}}
