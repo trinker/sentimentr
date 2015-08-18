@@ -18,4 +18,5 @@ inst/sentimentr_logo
 inst/staticdocs
 inst/extra_statdoc
 inst/maintenance.R
+inst/add_to_dictionary.R
 

@@ -4,7 +4,7 @@
 \name{polarity_table}
 \alias{polarity_table}
 \title{Polarity Lookup Key}
-\format{A data frame with 6776 rows and 2 variables}
+\format{A data frame with 6780 rows and 2 variables}
 \usage{
 data(polarity_table)
 }
