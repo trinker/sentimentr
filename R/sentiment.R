@@ -187,8 +187,9 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     	comma_loc=list(rm_na(comma_loc)), P= list(rm_na(P))), by = c('id', 'id2')]
 
     ## stretch by prior polarized word hits
-    word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
-    	comma_loc = unlist(comma_loc), P = unlist(P),
+    word_dat <- suppressWarnings(word_dat[, .(words, comma_loc, pol_loc = unlist(pol_loc),
+    	#comma_loc = unlist(comma_loc), 
+    	P = unlist(P),
     	lens = sapply(words, length)), by = c('id', 'id2')])
 
     ## Grab the cluster of non-polarity words (n.before/n.after taking into account [,;:]
