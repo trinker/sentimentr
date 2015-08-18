@@ -5,8 +5,11 @@ pacman::p_load_gh("trinker/sentimentr", "trinker/pax")
 #====================================================
 #polarity table
 
+word <- "contradicted"
+value <- -1
+
 # check if word is already there
-polarity_table["helped", ]
+polarity_table[word, ]
 
 polarity_table <- sentimentr::polarity_table %>%
 	   as.data.frame()
@@ -15,8 +18,8 @@ polarity_table <- sentimentr::polarity_table %>%
 
 
 polarity_table[check + 1, ] <- NA
-polarity_table[check + 1, "x"] <- "helped"
-polarity_table[check + 1, "y"] <- 1
+polarity_table[check + 1, "x"] <- word
+polarity_table[check + 1, "y"] <- value
 
 
 polarity_table <- polarity_table %>%
@@ -37,6 +40,10 @@ rownames(polarity_table) <- NULL
 
 #====================================================
 #valence_shifters_table
+
+# check if word is already there
+valence_shifters_table["alot", ]
+
 valence_shifters_table <- sentimentr::valence_shifters_table %>%
 	   as.data.frame()
 
