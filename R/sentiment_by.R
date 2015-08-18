@@ -40,7 +40,7 @@
 #' with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
 sentiment_by <- function(text.var, by = NULL, group.names, ...){
 
-	  word_count <- NULL
+	  word_count <- ave_sentiment <- NULL
     out <- sentiment(text.var = text.var, ...)
 
     if (is.null(by)){
@@ -78,7 +78,7 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
 
         out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
             'sd' = stats::sd(sentiment, na.rm = TRUE),
-            'ave_sentiment' = mean(sentiment, na.rm = TRUE)), keyby = G]
+            'ave_sentiment' = mean(sentiment, na.rm = TRUE)), keyby = G][order(-ave_sentiment)]
 
     }
 
