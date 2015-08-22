@@ -28,6 +28,7 @@ knitr::opts_chunk$set(fig.path = "inst/figure/")
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://travis-ci.org/trinker/sentimentr)
+[![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![Coverage Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 `r verbadge`
 
@@ -49,7 +50,7 @@ amplifier ($w_{i,j,k}^{a}$), or de-amplifier ($w_{i,j,k}^{d}$). Neutral words ho
 
 The core value in the cluster, the polarized word is acted upon by valence shifters. Amplifiers increase the polarity by 1.8 (.8 is the default weight ($z$)).  Amplifiers ($w_{i,j,k}^{a}$) become de-amplifiers if the context cluster contains an odd number of negators ($w_{i,j,k}^{n}$).  De-amplifiers work to decrease decrease the polarity.  Negation ($w_{i,j,k}^{n}$) acts on amplifiers/de-amplifiers as discussed but also flip the sign of the polarized word.  Negation is determined by raising $-1$ to the power of the number of negators ($w_{i,j,k}^{n}$) plus $2$.  Simply, this is a result of a belief that two negatives equal a positive, 3 negatives a negative and so on.
 
-The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight the context cluster.  A but conjunction before the polarized word up-weights the cluster by 1.85 (.85 is the default weight ($z_2$)).  A but conjunction after the polarized word down-weights the cluster by 1 - .85 ($z_2$)).  The number of occurrences before and after the polarized word are multiplied by 1 and -1 respectively and then summed within context cluster.  It is this value that is multiplied by the weight and added to 1.This corresponds to the belief that a but makes the next clause of greater values while lowering the value placed on the prior clause.
+The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight the context cluster.  A but conjunction before the polarized word up-weights the cluster by 1.85 (.85 is the default weight ($z_2$)).  A but conjunction after the polarized word down-weights the cluster by 1 - .85 ($z_2$).  The number of occurrences before and after the polarized word are multiplied by 1 and -1 respectively and then summed within context cluster.  It is this value that is multiplied by the weight and added to 1.This corresponds to the belief that a but makes the next clause of greater values while lowering the value placed on the prior clause.
 
 The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{i,j,l}$) are summed ($c'_{i,j}$) and divided by the square root of the word count (&radic;$w_{i,jn}$) yielding an unbounded polarity score ($\delta_{i,j}$) for each sentence.
 

@@ -7,6 +7,7 @@ state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
 [![Build
 Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://travis-ci.org/trinker/sentimentr)
+[![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 <a href="https://img.shields.io/badge/Version-0.1.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.0-orange.svg" alt="Version"/></a>
@@ -130,7 +131,7 @@ The "but" conjunctions (i.e., 'but', 'however', and 'although') also
 weight the context cluster. A but conjunction before the polarized word
 up-weights the cluster by 1.85 (.85 is the default weight
 (*z*<sub>2</sub>)). A but conjunction after the polarized word
-down-weights the cluster by 1 - .85 (*z*<sub>2</sub>)). The number of
+down-weights the cluster by 1 - .85 (*z*<sub>2</sub>). The number of
 occurrences before and after the polarized word are multiplied by 1
 and -1 respectively and then summed within context cluster. It is this
 value that is multiplied by the weight and added to 1.This corresponds
@@ -356,16 +357,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20210.9895 20565.0311 21360.1368 20919.0727
-        sentimentr_hu_liu()   197.8286   211.7385   221.2295   225.6485
-     sentimentr_sentiword()   954.1506   962.7060   966.8255   971.2614
-             syuzhet_binn()   252.5622   282.2227   298.0970   311.8833
-              syuzhet_nrc()   767.6785   814.2562   843.1734   860.8339
-            syuzhet_afinn()   151.3630   154.3645   159.2540   157.3660
+                 stanford() 20014.9632 20171.2523 20290.7593 20327.5415
+        sentimentr_hu_liu()   179.3323   179.9224   183.4586   180.5126
+     sentimentr_sentiword()   769.7694   871.2694   916.8361   972.7693
+             syuzhet_binn()   240.0943   242.2397   253.1608   244.3850
+              syuzhet_nrc()   597.1048   603.3020   662.5765   609.4992
+            syuzhet_afinn()   117.6219   119.3156   128.4207   121.0093
              uq        max neval
-     21934.7104 22950.3481     3
-       232.9299   240.2113     3
-       973.1630   975.0647     3
-       320.8644   329.8455     3
-       880.9209   901.0079     3
-       163.1995   169.0329     3
+     20428.6574 20529.7732     3
+       185.5217   190.5308     3
+       990.3694  1007.9695     3
+       259.6940   275.0031     3
+       695.3124   781.1256     3
+       133.8202   146.6311     3
