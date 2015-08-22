@@ -10,7 +10,7 @@ data(valence_shifters_table)
 }
 \description{
 A \pkg{data.table} dataset containing a vector of valence shifter words that
-can alter a polarized word's meaning and a numic key for negators (1),
+can alter a polarized word's meaning and a numeric key for negators (1),
 amplifiers(2), and de-amplifiers (3).
 }
 \details{
