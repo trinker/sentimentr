@@ -162,11 +162,11 @@ Examples
     sentiment(mytext)
 
     ##    element_id sentence_id word_count  sentiment
-    ## 1:          1           1          4  0.2500000
-    ## 2:          1           2          6 -0.5642575
-    ## 3:          2           1          5  0.2515576
-    ## 4:          3           1          5  0.4024922
-    ## 5:          3           2          4 -0.0625000
+    ## 1:          1           1          4  0.5000000
+    ## 2:          1           2          6 -1.4696938
+    ## 3:          2           1          5  0.4472136
+    ## 4:          3           1          5  0.8049845
+    ## 5:          3           2          4  0.0000000
 
 To aggregate by element (column cell or vector element) use
 `sentiment_by` with `by = NULL`.
@@ -178,10 +178,10 @@ To aggregate by element (column cell or vector element) use
     )
     sentiment_by(mytext)
 
-    ##    element_id word_count        sd ave_sentiment
-    ## 1:          1         10 0.5757670    -0.1571287
-    ## 2:          2          5        NA     0.2515576
-    ## 3:          3          9 0.3287992     0.1699961
+    ##    element_id word_count       sd ave_sentiment
+    ## 1:          1         10 1.392784    -0.4848469
+    ## 2:          2          5       NA     0.4472136
+    ## 3:          3          9 0.569210     0.4024922
 
 To aggregate by grouping variables use `sentiment_by` using the `by`
 argument.
@@ -189,13 +189,13 @@ argument.
     with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:    LEHRER time 1        765 0.1559605   0.068644722
-    ##  2: SCHIEFFER time 3       1445 0.1578667   0.056981746
-    ##  3:   CROWLEY time 2       1672 0.1431852   0.038512429
-    ##  4:     OBAMA time 1       3598 0.1766826   0.036478259
-    ##  5:     OBAMA time 3       7241 0.1602116   0.024073058
-    ##  6:     OBAMA time 2       7476 0.1577368   0.023101997
-    ##  7:    ROMNEY time 2       7534 0.1748878   0.022651053
-    ##  8:  QUESTION time 2        583 0.1800059   0.016649654
-    ##  9:    ROMNEY time 3       8302 0.1683993   0.014460121
-    ## 10:    ROMNEY time 1       4085 0.1991791   0.009327197
+    ##  1:     OBAMA time 1       3598 0.4174276    0.10410370
+    ##  2:    LEHRER time 1        765 0.3415224    0.10374333
+    ##  3:     OBAMA time 3       7241 0.3877668    0.09330235
+    ##  4:     OBAMA time 2       7476 0.3498035    0.07929961
+    ##  5: SCHIEFFER time 3       1445 0.3361366    0.07554469
+    ##  6:    ROMNEY time 3       8302 0.3619940    0.06916677
+    ##  7:    ROMNEY time 1       4085 0.3424956    0.06462922
+    ##  8:   CROWLEY time 2       1672 0.2125288    0.05531121
+    ##  9:    ROMNEY time 2       7534 0.2880493    0.05417516
+    ## 10:  QUESTION time 2        583 0.3034280    0.02579568
