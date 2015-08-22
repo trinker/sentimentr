@@ -7,9 +7,9 @@ state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
 [![Build
 Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://travis-ci.org/trinker/sentimentr)
-[![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
+[![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 <a href="https://img.shields.io/badge/Version-0.1.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.0-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
@@ -357,16 +357,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20014.9632 20171.2523 20290.7593 20327.5415
-        sentimentr_hu_liu()   179.3323   179.9224   183.4586   180.5126
-     sentimentr_sentiword()   769.7694   871.2694   916.8361   972.7693
-             syuzhet_binn()   240.0943   242.2397   253.1608   244.3850
-              syuzhet_nrc()   597.1048   603.3020   662.5765   609.4992
-            syuzhet_afinn()   117.6219   119.3156   128.4207   121.0093
+                 stanford() 20019.9878 20737.6194 21479.4359 21455.2509
+        sentimentr_hu_liu()   222.1904   225.5824   227.4384   228.9743
+     sentimentr_sentiword()   973.9525   976.0680   977.0022   978.1836
+             syuzhet_binn()   245.7168   281.0441   301.6485   316.3713
+              syuzhet_nrc()   784.2408   795.5994   806.2744   806.9579
+            syuzhet_afinn()   117.1592   133.8399   139.6347   150.5206
              uq        max neval
-     20428.6574 20529.7732     3
-       185.5217   190.5308     3
-       990.3694  1007.9695     3
-       259.6940   275.0031     3
-       695.3124   781.1256     3
-       133.8202   146.6311     3
+     22209.1599 22963.0689     3
+       230.0624   231.1506     3
+       978.5270   978.8704     3
+       329.6143   342.8573     3
+       817.2912   827.6244     3
+       150.8724   151.2242     3
