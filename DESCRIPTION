@@ -9,7 +9,7 @@ Description: Calulate text polarity sentiment at the sentence level and
 Depends: R (>= 3.2.1)
 Suggests: testthat
 Imports: data.table, stats, stringi
-Date: 2015-08-17
+Date: 2015-08-21
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)

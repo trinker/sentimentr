@@ -34,23 +34,24 @@ data.table::setkey(polarity_table, "x")
 pax::new_data(polarity_table)
 
 # Removing term
-polarity_table <- polarity_table[!1:nrow(polarity_table) %in% tail(which(polarity_table$x == "helped"), -1), ] 
+polarity_table <- polarity_table[!1:nrow(polarity_table) %in% tail(which(polarity_table$x == "helped"), -1), ]
 nrow(polarity_table)
 rownames(polarity_table) <- NULL
 
 #====================================================
 #valence_shifters_table
 
+newp <- c('but', 'although', 'however')
 # check if word is already there
-valence_shifters_table["alot", ]
+valence_shifters_table[newp, ]
 
 valence_shifters_table <- sentimentr::valence_shifters_table %>%
 	   as.data.frame()
 
 (check <- nrow(valence_shifters_table))
-valence_shifters_table[check + 1, ] <- NA
-valence_shifters_table[check + 1, "x"] <- "cares"
-valence_shifters_table[check + 1, "y"] <- 1
+valence_shifters_table[check + 1:3, ] <- NA
+valence_shifters_table[check + 1:3, "x"] <- newp
+valence_shifters_table[check + 1:3, "y"] <- 4
 
 
 valence_shifters_table <- valence_shifters_table %>%

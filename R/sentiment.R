@@ -188,7 +188,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 
     ## stretch by prior polarized word hits
     word_dat <- suppressWarnings(word_dat[, .(words, comma_loc, pol_loc = unlist(pol_loc),
-    	#comma_loc = unlist(comma_loc), 
+    	#comma_loc = unlist(comma_loc),
     	P = unlist(P),
     	lens = sapply(words, length)), by = c('id', 'id2')])
 
