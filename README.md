@@ -49,7 +49,7 @@ Table of Contents
 -   [Installation](#installation)
 -   [Contact](#contact)
 -   [Examples](#examples)
-    -   [Annie Swafford's Examples](#annie-swafford's-examples)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
 
 The Equation
 ============
@@ -343,16 +343,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20832.5169 21333.0149 21904.5874 21833.5129
-        sentimentr_hu_liu()   228.9919   231.3733   237.6209   233.7547
-     sentimentr_sentiword()   976.6752   977.0119   981.0800   977.3485
-             syuzhet_binn()   341.3814   343.8619   346.3814   346.3424
-              syuzhet_nrc()   816.3471   820.4288   842.1505   824.5104
-            syuzhet_afinn()   154.9500   155.4703   157.1086   155.9907
+                 stanford() 19619.9665 20776.8495 21195.9734 21933.7325
+        sentimentr_hu_liu()   198.3233   214.7893   221.2131   231.2553
+     sentimentr_sentiword()   876.2195   928.1433   946.8325   980.0672
+             syuzhet_binn()   285.8214   317.1668   329.6773   348.5122
+              syuzhet_nrc()   639.5216   712.2554   737.0497   784.9892
+            syuzhet_afinn()   146.7050   148.1271   153.1206   149.5492
              uq        max neval
-     22440.6227 23047.7326     3
-       241.9354   250.1162     3
-       983.2824   989.2162     3
-       348.8815   351.4205     3
-       855.0522   885.5939     3
-       158.1879   160.3852     3
+     21983.9768 22034.2211     3
+       232.6579   234.0605     3
+       982.1390   984.2108     3
+       351.6052   354.6983     3
+       785.8138   786.6384     3
+       156.3284   163.1075     3
