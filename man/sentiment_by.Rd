@@ -48,7 +48,9 @@ stats::setNames(get_sentences(sentiment_by(mytext, question.weight = 0)),
     round(mysentiment[["ave_sentiment"]], 3))
 
 with(presidential_debates_2012, sentiment_by(dialogue, person))
-with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
+(out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+plot(out)
+plot(uncombine(out))
 }
 \seealso{
 Other sentiment.functions: \code{\link{sentiment}}

@@ -230,7 +230,7 @@ To aggregate by element (column cell or vector element) use
 To aggregate by grouping variables use `sentiment_by` using the `by`
 argument.
 
-    with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
+    (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
     ##  1:     OBAMA time 1       3598 0.4397613    0.10966120
@@ -243,6 +243,18 @@ argument.
     ##  8:   CROWLEY time 2       1672 0.2125288    0.05531121
     ##  9:    ROMNEY time 2       7534 0.3188779    0.04946325
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
+
+    plot(out)
+
+    ## Warning: Removed 2 rows containing non-finite values (stat_boxplot).
+
+    ## Warning: Removed 2 rows containing missing values (geom_point).
+
+![](inst/figure/unnamed-chunk-6-1.png)
+
+    plot(uncombine(out))
+
+![](inst/figure/unnamed-chunk-6-2.png)
 
 Annie Swafford's Examples
 -------------------------
@@ -257,7 +269,7 @@ package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), and my
 own algorithm with both the default [Hu & Liu
 (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
-lexicon as well as a [Baccianella, Esuli and Sebastianiâ€™s
+lexicon as well as a [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
     if (!require("pacman")) install.packages("pacman")
@@ -343,16 +355,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19619.9665 20776.8495 21195.9734 21933.7325
-        sentimentr_hu_liu()   198.3233   214.7893   221.2131   231.2553
-     sentimentr_sentiword()   876.2195   928.1433   946.8325   980.0672
-             syuzhet_binn()   285.8214   317.1668   329.6773   348.5122
-              syuzhet_nrc()   639.5216   712.2554   737.0497   784.9892
-            syuzhet_afinn()   146.7050   148.1271   153.1206   149.5492
+                 stanford() 20314.4483 21177.4241 21598.7038 22040.3998
+        sentimentr_hu_liu()   231.1703   240.8721   310.3174   250.5739
+     sentimentr_sentiword()   970.0219   973.1647   974.5453   976.3074
+             syuzhet_binn()   309.9902   315.0276   320.6843   320.0650
+              syuzhet_nrc()   799.4852   800.0070   837.9049   800.5288
+            syuzhet_afinn()   148.8184   149.5133   149.8040   150.2081
              uq        max neval
-     21983.9768 22034.2211     3
-       232.6579   234.0605     3
-       982.1390   984.2108     3
-       351.6052   354.6983     3
-       785.8138   786.6384     3
-       156.3284   163.1075     3
+     22240.8315 22441.2632     3
+       349.8910   449.2081     3
+       976.8070   977.3067     3
+       326.0313   331.9976     3
+       857.1148   913.7007     3
+       150.2968   150.3855     3

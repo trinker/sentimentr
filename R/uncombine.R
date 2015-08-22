@@ -32,6 +32,15 @@ uncombine <- function(x, ...){
 #' @export
 #' @method uncombine sentiment_by
 uncombine.sentiment_by <- function(x, ...){
-    attributes(x)[["uncombine"]][["uncombine"]]
+    out <- attributes(x)[["uncombine"]][["uncombine"]]
+
+    class(out) <- unique(c("sentiment", class(out)))
+
+    attributes(x)
+
+    sentences <- new.env(FALSE)
+    sentences[["sentences"]] <- get_sentences(x)
+    attributes(out)[["sentences"]] <- sentences
+    out
 }
 

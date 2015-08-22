@@ -14,6 +14,18 @@ ver <- gsub(regex, "\\2", desc[loc])
 verbadge <- sprintf('<a href="https://img.shields.io/badge/Version-%s-orange.svg"><img src="https://img.shields.io/badge/Version-%s-orange.svg" alt="Version"/></a></p>', ver, ver)
 ````
 
+
+```{r, echo=FALSE}
+library(knitr)
+knit_hooks$set(htmlcap = function(before, options, envir) {
+  if(!before) {
+    paste('<p class="caption"><b><em>',options$htmlcap,"</em></b></p>",sep="")
+    }
+    })
+knitr::opts_knit$set(self.contained = TRUE, cache = FALSE)
+knitr::opts_chunk$set(fig.path = "inst/figure/")
+```
+
 [![Project Status: Wip - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)
 [![Build Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://travis-ci.org/trinker/sentimentr)
 [![Coverage Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
@@ -113,13 +125,16 @@ sentiment_by(mytext)
 To aggregate by grouping variables use `sentiment_by` using the `by` argument.
 
 ```{r}
-with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
+(out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+
+plot(out)
+plot(uncombine(out))
 ```
 
 
 ## Annie Swafford's Examples
 
-[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiques Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Staford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), and my own algorithm with both the default [Hu & Liu (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity lexicon as well as a [Baccianella, Esuli and Sebastiani’s (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
+[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiques Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Staford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), and my own algorithm with both the default [Hu & Liu (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity lexicon as well as a [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
 
 ```{r, message=FALSE, comment=NA}

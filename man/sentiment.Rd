@@ -179,6 +179,7 @@ sentiment(mytext)
 sentiment(mytext, question.weight = 0)
 
 sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am))
+plot(sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am)))
 
 y <- "He was not the sort of man that one would describe as especially handsome."
 sentiment(y)

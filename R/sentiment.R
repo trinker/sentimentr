@@ -164,6 +164,7 @@
 #' sentiment(mytext, question.weight = 0)
 #'
 #' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am))
+#' plot(sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am)))
 #'
 #' y <- "He was not the sort of man that one would describe as especially handsome."
 #' sentiment(y)
@@ -289,5 +290,33 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 }
 
 
+#' Plots a sentiment object
+#'
+#' Plots a sentiment object.
+#'
+#' @param x The sentiment object.
+#' @param \ldots ignored
+#' @details Utilizes Matthew Jocker's \pkg{syuzhet} package to calculate smoothed
+#' sentiment across the duration of the text.
+#' @return Returns a \pkg{ggplot2} object.
+#' @method plot sentiment
+#' @export
+plot.sentiment <- function(x, ...){
 
+    m <- syuzhet::get_transformed_values(na.omit(x[["sentiment"]]))
+
+    dat <- data.frame(
+        Emotional_Valence = m,
+        Duration = seq_along(m)
+    )
+
+    ggplot2::ggplot(dat, ggplot2::aes_string('Duration', 'Emotional_Valence')) +
+        ggplot2::geom_path(size=1, color="blue") +
+        ggplot2::theme_bw() +
+        ggplot2::ylab("Emotional Valence") +
+        ggplot2::theme(panel.grid = ggplot2::element_blank()) +
+        ggplot2::scale_x_continuous(label=function(x) paste0(x, "%"),
+            expand = c(0,0), limits = c(0,100))
+
+}
 

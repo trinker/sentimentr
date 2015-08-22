@@ -37,10 +37,12 @@
 #'     round(mysentiment[["ave_sentiment"]], 3))
 #'
 #' with(presidential_debates_2012, sentiment_by(dialogue, person))
-#' with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
+#' (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+#' plot(out)
+#' plot(uncombine(out))
 sentiment_by <- function(text.var, by = NULL, group.names, ...){
 
-	  word_count <- ave_sentiment <- NULL
+	word_count <- ave_sentiment <- NULL
     out <- sentiment(text.var = text.var, ...)
 
     if (is.null(by)){
@@ -92,6 +94,50 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
     uncombine[["uncombine"]] <- uncombined
     attributes(out2)[["uncombine"]] <- uncombine
     out2
+
+}
+
+#' Plots a sentiment_by object
+#'
+#' Plots a sentiment_by object.
+#'
+#' @param x The sentiment_by object.
+#' @param \ldots ignored
+#' @method plot sentiment_by
+#' @return Returns a \pkg{ggplot2} object.
+#' @export
+plot.sentiment_by <- function(x, ...){
+
+    ave_sentiment <- grouping.vars <- NULL
+    dat2 <- uncombine(x)
+
+    grps <- attributes(x)[["groups"]]
+    if (length(grps) == 1 && grps == "element_id") return(plot(dat2))
+
+    x[, "grouping.vars"] <- paste2(x[, attributes(x)[["groups"]], with=FALSE])
+    x[, grouping.vars := factor(grouping.vars, levels = rev(grouping.vars))]
+
+    dat2[, "grouping.vars"] <- paste2(dat2[, attributes(x)[["groups"]], with=FALSE])
+    dat2[, grouping.vars := factor(grouping.vars, levels = levels(x[["grouping.vars"]]))]
+
+    #center_dat <- dat2[, list(upper = mean(sentiment, na.rm = TRUE) + 2*SE(sentiment),
+    #    lower = mean(sentiment, na.rm = TRUE) - 2*SE(sentiment),
+    #    means = mean(sentiment, na.rm = TRUE)), keyby = "grouping.vars"]
+
+    ggplot2::ggplot() +
+        ggplot2::geom_hline(ggplot2::aes(yintercept=0), size = 1, color="grey70") +
+        ggplot2::geom_point(data=dat2, ggplot2::aes_string('grouping.vars', 'sentiment'), alpha=.05, shape=1) +
+        ggplot2::geom_point(data=x, ggplot2::aes_string('grouping.vars','ave_sentiment'), color="red", shape=3, size=4)  +
+        ggplot2::geom_boxplot(data=dat2, ggplot2::aes_string('grouping.vars', 'sentiment', color = "grouping.vars"),
+            alpha=.5, fill =NA) +
+        ggplot2::coord_flip() +
+        #ggplot2::geom_errorbar(data = center_dat, width=.25, alpha=.4,
+        #    ggplot2::aes_string('grouping.vars', y = "means", ymin="upper", ymax="lower"), height = .3) +
+        ggplot2::theme_bw() +
+        ggplot2::guides(color=FALSE) +
+        ggplot2::ylab("Sentiment") +
+        ggplot2::xlab("Groups") +
+        ggplot2::theme(panel.grid = ggplot2::element_blank())
 
 }
 
