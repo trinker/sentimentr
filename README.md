@@ -261,7 +261,7 @@ Annie Swafford's Examples
 
 [Annie
 Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/)
-critiques Jocker's approach to sentiment and gave the following examples
+critiqued Jocker's approach to sentiment and gave the following examples
 of sentences (`ase` for Annie Swafford example). Here I test each of
 Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Staford wrapper
 (note I use my own [GitHub Stanford wrapper
@@ -355,16 +355,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20314.4483 21177.4241 21598.7038 22040.3998
-        sentimentr_hu_liu()   231.1703   240.8721   310.3174   250.5739
-     sentimentr_sentiword()   970.0219   973.1647   974.5453   976.3074
-             syuzhet_binn()   309.9902   315.0276   320.6843   320.0650
-              syuzhet_nrc()   799.4852   800.0070   837.9049   800.5288
-            syuzhet_afinn()   148.8184   149.5133   149.8040   150.2081
+                 stanford() 20014.0308 20366.2619 20786.0767 20718.4931
+        sentimentr_hu_liu()   175.5076   176.4909   196.1143   177.4742
+     sentimentr_sentiword()   972.7229   974.1516   975.1357   975.5803
+             syuzhet_binn()   314.4122   315.2152   315.5905   316.0183
+              syuzhet_nrc()   598.1706   600.5553   655.9273   602.9399
+            syuzhet_afinn()   116.5372   120.1496   131.1331   123.7620
              uq        max neval
-     22240.8315 22441.2632     3
-       349.8910   449.2081     3
-       976.8070   977.3067     3
-       326.0313   331.9976     3
-       857.1148   913.7007     3
-       150.2968   150.3855     3
+     21172.0997 21625.7063     3
+       206.4177   235.3612     3
+       976.3421   977.1038     3
+       316.1796   316.3410     3
+       684.8057   766.6715     3
+       138.4310   153.1000     3

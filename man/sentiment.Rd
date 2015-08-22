@@ -52,7 +52,7 @@ down weights the cluster 1 - number of occurrences of the but conjunctions
 before the polarized word times the weight given
 (\eqn{1 + N_{but conjunctions} * but.weight}).  These are added to the
 deamplifier and amplifier weights and thus the down weight is constrained to
--1 as the lower bound.  Set to zero to remove but conjunctio weighting.}
+-1 as the lower bound.  Set to zero to remove but conjunction weighting.}
 
 \item{\ldots}{Ignored.}
 }
@@ -79,11 +79,11 @@ are the words within sentences.  Each sentence (\eqn{s_j}) is broken into a
 an ordered bag of words.  Punctuation is removed with the exception of pause
 punctuations (commas, colons, semicolons) which are considered a word within
 the sentence.  I will denote pause words as \eqn{cw} (comma words) for
-convience.  We can represent these words as an i,j,k notation as
+convenience.  We can represent these words as an i,j,k notation as
 \eqn{w_{i,j,k}}.  For example \eqn{w_{3,2,5}} would be the fifth word of the
 second sentence of the third paragraph.  While I use the term paragraph this
 merely represent a complete turn of talk.  For example t may be a cell level
-response in a questionare comprosed of sentences.
+response in a questionnaire composed of sentences.
 
 The words in each sentence (\eqn{w_{i,j,k}}) are searched and compared to a
 modified version of Hu, M., & Liu, B.'s (2004) dictionary of polarized words.
@@ -129,7 +129,7 @@ The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight
 the context cluster.  A but conjunction before the polarized word up-weights
 the cluster by 1.85 (.85 is the default weight (\eqn{z_2})).  A but conjunction
 after the polarized word down-weights the cluster by 1 - .85 (\eqn{z_2})).  The
-number of occurences before and after the polarized word are multiplied by
+number of occurrences before and after the polarized word are multiplied by
 1 and -1 respectively and then summed within context cluster.  It is this
 value that is multiplied by the weight and added to 1. This
 corresponds to the belief that a but makes the next clause of greater values
