@@ -24,6 +24,19 @@
 #' Default is 1.  A 0 corresponds with the belief that questions (pure questions)
 #' are not polarized.  A weight may be applied based on the evidence that the
 #' questions function with polarized sentiment.
+#' @param but.weight The weight to give to "but" style conjunctions that overrule
+#' the previous clause.  Weighting a but statement stems from the belief that
+#' the conjunctions "but", "however", and "although" amplify the current clause
+#' and/or down weight the prior clause.  If a but conjunction is located before
+#' polarized word in the context cluster the cluster is up-weighted 1 + number
+#' of occurrences of the but conjunctions before the polarized word times the
+#' weight given (\eqn{1 + N_{but conjunctions} * but.weight}).  Conversely,
+#' a but conjunction found after the polarized word in a context cluster
+#' down weights the cluster 1 - number of occurrences of the but conjunctions
+#' before the polarized word times the weight given
+#' (\eqn{1 + N_{but conjunctions} * but.weight}).  These are added to the
+#' deamplifier and amplifier weights and thus the down weight is constrained to
+#' -1 as the lower bound.  Set to zero to remove but conjunctio weighting.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -97,14 +110,24 @@
 #' where \eqn{w_{i,jn}} is the number of words in the sentence.
 #'
 #' The core value in the cluster, the polarized word is acted uppon by valence
-#' shifters. Amplifiers increas the polarity by 1.8 (.8 is the default weight
+#' shifters. Amplifiers increase the polarity by 1.8 (.8 is the default weight
 #' (\eqn{z})).  Amplifiers (\eqn{w_{i,j,k}^{a}}) become de-amplifiers if the clontext cluster
 #' contains an odd number of negators (\eqn{w_{i,j,k}^{n}}).  De-amplifiers work
 #' to decrease decrease the polarity.  Negation (\eqn{w_{i,j,k}^{n}}) acts on
 #' amplifiers/de-amplifiers as discussed but also flip the sign of the polarized
 #' word.  Negation is determined by raising -1 to the power of the number of
 #' negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that two
-#' negatives qual a positive, 3 negatives a negative and so on.
+#' negatives equal a positive, 3 negatives a negative and so on.
+#'
+#' The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight
+#' the context cluster.  A but conjunction before the polarized word up-weights
+#' the cluster by 1.85 (.85 is the default weight (\eqn{z_2})).  A but conjunction
+#' after the polarized word down-weights the cluster by 1 - .85 (\eqn{z_2})).  The
+#' number of occurences before and after the polarized word are multiplied by
+#' 1 and -1 respectively and then summed within context cluster.  It is this
+#' value that is multiplied by the weight and added to 1. This
+#' corresponds to the belief that a but makes the next clause of greater values
+#' while lowering the value placed on the prior clause.
 #'
 #' The researcher may provide a weight \eqn{z} to be utilized with
 #' amplifiers/de-amplifiers (default is .8; de-amplifier weight is constrained
@@ -118,11 +141,15 @@
 #'
 #' \deqn{c'_{i,j}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}})}}
 #'
-#' \deqn{w_{amp}=\sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}}
+#' \deqn{w_{amp}= (w_{b} > 1) + \sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}}
 #'
 #' \deqn{w_{deamp} = \max(w_{deamp'}, -1)}
 #'
-#' \deqn{w_{deamp'}= \sum{(z(- w_{neg}\cdot w_{i,j,k}^{a} + w_{i,j,k}^{d}))}}
+#' \deqn{w_{deamp'}= (w_{b} < 1) + \sum{(z(- w_{neg}\cdot w_{i,j,k}^{a} + w_{i,j,k}^{d}))}}
+#'
+#' \deqn{w_{b} = 1 + z_2 * w_{b'}}
+#'
+#' \deqn{w_{b'} = \sum{\\(|w_{but conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but conjunction}| * -1}\\)}
 #'
 #' \deqn{w_{neg}= \left(\sum{w_{i,j,k}^{n}}\right) \bmod {2}}
 #'
@@ -143,11 +170,12 @@
 #' sentiment(y, n.before=Inf)
 sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
-    amplifier.weight = .8, n.before = 4, n.after = 2, question.weight = 1, ...){
+    amplifier.weight = .8, n.before = 4, n.after = 2, question.weight = 1,
+    but.weight = .85, ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
-            T_sum <- N <- . <- NULL
+            T_sum <- N <- . <- b <- before <- NULL
 
     ## check to ake sure valence_shifters_dt polarity_dt are mutually exclusive
     if(any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
@@ -204,6 +232,12 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 
     ## tag nonpol cluster as negator (1) , amplifier (2), or deamplifier (3)
     word_dat[, "cluster_tag"] <- valence_shifters_dt[word_dat[["non_pol"]]][[2]]
+    word_dat[, before := 1 - 2*cumsum(non_pol == "*"), .(id, id2, pol_loc)]
+
+    but_dat <- word_dat[cluster_tag == "4", list(
+    	b =  before*sum2(cluster_tag %in% "4")),
+        by = c("id", "id2", "pol_loc", "before")][, before := NULL][,
+            list(b = 1 + but.weight*sum2(b)), by = c("id", "id2", "pol_loc")]
 
     ## Get counts of negators (neg), amplifiers (a), and deamplifiers (d)
     ## neg is changed to a simple 0/1 if it flips the sign or not
@@ -212,17 +246,23 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     	a =  sum2(cluster_tag %in% "2"),
     	d =  sum2(cluster_tag %in% "3")), by = c("id", "id2", "pol_loc")]
 
-     ## calculate the overall +/- shift of the poalrized word by summing the negators
-     word_dat[, w_neg := neg %% 2]
+    word_dat <- merge(word_dat, but_dat, by = c("id", "id2", "pol_loc"), all.x = TRUE)
 
-     ## merge original word counts, polarized word scores, & valence shifter scores
-     sent_dat <- merge(merge(pol_dat, sent_dat[,  c("id", "id2", "wc"), with=FALSE],
-         by = c("id", "id2")),	word_dat, by = c("id", "id2", "pol_loc"))
+    ## calculate the overall +/- shift of the poalrized word by summing the negators
+    word_dat[, w_neg := neg %% 2]
 
-     ## add the amplifier/deamplifier & total raw sentiment scores
-     sent_dat[, A :=  ((1  - w_neg) * a)* amplifier.weight][,
-     	D := ((-w_neg)*a - d) * amplifier.weight][, D := ifelse(D < -1, -1, D)][,
-     		T := (1 + c(A + D))*(P*((-1)^(2 + w_neg)))]
+    ## merge original word counts, polarized word scores, & valence shifter scores
+    sent_dat <- merge(merge(pol_dat, sent_dat[,  c("id", "id2", "wc"), with=FALSE],
+        by = c("id", "id2")),	word_dat, by = c("id", "id2", "pol_loc"))
+
+    ## add in the but weights
+    sent_dat[, a := a + ifelse(!is.na(b) & b > 1, b, 0)]
+    sent_dat[, d := d + ifelse(!is.na(b) & b < 1, b, 0)]
+
+    ## add the amplifier/deamplifier & total raw sentiment scores
+    sent_dat[, A :=  ((1  - w_neg) * a)* amplifier.weight][,
+    	D := ((-w_neg)*a - d) * amplifier.weight][, D := ifelse(D < -1, -1, D)][,
+    		T := (1 + c(A + D))*(P*((-1)^(2 + w_neg)))]
 
      ## Aggregate (sum) at the sentence level
      sent_dat <- sent_dat[, list(T_sum=sum(T), N = unique(wc)), by=list(id, id2)]
@@ -247,5 +287,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
      attributes(out)[["sentences"]] <- sentences
      out
 }
+
+
 
 

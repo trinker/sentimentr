@@ -7,7 +7,7 @@
 sentiment(text.var, polarity_dt = sentimentr::polarity_table,
   valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
   amplifier.weight = 0.8, n.before = 4, n.after = 2,
-  question.weight = 1, ...)
+  question.weight = 1, but.weight = 0.85, ...)
 }
 \arguments{
 \item{text.var}{The text variable.}
@@ -39,6 +39,20 @@ use \code{n.after = Inf}.}
 Default is 1.  A 0 corresponds with the belief that questions (pure questions)
 are not polarized.  A weight may be applied based on the evidence that the
 questions function with polarized sentiment.}
+
+\item{but.weight}{The weight to give to "but" style conjunctions that overrule
+the previous clause.  Weighting a but statement stems from the belief that
+the conjunctions "but", "however", and "although" amplify the current clause
+and/or down weight the prior clause.  If a but conjunction is located before
+polarized word in the context cluster the cluster is up-weighted 1 + number
+of occurrences of the but conjunctions before the polarized word times the
+weight given (\eqn{1 + N_{but conjunctions} * but.weight}).  Conversely,
+a but conjunction found after the polarized word in a context cluster
+down weights the cluster 1 - number of occurrences of the but conjunctions
+before the polarized word times the weight given
+(\eqn{1 + N_{but conjunctions} * but.weight}).  These are added to the
+deamplifier and amplifier weights and thus the down weight is constrained to
+-1 as the lower bound.  Set to zero to remove but conjunctio weighting.}
 
 \item{\ldots}{Ignored.}
 }
@@ -102,14 +116,24 @@ constrained to \eqn{\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,
 where \eqn{w_{i,jn}} is the number of words in the sentence.
 
 The core value in the cluster, the polarized word is acted uppon by valence
-shifters. Amplifiers increas the polarity by 1.8 (.8 is the default weight
+shifters. Amplifiers increase the polarity by 1.8 (.8 is the default weight
 (\eqn{z})).  Amplifiers (\eqn{w_{i,j,k}^{a}}) become de-amplifiers if the clontext cluster
 contains an odd number of negators (\eqn{w_{i,j,k}^{n}}).  De-amplifiers work
 to decrease decrease the polarity.  Negation (\eqn{w_{i,j,k}^{n}}) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the polarized
 word.  Negation is determined by raising -1 to the power of the number of
 negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that two
-negatives qual a positive, 3 negatives a negative and so on.
+negatives equal a positive, 3 negatives a negative and so on.
+
+The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight
+the context cluster.  A but conjunction before the polarized word up-weights
+the cluster by 1.85 (.85 is the default weight (\eqn{z_2})).  A but conjunction
+after the polarized word down-weights the cluster by 1 - .85 (\eqn{z_2})).  The
+number of occurences before and after the polarized word are multiplied by
+1 and -1 respectively and then summed within context cluster.  It is this
+value that is multiplied by the weight and added to 1. This
+corresponds to the belief that a but makes the next clause of greater values
+while lowering the value placed on the prior clause.
 
 The researcher may provide a weight \eqn{z} to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is constrained
@@ -123,11 +147,15 @@ Where:
 
 \deqn{c'_{i,j}=\sum{((1 + w_{amp} + w_{deamp})\cdot w_{i,j,k}^{p}(-1)^{2 + w_{neg}})}}
 
-\deqn{w_{amp}=\sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}}
+\deqn{w_{amp}= (w_{b} > 1) + \sum{(w_{neg}\cdot (z \cdot w_{i,j,k}^{a}))}}
 
 \deqn{w_{deamp} = \max(w_{deamp'}, -1)}
 
-\deqn{w_{deamp'}= \sum{(z(- w_{neg}\cdot w_{i,j,k}^{a} + w_{i,j,k}^{d}))}}
+\deqn{w_{deamp'}= (w_{b} < 1) + \sum{(z(- w_{neg}\cdot w_{i,j,k}^{a} + w_{i,j,k}^{d}))}}
+
+\deqn{w_{b} = 1 + z_2 * w_{b'}}
+
+\deqn{w_{b'} = \sum{\\(|w_{but conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but conjunction}| * -1}\\)}
 
 \deqn{w_{neg}= \left(\sum{w_{i,j,k}^{n}}\right) \bmod {2}}
 }

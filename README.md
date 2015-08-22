@@ -17,6 +17,33 @@ Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](
 at the sentence level and optionally aggregate by rows or grouping
 variable(s).
 
+**sentimentr** is a response to my own needs with sentiment detection
+that were not addressed by the current **R** tools. My own `polarity`
+function in the **qdap** package is slower on larger data sets. It is a
+dictionary lookup approach that tries to incorporate weighting for
+valence shifters (negation and amplifiers/deamplifiers). Matthew
+Jocker's created the
+[**syuzhet**](http://www.matthewjockers.net/2015/02/02/syuzhet/) package
+that utilizes dictionary lookups for the Bing, NRC, and Afinn methods.
+He also utilizes a wrapper for the [Stanford
+coreNLP](http://nlp.stanford.edu/software/corenlp.shtml) which uses much
+more sophisticated analysis. Jocker's dictionary methods are fast but
+are more prone to error in the case of valence shifters. Jocker's
+[addressed these
+critiques](http://www.matthewjockers.net/2015/03/04/some-thoughts-on-annies-thoughts-about-syuzhet/)
+with regard to analyzing general sentiment in a piece of literature. He
+points to the accuracy of the Stanford detection as well. In my own work
+I need better accuracy than a simple dictionary lookup that considers
+valence shifters yet retains the speed that Stanford's parser does not
+have. This leads to a trade off of speed vs. accuracy. The equation
+below describes the dictionary method of **sentimentr** that may give
+better results than a dictionary approach that does not consider valence
+shifters but will likely still be less accurate than Stanford's
+approach. Simply, **sentimentr** attempts to balance accuracy and speed.
+
+The Equation
+============
+
 The equation used by the algorithm to assign value to polarity of each
 sentence fist utilizes the sentiment dictionary (Hu and Liu,
 [2004](http://www.cs.uic.edu/~liub/publications/kdd04-revSummary.pdf))
@@ -28,13 +55,13 @@ where *w* are the words within sentences. Each sentence
 (*s*<sub>*j*</sub>) is broken into a an ordered bag of words.
 Punctuation is removed with the exception of pause punctuations (commas,
 colons, semicolons) which are considered a word within the sentence. I
-will denote pause words as *c**w* (comma words) for convience. We can
+will denote pause words as *c**w* (comma words) for convenience. We can
 represent these words as an i,j,k notation as
 *w*<sub>*i*, *j*, *k*</sub>. For example *w*<sub>3, 2, 5</sub> would be
 the fifth word of the second sentence of the third paragraph. While I
 use the term paragraph this merely represent a complete turn of talk.
-For example t may be a cell level response in a questionare comprosed of
-sentences.
+For example t may be a cell level response in a questionnaire composed
+of sentences.
 
 The words in each sentence (*w*<sub>*i*, *j*, *k*</sub>) are searched
 and compared to a modified version of Hu, M., & Liu, B.'s (2004)
@@ -43,7 +70,7 @@ dictionary of polarized words. Positive
 (*w*<sub>*i*, *j*, *k*</sub><sup> − </sup>) words are tagged with a  + 1
 and  − 1 respectively (or other positive/negative weighting if the user
 provides the sentiment dictionary). I will denote polarized words as
-*p**w* for convience. These will form a polar cluster
+*p**w* for convenience. These will form a polar cluster
 (*c*<sub>*i*, *j*, *l*</sub>) which is a subset of the a sentence
 (*c*<sub>*i*, *j*, *l*</sub> ⊆ *s*<sub>*i*</sub>, *j*).
 
@@ -73,19 +100,30 @@ and the upper bound is constrained to
 min{*p**w*<sub>*i*, *j*, *k* + *n**a*</sub>, *w*<sub>*i*, *j**n*</sub>, min{*c**w*<sub>*i*, *j*, *k*</sub> \> *p**w*<sub>*i*, *j*, *k*</sub>}}
 where *w*<sub>*i*, *j**n*</sub> is the number of words in the sentence.
 
-The core value in the cluster, the polarized word is acted uppon by
-valence shifters. Amplifiers increas the polarity by 1.8 (.8 is the
+The core value in the cluster, the polarized word is acted upon by
+valence shifters. Amplifiers increase the polarity by 1.8 (.8 is the
 default weight (*z*)). Amplifiers
 (*w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>) become de-amplifiers if the
-clontext cluster contains an odd number of negators
+context cluster contains an odd number of negators
 (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>). De-amplifiers work to
 decrease decrease the polarity. Negation
 (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the
 polarized word. Negation is determined by raising  − 1 to the power of
 the number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) plus
-2. Simply, this is a result of a belief that two negatives qual a
+2. Simply, this is a result of a belief that two negatives equal a
 positive, 3 negatives a negative and so on.
+
+The "but" conjunctions (i.e., 'but', 'however', and 'although') also
+weight the context cluster. A but conjunction before the polarized word
+up-weights the cluster by 1.85 (.85 is the default weight
+(*z*<sub>2</sub>)). A but conjunction after the polarized word
+down-weights the cluster by 1 - .85 (*z*<sub>2</sub>)). The number of
+occurrences before and after the polarized word are multiplied by 1
+and -1 respectively and then summed within context cluster. It is this
+value that is multiplied by the weight and added to 1.This corresponds
+to the belief that a but makes the next clause of greater values while
+lowering the value placed on the prior clause.
 
 The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
@@ -108,8 +146,12 @@ Where:
 
 *w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup> + *w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>))
 
-*w*<sub>*d**e**a**m**p*′</sub> =
-(∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> ) mod 2
+*w*<sub>*b*</sub> = 1 + *z*<sub>2</sub> \* *w*<sub>*b*′</sub>
+
+*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1)
+
+*w*<sub>*n**e**g*</sub> = (∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> )
+mod 2
 
 To get the mean of all sentences (*s*<sub>*i*, *j*</sub>) within a
 paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
@@ -120,9 +162,11 @@ paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
 Table of Contents
 ============
 
+-   [The Equation](#the-equation)
 -   [Installation](#installation)
 -   [Contact](#contact)
 -   [Examples](#examples)
+    -   [Annie Swafford](#annie-swafford)
 
 Installation
 ============
@@ -163,7 +207,7 @@ Examples
 
     ##    element_id sentence_id word_count  sentiment
     ## 1:          1           1          4  0.5000000
-    ## 2:          1           2          6 -1.4696938
+    ## 2:          1           2          6 -2.6781088
     ## 3:          2           1          5  0.4472136
     ## 4:          3           1          5  0.8049845
     ## 5:          3           2          4  0.0000000
@@ -179,7 +223,7 @@ To aggregate by element (column cell or vector element) use
     sentiment_by(mytext)
 
     ##    element_id word_count       sd ave_sentiment
-    ## 1:          1         10 1.392784    -0.4848469
+    ## 1:          1         10 2.247262    -1.0890544
     ## 2:          2          5       NA     0.4472136
     ## 3:          3          9 0.569210     0.4024922
 
@@ -189,13 +233,138 @@ argument.
     with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.4174276    0.10410370
-    ##  2:    LEHRER time 1        765 0.3415224    0.10374333
-    ##  3:     OBAMA time 3       7241 0.3877668    0.09330235
-    ##  4:     OBAMA time 2       7476 0.3498035    0.07929961
-    ##  5: SCHIEFFER time 3       1445 0.3361366    0.07554469
-    ##  6:    ROMNEY time 3       8302 0.3619940    0.06916677
-    ##  7:    ROMNEY time 1       4085 0.3424956    0.06462922
+    ##  1:     OBAMA time 1       3598 0.4397613    0.10966120
+    ##  2:    LEHRER time 1        765 0.3493838    0.10941383
+    ##  3:     OBAMA time 3       7241 0.4135144    0.09654523
+    ##  4:     OBAMA time 2       7476 0.3832811    0.08893467
+    ##  5:    ROMNEY time 3       8302 0.3909338    0.08108205
+    ##  6:    ROMNEY time 1       4085 0.3510066    0.06613552
+    ##  7: SCHIEFFER time 3       1445 0.3772378    0.06515716
     ##  8:   CROWLEY time 2       1672 0.2125288    0.05531121
-    ##  9:    ROMNEY time 2       7534 0.2880493    0.05417516
-    ## 10:  QUESTION time 2        583 0.3034280    0.02579568
+    ##  9:    ROMNEY time 2       7534 0.3188779    0.04946325
+    ## 10:  QUESTION time 2        583 0.3255268    0.03334828
+
+Annie Swafford
+--------------
+
+[Annie
+Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/)
+critiques Jocker's approach to sentiment and gave the following examples
+of sentences (`ase` for Annie Swafford example). Here I test each of
+Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Staford wrapper
+(note I use my own [GitHub Stanford wrapper
+package](https://github.com/trinker/stansent) based off of Jocker's
+approach as it works more reliably on my own Windows machine), and my
+own algorithm with both the default [Hu & Liu
+(2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
+lexicon as well as a [Baccianella, Esuli and Sebastianiâ€™s
+(2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
+
+    if (!require("pacman")) install.packages("pacman")
+    pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
+    pacman::p_load(syuzhet, qdap, microbenchmark)
+
+    ase <- c(
+        "I haven't been sad in a long time.",
+        "I am extremely happy today.",
+        "It's a good day.",
+        "But suddenly I'm only a little bit happy.",
+        "Then I'm not happy at all.",
+        "In fact, I am now the least happy person on the planet.",
+        "There is no happiness left in me.",
+        "Wait, it's returned!",
+        "I don't feel so bad after all!"
+    )
+
+    syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
+        function(x) get_sentiment(ase, method=x))), c("bing", "afinn", "nrc"))
+
+
+    left_just(data.frame(
+        stanford = sentiment_stanford(ase),
+        hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
+        sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
+        syuzhet,
+        sentences = ase,
+        stringsAsFactors = FALSE
+    ), "sentences")
+
+    ## 
+    ## Analyzing text for sentiment...
+
+    ##   stanford hu_liu sentiword bing afinn nrc
+    ## 1      0.5      0      0.27   -1    -2   0
+    ## 2       -1    0.8      0.65    1     3   1
+    ## 3     -0.5    0.5      0.32    1     3   1
+    ## 4      0.5      0         0    1     3   1
+    ## 5      0.5  -0.41     -0.56    1     3   1
+    ## 6      0.5   0.06      0.05    1     3   1
+    ## 7      0.5  -0.38     -0.05    1     2   1
+    ## 8        0      0     -0.14    0     0  -1
+    ## 9      0.5   0.38      0.24   -1    -3  -1
+    ##   sentences                                              
+    ## 1 I haven't been sad in a long time.                     
+    ## 2 I am extremely happy today.                            
+    ## 3 It's a good day.                                       
+    ## 4 But suddenly I'm only a little bit happy.              
+    ## 5 Then I'm not happy at all.                             
+    ## 6 In fact, I am now the least happy person on the planet.
+    ## 7 There is no happiness left in me.                      
+    ## 8 Wait, it's returned!                                   
+    ## 9 I don't feel so bad after all!
+
+Also of interest is the time of each of these methods. Here I increase
+Annie's examples by 100 and **microbenchmark** on a few (Stanford takes
+so long I didn't extend to more). Note that if a text needs to be broken
+into sentence parts **syuzhet** has the `get_sentences` function that
+uses the **openNLP** package, this is a time expensive task.
+**sentimentr** uses a much faster regex based approach that is nearly as
+accurate in parsing sentences with a much lower computational time. We
+see that Stanford takes the longest time while **sentimentr** and
+**syuzhet** are comparable depending upon lexicon used.
+
+    ase_100 <- rep(ase, 100)
+
+    stanford <- function() {sentiment_stanford(ase_100)}
+
+    sentimentr_hu_liu <- function() sentiment(ase_100)
+    sentimentr_sentiword <- function() sentiment(ase_100, sentiword) 
+        
+    syuzhet_binn <- function() get_sentiment(ase_100, method="bing")
+    syuzhet_nrc <- function() get_sentiment(ase_100, method="nrc")
+    syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
+         
+    microbenchmark(
+        stanford(),
+        sentimentr_hu_liu(),
+        sentimentr_sentiword(),
+        syuzhet_binn(), 
+        syuzhet_nrc(),
+        syuzhet_afinn(),
+        times = 3
+    )
+
+    ## 
+    ## Analyzing text for sentiment...
+    ## 
+    ## 
+    ## Analyzing text for sentiment...
+    ## 
+    ## 
+    ## Analyzing text for sentiment...
+
+    ## Unit: milliseconds
+    ##                    expr        min         lq       mean     median
+    ##              stanford() 18494.2881 19558.2466 20213.6003 20622.2052
+    ##     sentimentr_hu_liu()   225.9892   227.5663   229.5300   229.1434
+    ##  sentimentr_sentiword()   767.3838   768.4528   838.2837   769.5219
+    ##          syuzhet_binn()   273.0440   314.2431   328.2383   355.4422
+    ##           syuzhet_nrc()   652.4859   674.0496   719.9371   695.6133
+    ##         syuzhet_afinn()   128.7317   128.8033   129.0642   128.8749
+    ##          uq        max neval
+    ##  21073.2564 21524.3076     3
+    ##    231.3004   233.4575     3
+    ##    873.7337   977.9455     3
+    ##    355.8355   356.2288     3
+    ##    753.6627   811.7121     3
+    ##    129.2305   129.5860     3
