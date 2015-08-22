@@ -122,7 +122,7 @@ with(presidential_debates_2012, sentiment_by(dialogue, list(person, time)))
 [Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiques Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Staford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), and my own algorithm with both the default [Hu & Liu (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity lexicon as well as a [Baccianella, Esuli and Sebastiani’s (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
 
-```{r}
+```{r, message=FALSE, comment=NA}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
 pacman::p_load(syuzhet, qdap, microbenchmark)
@@ -145,8 +145,8 @@ syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase),
-    hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
-    sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
+    huliu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 1),
+    senti = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 1),    
     syuzhet,
     sentences = ase,
     stringsAsFactors = FALSE
@@ -157,7 +157,7 @@ left_just(data.frame(
 Also of interest is the time of each of these methods. Here I increase Annie's examples by 100 and **microbenchmark** on a few (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that Stanford takes the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.
 
 
-```{r}
+```{r, message = FALSE, comment=NA}
 ase_100 <- rep(ase, 100)
 
 stanford <- function() {sentiment_stanford(ase_100)}

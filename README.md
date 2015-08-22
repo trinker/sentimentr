@@ -282,36 +282,33 @@ lexicon as well as a [Baccianella, Esuli and Sebastianiâ€™s
 
     left_just(data.frame(
         stanford = sentiment_stanford(ase),
-        hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
-        sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
+        huliu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 1),
+        senti = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 1),    
         syuzhet,
         sentences = ase,
         stringsAsFactors = FALSE
     ), "sentences")
 
-    ## 
-    ## Analyzing text for sentiment...
-
-    ##   stanford hu_liu sentiword bing afinn nrc
-    ## 1      0.5      0      0.27   -1    -2   0
-    ## 2       -1    0.8      0.65    1     3   1
-    ## 3     -0.5    0.5      0.32    1     3   1
-    ## 4      0.5      0         0    1     3   1
-    ## 5      0.5  -0.41     -0.56    1     3   1
-    ## 6      0.5   0.06      0.05    1     3   1
-    ## 7      0.5  -0.38     -0.05    1     2   1
-    ## 8        0      0     -0.14    0     0  -1
-    ## 9      0.5   0.38      0.24   -1    -3  -1
-    ##   sentences                                              
-    ## 1 I haven't been sad in a long time.                     
-    ## 2 I am extremely happy today.                            
-    ## 3 It's a good day.                                       
-    ## 4 But suddenly I'm only a little bit happy.              
-    ## 5 Then I'm not happy at all.                             
-    ## 6 In fact, I am now the least happy person on the planet.
-    ## 7 There is no happiness left in me.                      
-    ## 8 Wait, it's returned!                                   
-    ## 9 I don't feel so bad after all!
+      stanford huliu senti bing afinn nrc
+    1      0.5     0   0.3   -1    -2   0
+    2       -1   0.8   0.7    1     3   1
+    3     -0.5   0.5   0.3    1     3   1
+    4      0.5     0     0    1     3   1
+    5      0.5  -0.4  -0.6    1     3   1
+    6      0.5   0.1   0.1    1     3   1
+    7      0.5  -0.4     0    1     2   1
+    8        0     0  -0.1    0     0  -1
+    9      0.5   0.4   0.2   -1    -3  -1
+      sentences                                              
+    1 I haven't been sad in a long time.                     
+    2 I am extremely happy today.                            
+    3 It's a good day.                                       
+    4 But suddenly I'm only a little bit happy.              
+    5 Then I'm not happy at all.                             
+    6 In fact, I am now the least happy person on the planet.
+    7 There is no happiness left in me.                      
+    8 Wait, it's returned!                                   
+    9 I don't feel so bad after all!                         
 
 Also of interest is the time of each of these methods. Here I increase
 Annie's examples by 100 and **microbenchmark** on a few (Stanford takes
@@ -344,27 +341,18 @@ see that Stanford takes the longest time while **sentimentr** and
         times = 3
     )
 
-    ## 
-    ## Analyzing text for sentiment...
-    ## 
-    ## 
-    ## Analyzing text for sentiment...
-    ## 
-    ## 
-    ## Analyzing text for sentiment...
-
-    ## Unit: milliseconds
-    ##                    expr        min         lq       mean     median
-    ##              stanford() 18494.2881 19558.2466 20213.6003 20622.2052
-    ##     sentimentr_hu_liu()   225.9892   227.5663   229.5300   229.1434
-    ##  sentimentr_sentiword()   767.3838   768.4528   838.2837   769.5219
-    ##          syuzhet_binn()   273.0440   314.2431   328.2383   355.4422
-    ##           syuzhet_nrc()   652.4859   674.0496   719.9371   695.6133
-    ##         syuzhet_afinn()   128.7317   128.8033   129.0642   128.8749
-    ##          uq        max neval
-    ##  21073.2564 21524.3076     3
-    ##    231.3004   233.4575     3
-    ##    873.7337   977.9455     3
-    ##    355.8355   356.2288     3
-    ##    753.6627   811.7121     3
-    ##    129.2305   129.5860     3
+    Unit: milliseconds
+                       expr        min         lq       mean     median
+                 stanford() 22543.1135 22844.4496 23251.6420 23145.7857
+        sentimentr_hu_liu()   242.4772   243.0554   244.4771   243.6337
+     sentimentr_sentiword()   814.4566   914.0809   949.1920  1013.7053
+             syuzhet_binn()   310.7054   351.9505   368.2274   393.1956
+              syuzhet_nrc()   766.2621   866.4518   932.9794   966.6415
+            syuzhet_afinn()   134.6550   146.1563   157.6492   157.6575
+             uq        max neval
+     23605.9063 24066.0269     3
+       245.4770   247.3204     3
+      1016.5598  1019.4143     3
+       396.9884   400.7813     3
+      1016.3381  1066.0347     3
+       169.1462   180.6350     3
