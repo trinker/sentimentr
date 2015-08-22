@@ -2,14 +2,14 @@ sentimentr
 ============
 
 
-[![Project Status: Wip - Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)
+[![Project Status: Active - The project has reached a stable, usable
+state and is being actively
+developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
 [![Build
 Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://travis-ci.org/trinker/sentimentr)
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
-<a href="https://img.shields.io/badge/Version-0.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.0.1-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.1.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.0-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -356,16 +356,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20519.1232 20620.1182 20684.4025 20721.1132
-        sentimentr_hu_liu()   224.5367   232.9833   238.5421   241.4299
-     sentimentr_sentiword()   977.2767   980.9229   987.7338   984.5692
-             syuzhet_binn()   254.8387   293.6495   310.7012   332.4602
-              syuzhet_nrc()   787.3683   790.1853   831.2212   793.0022
-            syuzhet_afinn()   118.1905   138.8190   149.8055   159.4475
+                 stanford() 20210.9895 20565.0311 21360.1368 20919.0727
+        sentimentr_hu_liu()   197.8286   211.7385   221.2295   225.6485
+     sentimentr_sentiword()   954.1506   962.7060   966.8255   971.2614
+             syuzhet_binn()   252.5622   282.2227   298.0970   311.8833
+              syuzhet_nrc()   767.6785   814.2562   843.1734   860.8339
+            syuzhet_afinn()   151.3630   154.3645   159.2540   157.3660
              uq        max neval
-     20767.0422 20812.9712     3
-       245.5448   249.6597     3
-       992.9624  1001.3556     3
-       338.6324   344.8045     3
-       853.1477   913.2931     3
-       165.6131   171.7787     3
+     21934.7104 22950.3481     3
+       232.9299   240.2113     3
+       973.1630   975.0647     3
+       320.8644   329.8455     3
+       880.9209   901.0079     3
+       163.1995   169.0329     3
