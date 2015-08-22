@@ -263,8 +263,8 @@ Annie Swafford's Examples
 Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/)
 critiqued Jocker's approach to sentiment and gave the following examples
 of sentences (`ase` for Annie Swafford example). Here I test each of
-Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Staford wrapper
-(note I use my own [GitHub Stanford wrapper
+Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford
+wrapper (note I use my own [GitHub Stanford wrapper
 package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), and my
 own algorithm with both the default [Hu & Liu
@@ -355,16 +355,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20014.0308 20366.2619 20786.0767 20718.4931
-        sentimentr_hu_liu()   175.5076   176.4909   196.1143   177.4742
-     sentimentr_sentiword()   972.7229   974.1516   975.1357   975.5803
-             syuzhet_binn()   314.4122   315.2152   315.5905   316.0183
-              syuzhet_nrc()   598.1706   600.5553   655.9273   602.9399
-            syuzhet_afinn()   116.5372   120.1496   131.1331   123.7620
+                 stanford() 20719.8971 20973.1924 21701.4782 21226.4876
+        sentimentr_hu_liu()   220.3820   230.1799   234.3284   239.9777
+     sentimentr_sentiword()   941.4491   965.7744   995.3905   990.0997
+             syuzhet_binn()   314.7829   318.5364   321.8965   322.2898
+              syuzhet_nrc()   803.9683   824.7740   890.8586   845.5797
+            syuzhet_afinn()   154.4171   160.4299   163.2374   166.4428
              uq        max neval
-     21172.0997 21625.7063     3
-       206.4177   235.3612     3
-       976.3421   977.1038     3
-       316.1796   316.3410     3
-       684.8057   766.6715     3
-       138.4310   153.1000     3
+     22192.2688 23158.0500     3
+       241.3016   242.6254     3
+      1022.3612  1054.6227     3
+       325.4532   328.6167     3
+       934.3038  1023.0279     3
+       167.6475   168.8523     3
