@@ -282,23 +282,23 @@ lexicon as well as a [Baccianella, Esuli and Sebastianiâ€™s
 
     left_just(data.frame(
         stanford = sentiment_stanford(ase),
-        huliu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 1),
-        senti = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 1),    
+        hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 1),
+        sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 1),    
         syuzhet,
         sentences = ase,
         stringsAsFactors = FALSE
     ), "sentences")
 
-      stanford huliu senti bing afinn nrc
-    1      0.5     0   0.3   -1    -2   0
-    2       -1   0.8   0.7    1     3   1
-    3     -0.5   0.5   0.3    1     3   1
-    4      0.5     0     0    1     3   1
-    5      0.5  -0.4  -0.6    1     3   1
-    6      0.5   0.1   0.1    1     3   1
-    7      0.5  -0.4     0    1     2   1
-    8        0     0  -0.1    0     0  -1
-    9      0.5   0.4   0.2   -1    -3  -1
+      stanford hu_liu sentiword bing afinn nrc
+    1      0.5      0       0.3   -1    -2   0
+    2       -1    0.8       0.7    1     3   1
+    3     -0.5    0.5       0.3    1     3   1
+    4      0.5      0         0    1     3   1
+    5      0.5   -0.4      -0.6    1     3   1
+    6      0.5    0.1       0.1    1     3   1
+    7      0.5   -0.4         0    1     2   1
+    8        0      0      -0.1    0     0  -1
+    9      0.5    0.4       0.2   -1    -3  -1
       sentences                                              
     1 I haven't been sad in a long time.                     
     2 I am extremely happy today.                            
@@ -343,16 +343,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 22543.1135 22844.4496 23251.6420 23145.7857
-        sentimentr_hu_liu()   242.4772   243.0554   244.4771   243.6337
-     sentimentr_sentiword()   814.4566   914.0809   949.1920  1013.7053
-             syuzhet_binn()   310.7054   351.9505   368.2274   393.1956
-              syuzhet_nrc()   766.2621   866.4518   932.9794   966.6415
-            syuzhet_afinn()   134.6550   146.1563   157.6492   157.6575
+                 stanford() 19908.5767 20161.3177 20381.0477 20414.0587
+        sentimentr_hu_liu()   228.7781   230.1002   231.4270   231.4224
+     sentimentr_sentiword()   948.0376   960.8877   967.3764   973.7378
+             syuzhet_binn()   357.4736   361.0872   364.9280   364.7008
+              syuzhet_nrc()   659.7661   722.6168   814.4051   785.4675
+            syuzhet_afinn()   127.7624   142.9503   149.0311   158.1383
              uq        max neval
-     23605.9063 24066.0269     3
-       245.4770   247.3204     3
-      1016.5598  1019.4143     3
-       396.9884   400.7813     3
-      1016.3381  1066.0347     3
-       169.1462   180.6350     3
+     20617.2832 20820.5076     3
+       232.7515   234.0807     3
+       977.0458   980.3537     3
+       368.6552   372.6096     3
+       891.7246   997.9818     3
+       159.6655   161.1927     3

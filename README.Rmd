@@ -145,8 +145,8 @@ syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase),
-    huliu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 1),
-    senti = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 1),    
+    hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 1),
+    sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 1),    
     syuzhet,
     sentences = ase,
     stringsAsFactors = FALSE
