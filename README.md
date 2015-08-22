@@ -41,8 +41,19 @@ better results than a dictionary approach that does not consider valence
 shifters but will likely still be less accurate than Stanford's
 approach. Simply, **sentimentr** attempts to balance accuracy and speed.
 
+
+Table of Contents
+============
+
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Contact](#contact)
+-   [Examples](#examples)
+    -   [Annie Swafford's Examples](#annie-swafford's-examples)
+
 The Equation
 ============
+
 
 The equation used by the algorithm to assign value to polarity of each
 sentence fist utilizes the sentiment dictionary (Hu and Liu,
@@ -158,19 +169,8 @@ paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
 *p*<sub>*i*, *δ*<sub>*i*, *j*</sub></sub> = 1/n  ⋅  ∑
 *δ*<sub>*i*, *j*</sub>.
 
-
-Table of Contents
-============
-
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Contact](#contact)
--   [Examples](#examples)
-    -   [Annie Swafford](#annie-swafford)
-
 Installation
 ============
-
 
 To download the development version of **sentimentr**:
 
@@ -244,8 +244,8 @@ argument.
     ##  9:    ROMNEY time 2       7534 0.3188779    0.04946325
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
 
-Annie Swafford
---------------
+Annie Swafford's Examples
+-------------------------
 
 [Annie
 Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/)
@@ -343,16 +343,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19908.5767 20161.3177 20381.0477 20414.0587
-        sentimentr_hu_liu()   228.7781   230.1002   231.4270   231.4224
-     sentimentr_sentiword()   948.0376   960.8877   967.3764   973.7378
-             syuzhet_binn()   357.4736   361.0872   364.9280   364.7008
-              syuzhet_nrc()   659.7661   722.6168   814.4051   785.4675
-            syuzhet_afinn()   127.7624   142.9503   149.0311   158.1383
+                 stanford() 20832.5169 21333.0149 21904.5874 21833.5129
+        sentimentr_hu_liu()   228.9919   231.3733   237.6209   233.7547
+     sentimentr_sentiword()   976.6752   977.0119   981.0800   977.3485
+             syuzhet_binn()   341.3814   343.8619   346.3814   346.3424
+              syuzhet_nrc()   816.3471   820.4288   842.1505   824.5104
+            syuzhet_afinn()   154.9500   155.4703   157.1086   155.9907
              uq        max neval
-     20617.2832 20820.5076     3
-       232.7515   234.0807     3
-       977.0458   980.3537     3
-       368.6552   372.6096     3
-       891.7246   997.9818     3
-       159.6655   161.1927     3
+     22440.6227 23047.7326     3
+       241.9354   250.1162     3
+       983.2824   989.2162     3
+       348.8815   351.4205     3
+       855.0522   885.5939     3
+       158.1879   160.3852     3
