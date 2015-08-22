@@ -269,7 +269,7 @@ package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), and my
 own algorithm with both the default [Hu & Liu
 (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
-lexicon as well as a [Baccianella, Esuli and Sebastiani's
+lexicon as well as [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
     if (!require("pacman")) install.packages("pacman")
@@ -355,16 +355,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20719.8971 20973.1924 21701.4782 21226.4876
-        sentimentr_hu_liu()   220.3820   230.1799   234.3284   239.9777
-     sentimentr_sentiword()   941.4491   965.7744   995.3905   990.0997
-             syuzhet_binn()   314.7829   318.5364   321.8965   322.2898
-              syuzhet_nrc()   803.9683   824.7740   890.8586   845.5797
-            syuzhet_afinn()   154.4171   160.4299   163.2374   166.4428
+                 stanford() 21217.3041 22386.1666 22909.9300 23555.0292
+        sentimentr_hu_liu()   195.9824   213.3631   221.1513   230.7437
+     sentimentr_sentiword()   973.4471   974.5431   985.4687   975.6390
+             syuzhet_binn()   252.3578   282.1310   298.8127   311.9042
+              syuzhet_nrc()   771.3303   772.3280   798.3978   773.3256
+            syuzhet_afinn()   158.2992   159.3067   159.8053   160.3142
              uq        max neval
-     22192.2688 23158.0500     3
-       241.3016   242.6254     3
-      1022.3612  1054.6227     3
-       325.4532   328.6167     3
-       934.3038  1023.0279     3
-       167.6475   168.8523     3
+     23756.2430 23957.4567     3
+       233.7358   236.7279     3
+       991.4795  1007.3200     3
+       322.0402   332.1761     3
+       811.9315   850.5374     3
+       160.5584   160.8027     3
