@@ -31,15 +31,16 @@ more sophisticated analysis. Jocker's dictionary methods are fast but
 are more prone to error in the case of valence shifters. Jocker's
 [addressed these
 critiques](http://www.matthewjockers.net/2015/03/04/some-thoughts-on-annies-thoughts-about-syuzhet/)
-with regard to analyzing general sentiment in a piece of literature. He
-points to the accuracy of the Stanford detection as well. In my own work
-I need better accuracy than a simple dictionary lookup that considers
-valence shifters yet retains the speed that Stanford's parser does not
-have. This leads to a trade off of speed vs. accuracy. The equation
-below describes the dictionary method of **sentimentr** that may give
-better results than a dictionary approach that does not consider valence
-shifters but will likely still be less accurate than Stanford's
-approach. Simply, **sentimentr** attempts to balance accuracy and speed.
+explaining that the method is good with regard to analyzing general
+sentiment in a piece of literature. He points to the accuracy of the
+Stanford detection as well. In my own work I need better accuracy than a
+simple dictionary lookup; something that considers valence shifters yet
+optimizes speed which the Stanford's parser does not. This leads to a
+trade off of speed vs. accuracy. The equation below describes the
+dictionary method of **sentimentr** that may give better results than a
+dictionary approach that does not consider valence shifters but will
+likely still be less accurate than Stanford's approach. Simply,
+**sentimentr** attempts to balance accuracy and speed.
 
 
 Table of Contents
@@ -355,16 +356,16 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19817.0754 20438.8711 21034.3110 21060.6668
-        sentimentr_hu_liu()   221.1074   222.3142   226.9894   223.5210
-     sentimentr_sentiword()   968.1034   968.8658   976.8568   969.6282
-             syuzhet_binn()   321.1439   326.2029   398.5578   331.2619
-              syuzhet_nrc()   754.1079   760.8421   793.2174   767.5763
-            syuzhet_afinn()   131.7537   139.6177   145.6872   147.4817
+                 stanford() 20519.1232 20620.1182 20684.4025 20721.1132
+        sentimentr_hu_liu()   224.5367   232.9833   238.5421   241.4299
+     sentimentr_sentiword()   977.2767   980.9229   987.7338   984.5692
+             syuzhet_binn()   254.8387   293.6495   310.7012   332.4602
+              syuzhet_nrc()   787.3683   790.1853   831.2212   793.0022
+            syuzhet_afinn()   118.1905   138.8190   149.8055   159.4475
              uq        max neval
-     21642.9288 22225.1907     3
-       229.9305   236.3399     3
-       981.2335   992.8388     3
-       437.2647   543.2675     3
-       812.7721   857.9679     3
-       152.6540   157.8262     3
+     20767.0422 20812.9712     3
+       245.5448   249.6597     3
+       992.9624  1001.3556     3
+       338.6324   344.8045     3
+       853.1477   913.2931     3
+       165.6131   171.7787     3

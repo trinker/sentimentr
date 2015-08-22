@@ -1,4 +1,4 @@
-language:      c
+language: java
 
 sudo: required
 before_install:
@@ -7,7 +7,8 @@ before_install:
   - ./travis-tool.sh bootstrap
 install:
   - sh -e /etc/init.d/xvfb start
-  - ./travis-tool.sh aptget_install r-cran-xml 
+  - ./travis-tool.sh aptget_install r-cran-xml
+  - ./travis-tool.sh install_r_binary rjava
   - ./travis-tool.sh install_github hadley/devtools
   - ./travis-tool.sh install_deps
   - ./travis-tool.sh github_package jimhester/covr
@@ -20,7 +21,7 @@ notifications:
     on_failure:      change
 env:
    global:
-     - R_BUILD_ARGS="--resave-data=best" 
+     - R_BUILD_ARGS="--resave-data=best"
      - R_CHECK_ARGS="--as-cran"
      - DISPLAY=:99.0
      - BOOTSTRAP_LATEX=1
