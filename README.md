@@ -162,7 +162,7 @@ Where:
 
 *w*<sub>*b*</sub> = 1 + *z*<sub>2</sub> \* *w*<sub>*b*′</sub>
 
-*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1)
+*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1)
 
 *w*<sub>*n**e**g*</sub> = (∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> )
 mod 2
