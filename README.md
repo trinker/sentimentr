@@ -218,7 +218,7 @@ functions summarized in the table below:
 </tr>
 <tr class="odd">
 <td align="left"><code>replace_emoticon</code></td>
-<td align="left">Repalce emoticons with word equivalent</td>
+<td align="left">Replace emoticons with word equivalent</td>
 </tr>
 </tbody>
 </table>
@@ -387,19 +387,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19607.8981 19656.4819 19674.1189 19705.0657
-        sentimentr_hu_liu()   174.7867   198.0571   207.5542   221.3275
-     sentimentr_sentiword()   739.5311   856.3743   895.5007   973.2176
-             syuzhet_binn()   351.9965   352.7008   393.7234   353.4051
-              syuzhet_nrc()   644.1037   656.4897   713.9291   668.8757
-            syuzhet_afinn()   164.2657   164.5409   165.6484   164.8162
+                 stanford() 21429.9149 21533.7647 21835.5865 21637.6146
+        sentimentr_hu_liu()   185.2158   187.2156   209.0417   189.2154
+     sentimentr_sentiword()   774.3885   787.3515   866.3429   800.3145
+             syuzhet_binn()   270.4358   314.7852   355.9027   359.1347
+              syuzhet_nrc()   643.3126   675.7741   686.8932   708.2356
+            syuzhet_afinn()   154.3818   186.9069   210.4344   219.4320
              uq        max neval
-     19707.2293 19709.3929     3
-       223.9379   226.5484     3
-       973.4855   973.7534     3
-       414.5869   475.7687     3
-       748.8419   828.8080     3
-       166.3397   167.8633     3
+     22038.4224 22439.2301     3
+       220.9547   252.6940     3
+       912.3201  1024.3257     3
+       398.6362   438.1377     3
+       708.6835   709.1314     3
+       238.4608   257.4896     3
 
 Contact
 =======

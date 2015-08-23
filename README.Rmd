@@ -99,7 +99,7 @@ There are two main functions in **sentimentr** with three helper functions summa
 | `sentiment_by`   | Aggregated sentiment by group(s)                      |
 | `uncombine`      | Extract sentence level sentiment from  `sentiment_by` |
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
-| `replace_emoticon`| Repalce emoticons with word equivalent               |
+| `replace_emoticon`| Replace emoticons with word equivalent               |
 
 # Examples
 
