@@ -88,13 +88,17 @@ Download the [zip ball](https://github.com/trinker/sentimentr/zipball/master) or
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("trinker/sentimentr")
 ```
+# Usage
 
-# Contact
+There are two main functions in **sentimentr** with two helper functions summarized in the table below:
 
-You are welcome to:
-* submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues>
-* send a pull request on: <https://github.com/trinker/sentimentr/>
-* compose a friendly e-mail to: <tyler.rinker@gmail.com>
+
+| Function         |  Description                                          |
+|------------------|-------------------------------------------------------|
+| `sentiment`      | Sentiment at the sentence level                       |
+| `sentiment_by`   | Aggregated sentiment by group(s)                      |
+| `uncombine`      | Extract sentence level sentiment from  `sentiment_by` |
+| `get_sentences`  | Regex string to sentence parser (or get sentences from `sentiment`/`sentiment_by`|
 
 # Examples
 
@@ -195,3 +199,10 @@ microbenchmark(
     times = 3
 )
 ```
+
+# Contact
+
+You are welcome to:
+* submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues>
+* send a pull request on: <https://github.com/trinker/sentimentr/>
+* compose a friendly e-mail to: <tyler.rinker@gmail.com>

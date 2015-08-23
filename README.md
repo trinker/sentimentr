@@ -49,9 +49,10 @@ Table of Contents
 
 -   [The Equation](#the-equation)
 -   [Installation](#installation)
--   [Contact](#contact)
+-   [Usage](#usage)
 -   [Examples](#examples)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
+-   [Contact](#contact)
 
 The Equation
 ============
@@ -185,14 +186,38 @@ the development version:
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load_gh("trinker/sentimentr")
 
-Contact
-=======
+Usage
+=====
 
-You are welcome to: 
-* submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues> 
-* send a pull request on: <https://github.com/trinker/sentimentr/> 
-* compose a friendly e-mail to: <tyler.rinker@gmail.com>
+There are two main functions in **sentimentr** with two helper functions
+summarized in the table below:
 
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>sentiment</code></td>
+<td align="left">Sentiment at the sentence level</td>
+</tr>
+<tr class="even">
+<td align="left"><code>sentiment_by</code></td>
+<td align="left">Aggregated sentiment by group(s)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>uncombine</code></td>
+<td align="left">Extract sentence level sentiment from <code>sentiment_by</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_sentences</code></td>
+<td align="left">Regex string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code></td>
+</tr>
+</tbody>
+</table>
 
 Examples
 ========
@@ -357,16 +382,24 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20019.9878 20737.6194 21479.4359 21455.2509
-        sentimentr_hu_liu()   222.1904   225.5824   227.4384   228.9743
-     sentimentr_sentiword()   973.9525   976.0680   977.0022   978.1836
-             syuzhet_binn()   245.7168   281.0441   301.6485   316.3713
-              syuzhet_nrc()   784.2408   795.5994   806.2744   806.9579
-            syuzhet_afinn()   117.1592   133.8399   139.6347   150.5206
+                 stanford() 24358.3595 24706.1951 25164.7271 25054.0307
+        sentimentr_hu_liu()   195.4934   198.8330   204.9732   202.1726
+     sentimentr_sentiword()   915.2230   918.9235   953.4953   922.6240
+             syuzhet_binn()   278.6261   303.2123   326.0081   327.7985
+              syuzhet_nrc()   765.1500   777.5101   871.7022   789.8702
+            syuzhet_afinn()   128.3995   130.1361   131.6634   131.8727
              uq        max neval
-     22209.1599 22963.0689     3
-       230.0624   231.1506     3
-       978.5270   978.8704     3
-       329.6143   342.8573     3
-       817.2912   827.6244     3
-       150.8724   151.2242     3
+     25567.9109 26081.7910     3
+       209.7131   217.2536     3
+       972.6314  1022.6387     3
+       349.6991   371.5997     3
+       924.9782  1060.0863     3
+       133.2953   134.7178     3
+
+Contact
+=======
+
+You are welcome to: 
+* submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues> 
+* send a pull request on: <https://github.com/trinker/sentimentr/> 
+* compose a friendly e-mail to: <tyler.rinker@gmail.com>
