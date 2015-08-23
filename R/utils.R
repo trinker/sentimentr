@@ -28,10 +28,21 @@ period_reg <- paste0(
         "|",
     "(?:(?<=([ .][a-z]))\\.)(?!(?:\\s[A-Z]|$)|(?:\\s\\s))",
         "|",
-    "(?:(?<=[A-Z])\\.\\s(?=[A-Z]\\.))",
+    "(?:(?<=[A-Z])\\.(?=\\s??[A-Z]\\.))",
         "|",
-    "(?:(?<=[A-Z])\\.(?=\\s[A-Z][A-Za-z]))"
+    "(?:(?<=[A-Z])\\.(?!\\s[A-Z][A-Za-z]))"
 )
+
+#period_reg <- paste0(
+#    "(?:(?<=[a-z])\\.\\s(?=[a-z]\\.))",
+#        "|",
+#   "(?:(?<=([ .][a-z]))\\.)(?!(?:\\s[A-Z]|$)|(?:\\s\\s))",
+#        "|",
+#    "(?:(?<=[A-Z])\\.\\s(?=[A-Z]\\.))",
+#        "|",
+#    "(?:(?<=[A-Z])\\.(?=\\s[A-Z][A-Za-z]))"
+#)
+
 
 
 sent_regex <- sprintf("((?<=\\b(%s))\\.)|%s|(%s)",
@@ -40,12 +51,28 @@ sent_regex <- sprintf("((?<=\\b(%s))\\.)|%s|(%s)",
 	'\\.(?=\\d+)'
 )
 
+sent_regex2 <- sprintf("((?<=\\b(%s))\\.)|%s|(%s)",
+    paste(unlist(abbr_rep), collapse = "|"),
+    period_reg,
+	'\\.(?=\\d+)'
+)
+
 get_sents <- function(x) {
 	if (is(x, "get_sentences")) return(x)
-    x <- stringi::stri_replace_all_regex(stringi::stri_trans_tolower(x), sent_regex, "")
-    stringi::stri_split_regex(x, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
+    y <- stringi::stri_trans_tolower(stringi::stri_replace_all_regex(x, sent_regex, ""))
+    stringi::stri_split_regex(y, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
 }
 
+#get_sents <- function(x) {
+#	if (is(x, "get_sentences")) return(x)
+#    x <- stringi::stri_trans_tolower(stringi::stri_replace_all_regex(x, sent_regex, ""))
+#    stringi::stri_split_regex(x, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
+#}
+
+get_sents2 <- function(x) {
+    y <- stringi::stri_replace_all_regex(x, sent_regex, "<<<TEMP>>>")
+    stringi::stri_split_regex(y, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
+}
 
 add_row_id <- function(x){
     lens <- lapply(x, length)

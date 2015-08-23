@@ -2,9 +2,12 @@
 % Please edit documentation in R/get_sentences.R
 \name{get_sentences}
 \alias{get_sentences}
+\alias{get_sentences2}
 \title{Get Sentences}
 \usage{
 get_sentences(x, ...)
+
+get_sentences2(x, ...)
 }
 \arguments{
 \item{x}{A character vector, \code{sentiment}, or \code{sentiment_by} object.}
@@ -15,8 +18,11 @@ get_sentences(x, ...)
 \code{subs} - Returns a list of sub-expressions.
 }
 \description{
-Get sentences from a character vector, \code{sentiment}, or
+\code{get_sentences} - Get sentences from a character vector, \code{sentiment}, or
 \code{sentiment_by} object.
+
+\code{get_sentences2} - Get sentences from a character vector but does not
+force to lower case.
 }
 \examples{
 (x <- paste0(
@@ -24,5 +30,6 @@ Get sentences from a character vector, \code{sentiment}, or
     "go at 5 p. m. eastern time.  Or somewhere in between!go there"
 ))
 get_sentences(x)
+get_sentences2(x)
 }
 
