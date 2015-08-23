@@ -48,9 +48,9 @@ The words in each sentence ($w_{i,j,k}$) are searched and compared to a modified
 The polarized context cluster ($c_{i,j,l}$) of words is pulled from around the polarized word ($pw$) and defaults to 4 words before and two words after $pw$ to be considered as valence shifters.  The cluster can be represented as ($c_{i,j,l} = \{pw_{i,j,k - nb}, ..., pw_{i,j,k} , ..., pw_{i,j,k - na}\}$), where $nb$ & $na$ are the parameters `n.before` and `n.after` set by the user.  The words in this polarized context cluster are tagged as neutral ($w_{i,j,k}^{0}$), negator ($w_{i,j,k}^{n}$),
 amplifier ($w_{i,j,k}^{a}$), or de-amplifier ($w_{i,j,k}^{d}$). Neutral words hold no value in the equation but do affect word count ($n$).  Each polarized word is then weighted ($w$) based on the weights from the `polarity_dt` argument and then further weighted by the function and number of the valence shifters directly surrounding the positive or negative word ($pw$).  Pause ($cw$) locations (punctuation that denotes a pause including commas, colons, and semicolons) are indexed and considered in calculating the upper and lower bounds in the polarized context cluster. This is because these marks indicate a change in thought and words prior are not necessarily connected with words after these punctuation marks.  The lower bound of the polarized context cluster is constrained to $\max \{pw_{i,j,k - nb}, 1, \max \{cw_{i,j,k} < pw_{i,j,k}\}\}$ and the upper bound is constrained to $\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,j,k}\}\}$ where $w_{i,jn}$ is the number of words in the sentence.
 
-The core value in the cluster, the polarized word is acted upon by valence shifters. Amplifiers increase the polarity by 1.8 (.8 is the default weight ($z$)).  Amplifiers ($w_{i,j,k}^{a}$) become de-amplifiers if the context cluster contains an odd number of negators ($w_{i,j,k}^{n}$).  De-amplifiers work to decrease decrease the polarity.  Negation ($w_{i,j,k}^{n}$) acts on amplifiers/de-amplifiers as discussed but also flip the sign of the polarized word.  Negation is determined by raising $-1$ to the power of the number of negators ($w_{i,j,k}^{n}$) plus $2$.  Simply, this is a result of a belief that two negatives equal a positive, 3 negatives a negative and so on.
+The core value in the cluster, the polarized word is acted upon by valence shifters. Amplifiers increase the polarity by 1.8 (.8 is the default weight ($z$)).  Amplifiers ($w_{i,j,k}^{a}$) become de-amplifiers if the context cluster contains an odd number of negators ($w_{i,j,k}^{n}$).  De-amplifiers work to decrease the polarity.  Negation ($w_{i,j,k}^{n}$) acts on amplifiers/de-amplifiers as discussed but also flip the sign of the polarized word.  Negation is determined by raising $-1$ to the power of the number of negators ($w_{i,j,k}^{n}$) plus $2$.  Simply, this is a result of a belief that two negatives equal a positive, 3 negatives a negative, and so on.
 
-The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight the context cluster.  A but conjunction before the polarized word up-weights the cluster by 1.85 (.85 is the default weight ($z_2$)).  A but conjunction after the polarized word down-weights the cluster by 1 - .85 ($z_2$).  The number of occurrences before and after the polarized word are multiplied by 1 and -1 respectively and then summed within context cluster.  It is this value that is multiplied by the weight and added to 1.This corresponds to the belief that a but makes the next clause of greater values while lowering the value placed on the prior clause.
+The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight the context cluster.  A but conjunction before the polarized word ($w_{but\,conjunction}, ..., w_{i, j, k}^{p}$) up-weights the cluster by 1 + $z_2 * \{|w_{but\,conjunction}|, ..., w_{i, j, k}^{p}\}$ (.85 is the default weight ($z_2$) where $|w_{but\,conjunction}|$ are the number of but conjunctions before the polarized word).  A but conjunction after the polarized word down-weights the cluster by 1 + $\{w_{i, j, k}^{p}, ..., |w_{but\,conjunction}| * -1\} * z_2$.  This corresponds to the belief that a but makes the next clause of greater values while lowering the value placed on the prior clause.
 
 The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{i,j,l}$) are summed ($c'_{i,j}$) and divided by the square root of the word count (&radic;$w_{i,jn}$) yielding an unbounded polarity score ($\delta_{i,j}$) for each sentence.
 
@@ -72,7 +72,7 @@ $$w_{deamp'} = \sum{(z(- w_{neg}\cdot w_{i,j,k}^{a} + w_{i,j,k}^{d}))}$$
 
 $$w_{b} = 1 + z_2 * w_{b'}$$
 
-$$w_{b'} = \sum{(|w_{but conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but conjunction}| * -1})$$
+$$w_{b'} = \sum{(|w_{but\,conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but\,conjunction}| * -1})$$
 
 $w_{neg}$ = ($\sum{w_{i,j,k}^{n}}$ ) mod 2
 
@@ -132,8 +132,20 @@ To aggregate by grouping variables use `sentiment_by` using the `by` argument.
 
 ```{r}
 (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+```
 
+## Plotting 
+
+### Plotting at Aggregated Sentiment
+```{r}
 plot(out)
+```
+
+### Plotting at the Sentence Level
+
+The `plot` method for the class `sentiment` uses **syuzhet**'s `get_transformed_values` combined with **ggplot2** to make a reasonable, smoothed plot for the duration of the text based on percentage, making the plots comparable between texts.  This plot gives the overall shape of the text's sentiment.  The user can see `syuzhet::get_transformed_values` for more details.
+
+```{r}
 plot(uncombine(out))
 ```
 

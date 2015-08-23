@@ -46,11 +46,12 @@ the conjunctions "but", "however", and "although" amplify the current clause
 and/or down weight the prior clause.  If a but conjunction is located before
 polarized word in the context cluster the cluster is up-weighted 1 + number
 of occurrences of the but conjunctions before the polarized word times the
-weight given (\eqn{1 + N_{but conjunctions} * but.weight}).  Conversely,
+weight given (\eqn{1 + N_{but\,conjunctions} * z_2} where \eqn{z_2} is the
+\code{but.weight}).  Conversely,
 a but conjunction found after the polarized word in a context cluster
 down weights the cluster 1 - number of occurrences of the but conjunctions
-before the polarized word times the weight given
-(\eqn{1 + N_{but conjunctions} * but.weight}).  These are added to the
+after the polarized word times the weight given
+(\eqn{1 + N_{but\,conjunctions}*-1 * z_2}).  These are added to the
 deamplifier and amplifier weights and thus the down weight is constrained to
 -1 as the lower bound.  Set to zero to remove but conjunction weighting.}
 
@@ -126,9 +127,12 @@ negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that t
 negatives equal a positive, 3 negatives a negative and so on.
 
 The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight
-the context cluster.  A but conjunction before the polarized word up-weights
-the cluster by 1.85 (.85 is the default weight (\eqn{z_2})).  A but conjunction
-after the polarized word down-weights the cluster by 1 - .85 (\eqn{z_2})).  The
+the context cluster.  A but conjunction before the polarized word
+(\eqn{w_{but\,conjunction}, ..., w_{i, j, k}^{p}}) up-weights the cluster by
+\eqn{1 + z_2 * \{|w_{but\,conjunction}|, ..., w_{i, j, k}^{p}\}} (.85 is the
+default weight (\eqn{z_2})).  A but conjunction after the polarized word
+down-weights the cluster by
+\eqn{1 + \{w_{i, j, k}^{p}, ..., |w_{but\,conjunction}| * -1\} * z_2}.  The
 number of occurrences before and after the polarized word are multiplied by
 1 and -1 respectively and then summed within context cluster.  It is this
 value that is multiplied by the weight and added to 1. This
@@ -155,7 +159,7 @@ Where:
 
 \deqn{w_{b} = 1 + z_2 * w_{b'}}
 
-\deqn{w_{b'} = \sum{\\(|w_{but conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but conjunction}| * -1}\\)}
+\deqn{w_{b'} = \sum{\\(|w_{but\,conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but\,conjunction}| * -1}\\)}
 
 \deqn{w_{neg}= \left(\sum{w_{i,j,k}^{n}}\right) \bmod {2}}
 }

@@ -51,6 +51,9 @@ Table of Contents
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Examples](#examples)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
 -   [Contact](#contact)
 
@@ -89,7 +92,7 @@ provides the sentiment dictionary). I will denote polarized words as
 (*c*<sub>*i*, *j*, *l*</sub> ⊆ *s*<sub>*i*</sub>, *j*).
 
 The polarized context cluster (*c*<sub>*i*, *j*, *l*</sub>) of words is
-pulled from around the polarized word (*pw*) and defaults to 4 words
+pulled from around the polarized word (*p**w*) and defaults to 4 words
 before and two words after *p**w* to be considered as valence shifters.
 The cluster can be represented as
 (*c*<sub>*i*, *j*, *l*</sub> = {*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, ..., *p**w*<sub>*i*, *j*, *k*</sub>, ..., *p**w*<sub>*i*, *j*, *k* − *n**a*</sub>}),
@@ -120,24 +123,26 @@ default weight (*z*)). Amplifiers
 (*w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>) become de-amplifiers if the
 context cluster contains an odd number of negators
 (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>). De-amplifiers work to
-decrease decrease the polarity. Negation
+decrease the polarity. Negation
 (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the
 polarized word. Negation is determined by raising  − 1 to the power of
 the number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) plus
 2. Simply, this is a result of a belief that two negatives equal a
-positive, 3 negatives a negative and so on.
+positive, 3 negatives a negative, and so on.
 
 The "but" conjunctions (i.e., 'but', 'however', and 'although') also
 weight the context cluster. A but conjunction before the polarized word
-up-weights the cluster by 1.85 (.85 is the default weight
-(*z*<sub>2</sub>)). A but conjunction after the polarized word
-down-weights the cluster by 1 - .85 (*z*<sub>2</sub>). The number of
-occurrences before and after the polarized word are multiplied by 1
-and -1 respectively and then summed within context cluster. It is this
-value that is multiplied by the weight and added to 1.This corresponds
-to the belief that a but makes the next clause of greater values while
-lowering the value placed on the prior clause.
+(*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>)
+up-weights the cluster by 1 +
+*z*<sub>2</sub> \* {|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>}
+(.85 is the default weight (*z*<sub>2</sub>) where
+|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| are the
+number of but conjunctions before the polarized word). A but conjunction
+after the polarized word down-weights the cluster by 1 +
+{*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1} \* *z*<sub>2</sub>.
+This corresponds to the belief that a but makes the next clause of
+greater values while lowering the value placed on the prior clause.
 
 The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
@@ -162,7 +167,7 @@ Where:
 
 *w*<sub>*b*</sub> = 1 + *z*<sub>2</sub> \* *w*<sub>*b*′</sub>
 
-*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t**c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1)
+*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1)
 
 *w*<sub>*n**e**g*</sub> = (∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> )
 mod 2
@@ -275,17 +280,31 @@ argument.
     ##  9:    ROMNEY time 2       7534 0.3188779    0.04946325
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
 
+Plotting
+--------
+
+### Plotting at Aggregated Sentiment
+
     plot(out)
 
     ## Warning: Removed 2 rows containing non-finite values (stat_boxplot).
 
     ## Warning: Removed 2 rows containing missing values (geom_point).
 
-![](inst/figure/unnamed-chunk-6-1.png)
+![](inst/figure/unnamed-chunk-7-1.png)
+
+### Plotting at the Sentence Level
+
+The `plot` method for the class `sentiment` uses **syuzhet**'s
+`get_transformed_values` combined with **ggplot2** to make a reasonable,
+smoothed plot for the duration of the text based on percentage, making
+the plots comparable between texts. This plot gives the overall shape of
+the text's sentiment. The user can see `syuzhet::get_transformed_values`
+for more details.
 
     plot(uncombine(out))
 
-![](inst/figure/unnamed-chunk-6-2.png)
+![](inst/figure/unnamed-chunk-8-1.png)
 
 Annie Swafford's Examples
 -------------------------
@@ -387,19 +406,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 21429.9149 21533.7647 21835.5865 21637.6146
-        sentimentr_hu_liu()   185.2158   187.2156   209.0417   189.2154
-     sentimentr_sentiword()   774.3885   787.3515   866.3429   800.3145
-             syuzhet_binn()   270.4358   314.7852   355.9027   359.1347
-              syuzhet_nrc()   643.3126   675.7741   686.8932   708.2356
-            syuzhet_afinn()   154.3818   186.9069   210.4344   219.4320
+                 stanford() 19301.7293 19302.7286 19439.5723 19303.7278
+        sentimentr_hu_liu()   177.3320   178.1615   195.3644   178.9910
+     sentimentr_sentiword()   752.8734   806.6817   862.7564   860.4900
+             syuzhet_binn()   275.9084   317.4274   334.9810   358.9464
+              syuzhet_nrc()   630.5596   645.3680   667.6543   660.1765
+            syuzhet_afinn()   122.1410   143.7928   151.3437   165.4446
              uq        max neval
-     22038.4224 22439.2301     3
-       220.9547   252.6940     3
-       912.3201  1024.3257     3
-       398.6362   438.1377     3
-       708.6835   709.1314     3
-       238.4608   257.4896     3
+     19508.4938 19713.2598     3
+       204.3807   229.7703     3
+       917.6979   974.9057     3
+       364.5173   370.0882     3
+       686.2016   712.2268     3
+       165.9451   166.4455     3
 
 Contact
 =======
