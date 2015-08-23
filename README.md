@@ -74,7 +74,7 @@ represent these words as an i,j,k notation as
 *w*<sub>*i*, *j*, *k*</sub>. For example *w*<sub>3, 2, 5</sub> would be
 the fifth word of the second sentence of the third paragraph. While I
 use the term paragraph this merely represent a complete turn of talk.
-For example t may be a cell level response in a questionnaire composed
+For example it may be a cell level response in a questionnaire composed
 of sentences.
 
 The words in each sentence (*w*<sub>*i*, *j*, *k*</sub>) are searched
