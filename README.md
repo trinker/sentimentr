@@ -90,7 +90,7 @@ provides the sentiment dictionary). I will denote polarized words as
 
 The polarized context cluster (*c*<sub>*i*, *j*, *l*</sub>) of words is
 pulled from around the polarized word (*pw*) and defaults to 4 words
-before and two words after *p**w*) to be considered as valence shifters.
+before and two words after *p**w* to be considered as valence shifters.
 The cluster can be represented as
 (*c*<sub>*i*, *j*, *l*</sub> = {*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, ..., *p**w*<sub>*i*, *j*, *k*</sub>, ..., *p**w*<sub>*i*, *j*, *k* − *n**a*</sub>}),
 where *n**b* & *n**a* are the parameters `n.before` and `n.after` set by
