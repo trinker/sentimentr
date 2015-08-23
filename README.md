@@ -189,8 +189,8 @@ the development version:
 Usage
 =====
 
-There are two main functions in **sentimentr** with two helper functions
-summarized in the table below:
+There are two main functions in **sentimentr** with three helper
+functions summarized in the table below:
 
 <table>
 <thead>
@@ -215,6 +215,10 @@ summarized in the table below:
 <tr class="even">
 <td align="left"><code>get_sentences</code></td>
 <td align="left">Regex based string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code>)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>replace_emoticon</code></td>
+<td align="left">Repalce emoticons with word equivalent</td>
 </tr>
 </tbody>
 </table>
@@ -383,19 +387,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20212.5299 20424.8602 21165.5886 20637.1906
-        sentimentr_hu_liu()   241.2640   248.8741   281.3531   256.4842
-     sentimentr_sentiword()   979.7580   984.7384   996.1703   989.7187
-             syuzhet_binn()   317.6091   317.6167   318.7414   317.6243
-              syuzhet_nrc()   858.9548   934.0575  1018.9533  1009.1601
-            syuzhet_afinn()   151.7333   153.8353   166.4243   155.9373
+                 stanford() 19607.8981 19656.4819 19674.1189 19705.0657
+        sentimentr_hu_liu()   174.7867   198.0571   207.5542   221.3275
+     sentimentr_sentiword()   739.5311   856.3743   895.5007   973.2176
+             syuzhet_binn()   351.9965   352.7008   393.7234   353.4051
+              syuzhet_nrc()   644.1037   656.4897   713.9291   668.8757
+            syuzhet_afinn()   164.2657   164.5409   165.6484   164.8162
              uq        max neval
-     21642.1179 22647.0453     3
-       301.3977   346.3112     3
-      1004.3764  1019.0341     3
-       319.3076   320.9908     3
-      1098.9525  1188.7449     3
-       173.7698   191.6023     3
+     19707.2293 19709.3929     3
+       223.9379   226.5484     3
+       973.4855   973.7534     3
+       414.5869   475.7687     3
+       748.8419   828.8080     3
+       166.3397   167.8633     3
 
 Contact
 =======

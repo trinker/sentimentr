@@ -24,6 +24,11 @@ sentimentr 0.1.0
 
 **NEW FEATURES**
 
+* `emoticons` dictionary added.  This is a simple dataset containing common
+  emoticons (adapted from [Popular Emoticon List](http://www.lingo2word.com/lists/emoticon_listH.html))
+
+* `replace_emoticon` function added to replace emoticons with word equivalents.
+
 **MINOR FEATURES**
 
 IMPROVEMENTS

@@ -65,3 +65,31 @@ data.table::setkey(valence_shifters_table, "x")
 pax::new_data(valence_shifters_table)
 
 
+#====================================================
+#emoticons
+
+newp <- c('0;)', '0;-)')
+# check if word is already there
+emoticons[newp, ]
+
+emoticons <- sentimentr::emoticons %>%
+	   as.data.frame()
+
+(check <- nrow(emoticons))
+emoticons[check + 1:2, ] <- NA
+emoticons[check + 1:2, "x"] <- newp
+emoticons[check + 1:2, "y"] <- c("angel", "angel")
+
+
+emoticons <- emoticons %>%
+	   arrange(x)
+
+nrow(emoticons) == check + 1
+
+data.table::setDT(emoticons)
+data.table::setkey(emoticons, "x")
+
+pax::new_data(emoticons)
+
+
+

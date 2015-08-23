@@ -63,7 +63,7 @@ NULL
 #' @keywords datasets
 #' @name valence_shifters_table
 #' @usage data(valence_shifters_table)
-#' @format A data frame with 86 rows and 2 variables
+#' @format A data frame with 89 rows and 2 variables
 NULL
 
 
@@ -128,3 +128,23 @@ NULL
 #' \url{http://sentiwordnet.isti.cnr.it/}
 NULL
 
+
+
+#' Emoticons Data Set
+#'
+#' A dataset containing common emoticons (adapted from
+#' \href{http://www.lingo2word.com/lists/emoticon_listH.html}{Popular Emoticon List}).
+#'
+#' @details
+#' \itemize{
+#'   \item x. The graphic representation of the emoticon
+#'   \item y. The meaning of the emoticon
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name emoticons
+#' @usage data(emoticons)
+#' @format A data frame with 82 rows and 2 variables
+#' @references \url{http://www.lingo2word.com/lists/emoticon_listH.html}
+NULL

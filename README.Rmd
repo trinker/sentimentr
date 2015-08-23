@@ -90,7 +90,7 @@ pacman::p_load_gh("trinker/sentimentr")
 ```
 # Usage
 
-There are two main functions in **sentimentr** with two helper functions summarized in the table below:
+There are two main functions in **sentimentr** with three helper functions summarized in the table below:
 
 
 | Function         |  Description                                          |
@@ -99,6 +99,7 @@ There are two main functions in **sentimentr** with two helper functions summari
 | `sentiment_by`   | Aggregated sentiment by group(s)                      |
 | `uncombine`      | Extract sentence level sentiment from  `sentiment_by` |
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
+| `replace_emoticon`| Repalce emoticons with word equivalent               |
 
 # Examples
 
