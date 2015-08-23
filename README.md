@@ -214,7 +214,7 @@ summarized in the table below:
 </tr>
 <tr class="even">
 <td align="left"><code>get_sentences</code></td>
-<td align="left">Regex string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code></td>
+<td align="left">Regex based string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -382,19 +382,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24358.3595 24706.1951 25164.7271 25054.0307
-        sentimentr_hu_liu()   195.4934   198.8330   204.9732   202.1726
-     sentimentr_sentiword()   915.2230   918.9235   953.4953   922.6240
-             syuzhet_binn()   278.6261   303.2123   326.0081   327.7985
-              syuzhet_nrc()   765.1500   777.5101   871.7022   789.8702
-            syuzhet_afinn()   128.3995   130.1361   131.6634   131.8727
+                 stanford() 23551.8635 23651.5785 23954.5029 23751.2936
+        sentimentr_hu_liu()   199.1350   217.8095   227.9449   236.4840
+     sentimentr_sentiword()   830.2544   888.4809   967.9729   946.7074
+             syuzhet_binn()   307.8521   317.7309   329.1883   327.6096
+              syuzhet_nrc()   841.1770   879.2056   900.0662   917.2343
+            syuzhet_afinn()   126.3821   144.3587   161.4583   162.3353
              uq        max neval
-     25567.9109 26081.7910     3
-       209.7131   217.2536     3
-       972.6314  1022.6387     3
-       349.6991   371.5997     3
-       924.9782  1060.0863     3
-       133.2953   134.7178     3
+     24155.8226 24560.3515     3
+       242.3499   248.2158     3
+      1036.8321  1126.9569     3
+       339.8564   352.1032     3
+       929.5109   941.7874     3
+       178.9965   195.6577     3
 
 Contact
 =======
