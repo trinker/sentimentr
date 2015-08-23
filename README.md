@@ -287,20 +287,16 @@ Plotting
 
     plot(out)
 
-    ## Warning: Removed 2 rows containing non-finite values (stat_boxplot).
-
-    ## Warning: Removed 2 rows containing missing values (geom_point).
-
 ![](inst/figure/unnamed-chunk-7-1.png)
 
 ### Plotting at the Sentence Level
 
 The `plot` method for the class `sentiment` uses **syuzhet**'s
 `get_transformed_values` combined with **ggplot2** to make a reasonable,
-smoothed plot for the duration of the text based on percentage, making
-the plots comparable between texts. This plot gives the overall shape of
-the text's sentiment. The user can see `syuzhet::get_transformed_values`
-for more details.
+smoothed plot for the duration of the text based on percentage, allowing
+for comparison between plots of different texts. This plot gives the
+overall shape of the text's sentiment. The user can see
+`syuzhet::get_transformed_values` for more details.
 
     plot(uncombine(out))
 
@@ -406,19 +402,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19501.5515 19581.5305 19656.7916 19661.5095
-        sentimentr_hu_liu()   178.1789   180.7896   198.5750   183.4003
-     sentimentr_sentiword()   743.5938   745.6605   818.6837   747.7272
-             syuzhet_binn()   272.7845   276.6049   308.5340   280.4252
-              syuzhet_nrc()   671.6090   696.0595   771.6465   720.5100
-            syuzhet_afinn()   126.7888   129.9319   135.0424   133.0750
+                 stanford() 18296.7227 19404.6873 19877.0087 20512.6518
+        sentimentr_hu_liu()   173.6543   203.8537   214.1287   234.0531
+     sentimentr_sentiword()   738.5330   859.8716   907.5855   981.2101
+             syuzhet_binn()   282.7214   315.9404   331.5220   349.1594
+              syuzhet_nrc()   630.9808   759.2502   814.1419   887.5196
+            syuzhet_afinn()   166.2193   166.4287   169.4098   166.6381
              uq        max neval
-     19734.4117 19807.3140     3
-       208.7731   234.1459     3
-       856.2286   964.7299     3
-       326.4087   372.3922     3
-       821.6653   922.8205     3
-       139.1692   145.2634     3
+     20667.1517 20821.6515     3
+       234.3660   234.6788     3
+       992.1118  1003.0134     3
+       355.9223   362.6852     3
+       905.7224   923.9253     3
+       171.0051   175.3720     3
 
 Contact
 =======

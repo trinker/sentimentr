@@ -137,13 +137,13 @@ To aggregate by grouping variables use `sentiment_by` using the `by` argument.
 ## Plotting 
 
 ### Plotting at Aggregated Sentiment
-```{r}
+```{r, warning=FALSE}
 plot(out)
 ```
 
 ### Plotting at the Sentence Level
 
-The `plot` method for the class `sentiment` uses **syuzhet**'s `get_transformed_values` combined with **ggplot2** to make a reasonable, smoothed plot for the duration of the text based on percentage, making the plots comparable between texts.  This plot gives the overall shape of the text's sentiment.  The user can see `syuzhet::get_transformed_values` for more details.
+The `plot` method for the class `sentiment` uses **syuzhet**'s `get_transformed_values` combined with **ggplot2** to make a reasonable, smoothed plot for the duration of the text based on percentage, allowing for comparison between plots of different texts.  This plot gives the overall shape of the text's sentiment.  The user can see `syuzhet::get_transformed_values` for more details.
 
 ```{r}
 plot(uncombine(out))
