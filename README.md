@@ -14,7 +14,7 @@ Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
-**sentimentr** is designed to quickly calulate text polarity sentiment
+**sentimentr** is designed to quickly calculate text polarity sentiment
 at the sentence level and optionally aggregate by rows or grouping
 variable(s).
 
@@ -402,19 +402,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 18296.7227 19404.6873 19877.0087 20512.6518
-        sentimentr_hu_liu()   173.6543   203.8537   214.1287   234.0531
-     sentimentr_sentiword()   738.5330   859.8716   907.5855   981.2101
-             syuzhet_binn()   282.7214   315.9404   331.5220   349.1594
-              syuzhet_nrc()   630.9808   759.2502   814.1419   887.5196
-            syuzhet_afinn()   166.2193   166.4287   169.4098   166.6381
+                 stanford() 19534.8874 19719.3494 19782.8247 19903.8114
+        sentimentr_hu_liu()   220.7847   224.1138   226.0406   227.4429
+     sentimentr_sentiword()   969.6914   973.4066   979.2458   977.1219
+             syuzhet_binn()   356.9010   357.5310   363.1912   358.1610
+              syuzhet_nrc()   884.7328   892.4310   914.2375   900.1292
+            syuzhet_afinn()   162.0473   162.6307   172.1710   163.2141
              uq        max neval
-     20667.1517 20821.6515     3
-       234.3660   234.6788     3
-       992.1118  1003.0134     3
-       355.9223   362.6852     3
-       905.7224   923.9253     3
-       171.0051   175.3720     3
+     19906.7934 19909.7754     3
+       228.6686   229.8943     3
+       984.0230   990.9240     3
+       366.3362   374.5115     3
+       928.9898   957.8504     3
+       177.2328   191.2516     3
 
 Contact
 =======

@@ -1,6 +1,6 @@
-#' Calulate Text Polarity Sentiment
+#' Calculate Text Polarity Sentiment
 #'
-#' Calulate text polarity sentiment at the sentence level and optionally
+#' Calculate text polarity sentiment at the sentence level and optionally
 #' aggregate by rows or grouping variable(s).
 #' @docType package
 #' @name sentimentr

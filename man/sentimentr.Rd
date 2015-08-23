@@ -5,9 +5,9 @@
 \alias{package-sentiment}
 \alias{sentimentr}
 \alias{sentimentr-package}
-\title{Calulate Text Polarity Sentiment}
+\title{Calculate Text Polarity Sentiment}
 \description{
-Calulate text polarity sentiment at the sentence level and optionally
+Calculate text polarity sentiment at the sentence level and optionally
 aggregate by rows or grouping variable(s).
 }
 
