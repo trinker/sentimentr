@@ -174,7 +174,7 @@ left_just(data.frame(
 
 ```
 
-Also of interest is the time of each of these methods. Here I increase Annie's examples by 100 and **microbenchmark** on a few (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that Stanford takes the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.
+Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that Stanford takes the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.
 
 
 ```{r, message = FALSE, comment=NA}

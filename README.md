@@ -349,8 +349,9 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
     8 Wait, it's returned!                                   
     9 I don't feel so bad after all!                         
 
-Also of interest is the time of each of these methods. Here I increase
-Annie's examples by 100 and **microbenchmark** on a few (Stanford takes
+Also of interest is the computational time used by each of these
+methods. To demonstrate this I increased Annie's examples by 100
+replications and **microbenchmark** on a few iterations (Stanford takes
 so long I didn't extend to more). Note that if a text needs to be broken
 into sentence parts **syuzhet** has the `get_sentences` function that
 uses the **openNLP** package, this is a time expensive task.
@@ -382,19 +383,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 23551.8635 23651.5785 23954.5029 23751.2936
-        sentimentr_hu_liu()   199.1350   217.8095   227.9449   236.4840
-     sentimentr_sentiword()   830.2544   888.4809   967.9729   946.7074
-             syuzhet_binn()   307.8521   317.7309   329.1883   327.6096
-              syuzhet_nrc()   841.1770   879.2056   900.0662   917.2343
-            syuzhet_afinn()   126.3821   144.3587   161.4583   162.3353
+                 stanford() 20212.5299 20424.8602 21165.5886 20637.1906
+        sentimentr_hu_liu()   241.2640   248.8741   281.3531   256.4842
+     sentimentr_sentiword()   979.7580   984.7384   996.1703   989.7187
+             syuzhet_binn()   317.6091   317.6167   318.7414   317.6243
+              syuzhet_nrc()   858.9548   934.0575  1018.9533  1009.1601
+            syuzhet_afinn()   151.7333   153.8353   166.4243   155.9373
              uq        max neval
-     24155.8226 24560.3515     3
-       242.3499   248.2158     3
-      1036.8321  1126.9569     3
-       339.8564   352.1032     3
-       929.5109   941.7874     3
-       178.9965   195.6577     3
+     21642.1179 22647.0453     3
+       301.3977   346.3112     3
+      1004.3764  1019.0341     3
+       319.3076   320.9908     3
+      1098.9525  1188.7449     3
+       173.7698   191.6023     3
 
 Contact
 =======
