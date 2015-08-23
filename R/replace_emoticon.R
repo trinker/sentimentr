@@ -28,5 +28,5 @@
 #'
 #' replace_emoticon(x)
 replace_emoticon <- function(text.var, emoticon_dt = sentimentr::emoticons, ...){
-    gsub("\\s+", " ", .mgsub(emoticon_dt[["x"]], paste0(" ", emoticon_dt[["y"]], " "), x, ...))
+    gsub("\\s+", " ", .mgsub(emoticon_dt[["x"]], paste0(" ", emoticon_dt[["y"]], " "), text.var, ...))
 }
