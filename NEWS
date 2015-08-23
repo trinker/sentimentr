@@ -22,6 +22,10 @@ sentimentr 0.1.0
 
 BUG FIXES
 
+* `get_sentences` converted to lower case too early in the regex parsing,
+  resulting in missed sentence boundary detection.  This has been corrected.
+
+
 NEW FEATURES
 
 * `emoticons` dictionary added.  This is a simple dataset containing common
@@ -29,14 +33,20 @@ NEW FEATURES
 
 * `replace_emoticon` function added to replace emoticons with word equivalents.
 
+* `get_sentences2` added to allow for users that may want to get sentences from
+  text and retain case and non-sentence boundary periods.  This should be
+  preferable in such instances where these features are deemed important to the
+  analysis at hand.
+
 MINOR FEATURES
 
 IMPROVEMENTS
+
 
 CHANGES
 
 sentimentr 0.0.1
 ----------------------------------------------------------------
 
-This package is designed to quickly calulate text polarity sentiment at the
+This package is designed to quickly calculate text polarity sentiment at the
 sentence level and optionally aggregate by rows or grouping variable(s).
