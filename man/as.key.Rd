@@ -4,11 +4,18 @@
 \alias{as.key}
 \title{Convert data.frame to a Hash Key}
 \usage{
-as.key(x, ...)
+as.key(x, comparison = sentimentr::valence_shifters_table, ...)
 }
 \arguments{
 \item{x}{A \code{\link[base]{data.frame}} with the first column containing
 polarized words and the second containing polarity values.}
+
+\item{comparison}{A \code{\link[base]{data.frame}} to compare to \code{x}.
+If elements in \code{x}'s column 1 matches \code{comparison}'s column 1 the
+accompanying row will be removed from \code{x}.  This is useful to ensure
+\code{polarity_dt} words are not also found in \code{valence_shifters_dt} in
+\code{\link[sentimentr]{sentiment}}.  Use \code{comparison = NULL} to skip
+this comparison.}
 
 \item{\ldots}{ignored.}
 }
@@ -44,9 +51,7 @@ nrc <- data.frame(
 
 as.key(nrc[nrc[["polarity"]] != 0, ])
 
-bing <- syuzhet:::bing[!as.character(syuzhet:::bing[[1]]) \%in\%
-    sentimentr::valence_shifters_table[["x"]], ]
-sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as.key(bing))
+sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as.key(syuzhet:::bing))
 }
 }
 \keyword{hash}

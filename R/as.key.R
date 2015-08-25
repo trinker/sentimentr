@@ -5,6 +5,12 @@
 #'
 #' @param x A \code{\link[base]{data.frame}} with the first column containing
 #' polarized words and the second containing polarity values.
+#' @param comparison A \code{\link[base]{data.frame}} to compare to \code{x}.
+#' If elements in \code{x}'s column 1 matches \code{comparison}'s column 1 the
+#' accompanying row will be removed from \code{x}.  This is useful to ensure
+#' \code{polarity_dt} words are not also found in \code{valence_shifters_dt} in
+#' \code{\link[sentimentr]{sentiment}}.  Use \code{comparison = NULL} to skip
+#' this comparison.
 #' @param \ldots ignored.
 #' @return Returns a \pkg{data.table} object that can be used as a hash key.
 #' @keywords key hash lookup
@@ -34,11 +40,9 @@
 #'
 #' as.key(nrc[nrc[["polarity"]] != 0, ])
 #'
-#' bing <- syuzhet:::bing[!as.character(syuzhet:::bing[[1]]) %in%
-#'     sentimentr::valence_shifters_table[["x"]], ]
-#' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as.key(bing))
+#' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as.key(syuzhet:::bing))
 #' }
-as.key <- function(x, ...){
+as.key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
 
     stopifnot(is.data.frame(x))
     if (is.factor(x[[1]])) {
@@ -51,6 +55,9 @@ as.key <- function(x, ...){
 
     colnames(x) <- c("x", "y")
 
+    if (!is.null(comparison)) {
+        x <- x[!x[["x"]] %in% comparison[["x"]], ]
+    }
     data.table::setDT(x)
     x <- x[order(x),]
     data.table::setkey(x, "x")
