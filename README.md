@@ -194,7 +194,7 @@ the development version:
 Usage
 =====
 
-There are two main functions in **sentimentr** with three helper
+There are two main functions in **sentimentr** with four helper
 functions summarized in the table below:
 
 <table>
@@ -224,6 +224,10 @@ functions summarized in the table below:
 <tr class="odd">
 <td align="left"><code>replace_emoticon</code></td>
 <td align="left">Replace emoticons with word equivalent</td>
+</tr>
+<tr class="even">
+<td align="left"><code>as.key</code></td>
+<td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
 </tr>
 </tbody>
 </table>
@@ -402,19 +406,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19534.8874 19719.3494 19782.8247 19903.8114
-        sentimentr_hu_liu()   220.7847   224.1138   226.0406   227.4429
-     sentimentr_sentiword()   969.6914   973.4066   979.2458   977.1219
-             syuzhet_binn()   356.9010   357.5310   363.1912   358.1610
-              syuzhet_nrc()   884.7328   892.4310   914.2375   900.1292
-            syuzhet_afinn()   162.0473   162.6307   172.1710   163.2141
+                 stanford() 21020.2987 22083.3079 22505.0046 23146.3171
+        sentimentr_hu_liu()   174.1415   176.1858   192.7617   178.2301
+     sentimentr_sentiword()   724.4340   729.6015   868.0329   734.7691
+             syuzhet_binn()   253.3472   256.5973   286.7103   259.8474
+              syuzhet_nrc()   615.2394   723.2027   813.4100   831.1661
+            syuzhet_afinn()   156.4178   158.9233   169.6321   161.4289
              uq        max neval
-     19906.7934 19909.7754     3
-       228.6686   229.8943     3
-       984.0230   990.9240     3
-       366.3362   374.5115     3
-       928.9898   957.8504     3
-       177.2328   191.2516     3
+     23247.3575 23348.3980     3
+       202.0719   225.9136     3
+       939.8324  1144.8957     3
+       303.3919   346.9364     3
+       912.4953   993.8245     3
+       176.2392   191.0495     3
 
 Contact
 =======

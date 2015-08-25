@@ -182,9 +182,10 @@ mytext <- c(
 sentiment(mytext)
 sentiment(mytext, question.weight = 0)
 
-sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am))
-plot(sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am)))
-
+(sam <- sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am)))
+plot(sam)
+plot(sam, scale_range = TRUE, low_pass_size = 5)
+plot(sam, scale_range = TRUE, low_pass_size = 10)
 y <- "He was not the sort of man that one would describe as especially handsome."
 sentiment(y)
 sentiment(y, n.before=Inf)

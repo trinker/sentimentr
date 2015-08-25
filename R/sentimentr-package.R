@@ -145,6 +145,6 @@ NULL
 #' @keywords datasets
 #' @name emoticons
 #' @usage data(emoticons)
-#' @format A data frame with 82 rows and 2 variables
+#' @format A data frame with 75 rows and 2 variables
 #' @references \url{http://www.lingo2word.com/lists/emoticon_listH.html}
 NULL

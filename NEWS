@@ -42,6 +42,9 @@ MINOR FEATURES
 
 IMPROVEMENTS
 
+* `plot.sentiment` now used `...` to pass parameters to **syuzhet**'s
+  `get_transformed_values`.
+
 
 CHANGES
 

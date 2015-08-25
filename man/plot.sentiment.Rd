@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{The sentiment object.}
 
-\item{\ldots}{ignored}
+\item{\ldots}{Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.}
 }
 \value{
 Returns a \pkg{ggplot2} object.

@@ -75,6 +75,12 @@ emoticons[newp, ]
 emoticons <- sentimentr::emoticons %>%
 	   as.data.frame()
 
+emoticons <- emoticons %>%
+        arrange(x)
+
+dups <- which(duplicated(emoticons[[1]]))
+emoticons[c(dups), ]
+
 (check <- nrow(emoticons))
 emoticons[check + 1:2, ] <- NA
 emoticons[check + 1:2, "x"] <- newp
@@ -83,6 +89,11 @@ emoticons[check + 1:2, "y"] <- c("angel", "angel")
 
 emoticons <- emoticons %>%
 	   arrange(x)
+
+
+emoticons[which(duplicated(emoticons[[1]]) | duplicated(emoticons[[1]], fromLast=TRUE)), ]
+
+emoticons <- emoticons[-c(16, 19, 23, 24, 27, 53, 64), ]
 
 nrow(emoticons) == check + 1
 

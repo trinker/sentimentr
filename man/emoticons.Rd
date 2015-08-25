@@ -4,7 +4,7 @@
 \name{emoticons}
 \alias{emoticons}
 \title{Emoticons Data Set}
-\format{A data frame with 82 rows and 2 variables}
+\format{A data frame with 75 rows and 2 variables}
 \usage{
 data(emoticons)
 }
