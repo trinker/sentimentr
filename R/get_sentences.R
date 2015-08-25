@@ -61,7 +61,8 @@ get_sentences.sentiment_by <- function(x, ...) {
 #' @rdname get_sentences
 #' @export
 get_sentences2 <- function(x, ...) {
-    lapply(get_sents2(x), function(x) gsub("<<<TEMP>>>", ".", x))
+    lapply(lapply(get_sents2(x), function(x) gsub("<<<TEMP>>>", ".", x)),
+        function(x) gsub("^\\s+|\\s+$", "", x))
 }
 
 
