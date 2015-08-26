@@ -37,3 +37,14 @@ test_that("get_sentences works on sentment/sentiment_by",{
     expect_equal(get_sentences(uncombine(x)), y)
 
 })
+
+test_that("get_sentences works on get_sentences",{
+
+    x <- paste0(
+        "Mr. Brown comes! He says hello. i give him coffee.  i will ",
+        "go at 5 p. m. eastern time.  Or somewhere in between!go there"
+    )
+
+    expect_equal(get_sentences(x), get_sentences(get_sentences(x)))
+
+})

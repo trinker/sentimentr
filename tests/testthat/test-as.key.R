@@ -1,6 +1,6 @@
 context("Checking as.key")
 
-test_that("as.key ...",{
+test_that("as.key makes a data.table key",{
 
     key <- data.frame(
         words = sample(LETTERS),
