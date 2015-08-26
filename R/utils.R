@@ -88,30 +88,29 @@ make_words <- function(x, hyphen = ""){
     lapply(stringi::stri_split_regex(gsub("^\\s+|\\s+$", "", x), "[[:space:]]|(?=[,;:])"), function(y) gsub('~{2,}', ' ', y))
 }
 
-count_row_length <- function(x){
-    x <- stringi::stri_count_words(x)
-    x[is.na(x) | x == 0] <- 1
-    x
-}
-
-#' @importFrom data.table :=
-make_sentence_df <- function(x){
-
-    indx <- wc <- NULL
-
-    sents <- get_sents(x)
-    ids <- add_row_id(sents)
-    text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", unlist(sents))
-    dat <- data.frame(
-        id = ids,
-        sentences = text.var,
-    	wc = count_words(text.var),
-        stringsAsFactors = FALSE
-    )
-    data.table::setDT(dat)
-    dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA, with=FALSE][, indx:=NULL]
-}
-
+## count_row_length <- function(x){
+##     x <- stringi::stri_count_words(x)
+##     x[is.na(x) | x == 0] <- 1
+##     x
+## }
+##
+## # @importFrom data.table :=
+## make_sentence_df <- function(x){
+##
+##     indx <- wc <- NULL
+##
+##     sents <- get_sents(x)
+##     ids <- add_row_id(sents)
+##     text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", unlist(sents))
+##     dat <- data.frame(
+##         id = ids,
+##         sentences = text.var,
+##     	wc = count_words(text.var),
+##         stringsAsFactors = FALSE
+##     )
+##     data.table::setDT(dat)
+##     dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA, with=FALSE][, indx:=NULL]
+## }
 
 
 #' @importFrom data.table :=

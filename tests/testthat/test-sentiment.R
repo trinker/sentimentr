@@ -55,3 +55,16 @@ test_that("sentiment but.weight = 0 alters the output",{
 
     expect_false(all(x == y))
 })
+
+
+test_that("sentiment_by plots a ggplot object",{
+
+    mytext <- c(
+       'do you like it?  But I hate really bad dogs',
+       'I am the best friend.',
+       'Do you really like it?  I\'m not happy'
+    )
+
+    expect_true(is(plot(sentiment(mytext)), "ggplot"))
+
+})
