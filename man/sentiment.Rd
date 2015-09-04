@@ -16,10 +16,10 @@ sentiment(text.var, polarity_dt = sentimentr::polarity_table,
 weights with x and y as column names..}
 
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
-can alter a polarized word's meaning and a numic key for negators (1),
+can alter a polarized word's meaning and a numeric key for negators (1),
 amplifiers(2), and de-amplifiers (3) with x and y as column names.}
 
-\item{hyphen}{The character string to replace hyphens with.  Default repalces
+\item{hyphen}{The character string to replace hyphens with.  Default replaces
 with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
 would result in a space between words (e.g., 'sugar free').}
 
@@ -90,7 +90,7 @@ The words in each sentence (\eqn{w_{i,j,k}}) are searched and compared to a
 modified version of Hu, M., & Liu, B.'s (2004) dictionary of polarized words.
 Positive (\eqn{w_{i,j,k}^{+}}{w_i,j,k^+}) and negative
 (\eqn{w_{i,j,k}^{-}}{w_i,j,k^-}) words are tagged with a \eqn{+1} and \eqn{-1}
-respectively.  I will denote polarized words as \eqn{pw} for convience. These
+respectively.  I will denote polarized words as \eqn{pw} for convenience. These
 will form a polar cluster (\eqn{c_{i,j,l}}{c_i,j,l}) which is a subset of the a
 sentence (\eqn{c_{i,j,l} \subseteq s_i,j }{l_i,j,l \subseteq s_i,j}).
 
@@ -118,9 +118,9 @@ where \eqn{w_{i,jn}} is the number of words in the sentence.
 
 The core value in the cluster, the polarized word is acted uppon by valence
 shifters. Amplifiers increase the polarity by 1.8 (.8 is the default weight
-(\eqn{z})).  Amplifiers (\eqn{w_{i,j,k}^{a}}) become de-amplifiers if the clontext cluster
-contains an odd number of negators (\eqn{w_{i,j,k}^{n}}).  De-amplifiers work
-to decrease decrease the polarity.  Negation (\eqn{w_{i,j,k}^{n}}) acts on
+(\eqn{z})).  Amplifiers (\eqn{w_{i,j,k}^{a}}) become de-amplifiers if the context
+cluster contains an odd number of negators (\eqn{w_{i,j,k}^{n}}).  De-amplifiers
+work to decrease the polarity.  Negation (\eqn{w_{i,j,k}^{n}}) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the polarized
 word.  Negation is determined by raising -1 to the power of the number of
 negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that two
@@ -168,7 +168,7 @@ The polarity score is dependent upon the polarity dictionary used.
 This function defaults to the word polarity dictionary used by Hu, M., &
 Liu, B. (2004), however, this may not be appropriate for the context of
 children in a classroom.  The user may (is encouraged) to provide/augment the
-dictionary (see the \code{sentiment_frame} function).  For instance the word
+dictionary (see the \code{as.key} function).  For instance the word
 "sick" in a high school setting may mean that something is good, whereas
 "sick" used by a typical adult indicates something is not right or negative
 connotation (\strong{deixis}).
