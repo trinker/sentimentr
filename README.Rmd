@@ -223,7 +223,7 @@ The user may wish to see the output from `sentiment_by` line by line with positi
 highlight(with(subset(cannon_reviews, number %in% 1:3), sentiment_by(review, number)))
 ```
 
-![](inst/highlight.png)
+![](inst/figure/highlight.png)
 
 # Contact
 

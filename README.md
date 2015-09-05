@@ -434,7 +434,7 @@ with positive/negative sentences highlighted. The `highlight` wraps
 green; negative = pink). Here we look at the first three reviews from Hu
 and Liu's (2004) Cannon G3 Camera Amazon product reviews.
 
-![](inst/highlight.png)
+![](inst/figure/highlight.png)
 
 Contact
 =======
