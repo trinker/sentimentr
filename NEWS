@@ -38,6 +38,8 @@ NEW FEATURES
   preferable in such instances where these features are deemed important to the
   analysis at hand.
 
+* `syntax_highlight` added to allow positive/negativ syntax highlighting.
+
 MINOR FEATURES
 
 IMPROVEMENTS

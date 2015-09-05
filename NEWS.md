@@ -38,9 +38,14 @@ sentimentr 0.1.0
   preferable in such instances where these features are deemed important to the
   analysis at hand.
 
+* `syntax_highlight` added to allow positive/negativ syntax highlighting.
+
 **MINOR FEATURES**
 
 IMPROVEMENTS
+
+* `plot.sentiment` now used `...` to pass parameters to **syuzhet**'s
+  `get_transformed_values`.
 
 
 **CHANGES**
