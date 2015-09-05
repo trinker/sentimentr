@@ -232,7 +232,7 @@ functions summarized in the table below:
 </tr>
 <tr class="odd">
 <td align="left"><code>highlight</code></td>
-<td align="left">Highlight positive/negative sentence as an HTML document</td>
+<td align="left">Highlight positive/negative sentences as an HTML document</td>
 </tr>
 </tbody>
 </table>
