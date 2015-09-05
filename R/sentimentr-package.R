@@ -148,3 +148,36 @@ NULL
 #' @format A data frame with 75 rows and 2 variables
 #' @references \url{http://www.lingo2word.com/lists/emoticon_listH.html}
 NULL
+
+
+#' Cannon G3 Camera Product Reviews From Amazon
+#'
+#' A dataset containing Amazon product reviews for the Cannon G3 Camera.  This
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains for
+#' than one opinion score and average of all scores is used.
+#'
+#' @details
+#' \itemize{
+#'   \item number. The review number.
+#'   \item opinion.score. Hu and Liu (2004)'s average opionion rating for a
+#'   sentence.   Negative and positive reflects dirrection, a negative or positive
+#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   \item review. The text from the review.
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name cannon_reviews
+#' @usage data(cannon_reviews)
+#' @format A data frame with 45 rows and 2 variables
+#' @references
+#' Minqing Hu and Bing Liu. "Mining and summarizing customer reviews".
+#'    Proceedings of the ACM SIGKDD International Conference on
+#'    Knowledge Discovery & Data Mining (KDD-04), 2004.
+#'
+#' Minqing Hu and Bing Liu. "Mining Opinion Features in Customer
+#'    Reviews." Proceedings of Nineteeth National Conference on
+#'    Artificial Intellgience (AAAI-2004), 2004.
+#'
+#' \url{http://www.cs.uic.edu/~liub/FBS/FBS.html}
+NULL

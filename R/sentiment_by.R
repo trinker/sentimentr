@@ -40,6 +40,11 @@
 #' (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 #' plot(out)
 #' plot(uncombine(out))
+#'
+#' with(cannon_reviews, sentiment_by(review, number))[order(as.numeric(number))]
+#' \dontrun{
+#' highlight(with(cannon_reviews, sentiment_by(review, number)))
+#' }
 sentiment_by <- function(text.var, by = NULL, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL

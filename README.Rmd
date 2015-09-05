@@ -90,7 +90,7 @@ pacman::p_load_gh("trinker/sentimentr")
 ```
 # Usage
 
-There are two main functions in **sentimentr** with four helper functions summarized in the table below:
+There are two main functions in **sentimentr** with five helper functions summarized in the table below:
 
 
 | Function         |  Description                                          |
@@ -101,6 +101,7 @@ There are two main functions in **sentimentr** with four helper functions summar
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
 | `replace_emoticon`| Replace emoticons with word equivalent               |
 | `as.key`         | Coerce a `data.frame` lexicon to a polarity hash key  |
+| `highlight`      | Highlight positive/negative sentence as an HTML document |
 
 # Examples
 
@@ -213,6 +214,16 @@ microbenchmark(
     times = 3
 )
 ```
+
+## Text Highlighting
+
+The user may wish to see the output from `sentiment_by` line by line with positive/negative sentences highlighted.  The `highlight` wraps `sentiment_by` output to produces a highlighted HTML file (positive = green; negative = pink). Here we look at the first three reviews from Hu and Liu's (2004) Cannon G3 Camera Amazon product reviews.  
+
+```{r echo=FALSE, eval=FALSE}
+highlight(with(subset(cannon_reviews, number %in% 1:3), sentiment_by(review, number)))
+```
+
+![](inst/highlight.png)
 
 # Contact
 

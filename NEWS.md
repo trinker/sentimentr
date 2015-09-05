@@ -40,6 +40,9 @@ sentimentr 0.1.0
 
 * `highlight` added to allow positive/negativ text highlighting.
 
+* `cannon_reviews` data set added containing Amazon product reviews for the
+  Cannon G3 Camera compiled by Hu and Liu (2004).
+
 **MINOR FEATURES**
 
 IMPROVEMENTS

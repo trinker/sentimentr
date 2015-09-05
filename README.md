@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.1.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.2-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.1.3-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.3-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -55,6 +55,7 @@ Table of Contents
         -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Text Highlighting](#text-highlighting)
 -   [Contact](#contact)
 
 The Equation
@@ -194,7 +195,7 @@ the development version:
 Usage
 =====
 
-There are two main functions in **sentimentr** with four helper
+There are two main functions in **sentimentr** with five helper
 functions summarized in the table below:
 
 <table>
@@ -228,6 +229,10 @@ functions summarized in the table below:
 <tr class="even">
 <td align="left"><code>as.key</code></td>
 <td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>highlight</code></td>
+<td align="left">Highlight positive/negative sentence as an HTML document</td>
 </tr>
 </tbody>
 </table>
@@ -406,19 +411,30 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19814.2380 20164.8303 20389.6212 20515.4226
-        sentimentr_hu_liu()   190.2419   212.2217   220.0567   234.2016
-     sentimentr_sentiword()   712.4947   740.6414   808.4347   768.7880
-             syuzhet_binn()   296.7237   303.9136   315.9296   311.1035
-              syuzhet_nrc()   627.3655   689.4196   769.3540   751.4737
-            syuzhet_afinn()   140.4882   141.5478   144.0354   142.6074
+                 stanford() 20718.9255 21424.5779 22853.5198 22130.2303
+        sentimentr_hu_liu()   190.7887   209.3424   217.9984   227.8960
+     sentimentr_sentiword()   798.2538   847.2275   891.3337   896.2011
+             syuzhet_binn()   368.0512   373.3091   380.1668   378.5669
+              syuzhet_nrc()   890.9371   909.1986   968.5588   927.4601
+            syuzhet_afinn()   164.1205   169.6536   205.8275   175.1867
              uq        max neval
-     20677.3128 20839.2029     3
-       234.9641   235.7267     3
-       856.4046   944.0212     3
-       325.5325   339.9616     3
-       840.3483   929.2230     3
-       145.8091   149.0107     3
+     23920.8169 25711.4035     3
+       231.6032   235.3104     3
+       937.8736   979.5462     3
+       386.2246   393.8824     3
+      1007.3697  1087.2793     3
+       226.6810   278.1752     3
+
+Text Highlighting
+-----------------
+
+The user may wish to see the output from `sentiment_by` line by line
+with positive/negative sentences highlighted. The `highlight` wraps
+`sentiment_by` output to produces a highlighted HTML file (positive =
+green; negative = pink). Here we look at the first three reviews from Hu
+and Liu's (2004) Cannon G3 Camera Amazon product reviews.
+
+![](inst/highlight.png)
 
 Contact
 =======

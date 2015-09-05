@@ -30,6 +30,8 @@
 #' \dontrun{
 #' highlight(sent_dat)
 #' highlight(sent_dat, original.text = dat[["dialogue"]])
+#'
+#' highlight(with(cannon_reviews, sentiment_by(review, number)))
 #' }
 highlight <- function(x, original.text = NULL, file = "polarity.html",
     open = TRUE, digits = 3, ...){
