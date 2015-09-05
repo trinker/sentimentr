@@ -308,7 +308,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 #' @export
 plot.sentiment <- function(x, ...){
 
-    m <- syuzhet::get_transformed_values(na.omit(x[["sentiment"]]), ...)
+    m <- syuzhet::get_transformed_values(stats::na.omit(x[["sentiment"]]), ...)
 
     dat <- data.frame(
         Emotional_Valence = m,

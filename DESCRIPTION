@@ -8,7 +8,7 @@ Description: Calculate text polarity sentiment at the sentence level
         and optionally aggregate by rows or grouping variable(s).
 Depends: R (>= 3.2.1)
 Suggests: testthat
-Imports: data.table, ggplot2, stats, stringi, syuzhet
+Imports: data.table, ggplot2, graphics, methods, stats, stringi, syuzhet, utils
 Date: 2015-09-05
 License: GPL-2
 LazyData: TRUE

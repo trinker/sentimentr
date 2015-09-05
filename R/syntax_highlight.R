@@ -22,13 +22,19 @@
 #' setDT(dat)
 #'
 #' dat[, gr:={gr= paste(person, time); cumsum(c(TRUE, gr[-1]!= gr[-.N]))}]
-#' dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue, collapse = ' ')), by = gr][,gr:= NULL][]
+#' dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue,
+#'     collapse = ' ')), by = gr][,gr:= NULL][]
 #'
 #' (sent_dat <- with(dat, sentiment_by(dialogue, list(person, time))))
 #'
+#' \dontrun{
 #' syntax_highlight(sent_dat)
 #' syntax_highlight(sent_dat, original.text = dat[["dialogue"]])
-syntax_highlight <- function(x, original.text = NULL, file = "polarity.html", open = TRUE, digits = 3, ...){
+#' }
+syntax_highlight <- function(x, original.text = NULL, file = "polarity.html",
+    open = TRUE, digits = 3, ...){
+
+    polarity <- grouping.var <- NULL
 
     if (!inherits(x, "sentiment_by")) stop("Must be a `sentiment_by` object")
 
@@ -63,7 +69,8 @@ syntax_highlight <- function(x, original.text = NULL, file = "polarity.html", op
 
     y[, grouping.var:= eval(mygrps)]
 
-    y[, txt := sprintf("<h1>%s: <em>%s</em></h1><p class=\"indented\">%s</p>", grouping.var, formdig(sentiment, digits), txt)]
+    y[, txt := sprintf("<h1>%s: <em>%s</em></h1><p class=\"indented\">%s</p>",
+        grouping.var, formdig(sentiment, digits), txt)]
 
     body <- paste(y[["txt"]], collapse="\n")
 
@@ -72,7 +79,7 @@ syntax_highlight <- function(x, original.text = NULL, file = "polarity.html", op
     if (file.exists(file)) message(sprintf("%s appears to be generated", file))
     if (open){
         message(sprintf("Attempting to open %s", file))
-        browseURL(file)
+        utils::browseURL(file)
     }
 }
 

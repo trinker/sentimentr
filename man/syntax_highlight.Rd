@@ -38,11 +38,14 @@ dat <- presidential_debates_2012
 setDT(dat)
 
 dat[, gr:={gr= paste(person, time); cumsum(c(TRUE, gr[-1]!= gr[-.N]))}]
-dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue, collapse = ' ')), by = gr][,gr:= NULL][]
+dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue,
+    collapse = ' ')), by = gr][,gr:= NULL][]
 
 (sent_dat <- with(dat, sentiment_by(dialogue, list(person, time))))
 
+\dontrun{
 syntax_highlight(sent_dat)
 syntax_highlight(sent_dat, original.text = dat[["dialogue"]])
+}
 }
 

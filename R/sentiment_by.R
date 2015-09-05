@@ -104,6 +104,7 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
 #' @param x The sentiment_by object.
 #' @param \ldots ignored
 #' @method plot sentiment_by
+#' @importFrom graphics plot
 #' @return Returns a \pkg{ggplot2} object.
 #' @export
 plot.sentiment_by <- function(x, ...){
