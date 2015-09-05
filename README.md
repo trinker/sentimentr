@@ -429,9 +429,9 @@ Text Highlighting
 -----------------
 
 The user may wish to see the output from `sentiment_by` line by line
-with positive/negative sentences highlighted. The `highlight` wraps
+with positive/negative sentences highlighted. The `highlight` function wraps a 
 `sentiment_by` output to produces a highlighted HTML file (positive =
-green; negative = pink). Here we look at the first three reviews from Hu
+green; negative = pink). Here we look at three random reviews from Hu
 and Liu's (2004) Cannon G3 Camera Amazon product reviews.
 
     set.seed(2)
