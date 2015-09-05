@@ -99,7 +99,7 @@ formdig <- function(x, digits) {
 
     if (digits > 0) x <- sprintf(paste0("%.", digits, "f"), x)
     out <- gsub("^0(?=\\.)|(?<=-)0", "", x, perl=TRUE)
-    out[out == "NA"] <- ""
+    out[out %in% c("NA", "NaN")] <- ""
     out[reps & !is.na(reps)] <- ""
     out[pos & !is.na(pos)] <- paste0("+", out[pos & !is.na(pos)])
     out
