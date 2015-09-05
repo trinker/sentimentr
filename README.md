@@ -411,19 +411,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20718.9255 21424.5779 22853.5198 22130.2303
-        sentimentr_hu_liu()   190.7887   209.3424   217.9984   227.8960
-     sentimentr_sentiword()   798.2538   847.2275   891.3337   896.2011
-             syuzhet_binn()   368.0512   373.3091   380.1668   378.5669
-              syuzhet_nrc()   890.9371   909.1986   968.5588   927.4601
-            syuzhet_afinn()   164.1205   169.6536   205.8275   175.1867
+                 stanford() 22340.2145 22441.0371 22879.4288 22541.8597
+        sentimentr_hu_liu()   197.6678   209.3764   225.8777   221.0850
+     sentimentr_sentiword()   768.3389   868.9484   904.6249   969.5580
+             syuzhet_binn()   348.2173   355.3275   393.9643   362.4378
+              syuzhet_nrc()   844.5864   873.3304   894.1785   902.0744
+            syuzhet_afinn()   160.0737   160.3063   162.4504   160.5389
              uq        max neval
-     23920.8169 25711.4035     3
-       231.6032   235.3104     3
-       937.8736   979.5462     3
-       386.2246   393.8824     3
-      1007.3697  1087.2793     3
-       226.6810   278.1752     3
+     23149.0360 23756.2122     3
+       239.9827   258.8803     3
+       972.7678   975.9777     3
+       416.8379   471.2379     3
+       918.9746   935.8747     3
+       163.6387   166.7385     3
 
 Text Highlighting
 -----------------
@@ -433,6 +433,9 @@ with positive/negative sentences highlighted. The `highlight` wraps
 `sentiment_by` output to produces a highlighted HTML file (positive =
 green; negative = pink). Here we look at the first three reviews from Hu
 and Liu's (2004) Cannon G3 Camera Amazon product reviews.
+
+    set.seed(2)
+    highlight(with(subset(cannon_reviews, number %in% sample(unique(number), 3)), sentiment_by(review, number)))
 
 ![](inst/figure/highlight.png)
 
