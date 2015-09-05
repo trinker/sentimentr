@@ -1,6 +1,6 @@
 Package: sentimentr
 Title: Calculate Text Polarity Sentiment
-Version: 0.1.0
+Version: 0.1.3
 Authors@R: c(person("Tyler", "Rinker", email =
         "tyler.rinker@gmail.com", role = c("aut", "cre")))
 Maintainer: Tyler Rinker <tyler.rinker@gmail.com>

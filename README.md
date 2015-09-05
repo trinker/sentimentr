@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.1.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.0-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.1.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.2-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -406,19 +406,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 21020.2987 22083.3079 22505.0046 23146.3171
-        sentimentr_hu_liu()   174.1415   176.1858   192.7617   178.2301
-     sentimentr_sentiword()   724.4340   729.6015   868.0329   734.7691
-             syuzhet_binn()   253.3472   256.5973   286.7103   259.8474
-              syuzhet_nrc()   615.2394   723.2027   813.4100   831.1661
-            syuzhet_afinn()   156.4178   158.9233   169.6321   161.4289
+                 stanford() 19814.2380 20164.8303 20389.6212 20515.4226
+        sentimentr_hu_liu()   190.2419   212.2217   220.0567   234.2016
+     sentimentr_sentiword()   712.4947   740.6414   808.4347   768.7880
+             syuzhet_binn()   296.7237   303.9136   315.9296   311.1035
+              syuzhet_nrc()   627.3655   689.4196   769.3540   751.4737
+            syuzhet_afinn()   140.4882   141.5478   144.0354   142.6074
              uq        max neval
-     23247.3575 23348.3980     3
-       202.0719   225.9136     3
-       939.8324  1144.8957     3
-       303.3919   346.9364     3
-       912.4953   993.8245     3
-       176.2392   191.0495     3
+     20677.3128 20839.2029     3
+       234.9641   235.7267     3
+       856.4046   944.0212     3
+       325.5325   339.9616     3
+       840.3483   929.2230     3
+       145.8091   149.0107     3
 
 Contact
 =======

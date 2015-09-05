@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>replace_emoticon. sentimentr 0.1.3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">sentimentr 0.1.3</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Replace Emoticons With Words</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>replace_emoticon(text.var, emoticon_dt&nbsp;=&nbsp;sentimentr::emoticons, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>text.var</dt>
+      <dd>The text variable.</dd>
+      <dt>emoticon_dt</dt>
+      <dd>A <span class = "pkg">data.table</span> of emoticons (graphical representations)
+and corresponding word meanings.</dd>
+      <dt>...</dt>
+      <dd>Other arguments passed to <code>.mgsub</code> (see
+<a href = 'http://www.inside-r.org/packages/cran/qdap/docs/multigsub'>multigsub</a>
+from the <span class = "pkg">qdap</span> for details).</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Returns a vector of strings with emoticons replaced with word
+equivalents.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Replaces emoticons with word equivalents.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>x &lt;- c(
+    &quot;text from: http://www.webopedia.com/quick_ref/textmessageabbreviations_02.asp&quot;,
+    &quot;... understanding what different characters used in smiley faces mean:&quot;,
+    &quot;The close bracket represents a sideways smile  )&quot;,
+    &quot;Add in the colon and you have sideways eyes   :&quot;,
+    &quot;Put them together to make a smiley face  :)&quot;,
+    &quot;Use the dash -  to add a nose   :-)&quot;,
+    &quot;Change the colon to a semi-colon ; and you have a winking face ;)  with a nose  ;-)&quot;,
+    &quot;Put a zero 0 (halo) on top and now you have a winking, smiling angel 0;) with a nose 0;-)&quot;,
+    &quot;Use the letter 8 in place of the colon for sunglasses 8-)&quot;,
+    &quot;Use the open bracket ( to turn the smile into a frown  :-(&quot;
+)
+
+replace_emoticon(x)
+</div>
+<div class='output'> [1] &quot;text from: http://www.webopedia.com/quick_ref/textmessageabbreviations_02.asp&quot;                
+ [2] &quot;... understanding what different characters used in smiley faces mean:&quot;                       
+ [3] &quot;The close bracket represents a sideways smile )&quot;                                              
+ [4] &quot;Add in the colon and you have sideways eyes :&quot;                                                
+ [5] &quot;Put them together to make a smiley face happy &quot;                                               
+ [6] &quot;Use the dash - to add a nose happy &quot;                                                          
+ [7] &quot;Change the colon to a semi-colon ; and you have a winking face winking with a nose winking &quot;  
+ [8] &quot;Put a zero 0 (halo) on top and now you have a winking, smiling angel angel with a nose angel &quot;
+ [9] &quot;Use the letter 8 in place of the colon for sunglasses glasses &quot;                               
+[10] &quot;Use the open bracket ( to turn the smile into a frown sad &quot;                                   
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>replace_emoticon</li>
+    </ul>
+    <ul>
+      <li>emoticon</li>
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

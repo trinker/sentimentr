@@ -1,4 +1,4 @@
-#' Polarity Syntax Highlighting
+#' Polarity Text Highlighting
 #'
 #' Highlight sentences within elements (row IDs) by sentiment polarity
 #' (positive = green; negative = pink) as an html file.
@@ -9,12 +9,12 @@
 #' \code{sentiment_by} object that is striped of many punctuation marks and
 #' capitalizations.
 #' @param file A nam of the html file output.
-#' @param open logical.  If ]code{TRUE} the syntax highlighting document will
+#' @param open logical.  If ]code{TRUE} the text highlighting document will
 #' attempt to be opened.
 #' @param digits  The number of digits to print for each row level average
 #' sentiment score.
 #' @param \ldots Ignored.
-#' @return Generates an html document with syntax highlighting.
+#' @return Generates an html document with text highlighting.
 #' @export
 #' @examples
 #' library(data.table)
@@ -28,10 +28,10 @@
 #' (sent_dat <- with(dat, sentiment_by(dialogue, list(person, time))))
 #'
 #' \dontrun{
-#' syntax_highlight(sent_dat)
-#' syntax_highlight(sent_dat, original.text = dat[["dialogue"]])
+#' highlight(sent_dat)
+#' highlight(sent_dat, original.text = dat[["dialogue"]])
 #' }
-syntax_highlight <- function(x, original.text = NULL, file = "polarity.html",
+highlight <- function(x, original.text = NULL, file = "polarity.html",
     open = TRUE, digits = 3, ...){
 
     polarity <- grouping.var <- NULL
@@ -69,8 +69,8 @@ syntax_highlight <- function(x, original.text = NULL, file = "polarity.html",
 
     y[, grouping.var:= eval(mygrps)]
 
-    y[, txt := sprintf("<h1>%s: <em>%s</em></h1><p class=\"indented\">%s</p>",
-        grouping.var, formdig(sentiment, digits), txt)]
+    y[, txt := sprintf("<h1>%s: <em><span style=\"color: %s\">%s</span></em></h1><p class=\"indented\">%s</p>",
+        grouping.var, ifelse(sentiment < 0, "red", ifelse(sentiment > 0, "green", "#D0D0D0")), formdig(sentiment, digits), txt)]
 
     body <- paste(y[["txt"]], collapse="\n")
 
@@ -86,7 +86,7 @@ syntax_highlight <- function(x, original.text = NULL, file = "polarity.html",
 
 formdig <- function(x, digits) {
 
-    reps <- x == 0
+    #reps <- x == 0
     pos <- x > 0
     if (is.null(digits)) digits <- 3
 
@@ -100,7 +100,7 @@ formdig <- function(x, digits) {
     if (digits > 0) x <- sprintf(paste0("%.", digits, "f"), x)
     out <- gsub("^0(?=\\.)|(?<=-)0", "", x, perl=TRUE)
     out[out %in% c("NA", "NaN")] <- ""
-    out[reps & !is.na(reps)] <- ""
+    #out[reps & !is.na(reps)] <- ""
     out[pos & !is.na(pos)] <- paste0("+", out[pos & !is.na(pos)])
     out
 }
@@ -116,7 +116,7 @@ html <- c(
 
 style <- c("h1 { ", "    display: block;", "    font-size: 1.2em;", "    margin-top: 0.0em;",
     "    margin-bottom: 0.0em;", "    margin-left: 0;", "    margin-right: 0;",
-    "    font-weight: bold;", "}", ".indented {", "    margin-left: 5%%;",
+    "    font-weight: bold;", "}", ".indented {", "    margin-left: 5%%;", "    margin-right: 5%%;",
     "}")
 
 html <- sprintf(paste(html, collapse="\n"), paste(style, collapse="\n"), "%s")
