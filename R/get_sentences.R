@@ -10,7 +10,7 @@
 #' @param x A character vector, \code{sentiment}, or \code{sentiment_by} object.
 #' @param \ldots Ignored.
 #' @export
-#' @return \code{subs} - Returns a list of sub-expressions.
+#' @return Returns a list of vectors of sentences.
 #' @rdname get_sentences
 #' @examples
 #' (x <- paste0(
