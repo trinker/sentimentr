@@ -59,7 +59,7 @@ sent_regex2 <- sprintf("((?<=\\b(%s))\\.)|%s|(%s)",
 
 get_sents <- function(x) {
 	if (methods::is(x, "get_sentences")) return(x)
-    y <- stringi::stri_trans_tolower(stringi::stri_replace_all_regex(x, sent_regex, ""))
+    y <- stringi::stri_trans_tolower(stringi::stri_replace_all_regex(trimws(x), sent_regex, ""))
     stringi::stri_split_regex(y, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
 }
 
@@ -70,7 +70,7 @@ get_sents <- function(x) {
 #}
 
 get_sents2 <- function(x) {
-    y <- stringi::stri_replace_all_regex(x, sent_regex, "<<<TEMP>>>")
+    y <- stringi::stri_replace_all_regex(trimws(x), sent_regex, "<<<TEMP>>>")
     stringi::stri_split_regex(y, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
 }
 

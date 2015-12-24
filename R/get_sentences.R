@@ -28,7 +28,7 @@ get_sentences <- function(x, ...) {
 #' @export
 #' @method get_sentences character
 get_sentences.character <- function(x, ...) {
-    out <- lapply(get_sents(x), function(x) gsub("^\\s+|\\s+$", "", x))
+    out <- lapply(get_sents(trimws(x)), function(x) gsub("^\\s+|\\s+$", "", x))
     class(out) <- unique(c("get_sentences", class(out)))
     out
 }
