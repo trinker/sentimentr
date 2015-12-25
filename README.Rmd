@@ -100,7 +100,7 @@ There are two main functions in **sentimentr** with five helper functions summar
 | `uncombine`      | Extract sentence level sentiment from  `sentiment_by` |
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
 | `replace_emoticon`| Replace emoticons with word equivalent               |
-| `as.key`         | Coerce a `data.frame` lexicon to a polarity hash key  |
+| `as_key`         | Coerce a `data.frame` lexicon to a polarity hash key  |
 | `highlight`      | Highlight positive/negative sentences as an HTML document |
 
 # Examples

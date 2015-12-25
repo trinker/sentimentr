@@ -227,7 +227,7 @@ functions summarized in the table below:
 <td align="left">Replace emoticons with word equivalent</td>
 </tr>
 <tr class="even">
-<td align="left"><code>as.key</code></td>
+<td align="left"><code>as_key</code></td>
 <td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
 </tr>
 <tr class="odd">

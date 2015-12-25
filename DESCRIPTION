@@ -5,21 +5,12 @@ Authors@R: c(person("Tyler", "Rinker", email =
         "tyler.rinker@gmail.com", role = c("aut", "cre")))
 Maintainer: Tyler Rinker <tyler.rinker@gmail.com>
 Description: Calculate text polarity sentiment at the sentence level
-    and optionally aggregate by rows or grouping variable(s).
-Depends:
-    R (>= 3.2.1)
-Suggests:
-    testthat
-Imports:
-    data.table,
-    ggplot2,
-    graphics,
-    methods,
-    stats,
-    stringi,
-    syuzhet,
-    utils
-Date: 2015-12-24
+        and optionally aggregate by rows or grouping variable(s).
+Depends: R (>= 3.2.1)
+Suggests: testthat
+Imports: data.table, ggplot2, graphics, methods, stats, stringi,
+        syuzhet, utils
+Date: 2015-12-25
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)

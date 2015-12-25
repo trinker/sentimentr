@@ -60,7 +60,7 @@
 #' This function defaults to the word polarity dictionary used by Hu, M., &
 #' Liu, B. (2004), however, this may not be appropriate for the context of
 #' children in a classroom.  The user may (is encouraged) to provide/augment the
-#' dictionary (see the \code{as.key} function).  For instance the word
+#' dictionary (see the \code{as_key} function).  For instance the word
 #' "sick" in a high school setting may mean that something is good, whereas
 #' "sick" used by a typical adult indicates something is not right or negative
 #' connotation (\strong{deixis}).

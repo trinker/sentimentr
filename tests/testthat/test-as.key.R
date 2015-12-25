@@ -1,6 +1,6 @@
-context("Checking as.key")
+context("Checking as_key")
 
-test_that("as.key makes a data.table key",{
+test_that("as_key makes a data.table key",{
 
     key <- data.frame(
         words = sample(LETTERS),
@@ -8,7 +8,7 @@ test_that("as.key makes a data.table key",{
         stringsAsFactors = FALSE
     )
 
-    mykey <- as.key(key)
+    mykey <- as_key(key)
 
     expect_true(is(mykey, "data.table"))
     expect_true(all(dim(mykey) == c(26, 2)))

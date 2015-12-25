@@ -22,7 +22,7 @@
 #'     stringsAsFactors = FALSE
 #' )
 #'
-#' (mykey <- as.key(key))
+#' (mykey <- as_key(key))
 #'
 #' # Looking up values
 #' mykey[c("A", "K")][[2]]
@@ -30,19 +30,19 @@
 #' # Using syuzhet's sentiment lexicons
 #' \dontrun{
 #' library(syuzhet)
-#' as.key(syuzhet:::bing)
-#' as.key(syuzhet:::afinn)
+#' as_key(syuzhet:::bing)
+#' as_key(syuzhet:::afinn)
 #' nrc <- data.frame(
 #'     words = rownames(syuzhet:::nrc),
 #'     polarity = syuzhet:::nrc[, "positive"] - syuzhet:::nrc[, "negative"],
 #'     stringsAsFactors = FALSE
 #' )
 #'
-#' as.key(nrc[nrc[["polarity"]] != 0, ])
+#' as_key(nrc[nrc[["polarity"]] != 0, ])
 #'
-#' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as.key(syuzhet:::bing))
+#' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as_key(syuzhet:::bing))
 #' }
-as.key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
+as_key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
 
     stopifnot(is.data.frame(x))
     if (is.factor(x[[1]])) {
