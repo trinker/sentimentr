@@ -434,7 +434,7 @@ approach to take in sentiment detection. Both **syuzhet** and
 **sentimentr** provide multiple dictionaries with a general algorithm to
 compute sentiment scores. **syuzhet** provides 3 approaches while
 **sentimentr** provides 2, but can be extended easily using the 3
-dictionaries fromt he **syuzhet** package. The follow visualization
+dictionaries from the **syuzhet** package. The follow visualization
 provides the accuracy of these approaches in comparison to Stanford's
 **Java** based implementation of sentiment detection. The visualization
 is generated from testing on three reviews data sets from Kotzias,
@@ -458,7 +458,7 @@ output to determine accuracy rates.
 <img src="inst/figure/comparisons_between_sentiment_detectors2.png" width="100%" alt="sent comp">
 
 The bar graph on the left shows the accuracy rates for the various
-sentiment set-ups in the three review contexts. The rank plot the right
+sentiment set-ups in the three review contexts. The rank plot on the right
 shows how the rankings for the methods varied across the three review
 contexts (note that rank ties were determined by
 `ties.method = "first"`).
