@@ -480,7 +480,7 @@ detection set up most applicable to the reader's needs.
 
 The reader may access the R script used to generate this visual via:
 
-    testing <- system.file("sentiment_testing.R", package = "sentimentr")
+    testing <- system.file("sentiment_testing/sentiment_testing.R", package = "sentimentr")
     file.copy(testing, getwd())
 
 Text Highlighting

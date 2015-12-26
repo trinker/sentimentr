@@ -238,7 +238,7 @@ It is important to point out that this is a small sample data set that covers a 
 The reader may access the R script used to generate this visual via:
 
 ```{r, eval=FALSE}
-testing <- system.file("sentiment_testing.R", package = "sentimentr")
+testing <- system.file("sentiment_testing/sentiment_testing.R", package = "sentimentr")
 file.copy(testing, getwd())
 ```
 
