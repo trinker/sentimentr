@@ -449,7 +449,7 @@ The data sets are hand scored as either positive or negative. The
 testing here merely matches the sign of the algorithm to the human coded
 output to determine accuracy rates.
 
--   Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). *From
+-   Kotzias, D., Denil, M., De Freitas, N., & Smyth,P. (2015). *From
     group to individual labels using deep features*. Proceedings of the
     21th ACM SIGKDD International Conference on Knowledge Discovery and
     Data Mining. 597-606.

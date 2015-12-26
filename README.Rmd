@@ -225,7 +225,7 @@ The accuracy of an algorithm weighs heavily into the decision as to what approac
 
 The data sets are hand scored as either positive or negative.  The testing here merely matches the sign of the algorithm to the human coded output to determine accuracy rates.
 
-- Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). *From group to individual labels using deep features*. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 597-606. http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
+- Kotzias, D., Denil, M., De Freitas, N., & Smyth,P. (2015). *From group to individual labels using deep features*. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 597-606. http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 
 <img src="inst/figure/comparisons_between_sentiment_detectors2.png" width="100%" alt="sent comp">  
 
