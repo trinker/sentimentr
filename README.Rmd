@@ -215,6 +215,33 @@ microbenchmark(
 )
 ```
 
+## Comparing sentimentr, syuzhet, and Stanford
+
+The accuracy of an algorithm weighs heavily into the decision as to what approach to take in sentiment detection.  Both **syuzhet** and **sentimentr** provide multiple dictionaries with a general algorithm to compute sentiment scores. **syuzhet** provides 3 approaches while **sentimentr** provides 2, but can be extended easily using the 3 dictionaries fromt he **syuzhet** package.  The follow visualization provides the accuracy of these approaches in comparison to Stanford's **Java** based implementation of sentiment detection.  The visualization is generated from testing on three reviews data sets from Kotzias, Denil, De Freitas, & Smyth (2015).  These authors utilized the three 1000 element data sets from:
+
+- amazon.com
+- imdb.com
+- yelp.com
+
+The data sets are hand scored as either positive or negative.  The testing here merely matches the sign of the algorithm to the human coded output to determine accuracy rates.
+
+- Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). *From group to individual labels using deep features*. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 597-606. http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
+
+<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width="100%" alt="sent comp">  
+
+The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot the right shows how the rankings for the methods varied across the three review contexts (note that rank ties were determined by `ties.method = "first"`).  
+
+The take away here seems that, unsurprisingly, Stanford's algorithm consistently out scores **syuzhet** and **sentimentr**.  The **sentimentr** approach loaded with the `hu_lu` dictionary is a top pick for speed and accuracy.  The `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comporable.
+
+It is important to point out that this is a small sample data set that covers a narrow range of uses for sentiment detection.  Jocker's **syuzhet** was designed to be applied across book chunks and it is, to some extent, unfair to test it out of this context.  Still this initial analysis provides a guide that may be of use for selecting the sentiment detection set up most applicable to the reader's needs.
+
+The reader may access the R script used to generate this visual via:
+
+```{r, eval=FALSE}
+testing <- system.file("sentiment_testing.R", package = "sentimentr")
+file.copy(testing, getwd())
+```
+
 ## Text Highlighting
 
 The user may wish to see the output from `sentiment_by` line by line with positive/negative sentences highlighted.  The `highlight` function wraps a `sentiment_by` output to produces a highlighted HTML file (positive = green; negative = pink). Here we look at three random reviews from Hu and Liu's (2004) Cannon G3 Camera Amazon product reviews.  

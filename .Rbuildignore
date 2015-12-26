@@ -12,11 +12,13 @@ contributors.geojson
 inst/build.R
 ^.*\.Rprofile$
 README.Rmd
+README.html
 README.R
 travis.yml
 inst/sentimentr_logo
 inst/staticdocs
 inst/extra_statdoc
 inst/maintenance.R
-inst/add_to_dictionary.R
-inst/Lexicon Scripts
+comparisons_between_sentiment_detectors.pdf
+comparisons_between_sentiment_detectors.png
+inst/data_create_scripts

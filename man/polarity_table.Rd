@@ -22,7 +22,7 @@ positive/negative word list as sentiment lookup values.
 Hu, M., & Liu, B. (2004). Mining opinion features in customer
 reviews. National Conference on Artificial Intelligence.
 
-\url{http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+\file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 }
 \keyword{datasets}
 

@@ -55,6 +55,7 @@ Table of Contents
         -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
     -   [Text Highlighting](#text-highlighting)
 -   [Contact](#contact)
 
@@ -357,15 +358,15 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
     ), "sentences")
 
       stanford hu_liu sentiword bing afinn nrc
-    1      0.5      0      0.27   -1    -2   0
-    2       -1    0.8      0.65    1     3   1
-    3     -0.5    0.5      0.32    1     3   1
-    4      0.5      0         0    1     3   1
-    5      0.5  -0.41     -0.56    1     3   1
-    6      0.5   0.06      0.05    1     3   1
-    7      0.5  -0.38     -0.05    1     2   1
+    1     -0.5      0      0.27   -1    -2   0
+    2        1    0.8      0.65    1     3   1
+    3      0.5    0.5      0.32    1     3   1
+    4     -0.5      0         0    1     3   1
+    5     -0.5  -0.41     -0.56    1     3   1
+    6     -0.5   0.06      0.05    1     3   1
+    7     -0.5  -0.38     -0.05    1     2   1
     8        0      0     -0.14    0     0  -1
-    9      0.5   0.38      0.24   -1    -3  -1
+    9     -0.5   0.38      0.24   -1    -3  -1
       sentences                                              
     1 I haven't been sad in a long time.                     
     2 I am extremely happy today.                            
@@ -411,28 +412,86 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 22340.2145 22441.0371 22879.4288 22541.8597
-        sentimentr_hu_liu()   197.6678   209.3764   225.8777   221.0850
-     sentimentr_sentiword()   768.3389   868.9484   904.6249   969.5580
-             syuzhet_binn()   348.2173   355.3275   393.9643   362.4378
-              syuzhet_nrc()   844.5864   873.3304   894.1785   902.0744
-            syuzhet_afinn()   160.0737   160.3063   162.4504   160.5389
+                 stanford() 22653.2750 22755.3807 22894.8700 22857.4864
+        sentimentr_hu_liu()   248.2902   254.6344   266.0804   260.9785
+     sentimentr_sentiword()   977.2922   982.8747   988.6231   988.4571
+             syuzhet_binn()   363.0680   377.2075   417.7497   391.3469
+              syuzhet_nrc()   930.6997   970.6681  1023.9279  1010.6365
+            syuzhet_afinn()   177.2105   183.6734   191.1983   190.1362
              uq        max neval
-     23149.0360 23756.2122     3
-       239.9827   258.8803     3
-       972.7678   975.9777     3
-       416.8379   471.2379     3
-       918.9746   935.8747     3
-       163.6387   166.7385     3
+     23015.6675 23173.8486     3
+       274.9755   288.9725     3
+       994.2885  1000.1199     3
+       445.0906   498.8343     3
+      1070.5420  1130.4476     3
+       198.1922   206.2481     3
+
+Comparing sentimentr, syuzhet, and Stanford
+-------------------------------------------
+
+The accuracy of an algorithm weighs heavily into the decision as to what
+approach to take in sentiment detection. Both **syuzhet** and
+**sentimentr** provide multiple dictionaries with a general algorithm to
+compute sentiment scores. **syuzhet** provides 3 approaches while
+**sentimentr** provides 2, but can be extended easily using the 3
+dictionaries fromt he **syuzhet** package. The follow visualization
+provides the accuracy of these approaches in comparison to Stanford's
+**Java** based implementation of sentiment detection. The visualization
+is generated from testing on three reviews data sets from Kotzias,
+Denil, De Freitas, & Smyth (2015). These authors utilized the three 1000
+element data sets from:
+
+-   amazon.com
+-   imdb.com
+-   yelp.com
+
+The data sets are hand scored as either positive or negative. The
+testing here merely matches the sign of the algorithm to the human coded
+output to determine accuracy rates.
+
+-   Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). *From
+    group to individual labels using deep features*. Proceedings of the
+    21th ACM SIGKDD International Conference on Knowledge Discovery and
+    Data Mining. 597-606.
+    <http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf>
+
+<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width="100%" alt="sent comp">
+
+The bar graph on the left shows the accuracy rates for the various
+sentiment set-ups in the three review contexts. The rank plot the right
+shows how the rankings for the methods varied across the three review
+contexts (note that rank ties were determined by
+`ties.method = "first"`).
+
+The take away here seems that, unsurprisingly, Stanford's algorithm
+consistently out scores **syuzhet** and **sentimentr**. The
+**sentimentr** approach loaded with the `hu_lu` dictionary is a top pick
+for speed and accuracy. The `bing` dictionary also performs well within
+both the **syuzhet** and **sentimentr** algorithms. Generally, the
+**sentimentr** algorithm out performs **syuzhet** when their dictonaries
+are comporable.
+
+It is important to point out that this is a small sample data set that
+covers a narrow range of uses for sentiment detection. Jocker's
+**syuzhet** was designed to be applied across book chunks and it is, to
+some extent, unfair to test it out of this context. Still this initial
+analysis provides a guide that may be of use for selecting the sentiment
+detection set up most applicable to the reader's needs.
+
+The reader may access the R script used to generate this visual via:
+
+    testing <- system.file("sentiment_testing.R", package = "sentimentr")
+    file.copy(testing, getwd())
 
 Text Highlighting
 -----------------
 
 The user may wish to see the output from `sentiment_by` line by line
-with positive/negative sentences highlighted. The `highlight` function wraps a 
-`sentiment_by` output to produces a highlighted HTML file (positive =
-green; negative = pink). Here we look at three random reviews from Hu
-and Liu's (2004) Cannon G3 Camera Amazon product reviews.
+with positive/negative sentences highlighted. The `highlight` function
+wraps a `sentiment_by` output to produces a highlighted HTML file
+(positive = green; negative = pink). Here we look at three random
+reviews from Hu and Liu's (2004) Cannon G3 Camera Amazon product
+reviews.
 
     set.seed(2)
     highlight(with(subset(cannon_reviews, number %in% sample(unique(number), 3)), sentiment_by(review, number)))

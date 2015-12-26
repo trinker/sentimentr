@@ -16,22 +16,22 @@ than one opinion score and average of all scores is used.
 \details{
 \itemize{
   \item number. The review number.
-  \item opinion.score. Hu and Liu (2004)'s average opionion rating for a
-  sentence.   Negative and positive reflects dirrection, a negative or positive
+  \item opinion.score. Hu and Liu (2004)'s average opinion rating for a
+  sentence.   Negative and positive reflects direction, a negative or positive
   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
   \item review. The text from the review.
 }
 }
 \references{
-Minqing Hu and Bing Liu. "Mining and summarizing customer reviews".
+Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
    Proceedings of the ACM SIGKDD International Conference on
-   Knowledge Discovery & Data Mining (KDD-04), 2004.
+   Knowledge Discovery & Data Mining (KDD-04).
 
-Minqing Hu and Bing Liu. "Mining Opinion Features in Customer
-   Reviews." Proceedings of Nineteeth National Conference on
-   Artificial Intellgience (AAAI-2004), 2004.
+Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
+   Reviews. Proceedings of Nineteeth National Conference on
+   Artificial Intellgience (AAAI-2004).
 
-\url{http://www.cs.uic.edu/~liub/FBS/FBS.html}
+\file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 }
 \keyword{datasets}
 
