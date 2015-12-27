@@ -38,6 +38,8 @@
 #' (\eqn{1 + N_{but\,conjunctions}*-1 * z_2}).  These are added to the
 #' deamplifier and amplifier weights and thus the down weight is constrained to
 #' -1 as the lower bound.  Set to zero to remove but conjunction weighting.
+#' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
+#' \code{NULL} to retain missing values.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -177,7 +179,7 @@
 sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
     amplifier.weight = .8, n.before = 4, n.after = 2, question.weight = 1,
-    but.weight = .85, ...){
+    but.weight = .85, missing_value = 0, ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -287,13 +289,18 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
      out <- stats::setNames(sent_dat[, c("id", "id2", "N", "sentiment"), with = FALSE],
          c("element_id", "sentence_id", "word_count", "sentiment"))
 
+     if (!is.null(missing_value)){
+         out[, 'sentiment' := replace_na(sentiment, y = missing_value)]
+     }
+
      class(out) <- unique(c("sentiment", class(out)))
      sentences <- new.env(FALSE)
      sentences[["sentences"]] <- sents
      attributes(out)[["sentences"]] <- sentences
-     out
+     out[]
 }
 
+replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}
 
 #' Plots a sentiment object
 #'

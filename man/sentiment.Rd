@@ -7,7 +7,7 @@
 sentiment(text.var, polarity_dt = sentimentr::polarity_table,
   valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
   amplifier.weight = 0.8, n.before = 4, n.after = 2,
-  question.weight = 1, but.weight = 0.85, ...)
+  question.weight = 1, but.weight = 0.85, missing_value = 0, ...)
 }
 \arguments{
 \item{text.var}{The text variable.}
@@ -54,6 +54,9 @@ after the polarized word times the weight given
 (\eqn{1 + N_{but\,conjunctions}*-1 * z_2}).  These are added to the
 deamplifier and amplifier weights and thus the down weight is constrained to
 -1 as the lower bound.  Set to zero to remove but conjunction weighting.}
+
+\item{missing_value}{A value to replace \code{NA}/\code{NaN} with.  Use
+\code{NULL} to retain missing values.}
 
 \item{\ldots}{Ignored.}
 }
