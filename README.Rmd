@@ -231,7 +231,7 @@ The data sets are hand scored as either positive or negative.  The testing here 
 
 The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot on the right shows how the rankings for the methods varied across the three review contexts (note that rank ties were determined by `ties.method = "first"`).  
 
-The take away here seems that, unsurprisingly, Stanford's algorithm consistently out scores **syuzhet** and **sentimentr**.  The **sentimentr** approach loaded with the `hu_lu` dictionary is a top pick for speed and accuracy.  The `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comporable.
+The take away here seems that, unsurprisingly, Stanford's algorithm consistently out scores **syuzhet** and **sentimentr**.  The **sentimentr** approach loaded with the `hu_lu` dictionary is a top pick for speed and accuracy.  The `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comparable.
 
 It is important to point out that this is a small sample data set that covers a narrow range of uses for sentiment detection.  Jocker's **syuzhet** was designed to be applied across book chunks and it is, to some extent, unfair to test it out of this context.  Still this initial analysis provides a guide that may be of use for selecting the sentiment detection set up most applicable to the reader's needs.
 

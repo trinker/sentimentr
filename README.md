@@ -469,7 +469,7 @@ consistently out scores **syuzhet** and **sentimentr**. The
 for speed and accuracy. The `bing` dictionary also performs well within
 both the **syuzhet** and **sentimentr** algorithms. Generally, the
 **sentimentr** algorithm out performs **syuzhet** when their dictonaries
-are comporable.
+are comparable.
 
 It is important to point out that this is a small sample data set that
 covers a narrow range of uses for sentiment detection. Jocker's
