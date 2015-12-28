@@ -253,7 +253,7 @@ Across all three contexts, notice that the Stanford coreNLP algorithm is better 
 
 The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements.  We can now see that the reason for the NRC's poorer peformance in accurcy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but does not perform well.  We can deduce to things from this observation:
 
-1. Larger dctionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(sentiword), big.mark=",")`] vs Hu & Lu [n = `r prettyNum(nrow(polarity_table), big.mark=",")`])
+1. Larger dctionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(polarity_table), big.mark=",")`])
 2. The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a dictionary lookup approach to sentiment detection, potentially, improving on discrimination and accuracy.

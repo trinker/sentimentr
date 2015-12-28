@@ -503,7 +503,7 @@ accurcy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce to things from this observation:
 
-1.  Larger dctionaries discriminate better (Sentiword [n = 20,104] vs Hu
+1.  Larger dctionaries discriminate better (Sentiword [n = 20,104] vs. Hu
     & Lu [n = 6,781])
 2.  The Sentiword dictionary may have words with reversed polarities
 
