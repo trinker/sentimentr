@@ -412,19 +412,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 25777.6589 25803.4697 26401.4275 25829.2806
-        sentimentr_hu_liu()   227.6393   230.4022   234.9633   233.1652
-     sentimentr_sentiword()   976.6649   986.1545   991.8178   995.6441
-             syuzhet_binn()   368.1723   369.3654   380.2292   370.5584
-              syuzhet_nrc()   812.2409   818.4518   844.9032   824.6628
-            syuzhet_afinn()   157.5437   159.0030   159.6528   160.4623
+                 stanford() 25786.2574 26638.5902 27229.1089 27490.9230
+        sentimentr_hu_liu()   229.2576   232.4190   240.7139   235.5805
+     sentimentr_sentiword()   977.2766   980.3545  1242.0126   983.4324
+             syuzhet_binn()   364.2065   389.1018   428.4038   413.9972
+              syuzhet_nrc()   779.4213   878.1002   916.7921   976.7791
+            syuzhet_afinn()   134.0317   149.7012   162.2358   165.3708
              uq        max neval
-     26713.3118 27597.3429     3
-       238.6253   244.0854     3
-       999.3942  1003.1444     3
-       386.2576   401.9567     3
-       861.2343   897.8058     3
-       160.7074   160.9525     3
+     27950.5346 28410.1463     3
+       246.4421   257.3037     3
+      1374.3806  1765.3289     3
+       460.5025   507.0078     3
+       985.4775   994.1760     3
+       176.3379   187.3051     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -493,18 +493,18 @@ Across all three contexts, notice that the Stanford coreNLP algorithm is
 better at:
 
 -   Detecting negative sentiment as negative
--   Discriminaton (i.e., reducing neutral assignmets)
+-   Discrimination (i.e., reducing neutral assignments)
 
 The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not
 assigning negative scores to positive statements, but perform less well
 in the reverse, often assigning positive scores to negative statements.
-We can now see that the reason for the NRC's poorer peformance in
-accurcy rate above is its inability to discriminate. The Sentiword
+We can now see that the reason for the NRC's poorer performance in
+accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce to things from this observation:
 
-1.  Larger dctionaries discriminate better (Sentiword [n = 20,104] vs. Hu
-    & Lu [n = 6,781])
+1.  Larger dictionaries discriminate better (Sentiword [n = 20,104] vs.
+    Hu & Lu [n = 6,781])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
