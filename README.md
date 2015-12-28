@@ -412,19 +412,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 23732.5878 25157.0278 26296.4252 26581.4679
-        sentimentr_hu_liu()   187.9254   212.9540   222.3921   237.9826
-     sentimentr_sentiword()  1010.6282  1016.4430  1021.3721  1022.2578
-             syuzhet_binn()   338.9221   341.3423   456.3030   343.7625
-              syuzhet_nrc()   685.6081   700.6281   728.9549   715.6482
-            syuzhet_afinn()   129.5489   130.7865   139.5307   132.0241
+                 stanford() 25777.6589 25803.4697 26401.4275 25829.2806
+        sentimentr_hu_liu()   227.6393   230.4022   234.9633   233.1652
+     sentimentr_sentiword()   976.6649   986.1545   991.8178   995.6441
+             syuzhet_binn()   368.1723   369.3654   380.2292   370.5584
+              syuzhet_nrc()   812.2409   818.4518   844.9032   824.6628
+            syuzhet_afinn()   157.5437   159.0030   159.6528   160.4623
              uq        max neval
-     27578.3439 28575.2198     3
-       239.6254   241.2682     3
-      1026.7441  1031.2303     3
-       514.9934   686.2243     3
-       750.6282   785.6083     3
-       144.5216   157.0190     3
+     26713.3118 27597.3429     3
+       238.6253   244.0854     3
+       999.3942  1003.1444     3
+       386.2576   401.9567     3
+       861.2343   897.8058     3
+       160.7074   160.9525     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -487,32 +487,34 @@ In the figure below we compare raw table counts as a heat map, plotting
 the predicted values from the various algorithms on the x axis versus
 the human scored values on the y axis.
 
-<img src="inst/figure/comparisons_between_sentiment_detectors2.png" alt="sent comp">
+<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width = "80%" alt="sent comp">
 
 Across all three contexts, notice that the Stanford coreNLP algorithm is
 better at:
 
-1.  Detecting negative sentiment as negative
-2.  Discriminaton (i.e., reducing neutral assignmets)
+-   Detecting negative sentiment as negative
+-   Discriminaton (i.e., reducing neutral assignmets)
 
 The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not
 assigning negative scores to positive statements, but perform less well
 in the reverse, often assigning positive scores to negative statements.
-The Sentiword dictionary does well at discriminating (like Stanford's
-coreNLP) but does not perform well. We can deduce to things from this
-observation:
+We can now see that the reason for the NRC's poorer peformance in
+accurcy rate above is its inability to discriminate. The Sentiword
+dictionary does well at discriminating (like Stanford's coreNLP) but
+does not perform well. We can deduce to things from this observation:
 
-1.  Larger dctionaries discriminate better (Sentiword (n = 20,104) vs Hu
-    & Lu (n = 6,781))
+1.  Larger dctionaries discriminate better (Sentiword [n = 20,104] vs Hu
+    & Lu [n = 6,781])
 2.  The Sentiword dictionary may have words with reversed polarities
 
-A reworking of the Sentiword dictionary may yield better results,
-potentially, improving on discrimination and accuracy.
+A reworking of the Sentiword dictionary may yield better results for a
+dictionary lookup approach to sentiment detection, potentially,
+improving on discrimination and accuracy.
 
 The reader may access the R script used to generate this visual via:
 
-    testing <- system.file("sentiment_testing/raw_results.R", package = "sentimentr")
-    file.copy(testing, getwd())
+    testing2 <- system.file("sentiment_testing/raw_results.R", package = "sentimentr")
+    file.copy(testing2, getwd())
 
 Text Highlighting
 -----------------

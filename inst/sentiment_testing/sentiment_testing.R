@@ -1,6 +1,6 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape")
-pacman::p_load(syuzhet, dplyr, tidyr, downloader, RColorBrewer, gridExtra)
+pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2, RColorBrewer, gridExtra)
 
 loc <- "sentiment_data"
 dir.create(loc)

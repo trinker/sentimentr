@@ -1,12 +1,12 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape")
-pacman::p_load(syuzhet, dplyr, tidyr, downloader)
+pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2)
 
 loc <- "sentiment_data"
 dir.create(loc)
 
 'http://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment%20labelled%20sentences.zip' %>%
-    download(file.path(loc, "sentiment_labelled_sentences.zip"), mode = "wb") 
+    download(file.path(loc, "sentiment_labelled_sentences.zip"), mode = "wb")
 
 unzip(file.path(loc, "sentiment_labelled_sentences.zip"), exdir = loc)
 
@@ -31,12 +31,12 @@ nrc <- data.frame(
 results_list <- file.path(loc, "sentiment labelled sentences") %>%
     dir(pattern = "labelled\\.txt$", full.names = TRUE) %>%
     lapply(function(x){
-    
+
     ## read in the data and split into sentences
     dat <- x %>%
-        read.delim(sep = "\t", header=FALSE, stringsAsFactors = FALSE, 
+        read.delim(sep = "\t", header=FALSE, stringsAsFactors = FALSE,
             strip.white = TRUE, quote = "") %>%
-        setNames(c("text", "rating")) %>% 
+        setNames(c("text", "rating")) %>%
         na.omit() %>%
         mutate(rating = 2*(as.numeric(rating) - .5)) %>%
         split_sentence() #%>% slice(1:10)
@@ -51,7 +51,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         cat(sprintf("%s of %s\n", i, len))
         mean(suppressMessages(sentiment_stanford(dat[["text"]][i])))
     })
-    
+
 
     ## calculate sentimentr sentiment and put all the pieces together
     data.frame(
@@ -60,14 +60,14 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         stanford,
 
         sentimentr_hu_liu = round(sentiment_by(dat$text, question.weight = 0)[["ave_sentiment"]], 2),
-        sentimentr_sentiword = round(sentiment_by(dat$text, polarity_dt = sentiword, question.weight = 0)[["ave_sentiment"]], 2),    
-        sentimentr_bing = round(sentiment_by(dat$text, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),  
-        sentimentr_afinn = round(sentiment_by(dat$text, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),    
-        sentimentr_nrc = round(sentiment_by(dat$text, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),  
+        sentimentr_sentiword = round(sentiment_by(dat$text, polarity_dt = sentiword, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_bing = round(sentiment_by(dat$text, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_afinn = round(sentiment_by(dat$text, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_nrc = round(sentiment_by(dat$text, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
 
         syuzhet,
         stringsAsFactors = FALSE
-    )  
+    )
 
 }) %>%
     setNames(file.path(loc, "sentiment labelled sentences") %>%
@@ -76,7 +76,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
     )
 
 #saveRDS(results_list, file = "results_list.rds")
-#results_list <- readRDS("results_list.rds")
+#results_list <- readRDS("inst/sentiment_testing/results_list.rds")
 
 
 results_list %>%
@@ -97,7 +97,7 @@ results_list %>%
     ) %>%
     split(., .[c("Method", "Context")]) %>%
     lapply(function(x) {
-        as.data.frame(table(x$rating, x$Score)) %>% 
+        as.data.frame(table(x$rating, x$Score)) %>%
             setNames(c("Actual", "Predicted", "n")) %>%
             spread(Predicted, n)
     }) %>%
