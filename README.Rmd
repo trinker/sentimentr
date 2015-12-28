@@ -227,7 +227,7 @@ The data sets are hand scored as either positive or negative.  The testing here 
 
 - Kotzias, D., Denil, M., De Freitas, N., & Smyth,P. (2015). *From group to individual labels using deep features*. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 597-606. http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 
-<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width="100%" alt="sent comp">  
+<img src="inst/figure/comparisons_between_sentiment_detectors_b.png" width="100%" alt="sent comp">  
 
 The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot on the right shows how the rankings for the methods varied across the three review contexts (note that rank ties were determined by `ties.method = "first"`).  
 
@@ -239,6 +239,29 @@ The reader may access the R script used to generate this visual via:
 
 ```{r, eval=FALSE}
 testing <- system.file("sentiment_testing/sentiment_testing.R", package = "sentimentr")
+file.copy(testing, getwd())
+```
+
+In the figure below we compare raw table counts as a heat map, plotting the predicted values from the various algorithms on the x axis versus the human scored values on the y axis.  
+
+<img src="inst/figure/comparisons_between_sentiment_detectors2.png" alt="sent comp">  
+
+Across all three contexts, notice that the Stanford coreNLP algorithm is better at:
+
+1.  Detecting negative sentiment as negative
+2.  Discriminaton (i.e., reducing neutral assignmets)
+
+The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but does not perform well.  We can deduce to things from this observation:
+
+1. Larger dctionaries discriminate better (Sentiword (n = `r  prettyNum(nrow(sentiword), big.mark=",")`) vs Hu & Lu (n = `r prettyNum(nrow(polarity_table), big.mark=",")`))
+2. The Sentiword dictionary may have words with reversed polarities
+
+A reworking of the Sentiword dictionary may yield better results, potentially, improving on discrimination and accuracy.
+
+The reader may access the R script used to generate this visual via:
+
+```{r, eval=FALSE}
+testing <- system.file("sentiment_testing/raw_results.R", package = "sentimentr")
 file.copy(testing, getwd())
 ```
 

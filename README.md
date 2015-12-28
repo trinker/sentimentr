@@ -280,9 +280,9 @@ argument.
 
     ##        person   time word_count        sd ave_sentiment
     ##  1:     OBAMA time 1       3598 0.4397613    0.10966120
-    ##  2:    LEHRER time 1        765 0.3493838    0.10941383
+    ##  2:    LEHRER time 1        765 0.3475658    0.10817049
     ##  3:     OBAMA time 3       7241 0.4135144    0.09654523
-    ##  4:     OBAMA time 2       7476 0.3832811    0.08893467
+    ##  4:     OBAMA time 2       7476 0.3829131    0.08875464
     ##  5:    ROMNEY time 3       8302 0.3909338    0.08108205
     ##  6:    ROMNEY time 1       4085 0.3510066    0.06613552
     ##  7: SCHIEFFER time 3       1445 0.3772378    0.06515716
@@ -412,19 +412,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 22653.2750 22755.3807 22894.8700 22857.4864
-        sentimentr_hu_liu()   248.2902   254.6344   266.0804   260.9785
-     sentimentr_sentiword()   977.2922   982.8747   988.6231   988.4571
-             syuzhet_binn()   363.0680   377.2075   417.7497   391.3469
-              syuzhet_nrc()   930.6997   970.6681  1023.9279  1010.6365
-            syuzhet_afinn()   177.2105   183.6734   191.1983   190.1362
+                 stanford() 23732.5878 25157.0278 26296.4252 26581.4679
+        sentimentr_hu_liu()   187.9254   212.9540   222.3921   237.9826
+     sentimentr_sentiword()  1010.6282  1016.4430  1021.3721  1022.2578
+             syuzhet_binn()   338.9221   341.3423   456.3030   343.7625
+              syuzhet_nrc()   685.6081   700.6281   728.9549   715.6482
+            syuzhet_afinn()   129.5489   130.7865   139.5307   132.0241
              uq        max neval
-     23015.6675 23173.8486     3
-       274.9755   288.9725     3
-       994.2885  1000.1199     3
-       445.0906   498.8343     3
-      1070.5420  1130.4476     3
-       198.1922   206.2481     3
+     27578.3439 28575.2198     3
+       239.6254   241.2682     3
+      1026.7441  1031.2303     3
+       514.9934   686.2243     3
+       750.6282   785.6083     3
+       144.5216   157.0190     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -455,12 +455,12 @@ output to determine accuracy rates.
     Data Mining. 597-606.
     <http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf>
 
-<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width="100%" alt="sent comp">
+<img src="inst/figure/comparisons_between_sentiment_detectors_b.png" width="100%" alt="sent comp">
 
 The bar graph on the left shows the accuracy rates for the various
-sentiment set-ups in the three review contexts. The rank plot on the right
-shows how the rankings for the methods varied across the three review
-contexts (note that rank ties were determined by
+sentiment set-ups in the three review contexts. The rank plot on the
+right shows how the rankings for the methods varied across the three
+review contexts (note that rank ties were determined by
 `ties.method = "first"`).
 
 The take away here seems that, unsurprisingly, Stanford's algorithm
@@ -481,6 +481,37 @@ detection set up most applicable to the reader's needs.
 The reader may access the R script used to generate this visual via:
 
     testing <- system.file("sentiment_testing/sentiment_testing.R", package = "sentimentr")
+    file.copy(testing, getwd())
+
+In the figure below we compare raw table counts as a heat map, plotting
+the predicted values from the various algorithms on the x axis versus
+the human scored values on the y axis.
+
+<img src="inst/figure/comparisons_between_sentiment_detectors2.png" alt="sent comp">
+
+Across all three contexts, notice that the Stanford coreNLP algorithm is
+better at:
+
+1.  Detecting negative sentiment as negative
+2.  Discriminaton (i.e., reducing neutral assignmets)
+
+The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not
+assigning negative scores to positive statements, but perform less well
+in the reverse, often assigning positive scores to negative statements.
+The Sentiword dictionary does well at discriminating (like Stanford's
+coreNLP) but does not perform well. We can deduce to things from this
+observation:
+
+1.  Larger dctionaries discriminate better (Sentiword (n = 20,104) vs Hu
+    & Lu (n = 6,781))
+2.  The Sentiword dictionary may have words with reversed polarities
+
+A reworking of the Sentiword dictionary may yield better results,
+potentially, improving on discrimination and accuracy.
+
+The reader may access the R script used to generate this visual via:
+
+    testing <- system.file("sentiment_testing/raw_results.R", package = "sentimentr")
     file.copy(testing, getwd())
 
 Text Highlighting
