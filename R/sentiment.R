@@ -325,6 +325,7 @@ plot.sentiment <- function(x, ...){
     ggplot2::ggplot(dat, ggplot2::aes_string('Duration', 'Emotional_Valence')) +
         ggplot2::geom_path(size=1, color="blue") +
         ggplot2::theme_bw() +
+        ggplot2::theme(plot.margin = grid::unit(c(5.1, 15.1, 4.1, 2.1), "pt")) +
         ggplot2::ylab("Emotional Valence") +
         ggplot2::theme(panel.grid = ggplot2::element_blank()) +
         ggplot2::scale_x_continuous(label=function(x) paste0(x, "%"),

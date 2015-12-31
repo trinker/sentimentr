@@ -45,19 +45,11 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
     syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
         function(x) get_sentiment(dat$text, method=x))), paste0("syuzhet_", c("bing", "afinn", "nrc")))
 
-    ## calculate stanford sentiment
-    len <- length(dat[["text"]])
-    stanford <- sapply(seq_along(dat[["text"]]), function(i){
-        cat(sprintf("%s of %s\n", i, len))
-        mean(suppressMessages(sentiment_stanford(dat[["text"]][i])))
-    })
-
-
     ## calculate sentimentr sentiment and put all the pieces together
     out <- data.frame(
         dat,
 
-        stanford,
+        stanford = round(sentiment_stanford_by(dat[["text"]])[["ave_sentiment"]], 2),
 
         sentimentr_hu_liu = round(sentiment_by(dat$text, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_sentiword = round(sentiment_by(dat$text, polarity_dt = sentiword, question.weight = 0)[["ave_sentiment"]], 2),

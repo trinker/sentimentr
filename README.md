@@ -349,7 +349,7 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
 
 
     left_just(data.frame(
-        stanford = sentiment_stanford(ase),
+        stanford = sentiment_stanford(ase)[["sentiment"]],
         hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
         sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
         syuzhet,
@@ -412,19 +412,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 25786.2574 26638.5902 27229.1089 27490.9230
-        sentimentr_hu_liu()   229.2576   232.4190   240.7139   235.5805
-     sentimentr_sentiword()   977.2766   980.3545  1242.0126   983.4324
-             syuzhet_binn()   364.2065   389.1018   428.4038   413.9972
-              syuzhet_nrc()   779.4213   878.1002   916.7921   976.7791
-            syuzhet_afinn()   134.0317   149.7012   162.2358   165.3708
+                 stanford() 24325.3059 24729.9028 25069.3703 25134.4997
+        sentimentr_hu_liu()   232.7551   233.0540   233.6514   233.3528
+     sentimentr_sentiword()   959.2167   971.9194   982.4365   984.6221
+             syuzhet_binn()   353.3274   369.8059   392.8542   386.2844
+              syuzhet_nrc()   784.2075   790.5753   806.8505   796.9431
+            syuzhet_afinn()   154.5516   156.3309   161.8224   158.1103
              uq        max neval
-     27950.5346 28410.1463     3
-       246.4421   257.3037     3
-      1374.3806  1765.3289     3
-       460.5025   507.0078     3
-       985.4775   994.1760     3
-       176.3379   187.3051     3
+     25441.4024 25748.3052     3
+       234.0996   234.8464     3
+       994.0465  1003.4708     3
+       412.6175   438.9506     3
+       818.1720   839.4010     3
+       165.4578   172.8054     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
