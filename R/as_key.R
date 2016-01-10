@@ -125,6 +125,5 @@ update_key <- function(key, drop = NULL, x = NULL,
 #' @rdname as_key
 is_key <- function(key){
     data.table::is.data.table(key) && all.equal(colnames(key), c("x", "y")) &&
-        is.character(key[["x"]]) && is.numeric(key[["y"]])
+        is.character(key[["x"]]) && (is.numeric(key[["y"]]) | is.character(key[["y"]]))
 }
-

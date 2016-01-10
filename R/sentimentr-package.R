@@ -22,7 +22,7 @@ NULL
 #' @keywords datasets
 #' @name polarity_table
 #' @usage data(polarity_table)
-#' @format A data frame with 6781 rows and 2 variables
+#' @format A data frame with 6798 rows and 2 variables
 #' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
 #' reviews. National Conference on Artificial Intelligence.
 #'
@@ -53,9 +53,9 @@ NULL
 #'   \item y. Number key value corresponding to:
 #' \tabular{lr}{
 #'   \bold{Valence Shifter}     \tab \bold{Value}\cr
-#'   Negator     \tab 1 \%\cr
-#'   Amplifier  \tab 2 \%\cr
-#'  De-amplifier  \tab 3 \%\cr
+#'   Negator     \tab 1 \cr
+#'   Amplifier  \tab 2 \cr
+#'  De-amplifier  \tab 3 \cr
 #' }
 #' }
 #'
@@ -63,7 +63,7 @@ NULL
 #' @keywords datasets
 #' @name valence_shifters_table
 #' @usage data(valence_shifters_table)
-#' @format A data frame with 89 rows and 2 variables
+#' @format A data frame with 95 rows and 2 variables
 NULL
 
 
@@ -120,7 +120,7 @@ NULL
 #' @keywords datasets
 #' @name sentiword
 #' @usage data(sentiword)
-#' @format A data frame with 20104 rows and 2 variables
+#' @format A data frame with 20103 rows and 2 variables
 #' @references Baccianella S., Esuli, A. and Sebastiani, F. (2010). SentiWordNet
 #' 3.0: An Enhanced Lexical Resource for Sentiment Analysis and Opinion Mining.
 #' International Conference on Language Resources and Evaluation.

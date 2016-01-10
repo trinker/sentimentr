@@ -4,7 +4,7 @@
 \name{valence_shifters_table}
 \alias{valence_shifters_table}
 \title{Valence Shifters}
-\format{A data frame with 89 rows and 2 variables}
+\format{A data frame with 95 rows and 2 variables}
 \usage{
 data(valence_shifters_table)
 }
@@ -30,9 +30,9 @@ pie"; the word "barely" deamplifies the word like.
   \item y. Number key value corresponding to:
 \tabular{lr}{
   \bold{Valence Shifter}     \tab \bold{Value}\cr
-  Negator     \tab 1 \%\cr
-  Amplifier  \tab 2 \%\cr
- De-amplifier  \tab 3 \%\cr
+  Negator     \tab 1 \cr
+  Amplifier  \tab 2 \cr
+ De-amplifier  \tab 3 \cr
 }
 }
 }
