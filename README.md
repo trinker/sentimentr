@@ -1,13 +1,6 @@
 sentimentr
 ============
 
-            Sentiment](#plotting-at-aggregated-sentiment)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, and
-        Stanford](#comparing-sentimentr-syuzhet-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
-
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
@@ -53,12 +46,18 @@ likely still be less accurate than Stanford's approach. Simply,
 Table of Contents
 ============
 
--   [[The Equation](#the-equation)](#[the-equation](#the-equation))
--   [[Installation](#installation)](#[installation](#installation))
--   [[Usage](#usage)](#[usage](#usage))
--   [[Examples](#examples)](#[examples](#examples))
-    -   [[Plotting](#plotting)](#[plotting](#plotting))
-        -   [[Plotting at Aggregated](#[plotting-at-aggregated)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Examples](#examples)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
+
 
 The Equation
 ============
