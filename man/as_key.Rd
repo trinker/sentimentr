@@ -2,9 +2,16 @@
 % Please edit documentation in R/as_key.R
 \name{as_key}
 \alias{as_key}
-\title{Convert data.frame to a Hash Key}
+\alias{is_key}
+\alias{update_key}
+\title{Create/Manipulate Hash Keys}
 \usage{
 as_key(x, comparison = sentimentr::valence_shifters_table, ...)
+
+update_key(key, drop = NULL, x = NULL,
+  comparison = sentimentr::valence_shifters_table, ...)
+
+is_key(key)
 }
 \arguments{
 \item{x}{A \code{\link[base]{data.frame}} with the first column containing
@@ -17,14 +24,22 @@ accompanying row will be removed from \code{x}.  This is useful to ensure
 \code{\link[sentimentr]{sentiment}}.  Use \code{comparison = NULL} to skip
 this comparison.}
 
+\item{key}{A \pkg{sentimentr} hash key.}
+
+\item{drop}{A vector of terms to drop.}
+
 \item{\ldots}{ignored.}
 }
 \value{
 Returns a \pkg{data.table} object that can be used as a hash key.
 }
 \description{
-Create your own hash keys from a data frame for use in key arguments such as
-\code{polarity_dt} in the \code{sentiment} function.
+\code{as_key} - Create your own hash keys from a data frame for use in key
+arguments such as \code{polarity_dt} in the \code{sentiment} function.
+
+\code{update_key} - Add/remove terms to a current key.
+
+\code{is_key} -
 }
 \examples{
 key <- data.frame(
@@ -35,10 +50,25 @@ key <- data.frame(
 
 (mykey <- as_key(key))
 
-# Looking up values
+## Looking up values
 mykey[c("A", "K")][[2]]
 
-# Using syuzhet's sentiment lexicons
+## Drop terms from key
+update_key(mykey, drop = c("F", "H"))
+
+## Add terms to key
+update_key(mykey, x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+
+## Add terms & drop to/from a key
+update_key(mykey, drop = c("F", "H"), x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+
+## Checking if you have a key
+is_key(mykey)
+is_key(key)
+is_key(mtcars)
+is_key(update_key(mykey, drop = c("F", "H")))
+
+## Using syuzhet's sentiment lexicons
 \dontrun{
 library(syuzhet)
 as_key(syuzhet:::bing)

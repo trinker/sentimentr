@@ -90,7 +90,7 @@ pacman::p_load_gh("trinker/sentimentr")
 ```
 # Usage
 
-There are two main functions in **sentimentr** with five helper functions summarized in the table below:
+There are two main functions in **sentimentr** with several helper functions summarized in the table below:
 
 
 | Function         |  Description                                          |
@@ -101,6 +101,8 @@ There are two main functions in **sentimentr** with five helper functions summar
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
 | `replace_emoticon`| Replace emoticons with word equivalent               |
 | `as_key`         | Coerce a `data.frame` lexicon to a polarity hash key  |
+| `is_key`         | Check if an object is a hash key                      |
+| `update_key`     | Add/remove terms to/fram a hash key                   |
 | `highlight`      | Highlight positive/negative sentences as an HTML document |
 
 # Examples

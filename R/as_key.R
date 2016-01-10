@@ -1,7 +1,7 @@
-#' Convert data.frame to a Hash Key
+#' Create/Manipulate Hash Keys
 #'
-#' Create your own hash keys from a data frame for use in key arguments such as
-#' \code{polarity_dt} in the \code{sentiment} function.
+#' \code{as_key} - Create your own hash keys from a data frame for use in key
+#' arguments such as \code{polarity_dt} in the \code{sentiment} function.
 #'
 #' @param x A \code{\link[base]{data.frame}} with the first column containing
 #' polarized words and the second containing polarity values.
@@ -15,6 +15,7 @@
 #' @return Returns a \pkg{data.table} object that can be used as a hash key.
 #' @keywords key hash lookup
 #' @export
+#' @rdname as_key
 #' @examples
 #' key <- data.frame(
 #'     words = sample(LETTERS),
@@ -24,10 +25,26 @@
 #'
 #' (mykey <- as_key(key))
 #'
-#' # Looking up values
+#' ## Looking up values
 #' mykey[c("A", "K")][[2]]
 #'
-#' # Using syuzhet's sentiment lexicons
+
+#' ## Drop terms from key
+#' update_key(mykey, drop = c("F", "H"))
+#'
+#' ## Add terms to key
+#' update_key(mykey, x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+#'
+#' ## Add terms & drop to/from a key
+#' update_key(mykey, drop = c("F", "H"), x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+#'
+#' ## Checking if you have a key
+#' is_key(mykey)
+#' is_key(key)
+#' is_key(mtcars)
+#' is_key(update_key(mykey, drop = c("F", "H")))
+#'
+#' ## Using syuzhet's sentiment lexicons
 #' \dontrun{
 #' library(syuzhet)
 #' as_key(syuzhet:::bing)
@@ -63,3 +80,51 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
     data.table::setkey(x, "x")
     x
 }
+
+#' Convert data.frame to a Hash Key
+#'
+#' \code{update_key} - Add/remove terms to a current key.
+#'
+#' @param key A \pkg{sentimentr} hash key.
+#' @param drop A vector of terms to drop.
+#' @export
+#' @rdname as_key
+update_key <- function(key, drop = NULL, x = NULL,
+    comparison = sentimentr::valence_shifters_table, ...){
+
+    stopifnot(is_key(key))
+
+    key1 <- data.table::copy(key)
+
+    if (!is.null(drop)){
+        key1 <- key[!x %in% drop, ]
+    }
+
+    if (!is.null(x)){
+        key2 <- as_key(x)
+        key1 <- rbind(key1, key2)
+
+    }
+
+    if (!is.null(comparison)) {
+        key1 <- key1[!key1[["x"]] %in% comparison[["x"]], ]
+    }
+
+    key1 <- key1[!duplicated(x)]
+    #key1 <- key1[order(key1),]
+    data.table::setkey(key1, "x")
+    key1
+}
+
+
+#' Convert data.frame to a Hash Key
+#'
+#' \code{is_key} -
+#'
+#' @export
+#' @rdname as_key
+is_key <- function(key){
+    data.table::is.data.table(key) && all.equal(colnames(key), c("x", "y")) &&
+        is.character(key[["x"]]) && is.numeric(key[["y"]])
+}
+

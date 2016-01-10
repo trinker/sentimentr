@@ -1,6 +1,12 @@
 sentimentr
 ============
 
+            Sentiment](#plotting-at-aggregated-sentiment)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, and
+        Stanford](#comparing-sentimentr-syuzhet-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -47,17 +53,12 @@ likely still be less accurate than Stanford's approach. Simply,
 Table of Contents
 ============
 
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Examples](#examples)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
+-   [[The Equation](#the-equation)](#[the-equation](#the-equation))
+-   [[Installation](#installation)](#[installation](#installation))
+-   [[Usage](#usage)](#[usage](#usage))
+-   [[Examples](#examples)](#[examples](#examples))
+    -   [[Plotting](#plotting)](#[plotting](#plotting))
+        -   [[Plotting at Aggregated](#[plotting-at-aggregated)
 
 The Equation
 ============
@@ -85,9 +86,9 @@ of sentences.
 The words in each sentence (*w*<sub>*i*, *j*, *k*</sub>) are searched
 and compared to a modified version of Hu, M., & Liu, B.'s (2004)
 dictionary of polarized words. Positive
-(*w*<sub>*i*, *j*, *k*</sub><sup> + </sup>) and negative
-(*w*<sub>*i*, *j*, *k*</sub><sup> − </sup>) words are tagged with a  + 1
-and  − 1 respectively (or other positive/negative weighting if the user
+(*w*<sub>*i*, *j*, *k*</sub><sup>+</sup>) and negative
+(*w*<sub>*i*, *j*, *k*</sub><sup>−</sup>) words are tagged with a +1 and
+−1 respectively (or other positive/negative weighting if the user
 provides the sentiment dictionary). I will denote polarized words as
 *p**w* for convenience. These will form a polar cluster
 (*c*<sub>*i*, *j*, *l*</sub>) which is a subset of the a sentence
@@ -114,9 +115,9 @@ calculating the upper and lower bounds in the polarized context cluster.
 This is because these marks indicate a change in thought and words prior
 are not necessarily connected with words after these punctuation marks.
 The lower bound of the polarized context cluster is constrained to
-max{*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, 1, max{*c**w*<sub>*i*, *j*, *k*</sub> \< *p**w*<sub>*i*, *j*, *k*</sub>}}
+max{*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, 1, max{*c**w*<sub>*i*, *j*, *k*</sub> &lt; *p**w*<sub>*i*, *j*, *k*</sub>}}
 and the upper bound is constrained to
-min{*p**w*<sub>*i*, *j*, *k* + *n**a*</sub>, *w*<sub>*i*, *j**n*</sub>, min{*c**w*<sub>*i*, *j*, *k*</sub> \> *p**w*<sub>*i*, *j*, *k*</sub>}}
+min{*p**w*<sub>*i*, *j*, *k* + *n**a*</sub>, *w*<sub>*i*, *j**n*</sub>, min{*c**w*<sub>*i*, *j*, *k*</sub> &gt; *p**w*<sub>*i*, *j*, *k*</sub>}}
 where *w*<sub>*i*, *j**n*</sub> is the number of words in the sentence.
 
 The core value in the cluster, the polarized word is acted upon by
@@ -128,55 +129,55 @@ context cluster contains an odd number of negators
 decrease the polarity. Negation
 (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) acts on
 amplifiers/de-amplifiers as discussed but also flip the sign of the
-polarized word. Negation is determined by raising  − 1 to the power of
-the number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) plus
-2. Simply, this is a result of a belief that two negatives equal a
+polarized word. Negation is determined by raising −1 to the power of the
+number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) plus 2.
+Simply, this is a result of a belief that two negatives equal a
 positive, 3 negatives a negative, and so on.
 
 The "but" conjunctions (i.e., 'but', 'however', and 'although') also
 weight the context cluster. A but conjunction before the polarized word
 (*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>)
 up-weights the cluster by 1 +
-*z*<sub>2</sub> \* {|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>}
+*z*<sub>2</sub> \* {|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>}
 (.85 is the default weight (*z*<sub>2</sub>) where
 |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| are the
 number of but conjunctions before the polarized word). A but conjunction
 after the polarized word down-weights the cluster by 1 +
-{*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1} \* *z*<sub>2</sub>.
+{*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1}\**z*<sub>2</sub>.
 This corresponds to the belief that a but makes the next clause of
 greater values while lowering the value placed on the prior clause.
 
 The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
-constrained to  − 1 lower bound). Last, these weighted context clusters
+constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(&radic;*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
-<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
+<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
 
 Where:
 
-*c*′<sub>*i*, *j*</sub> = ∑((1 + *w*<sub>*a**m**p*</sub> + *w*<sub>*d**e**a**m**p*</sub>) ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>( − 1)<sup>2 + *w*<sub>*n**e**g*</sub></sup>)
+*c*′<sub>*i*, *j*</sub> = ∑((1 + *w*<sub>*a**m**p*</sub> + *w*<sub>*d**e**a**m**p*</sub>)⋅*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>(−1)<sup>2 + *w*<sub>*n**e**g*</sub></sup>)
 
 *w*<sub>*a**m**p*</sub> = ∑(*w*<sub>*n**e**g*</sub> ⋅ (*z* ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>))
 
-*w*<sub>*d**e**a**m**p*</sub> = max(*w*<sub>*d**e**a**m**p*′</sub>,  − 1)
+*w*<sub>*d**e**a**m**p*</sub> = max(*w*<sub>*d**e**a**m**p*′</sub>, −1)
 
-*w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*( − *w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup> + *w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>))
+*w*<sub>*d**e**a**m**p*′</sub> = ∑(*z*(−*w*<sub>*n**e**g*</sub> ⋅ *w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup> + *w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>))
 
 *w*<sub>*b*</sub> = 1 + *z*<sub>2</sub> \* *w*<sub>*b*′</sub>
 
-*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| \*  − 1)
+*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1)
 
 *w*<sub>*n**e**g*</sub> = (∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> )
 mod 2
 
 To get the mean of all sentences (*s*<sub>*i*, *j*</sub>) within a
 paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
-*p*<sub>*i*, *δ*<sub>*i*, *j*</sub></sub> = 1/n  ⋅  ∑
+*p*<sub>*i*, *δ*<sub>*i*, *j*</sub></sub> = 1/n ⋅ ∑
 *δ*<sub>*i*, *j*</sub>.
 
 Installation
@@ -196,10 +197,14 @@ the development version:
 Usage
 =====
 
-There are two main functions in **sentimentr** with five helper
+There are two main functions in **sentimentr** with several helper
 functions summarized in the table below:
 
-<table>
+<table style="width:104%;">
+<colgroup>
+<col width="26%" />
+<col width="77%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Function</th>
@@ -230,6 +235,14 @@ functions summarized in the table below:
 <tr class="even">
 <td align="left"><code>as_key</code></td>
 <td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>is_key</code></td>
+<td align="left">Check if an object is a hash key</td>
+</tr>
+<tr class="even">
+<td align="left"><code>update_key</code></td>
+<td align="left">Add/remove terms to/fram a hash key</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>highlight</code></td>
@@ -297,9 +310,8 @@ Plotting
 
     plot(out)
 
-![](inst/figure/unnamed-chunk-7-1.png)
-
-### Plotting at the Sentence Level
+![](inst/figure/unnamed-chunk-7-1.png)  
+\#\#\# Plotting at the Sentence Level
 
 The `plot` method for the class `sentiment` uses **syuzhet**'s
 `get_transformed_values` combined with **ggplot2** to make a reasonable,
@@ -310,7 +322,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](inst/figure/unnamed-chunk-8-1.png)
+![](inst/figure/unnamed-chunk-8-1.png)  
 
 Annie Swafford's Examples
 -------------------------
@@ -412,19 +424,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24325.3059 24729.9028 25069.3703 25134.4997
-        sentimentr_hu_liu()   232.7551   233.0540   233.6514   233.3528
-     sentimentr_sentiword()   959.2167   971.9194   982.4365   984.6221
-             syuzhet_binn()   353.3274   369.8059   392.8542   386.2844
-              syuzhet_nrc()   784.2075   790.5753   806.8505   796.9431
-            syuzhet_afinn()   154.5516   156.3309   161.8224   158.1103
+                 stanford() 23600.1872 24628.2865 25915.9468 25656.3858
+        sentimentr_hu_liu()   181.8473   208.2013   227.0221   234.5553
+     sentimentr_sentiword()   758.9268   870.6869   920.9950   982.4471
+             syuzhet_binn()   312.7124   338.1965   353.9947   363.6806
+              syuzhet_nrc()   716.6233   814.3513   861.2974   912.0793
+            syuzhet_afinn()   125.8926   150.5338   185.9289   175.1750
              uq        max neval
-     25441.4024 25748.3052     3
-       234.0996   234.8464     3
-       994.0465  1003.4708     3
-       412.6175   438.9506     3
-       818.1720   839.4010     3
-       165.4578   172.8054     3
+     27073.8266 28491.2675     3
+       249.6095   264.6636     3
+      1002.0291  1021.6112     3
+       374.6358   385.5910     3
+       933.6345   955.1896     3
+       215.9471   256.7191     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -503,8 +515,8 @@ accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce to things from this observation:
 
-1.  Larger dictionaries discriminate better (Sentiword [n = 20,104] vs.
-    Hu & Lu [n = 6,781])
+1.  Larger dictionaries discriminate better (Sentiword \[n =
+    20,104\] vs. Hu & Lu \[n = 6,781\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
