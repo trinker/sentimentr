@@ -139,12 +139,15 @@ To aggregate by grouping variables use `sentiment_by` using the `by` argument.
 (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 ```
 
+
 ## Plotting 
 
 ### Plotting at Aggregated Sentiment
+
 ```{r, warning=FALSE}
 plot(out)
 ```
+
 
 ### Plotting at the Sentence Level
 

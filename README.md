@@ -53,6 +53,7 @@ Table of Contents
 -   [[Examples](#examples)](#[examples](#examples))
     -   [[Plotting](#plotting)](#[plotting](#plotting))
         -   [[Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)](#[plotting-at-aggregated-sentiment](#plotting-at-aggregated-sentiment))
+        -   [[Plotting at the Sentence Level](#plotting-at-the-sentence-level)](#[plotting-at-the-sentence-level](#plotting-at-the-sentence-level))
     -   [[Annie Swafford's Examples](#annie-swaffords-examples)](#[annie-swafford's-examples](#annie-swaffords-examples))
     -   [[Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)](#[comparing-sentimentr-syuzhet-and-stanford](#comparing-sentimentr-syuzhet-and-stanford))
     -   [[Text Highlighting](#text-highlighting)](#[text-highlighting](#text-highlighting))
@@ -309,7 +310,8 @@ Plotting
     plot(out)
 
 ![](inst/figure/unnamed-chunk-7-1.png)  
-\#\#\# Plotting at the Sentence Level
+
+### Plotting at the Sentence Level
 
 The `plot` method for the class `sentiment` uses **syuzhet**'s
 `get_transformed_values` combined with **ggplot2** to make a reasonable,
@@ -422,19 +424,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 22695.8015 23159.5560 23616.1747 23623.3104
-        sentimentr_hu_liu()   197.7432   206.5076   219.6625   215.2719
-     sentimentr_sentiword()   753.6985   756.1074   766.3068   758.5163
-             syuzhet_binn()   362.3290   372.7034   378.4449   383.0777
-              syuzhet_nrc()   753.5754   801.8830   820.4162   850.1906
-            syuzhet_afinn()   130.9111   132.9749   144.9784   135.0387
+                 stanford() 21734.4188 22627.1195 22929.1871 23519.8202
+        sentimentr_hu_liu()   234.2014   239.1286   243.4148   244.0558
+     sentimentr_sentiword()   749.9391   751.6156   827.7713   753.2921
+             syuzhet_binn()   272.2226   274.4196   329.1442   276.6167
+              syuzhet_nrc()   660.0959   667.3449   730.7062   674.5939
+            syuzhet_afinn()   123.2499   124.7400   145.5865   126.2301
              uq        max neval
-     24076.3613 24529.4122     3
-       230.6221   245.9722     3
-       772.6110   786.7057     3
-       386.5029   389.9281     3
-       853.8367   857.4827     3
-       152.0120   168.9852     3
+     23526.5712 23533.3222     3
+       248.0215   251.9872     3
+       866.6874   980.0827     3
+       357.6051   438.5935     3
+       766.0114   857.4290     3
+       156.7548   187.2796     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
