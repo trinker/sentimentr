@@ -241,7 +241,7 @@ functions summarized in the table below:
 </tr>
 <tr class="even">
 <td align="left"><code>update_key</code></td>
-<td align="left">Add/remove terms to/fram a hash key</td>
+<td align="left">Add/remove terms to/from a hash key</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>highlight</code></td>
