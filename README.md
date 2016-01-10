@@ -1,6 +1,7 @@
 sentimentr
 ============
 
+
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
@@ -46,22 +47,77 @@ likely still be less accurate than Stanford's approach. Simply,
 Table of Contents
 ============
 
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Examples](#examples)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
+-   [[Functions](#functions)](#[functions](#functions))
+-   [[The Equation](#the-equation)](#[the-equation](#the-equation))
+-   [[Installation](#installation)](#[installation](#installation))
+-   [[Examples](#examples)](#[examples](#examples))
+    -   [[Plotting](#plotting)](#[plotting](#plotting))
+        -   [[Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)](#[plotting-at-aggregated-sentiment](#plotting-at-aggregated-sentiment))
+    -   [[Annie Swafford's Examples](#annie-swaffords-examples)](#[annie-swafford's-examples](#annie-swaffords-examples))
+    -   [[Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)](#[comparing-sentimentr-syuzhet-and-stanford](#comparing-sentimentr-syuzhet-and-stanford))
+    -   [[Text Highlighting](#text-highlighting)](#[text-highlighting](#text-highlighting))
+-   [[Contact](#contact)](#[contact](#contact))
 
+Functions
+============
+
+
+There are two main functions (top 2 in table below) in **sentimentr**
+with several helper functions summarized in the table below:
+
+<table style="width:104%;">
+<colgroup>
+<col width="26%" />
+<col width="77%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>sentiment</code></td>
+<td align="left">Sentiment at the sentence level</td>
+</tr>
+<tr class="even">
+<td align="left"><code>sentiment_by</code></td>
+<td align="left">Aggregated sentiment by group(s)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>uncombine</code></td>
+<td align="left">Extract sentence level sentiment from <code>sentiment_by</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_sentences</code></td>
+<td align="left">Regex based string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code>)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>replace_emoticon</code></td>
+<td align="left">Replace emoticons with word equivalent</td>
+</tr>
+<tr class="even">
+<td align="left"><code>as_key</code></td>
+<td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>is_key</code></td>
+<td align="left">Check if an object is a hash key</td>
+</tr>
+<tr class="even">
+<td align="left"><code>update_key</code></td>
+<td align="left">Add/remove terms to/from a hash key</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>highlight</code></td>
+<td align="left">Highlight positive/negative sentences as an HTML document</td>
+</tr>
+</tbody>
+</table>
 
 The Equation
 ============
-
 
 The equation used by the algorithm to assign value to polarity of each
 sentence fist utilizes the sentiment dictionary (Hu and Liu,
@@ -192,63 +248,6 @@ the development version:
 
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load_gh("trinker/sentimentr")
-
-Usage
-=====
-
-There are two main functions in **sentimentr** with several helper
-functions summarized in the table below:
-
-<table style="width:104%;">
-<colgroup>
-<col width="26%" />
-<col width="77%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Function</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>sentiment</code></td>
-<td align="left">Sentiment at the sentence level</td>
-</tr>
-<tr class="even">
-<td align="left"><code>sentiment_by</code></td>
-<td align="left">Aggregated sentiment by group(s)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>uncombine</code></td>
-<td align="left">Extract sentence level sentiment from <code>sentiment_by</code></td>
-</tr>
-<tr class="even">
-<td align="left"><code>get_sentences</code></td>
-<td align="left">Regex based string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code>)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>replace_emoticon</code></td>
-<td align="left">Replace emoticons with word equivalent</td>
-</tr>
-<tr class="even">
-<td align="left"><code>as_key</code></td>
-<td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>is_key</code></td>
-<td align="left">Check if an object is a hash key</td>
-</tr>
-<tr class="even">
-<td align="left"><code>update_key</code></td>
-<td align="left">Add/remove terms to/from a hash key</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>highlight</code></td>
-<td align="left">Highlight positive/negative sentences as an HTML document</td>
-</tr>
-</tbody>
-</table>
 
 Examples
 ========
@@ -423,19 +422,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24528.2430 25439.5067 25753.5094 26350.7705
-        sentimentr_hu_liu()   235.0894   243.4285   246.5365   251.7675
-     sentimentr_sentiword()   800.3104   885.8031   931.1599   971.2958
-             syuzhet_binn()   343.6738   347.7343   352.0618   351.7948
-              syuzhet_nrc()   822.6281   822.7938   824.7877   822.9594
-            syuzhet_afinn()   155.6002   157.1986   158.9909   158.7971
+                 stanford() 22695.8015 23159.5560 23616.1747 23623.3104
+        sentimentr_hu_liu()   197.7432   206.5076   219.6625   215.2719
+     sentimentr_sentiword()   753.6985   756.1074   766.3068   758.5163
+             syuzhet_binn()   362.3290   372.7034   378.4449   383.0777
+              syuzhet_nrc()   753.5754   801.8830   820.4162   850.1906
+            syuzhet_afinn()   130.9111   132.9749   144.9784   135.0387
              uq        max neval
-     26366.1426 26381.5147     3
-       252.2600   252.7524     3
-       996.5847  1021.8735     3
-       356.2558   360.7168     3
-       825.8675   828.7756     3
-       160.6862   162.5754     3
+     24076.3613 24529.4122     3
+       230.6221   245.9722     3
+       772.6110   786.7057     3
+       386.5029   389.9281     3
+       853.8367   857.4827     3
+       152.0120   168.9852     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
