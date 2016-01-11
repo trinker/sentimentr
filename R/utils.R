@@ -61,7 +61,7 @@ get_sents <- function(x) {
     if (methods::is(x, "get_sentences")) return(x)
     y <- stringi::stri_replace_all_regex(trimws(x), sent_regex, "<<<TEMP>>>")
     z <- stringi::stri_split_regex(y, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)(\\s|(?=[a-zA-Z][a-zA-Z]*\\s))")
-    lapply(z, function(x) gsub("<<<TEMP>>>", " ", stringi::stri_trans_tolower(x)))
+    lapply(z, function(x) gsub("<<<temp>>>", "", stringi::stri_trans_tolower(x)))
 }
 
 # get_sents <- function(x) {
