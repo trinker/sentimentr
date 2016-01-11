@@ -30,7 +30,7 @@ period_reg <- paste0(
         "|",
     "(?:(?<=[A-Z])\\.(?=\\s??[A-Z]\\.))",
         "|",
-    "(?:(?<=[A-Z])\\.(?!\\s[A-Z][A-Za-z]))"
+    "(?:(?<=[A-Z])\\.(?!\\s+[A-Z][A-Za-z]))"  #added \\s to \\s+ to handle 'I went to AU.  Awesome school.'
 )
 
 #period_reg <- paste0(
