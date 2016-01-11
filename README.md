@@ -99,18 +99,22 @@ with several helper functions summarized in the table below:
 <td align="left">Replace emoticons with word equivalent</td>
 </tr>
 <tr class="even">
+<td align="left"><code>replace_rating</code></td>
+<td align="left">Replace ratings (e.g., &quot;10 out of 10&quot;, &quot;3 stars&quot;) with word equivalent</td>
+</tr>
+<tr class="odd">
 <td align="left"><code>as_key</code></td>
 <td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>is_key</code></td>
 <td align="left">Check if an object is a hash key</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>update_key</code></td>
 <td align="left">Add/remove terms to/from a hash key</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>highlight</code></td>
 <td align="left">Highlight positive/negative sentences as an HTML document</td>
 </tr>
@@ -291,15 +295,15 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.4397613    0.10966120
-    ##  2:    LEHRER time 1        765 0.3475658    0.10817049
-    ##  3:     OBAMA time 3       7241 0.4135144    0.09654523
-    ##  4:     OBAMA time 2       7476 0.3829131    0.08875464
-    ##  5:    ROMNEY time 3       8302 0.3909338    0.08108205
-    ##  6:    ROMNEY time 1       4085 0.3510066    0.06613552
+    ##  1:     OBAMA time 1       3598 0.4397446    0.10837955
+    ##  2:    LEHRER time 1        765 0.3504484    0.10580101
+    ##  3:     OBAMA time 3       7241 0.4116071    0.09651532
+    ##  4:     OBAMA time 2       7476 0.3834887    0.08935680
+    ##  5:    ROMNEY time 3       8302 0.3930657    0.07942057
+    ##  6:    ROMNEY time 1       4085 0.3510203    0.06657421
     ##  7: SCHIEFFER time 3       1445 0.3772378    0.06515716
     ##  8:   CROWLEY time 2       1672 0.2125288    0.05531121
-    ##  9:    ROMNEY time 2       7534 0.3188779    0.04946325
+    ##  9:    ROMNEY time 2       7534 0.3220190    0.04535011
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
 
 Plotting
@@ -424,19 +428,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 21734.4188 22627.1195 22929.1871 23519.8202
-        sentimentr_hu_liu()   234.2014   239.1286   243.4148   244.0558
-     sentimentr_sentiword()   749.9391   751.6156   827.7713   753.2921
-             syuzhet_binn()   272.2226   274.4196   329.1442   276.6167
-              syuzhet_nrc()   660.0959   667.3449   730.7062   674.5939
-            syuzhet_afinn()   123.2499   124.7400   145.5865   126.2301
+                 stanford() 24434.7906 25698.1308 26128.3359 26961.4710
+        sentimentr_hu_liu()   251.1763   251.3880   267.9926   251.5996
+     sentimentr_sentiword()  1015.0445  1015.6492  1042.5035  1016.2540
+             syuzhet_binn()   343.5851   349.6782   351.7873   355.7714
+              syuzhet_nrc()   844.1486   854.7963   868.1705   865.4441
+            syuzhet_afinn()   159.9836   161.5619   203.5712   163.1403
              uq        max neval
-     23526.5712 23533.3222     3
-       248.0215   251.9872     3
-       866.6874   980.0827     3
-       357.6051   438.5935     3
-       766.0114   857.4290     3
-       156.7548   187.2796     3
+     26975.1085 26988.7461     3
+       276.4007   301.2019     3
+      1056.2330  1096.2121     3
+       355.8884   356.0054     3
+       880.1815   894.9189     3
+       225.3650   287.5898     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -516,7 +520,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce to things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,104\] vs. Hu & Lu \[n = 6,781\])
+    20,103\] vs. Hu & Lu \[n = 6,821\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a

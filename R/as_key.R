@@ -119,7 +119,7 @@ update_key <- function(key, drop = NULL, x = NULL,
 
 #' Convert data.frame to a Hash Key
 #'
-#' \code{is_key} -
+#' \code{is_key} - Logical check if an object is a key.
 #'
 #' @export
 #' @rdname as_key

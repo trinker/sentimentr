@@ -25,6 +25,9 @@ sentimentr 0.1.0
 * `get_sentences` converted to lower case too early in the regex parsing,
   resulting in missed sentence boundary detection.  This has been corrected.
 
+* `highlight` failed for some occasions when using `original.text` because the
+  spltting algorithm for `sentiment` was different. `sentiment`'s split algorithm
+  now matches and is more accurate but at the cost of speed.
 
 **NEW FEATURES**
 
@@ -42,6 +45,17 @@ sentimentr 0.1.0
 
 * `cannon_reviews` data set added containing Amazon product reviews for the
   Cannon G3 Camera compiled by Hu and Liu (2004).
+
+* `replace_ratings` function + `ratings` data set added to replace ratings.
+
+* `polarity_table` get's an upgrade with new positive and negative words to
+  improve accuracy.
+
+* `valence_shifters_table` picks up a few non-traditional negators.  Full list
+  includes: "could have", "would have", "should have", "would be",
+  "would suggest", "strongly suggest".
+
+* `is_key` and `update_key` added to test and easily update keys.
 
 **MINOR FEATURES**
 

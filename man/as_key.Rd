@@ -39,7 +39,7 @@ arguments such as \code{polarity_dt} in the \code{sentiment} function.
 
 \code{update_key} - Add/remove terms to a current key.
 
-\code{is_key} -
+\code{is_key} - Logical check if an object is a key.
 }
 \examples{
 key <- data.frame(

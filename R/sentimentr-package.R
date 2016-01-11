@@ -22,7 +22,7 @@ NULL
 #' @keywords datasets
 #' @name polarity_table
 #' @usage data(polarity_table)
-#' @format A data frame with 6798 rows and 2 variables
+#' @format A data frame with 6821 rows and 2 variables
 #' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
 #' reviews. National Conference on Artificial Intelligence.
 #'
@@ -217,4 +217,23 @@ NULL
 #' SIGKDD International Conference on Knowledge Discovery and Data Mining.
 #' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} \cr\cr
 #' \url{http://archive.ics.uci.edu/ml/machine-learning-databases/00331/}
+NULL
+
+
+#' Ratings Data Set
+#'
+#' A dataset containing common ratings.
+#'
+#' @details
+#' \itemize{
+#'   \item x. The graphic representation of the rating
+#'   \item y. The meaning of the rating
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name ratings
+#' @usage data(ratings)
+#' @format A data frame with 35 rows and 2 variables
+#' @references
 NULL

@@ -155,6 +155,21 @@ make_sentence_df2 <- function(sents){
     text.var
 }
 
+.mgsub2 <- function (pattern, replacement, text.var, ...) {
+
+    ord <- rev(order(nchar(pattern)))
+    pattern <- pattern[ord]
+    if (length(replacement) != 1) replacement <- replacement[ord]
+
+    if (length(replacement) == 1) replacement <- rep(replacement, length(pattern))
+
+    text.var <- stringi::stri_replace_all_fixed(text.var, pattern, replacement,
+        vectorize_all=FALSE, opts_fixed = list(case_insensitive = TRUE)
+    )
+
+    text.var
+}
+
 space_fill <- function(x, doubles){
 
   .mgsub(doubles, gsub("\\s+", "~~", doubles), x)
