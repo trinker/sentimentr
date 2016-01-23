@@ -4,7 +4,7 @@
 \name{valence_shifters_table}
 \alias{valence_shifters_table}
 \title{Valence Shifters}
-\format{A data frame with 95 rows and 2 variables}
+\format{A data frame with 96 rows and 2 variables}
 \usage{
 data(valence_shifters_table)
 }

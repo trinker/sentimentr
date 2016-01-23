@@ -178,7 +178,7 @@
 #' sentiment(y, n.before=Inf)
 sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
     valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
-    amplifier.weight = .8, n.before = 4, n.after = 2, question.weight = 1,
+    amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     but.weight = .85, missing_value = 0, ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-

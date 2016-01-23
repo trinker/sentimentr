@@ -295,15 +295,15 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.4397446    0.10837955
-    ##  2:    LEHRER time 1        765 0.3504484    0.10580101
-    ##  3:     OBAMA time 3       7241 0.4116071    0.09651532
-    ##  4:     OBAMA time 2       7476 0.3834887    0.08935680
-    ##  5:    ROMNEY time 3       8302 0.3930657    0.07942057
-    ##  6:    ROMNEY time 1       4085 0.3510203    0.06657421
-    ##  7: SCHIEFFER time 3       1445 0.3772378    0.06515716
-    ##  8:   CROWLEY time 2       1672 0.2125288    0.05531121
-    ##  9:    ROMNEY time 2       7534 0.3220190    0.04535011
+    ##  1:    LEHRER time 1        765 0.3474359    0.10958889
+    ##  2:     OBAMA time 1       3598 0.4406033    0.10915755
+    ##  3:     OBAMA time 3       7241 0.4121806    0.09922089
+    ##  4:     OBAMA time 2       7476 0.3829126    0.09089932
+    ##  5:    ROMNEY time 3       8302 0.3883042    0.07834848
+    ##  6: SCHIEFFER time 3       1445 0.3773859    0.06669193
+    ##  7:    ROMNEY time 1       4085 0.3550998    0.06391677
+    ##  8:   CROWLEY time 2       1672 0.2144920    0.05560477
+    ##  9:    ROMNEY time 2       7534 0.3246025    0.04589893
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
 
 Plotting
@@ -374,7 +374,7 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
     ), "sentences")
 
       stanford hu_liu sentiword bing afinn nrc
-    1     -0.5      0      0.27   -1    -2   0
+    1     -0.5   0.35      0.18   -1    -2   0
     2        1    0.8      0.65    1     3   1
     3      0.5    0.5      0.32    1     3   1
     4     -0.5      0         0    1     3   1
@@ -428,19 +428,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24434.7906 25698.1308 26128.3359 26961.4710
-        sentimentr_hu_liu()   251.1763   251.3880   267.9926   251.5996
-     sentimentr_sentiword()  1015.0445  1015.6492  1042.5035  1016.2540
-             syuzhet_binn()   343.5851   349.6782   351.7873   355.7714
-              syuzhet_nrc()   844.1486   854.7963   868.1705   865.4441
-            syuzhet_afinn()   159.9836   161.5619   203.5712   163.1403
+                 stanford() 25537.7987 25740.5925 26076.4667 25943.3864
+        sentimentr_hu_liu()   258.5819   261.0322   263.1655   263.4826
+     sentimentr_sentiword()   999.4527  1006.6223  1018.3594  1013.7919
+             syuzhet_binn()   364.3725   379.4654   411.1200   394.5584
+              syuzhet_nrc()   902.3793   905.8874   907.2779   909.3955
+            syuzhet_afinn()   164.6204   165.3811   168.0283   166.1419
              uq        max neval
-     26975.1085 26988.7461     3
-       276.4007   301.2019     3
-      1056.2330  1096.2121     3
-       355.8884   356.0054     3
-       880.1815   894.9189     3
-       225.3650   287.5898     3
+     26345.8008 26748.2151     3
+       265.4573   267.4320     3
+      1027.8127  1041.8335     3
+       434.4937   474.4291     3
+       909.7273   910.0590     3
+       169.7323   173.3227     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -520,7 +520,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce to things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,103\] vs. Hu & Lu \[n = 6,821\])
+    20,102\] vs. Hu & Lu \[n = 6,827\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
