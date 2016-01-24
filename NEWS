@@ -57,6 +57,12 @@ NEW FEATURES
 
 * `is_key` and `update_key` added to test and easily update keys.
 
+* `grades` dictionary added.  This is a simple dataset containing common
+  grades and word equivalents.
+
+* `replace_grade` function added to replace grades with word equivalents.
+
+
 MINOR FEATURES
 
 IMPROVEMENTS

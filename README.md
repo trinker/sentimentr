@@ -99,22 +99,26 @@ with several helper functions summarized in the table below:
 <td align="left">Replace emoticons with word equivalent</td>
 </tr>
 <tr class="even">
+<td align="left"><code>replace_grade</code></td>
+<td align="left">Replace gradess (e.g., &quot;A+&quot;) with word equivalent</td>
+</tr>
+<tr class="odd">
 <td align="left"><code>replace_rating</code></td>
 <td align="left">Replace ratings (e.g., &quot;10 out of 10&quot;, &quot;3 stars&quot;) with word equivalent</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>as_key</code></td>
 <td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>is_key</code></td>
 <td align="left">Check if an object is a hash key</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>update_key</code></td>
 <td align="left">Add/remove terms to/from a hash key</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>highlight</code></td>
 <td align="left">Highlight positive/negative sentences as an HTML document</td>
 </tr>
@@ -428,19 +432,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 25036.9472 25182.5399 25400.6774 25328.1327
-        sentimentr_hu_liu()   211.4855   232.3748   242.8442   253.2641
-     sentimentr_sentiword()   789.2543   894.9556   939.2960  1000.6569
-             syuzhet_binn()   322.8875   327.5827   333.9586   332.2780
-              syuzhet_nrc()   630.3803   633.6483   672.6018   636.9162
-            syuzhet_afinn()   125.3790   140.5935   168.1875   155.8080
+                 stanford() 24007.9133 25026.5316 25501.0191 26045.1499
+        sentimentr_hu_liu()   257.8798   260.6083   292.9230   263.3368
+     sentimentr_sentiword()   977.4298   988.2982  1009.3642   999.1666
+             syuzhet_binn()   374.4916   386.0058   389.8711   397.5200
+              syuzhet_nrc()   861.2786   877.5804   923.3852   893.8822
+            syuzhet_afinn()   159.7357   160.2946   168.4575   160.8536
              uq        max neval
-     25582.5426 25836.9524     3
-       258.5236   263.7831     3
-      1014.3168  1027.9767     3
-       339.4941   346.7103     3
-       693.7126   750.5089     3
-       189.5917   223.3754     3
+     26247.5720 26449.9941     3
+       310.4446   357.5525     3
+      1025.3314  1051.4962     3
+       397.5609   397.6017     3
+       954.4385  1014.9948     3
+       172.8184   184.7832     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
