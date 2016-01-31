@@ -57,12 +57,21 @@ sentimentr 0.1.0
 
 * `is_key` and `update_key` added to test and easily update keys.
 
+* `grades` dictionary added.  This is a simple dataset containing common
+  grades and word equivalents.
+
+* `replace_grade` function added to replace grades with word equivalents.
+
+
 **MINOR FEATURES**
 
 IMPROVEMENTS
 
-* `plot.sentiment` now used `...` to pass parameters to **syuzhet**'s
+* `plot.sentiment` now uses `...` to pass parameters to **syuzhet**'s
   `get_transformed_values`.
+
+* `as_key`, `is_key`, & `update_key` all pick up a logical `sentiment` argument
+  that allows keys that have character y columns (2nd column).
 
 
 **CHANGES**

@@ -67,8 +67,11 @@ MINOR FEATURES
 
 IMPROVEMENTS
 
-* `plot.sentiment` now used `...` to pass parameters to **syuzhet**'s
+* `plot.sentiment` now uses `...` to pass parameters to **syuzhet**'s
   `get_transformed_values`.
+
+* `as_key`, `is_key`, & `update_key` all pick up a logical `sentiment` argument
+  that allows keys that have character y columns (2nd column).
 
 
 CHANGES

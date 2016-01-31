@@ -10,6 +10,15 @@ test_that("as_key makes a data.table key",{
 
     mykey <- as_key(key)
 
+    key2 <- data.frame(
+        words = sample(LETTERS),
+        words2 = sample(letters),
+        stringsAsFactors = FALSE
+    )
+
+    expect_true(is_key(as_key(key2, sentiment=FALSE), sentiment=FALSE))
+    expect_error(as_key(key2))
+
     expect_true(is(mykey, "data.table"))
     expect_true(all(dim(mykey) == c(26, 2)))
 })

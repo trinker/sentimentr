@@ -11,6 +11,8 @@
 #' \code{polarity_dt} words are not also found in \code{valence_shifters_dt} in
 #' \code{\link[sentimentr]{sentiment}}.  Use \code{comparison = NULL} to skip
 #' this comparison.
+#' @param sentiment logical.  If \code{TRUE} checking expects column 2 of the
+#' input keys/\code{\link[base]{data.frame}} are expected to be numeric.
 #' @param \ldots ignored.
 #' @return Returns a \pkg{data.table} object that can be used as a hash key.
 #' @keywords key hash lookup
@@ -59,16 +61,49 @@
 #'
 #' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as_key(syuzhet:::bing))
 #' }
-as_key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
+#'
+#' ## Using 2 vectors of words
+#' \dontrun{
+#' install.packages("tm.lexicon.GeneralInquirer", repos="http://datacube.wu.ac.at", type="source")
+#' require("tm.lexicon.GeneralInquirer")
+#'
+#' positive <- terms_in_General_Inquirer_categories("Positiv")
+#' negative <- terms_in_General_Inquirer_categories("Negativ")
+#'
+#' geninq <- data.frame(
+#'     x = c(positive, negative),
+#'     y = c(rep(1, length(positive)), rep(-1, length(negative))),
+#'     stringsAsFactors = FALSE
+#' ) %>%
+#'     as_key()
+#'
+#' geninq_pol <- with(presidential_debates_2012,
+#'     sentiment_by(dialogue,
+#'     person,
+#'     polarity_dt = geninq
+#' ))
+#'
+#' geninq_pol %>% plot()
+#' }
+as_key <- function(x, comparison = sentimentr::valence_shifters_table, sentiment = TRUE, ...){
 
     stopifnot(is.data.frame(x))
+
+    culprits <- NULL
+    if (length(x[[1]]) != length(unique(x[[1]]))) {
+        tab <- table(x[[1]])
+        culprits <- paste(paste0("   * ", sort(names(tab[tab > 1]))), collapse = "\n")
+        warning("One or more terms in the first column are repeated. Terms must be unique.\n  ",
+            "I found the following likely culprits:\n\n", culprits, "\n\nThese terms have been dropped\n")
+    }
+
     if (is.factor(x[[1]])) {
         warning("Column 1 was a factor...\nConverting to character.")
         x[[1]] <- as.character(x[[1]])
     }
 
     if (!is.character(x[[1]])) stop("Column 1 must be character")
-    if (!is.numeric(x[[2]])) stop("Column 2 must be numeric")
+    if (isTRUE(sentiment) && !is.numeric(x[[2]])) stop("Column 2 must be numeric")
 
     colnames(x) <- c("x", "y")
 
@@ -77,6 +112,8 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
     }
     data.table::setDT(x)
     x <- x[order(x),]
+
+    if (!is.null(culprits)) x <- x[!x %in% sort(names(tab[tab > 1])), ]
     data.table::setkey(x, "x")
     x
 }
@@ -90,9 +127,9 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, ...){
 #' @export
 #' @rdname as_key
 update_key <- function(key, drop = NULL, x = NULL,
-    comparison = sentimentr::valence_shifters_table, ...){
+    comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...){
 
-    stopifnot(is_key(key))
+    stopifnot(is_key(key, sentiment = sentiment))
 
     key1 <- data.table::copy(key)
 
@@ -101,9 +138,8 @@ update_key <- function(key, drop = NULL, x = NULL,
     }
 
     if (!is.null(x)){
-        key2 <- as_key(x)
+        key2 <- as_key(x, sentiment = sentiment)
         key1 <- rbind(key1, key2)
-
     }
 
     if (!is.null(comparison)) {
@@ -123,7 +159,15 @@ update_key <- function(key, drop = NULL, x = NULL,
 #'
 #' @export
 #' @rdname as_key
-is_key <- function(key){
+is_key <- function(key, sentiment = TRUE){
+    if (isTRUE(sentiment)) {
+        col2 <- is.numeric(key[["y"]])
+    } else{
+        col2 <- is.numeric(key[["y"]]) | is.character(key[["y"]])
+    }
     data.table::is.data.table(key) && all.equal(colnames(key), c("x", "y")) &&
-        is.character(key[["x"]]) && (is.numeric(key[["y"]]) | is.character(key[["y"]]))
+        is.character(key[["x"]]) && (col2)
 }
+
+
+

@@ -6,12 +6,13 @@
 \alias{update_key}
 \title{Create/Manipulate Hash Keys}
 \usage{
-as_key(x, comparison = sentimentr::valence_shifters_table, ...)
+as_key(x, comparison = sentimentr::valence_shifters_table, sentiment = TRUE,
+  ...)
 
 update_key(key, drop = NULL, x = NULL,
-  comparison = sentimentr::valence_shifters_table, ...)
+  comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...)
 
-is_key(key)
+is_key(key, sentiment = TRUE)
 }
 \arguments{
 \item{x}{A \code{\link[base]{data.frame}} with the first column containing
@@ -23,6 +24,9 @@ accompanying row will be removed from \code{x}.  This is useful to ensure
 \code{polarity_dt} words are not also found in \code{valence_shifters_dt} in
 \code{\link[sentimentr]{sentiment}}.  Use \code{comparison = NULL} to skip
 this comparison.}
+
+\item{sentiment}{logical.  If \code{TRUE} checking expects column 2 of the
+input keys/\code{\link[base]{data.frame}} are expected to be numeric.}
 
 \item{key}{A \pkg{sentimentr} hash key.}
 
@@ -82,6 +86,30 @@ nrc <- data.frame(
 as_key(nrc[nrc[["polarity"]] != 0, ])
 
 sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as_key(syuzhet:::bing))
+}
+
+## Using 2 vectors of words
+\dontrun{
+install.packages("tm.lexicon.GeneralInquirer", repos="http://datacube.wu.ac.at", type="source")
+require("tm.lexicon.GeneralInquirer")
+
+positive <- terms_in_General_Inquirer_categories("Positiv")
+negative <- terms_in_General_Inquirer_categories("Negativ")
+
+geninq <- data.frame(
+    x = c(positive, negative),
+    y = c(rep(1, length(positive)), rep(-1, length(negative))),
+    stringsAsFactors = FALSE
+) \%>\%
+    as_key()
+
+geninq_pol <- with(presidential_debates_2012,
+    sentiment_by(dialogue,
+    person,
+    polarity_dt = geninq
+))
+
+geninq_pol \%>\% plot()
 }
 }
 \keyword{hash}
