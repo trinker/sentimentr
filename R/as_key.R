@@ -134,7 +134,7 @@ update_key <- function(key, drop = NULL, x = NULL,
     key1 <- data.table::copy(key)
 
     if (!is.null(drop)){
-        key1 <- key[!x %in% drop, ]
+        key1 <- key1[!x %in% drop, ]
     }
 
     if (!is.null(x)){
