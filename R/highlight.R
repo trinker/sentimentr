@@ -78,10 +78,13 @@ highlight <- function(x, original.text = NULL, file = "polarity.html",
 
     cat(sprintf(html, body), file = file)
 
-    if (file.exists(file)) message(sprintf("%s appears to be generated", file))
-    if (open){
-        message(sprintf("Attempting to open %s", file))
-        utils::browseURL(file)
+    if (file.exists(file)){
+        message(sprintf("Saved in %s", file))
+        if (open){
+            path <- normalizePath(file)
+            message(sprintf("Oppening %s ...", file))
+            utils::browseURL(paste0("file://", path))
+        }
     }
 }
 
