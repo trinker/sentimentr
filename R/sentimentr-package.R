@@ -235,7 +235,6 @@ NULL
 #' @name ratings
 #' @usage data(ratings)
 #' @format A data frame with 35 rows and 2 variables
-#' @references
 NULL
 
 
@@ -254,5 +253,4 @@ NULL
 #' @name grades
 #' @usage data(grades)
 #' @format A data frame with 15 rows and 2 variables
-#' @references
 NULL
