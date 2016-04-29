@@ -22,3 +22,4 @@ inst/maintenance.R
 comparisons_between_sentiment_detectors.pdf
 comparisons_between_sentiment_detectors.png
 inst/data_create_scripts
+zzz_useResearch.R

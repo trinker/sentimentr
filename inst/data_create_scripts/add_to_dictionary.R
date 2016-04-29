@@ -8,14 +8,22 @@ pacman::p_load_gh("trinker/sentimentr", "trinker/pax")
 word <- "effective"
 value <- -1
 
+
+
 # check if word is already there
 polarity_table[word, ]
 
 polarity_table <- sentimentr::polarity_table %>%
 	   as.data.frame()
 
+valence_shifters_table[c('exceedingly')]
+
+valence_shifters_table[c('really')]
+
 (check <- nrow(polarity_table))
 
+polarity_table[c('greatly')]
+polarity_table[c('dreadful')]
 
 polarity_table[check + 1, ] <- NA
 polarity_table[check + 1, "x"] <- word

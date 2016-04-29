@@ -9,7 +9,7 @@ Description: Calculate text polarity sentiment at the sentence level
 Depends: R (>= 3.1.0)
 Suggests: testthat
 Imports: data.table, ggplot2, graphics, grid, methods, stats, stringi,
-        syuzhet, utils, useResearch, httr
+        syuzhet, utils
 Date: 2016-01-30
 License: GPL-2
 LazyData: TRUE
