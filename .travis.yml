@@ -1,6 +1,6 @@
 language: r
 
-sudo: required
+sudo: true
 before_install:
   - sh -e /etc/init.d/xvfb start
   - sudo R CMD javareconf  
