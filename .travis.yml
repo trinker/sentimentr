@@ -8,7 +8,6 @@ before_install:
 r_github_packages: 
   - jimhester/covr
 
-script:      ./travis-tool.sh run_tests
 notifications:
   email:
     on_success:      change
@@ -18,7 +17,7 @@ after_success:
   - Rscript -e 'covr::coveralls()'
   
 r_build_args: "--resave-data=best"
-r_check_args:"--as-cran"
+r_check_args: "--as-cran"
 
 env:
    global:
