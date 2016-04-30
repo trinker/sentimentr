@@ -1,9 +1,8 @@
 language: r
 
-sudo: true
+sudo: false
 before_install:
   - sh -e /etc/init.d/xvfb start
-  - sudo R CMD javareconf  
 
 r_github_packages: 
   - jimhester/covr
