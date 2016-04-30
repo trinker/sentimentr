@@ -1,24 +1,26 @@
-language: java
+language: r
 
 sudo: required
 before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-install:
   - sh -e /etc/init.d/xvfb start
-  - ./travis-tool.sh aptget_install r-cran-xml
-  - sudo R CMD javareconf
-  - ./travis-tool.sh install_github hadley/devtools
-  - ./travis-tool.sh install_deps
+  - sudo R CMD javareconf  
+
+r_github_packages: 
+  - jimhester/covr
+
 script:      ./travis-tool.sh run_tests
 notifications:
   email:
     on_success:      change
     on_failure:      change
+    
+after_success:
+  - Rscript -e 'covr::coveralls()'
+  
+r_build_args: "--resave-data=best"
+r_check_args:"--as-cran"
+
 env:
    global:
-     - R_BUILD_ARGS="--resave-data=best"
-     - R_CHECK_ARGS="--as-cran"
      - DISPLAY=:99.0
      - BOOTSTRAP_LATEX=1
