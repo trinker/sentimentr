@@ -6,11 +6,11 @@ citEntry(entry = "manual",
     author = "Tyler W. Rinker",
     organization = "University at Buffalo/SUNY",
     address = "Buffalo, New York",
-    note = "version 0.1.3",
+    note = "version 0.2.0",
     year = "2015",
     url = "http://github.com/trinker/sentimentr",
     textVersion  = paste("Rinker, T. W. (2015).",
         "sentimentr: Calculate Text Polarity Sentiment",
-        "version 0.1.3. University at Buffalo. Buffalo, New York.",
+        "version 0.2.0. University at Buffalo. Buffalo, New York.",
         "http://github.com/trinker/sentimentr")
 )

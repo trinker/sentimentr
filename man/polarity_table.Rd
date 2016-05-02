@@ -4,7 +4,7 @@
 \name{polarity_table}
 \alias{polarity_table}
 \title{Polarity Lookup Key}
-\format{A data frame with 6827 rows and 2 variables}
+\format{A data frame with 6836 rows and 2 variables}
 \usage{
 data(polarity_table)
 }
@@ -15,7 +15,8 @@ positive/negative word list as sentiment lookup values.
 \details{
 \itemize{
   \item x. Words
-  \item y. Sentiment values (+1, -1)
+  \item y. Sentiment values (+1, -1, -2); -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evilcomparison both connotate negative though the following word is positive and negative respectively).
+  
 }
 }
 \references{

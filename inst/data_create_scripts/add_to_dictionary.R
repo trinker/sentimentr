@@ -16,14 +16,20 @@ polarity_table[word, ]
 polarity_table <- sentimentr::polarity_table %>%
 	   as.data.frame()
 
-valence_shifters_table[c('exceedingly')]
+qdapRegex::ex_default(presidential_debates_2012$dialogue, pattern="(?i)\\b\\w+\\s+(or\\s+)+((the|a|an)\\s+)*\\w+") %>% unlist() %>% na.omit() %>% c() %>% unique()
 
-valence_shifters_table[c('really')]
+new_key <- update_key(as_key(polarity_table), x = data.frame(x = c("too good"), y = c(-1)))
+
+sentiment("I too often that I pay too good for food.", new_key)
+
+valence_shifters_table[c('extraordinarily')]
+
+valence_shifters_table[c('too often')]
 
 (check <- nrow(polarity_table))
 
-polarity_table[c('greatly')]
-polarity_table[c('dreadful')]
+polarity_table[c('too many')]
+polarity_table[c('rarely')]
 
 polarity_table[check + 1, ] <- NA
 polarity_table[check + 1, "x"] <- word
@@ -112,3 +118,22 @@ pax::new_data(emoticons)
 
 
 
+valence_shifters_table <- update_key(sentimentr::valence_shifters_table, drop=NULL, 
+    x = data.frame(
+        x = c("exceedingly", "remarkably", "especially"), 
+        y = c(2, 2, 2), stringsAsFactors = FALSE
+    ), 
+    comparison=sentimentr::polarity_table, 
+    sentiment=F
+)
+
+polarity_table <- update_key(sentimentr::polarity_table, 
+    x = data.frame(
+        x = c('i wish'), 
+        y = c(-2)
+    ), drop = 'I wish'
+)
+
+
+pax::new_data(valence_shifters_table)
+pax::new_data(polarity_table)

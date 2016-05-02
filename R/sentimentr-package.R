@@ -15,14 +15,15 @@ NULL
 #' @details
 #' \itemize{
 #'   \item x. Words
-#'   \item y. Sentiment values (+1, -1)
+#'   \item y. Sentiment values (+1, -1, -2); -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evilcomparison both connotate negative though the following word is positive and negative respectively).
+#'   
 #' }
 #'
 #' @docType data
 #' @keywords datasets
 #' @name polarity_table
 #' @usage data(polarity_table)
-#' @format A data frame with 6827 rows and 2 variables
+#' @format A data frame with 6836 rows and 2 variables
 #' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
 #' reviews. National Conference on Artificial Intelligence.
 #'
@@ -63,7 +64,7 @@ NULL
 #' @keywords datasets
 #' @name valence_shifters_table
 #' @usage data(valence_shifters_table)
-#' @format A data frame with 96 rows and 2 variables
+#' @format A data frame with 97 rows and 2 variables
 NULL
 
 
@@ -254,3 +255,4 @@ NULL
 #' @usage data(grades)
 #' @format A data frame with 15 rows and 2 variables
 NULL
+

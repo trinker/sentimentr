@@ -1,4 +1,4 @@
-sentimentr
+sentimentr   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
 ============
 
 
@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.1.3-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.3-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.2.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.2.0-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -47,17 +47,17 @@ likely still be less accurate than Stanford's approach. Simply,
 Table of Contents
 ============
 
--   [[Functions](#functions)](#[functions](#functions))
--   [[The Equation](#the-equation)](#[the-equation](#the-equation))
--   [[Installation](#installation)](#[installation](#installation))
--   [[Examples](#examples)](#[examples](#examples))
-    -   [[Plotting](#plotting)](#[plotting](#plotting))
-        -   [[Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)](#[plotting-at-aggregated-sentiment](#plotting-at-aggregated-sentiment))
-        -   [[Plotting at the Sentence Level](#plotting-at-the-sentence-level)](#[plotting-at-the-sentence-level](#plotting-at-the-sentence-level))
-    -   [[Annie Swafford's Examples](#annie-swaffords-examples)](#[annie-swafford's-examples](#annie-swaffords-examples))
-    -   [[Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)](#[comparing-sentimentr-syuzhet-and-stanford](#comparing-sentimentr-syuzhet-and-stanford))
-    -   [[Text Highlighting](#text-highlighting)](#[text-highlighting](#text-highlighting))
--   [[Contact](#contact)](#[contact](#contact))
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
 
 Functions
 ============
@@ -66,10 +66,10 @@ Functions
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
 
-<table style="width:104%;">
+<table style="width:100%;">
 <colgroup>
-<col width="26%" />
-<col width="77%" />
+<col width="25%" />
+<col width="74%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -216,11 +216,11 @@ amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(&radic;*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
-<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
+<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
 
 Where:
 
@@ -262,6 +262,9 @@ Examples
 ========
 
     if (!require("pacman")) install.packages("pacman")
+
+    ## Loading required package: pacman
+
     pacman::p_load(sentimentr)
 
     mytext <- c(
@@ -299,13 +302,13 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:    LEHRER time 1        765 0.3474359    0.10958889
-    ##  2:     OBAMA time 1       3598 0.4406033    0.10915755
-    ##  3:     OBAMA time 3       7241 0.4121806    0.09922089
-    ##  4:     OBAMA time 2       7476 0.3829126    0.09089932
+    ##  1:     OBAMA time 1       3598 0.4482863    0.09839218
+    ##  2:    LEHRER time 1        765 0.3668714    0.09822525
+    ##  3:     OBAMA time 3       7241 0.4133532    0.09790108
+    ##  4:     OBAMA time 2       7476 0.3873647    0.08763700
     ##  5:    ROMNEY time 3       8302 0.3883042    0.07834848
     ##  6: SCHIEFFER time 3       1445 0.3773859    0.06669193
-    ##  7:    ROMNEY time 1       4085 0.3550998    0.06391677
+    ##  7:    ROMNEY time 1       4085 0.3588247    0.06184742
     ##  8:   CROWLEY time 2       1672 0.2144920    0.05560477
     ##  9:    ROMNEY time 2       7534 0.3246025    0.04589893
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
@@ -317,7 +320,7 @@ Plotting
 
     plot(out)
 
-![](inst/figure/unnamed-chunk-7-1.png)  
+![](inst/figure/unnamed-chunk-7-1.png)
 
 ### Plotting at the Sentence Level
 
@@ -330,7 +333,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](inst/figure/unnamed-chunk-8-1.png)  
+![](inst/figure/unnamed-chunk-8-1.png)
 
 Annie Swafford's Examples
 -------------------------
@@ -432,19 +435,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24007.9133 25026.5316 25501.0191 26045.1499
-        sentimentr_hu_liu()   257.8798   260.6083   292.9230   263.3368
-     sentimentr_sentiword()   977.4298   988.2982  1009.3642   999.1666
-             syuzhet_binn()   374.4916   386.0058   389.8711   397.5200
-              syuzhet_nrc()   861.2786   877.5804   923.3852   893.8822
-            syuzhet_afinn()   159.7357   160.2946   168.4575   160.8536
+                 stanford() 19973.2510 20392.1210 20683.6057 20810.9910
+        sentimentr_hu_liu()   253.9947   256.7328   260.3667   259.4710
+     sentimentr_sentiword()   986.7741   993.2091  1015.3205   999.6442
+             syuzhet_binn()   296.3417   299.7767   331.0930   303.2117
+              syuzhet_nrc()   741.4134   761.5542   793.0349   781.6950
+            syuzhet_afinn()   146.6461   150.2254   151.4858   153.8047
              uq        max neval
-     26247.5720 26449.9941     3
-       310.4446   357.5525     3
-      1025.3314  1051.4962     3
-       397.5609   397.6017     3
-       954.4385  1014.9948     3
-       172.8184   184.7832     3
+     21038.7831 21266.5753     3
+       263.5527   267.6345     3
+      1029.5937  1059.5431     3
+       348.4686   393.7255     3
+       818.8456   855.9962     3
+       153.9057   154.0066     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -524,7 +527,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce to things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,102\] vs. Hu & Lu \[n = 6,827\])
+    20,102\] vs. Hu & Lu \[n = 6,836\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
@@ -554,7 +557,7 @@ reviews.
 Contact
 =======
 
-You are welcome to: 
-* submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues> 
-* send a pull request on: <https://github.com/trinker/sentimentr/> 
-* compose a friendly e-mail to: <tyler.rinker@gmail.com>
+You are welcome to:    
+- submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues>    
+- send a pull request on: <https://github.com/trinker/sentimentr/>    
+- compose a friendly e-mail to: <tyler.rinker@gmail.com>    

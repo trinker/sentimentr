@@ -17,7 +17,26 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 0.1.0
+sentimentr 0.2.0 -
+----------------------------------------------------------------
+
+**BUG FIXES**
+
+**NEW FEATURES**
+
+**MINOR FEATURES**
+
+**IMPROVEMENTS**
+
+**CHANGES**
+
+* Default sentiment and valence shifters get the following additions: 
+  - `polarity_table`: "excessively", 'overly', 'unduly', 'too much', 'too many', 
+  'too often', 'i wish', 'too good', 'too high', 'to tough'
+  - `valence_shifter_table`: "especially"
+
+
+sentimentr 0.1.0 - 0.1.3
 ----------------------------------------------------------------
 
 **BUG FIXES**
@@ -63,9 +82,7 @@ sentimentr 0.1.0
 * `replace_grade` function added to replace grades with word equivalents.
 
 
-**MINOR FEATURES**
-
-IMPROVEMENTS
+**IMPROVEMENTS**
 
 * `plot.sentiment` now uses `...` to pass parameters to **syuzhet**'s
   `get_transformed_values`.
@@ -74,7 +91,6 @@ IMPROVEMENTS
   that allows keys that have character y columns (2nd column).
 
 
-**CHANGES**
 
 sentimentr 0.0.1
 ----------------------------------------------------------------
