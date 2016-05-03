@@ -159,6 +159,66 @@ The `plot` method for the class `sentiment` uses **syuzhet**'s `get_transformed_
 plot(uncombine(out))
 ```
 
+## Making & Updating Dictionaries
+
+It is pretty straight forward to make or update a new dictionary (polarity or valence shifter).  To create a key from scratch the user needs to create a 2 column `data.frame`, with words on the left and values on the right (see `?polarity_table` & `?valence_shifters_table` for what the values mean).  Note that the words need to be lower cased.  Here I show this example:
+
+```{r}
+set.seed(10)
+key <- data.frame(
+    words = sample(letters),
+    polarity = rnorm(26),
+    stringsAsFactors = FALSE
+)
+```
+
+This is not yet a key.  **sentimentr** provides the `is_key` function to test if a table is a key.
+
+```{r}
+is_key(key)
+```
+
+It still needs to be **data.table**-ified.  The `as_key` function coerces a `data.frame` to a **data.table** with the left column named `x` and the right column named `y`.  It also checks the key against another key to make sure there is not overlap using the `compare` argument.  By default `as_key` checks against `valence_shifters_table`, assuming the user is creating a sentiment dictionary.  If the user is creating a valence shifter key then a sentiment key needs to be passed to `compare` instead and set the argument `sentiment = FALSE`.  Below I coerce `key` to a dictionary that **sentimentr** can use.
+
+
+```{r}
+mykey <- as_key(key)
+```
+
+Now we can check that `mykey` is a usable dictionary:
+
+```{r}
+is_key(mykey)
+```
+
+The key is ready for use:
+
+```{r}
+sentiment_by("I am a human.", polarity_dt = mykey)
+```
+
+
+You can see the values of a key that correspond to a word using **data.table** syntax:
+
+```{r}
+mykey[c("a", "b")][[2]]
+```
+
+Updating (adding or removing terms) a key is also useful.  The `update_key` function allows the user to add or drop terms via the `x` (add a `data.frame`) and `drop` (drop a term) arguments.  Below I drop the "a" and "h" terms (notice there are now 24 rows rather than 26):
+
+```{r}
+mykey_dropped <- update_key(mykey, drop = c("a", "h"))
+nrow(mykey_dropped)
+sentiment_by("I am a human.", polarity_dt = mykey_dropped)
+```
+
+Next I add the terms "dog" and "cat" as a `data.frame` with sentiment values:
+
+```{r}
+mykey_added <- update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
+nrow(mykey_added)
+sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
+```
 
 ## Annie Swafford's Examples
 
