@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.2.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.2.0-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.2.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.2.1-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -66,10 +66,10 @@ Functions
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
 
-<table style="width:100%;">
+<table style="width:104%;">
 <colgroup>
-<col width="25%" />
-<col width="74%" />
+<col width="26%" />
+<col width="77%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -216,11 +216,11 @@ amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(&radic;*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
-<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
+<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
 
 Where:
 
@@ -262,9 +262,6 @@ Examples
 ========
 
     if (!require("pacman")) install.packages("pacman")
-
-    ## Loading required package: pacman
-
     pacman::p_load(sentimentr)
 
     mytext <- c(
@@ -302,13 +299,13 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.4482863    0.09839218
-    ##  2:    LEHRER time 1        765 0.3668714    0.09822525
-    ##  3:     OBAMA time 3       7241 0.4133532    0.09790108
-    ##  4:     OBAMA time 2       7476 0.3873647    0.08763700
-    ##  5:    ROMNEY time 3       8302 0.3883042    0.07834848
+    ##  1:    LEHRER time 1        765 0.3587244    0.12446845
+    ##  2:     OBAMA time 1       3598 0.4378548    0.09934365
+    ##  3:     OBAMA time 3       7241 0.4014063    0.09377629
+    ##  4:     OBAMA time 2       7476 0.3871870    0.08732534
+    ##  5:    ROMNEY time 3       8302 0.3881821    0.07609734
     ##  6: SCHIEFFER time 3       1445 0.3773859    0.06669193
-    ##  7:    ROMNEY time 1       4085 0.3588247    0.06184742
+    ##  7:    ROMNEY time 1       4085 0.3570658    0.06029240
     ##  8:   CROWLEY time 2       1672 0.2144920    0.05560477
     ##  9:    ROMNEY time 2       7534 0.3246025    0.04589893
     ## 10:  QUESTION time 2        583 0.3255268    0.03334828
@@ -355,6 +352,13 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
     pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
     pacman::p_load(syuzhet, qdap, microbenchmark)
 
+    package 'microbenchmark' successfully unpacked and MD5 sums checked
+
+    The downloaded binary packages are in
+        C:\Users\Tyler\AppData\Local\Temp\RtmpI94Mwz\downloaded_packages
+
+    Warning: package 'microbenchmark' was built under R version 3.2.5
+
     ase <- c(
         "I haven't been sad in a long time.",
         "I am extremely happy today.",
@@ -386,7 +390,7 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
     3      0.5    0.5      0.32    1     3   1
     4     -0.5      0         0    1     3   1
     5     -0.5  -0.41     -0.56    1     3   1
-    6     -0.5   0.06      0.05    1     3   1
+    6     -0.5   0.06      0.11    1     3   1
     7     -0.5  -0.38     -0.05    1     2   1
     8        0      0     -0.14    0     0  -1
     9     -0.5   0.38      0.24   -1    -3  -1
@@ -435,19 +439,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 19973.2510 20392.1210 20683.6057 20810.9910
-        sentimentr_hu_liu()   253.9947   256.7328   260.3667   259.4710
-     sentimentr_sentiword()   986.7741   993.2091  1015.3205   999.6442
-             syuzhet_binn()   296.3417   299.7767   331.0930   303.2117
-              syuzhet_nrc()   741.4134   761.5542   793.0349   781.6950
-            syuzhet_afinn()   146.6461   150.2254   151.4858   153.8047
-             uq        max neval
-     21038.7831 21266.5753     3
-       263.5527   267.6345     3
-      1029.5937  1059.5431     3
-       348.4686   393.7255     3
-       818.8456   855.9962     3
-       153.9057   154.0066     3
+                 stanford() 23902.2941 24113.7397 24791.0538 24325.1854
+        sentimentr_hu_liu()   263.0135   274.3819   280.4202   285.7504
+     sentimentr_sentiword()  1003.0783  1008.5073  1013.3484  1013.9364
+             syuzhet_binn()   363.0287   365.6942   371.9197   368.3596
+              syuzhet_nrc()   945.8715   949.7894   951.9423   953.7072
+            syuzhet_afinn()   168.0045   169.0485   176.5775   170.0925
+             uq        max neval cld
+     25235.4336 26145.6819     3   b
+       289.1236   292.4969     3  a 
+      1018.4834  1023.0304     3  a 
+       376.3653   384.3709     3  a 
+       954.9777   956.2481     3  a 
+       180.8640   191.6355     3  a 
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------

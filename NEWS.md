@@ -22,6 +22,8 @@ sentimentr 0.2.0 -
 
 **BUG FIXES**
 
+* Commas were not handled properly in some cases.  THis has been fixed (see #7).
+
 **NEW FEATURES**
 
 **MINOR FEATURES**

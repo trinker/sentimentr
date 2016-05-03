@@ -198,7 +198,7 @@ sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
 
     # break rows into sentences, count words
     # space fill (~~), break into words
-    sents <- get_sents(text.var)
+    sents <- get_sents(gsub("(\\s*)([;:,]+)", " \\2", text.var))
     sent_dat <- make_sentence_df2(sents)
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 
