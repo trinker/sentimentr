@@ -3,7 +3,7 @@ context("Checking is_key")
 test_that("is_key detects keys",{
 
     key <- data.frame(
-        words = sample(LETTERS),
+        words = sample(letters),
         polarity = rnorm(26),
         stringsAsFactors = FALSE
     )
@@ -11,7 +11,7 @@ test_that("is_key detects keys",{
     mykey <- as_key(key)
 
     key2 <- data.frame(
-        words = sample(LETTERS),
+        words = sample(letters),
         words2 = sample(letters),
         stringsAsFactors = FALSE
     )
