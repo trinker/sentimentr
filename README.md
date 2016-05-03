@@ -341,7 +341,7 @@ It is pretty straight forward to make or update a new dictionary
 needs to create a 2 column `data.frame`, with words on the left and
 values on the right (see `?polarity_table` & `?valence_shifters_table`
 for what the values mean). Note that the words need to be lower cased.
-Here I show this example:
+Here I show an example `data.frame` ready for key conversion:
 
     set.seed(10)
     key <- data.frame(
@@ -523,19 +523,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 21265.8889 21337.4803 21374.8379 21409.0716
-        sentimentr_hu_liu()   257.4906   262.9908   266.4460   268.4911
-     sentimentr_sentiword()  1000.5397  1001.6107  1006.1668  1002.6817
-             syuzhet_binn()   283.7611   291.4498   340.9702   299.1384
-              syuzhet_nrc()   715.0591   719.1763   721.0977   723.2936
-            syuzhet_afinn()   139.0008   142.2336   145.5763   145.4663
+                 stanford() 20643.2509 20764.4544 20871.3814 20885.6579
+        sentimentr_hu_liu()   248.2293   257.2874   260.8887   266.3456
+     sentimentr_sentiword()  1014.5952  1015.9884  1030.3586  1017.3817
+             syuzhet_binn()   292.8556   295.0487   331.8268   297.2419
+              syuzhet_nrc()   716.3616   724.5808   740.4799   732.8000
+            syuzhet_afinn()   145.1182   145.7874   146.4155   146.4567
              uq        max neval
-     21429.3125 21449.5533     3
-       270.9237   273.3563     3
-      1008.9804  1015.2790     3
-       369.5747   440.0111     3
-       724.1170   724.9404     3
-       148.8641   152.2618     3
+     20985.4467 21085.2355     3
+       267.2184   268.0912     3
+      1038.2403  1059.0988     3
+       351.3124   405.3828     3
+       752.5390   772.2780     3
+       147.0641   147.6716     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
