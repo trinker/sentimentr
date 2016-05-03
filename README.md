@@ -54,7 +54,7 @@ Table of Contents
     -   [Plotting](#plotting)
         -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Making & Updating Dictionaries](#making-updating-dictionaries)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
     -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
     -   [Text Highlighting](#text-highlighting)
@@ -333,8 +333,8 @@ overall shape of the text's sentiment. The user can see
 
 ![](inst/figure/unnamed-chunk-8-1.png)
 
-Making & Updating Dictionaries
-------------------------------
+Making and Updating Dictionaries
+--------------------------------
 
 It is pretty straight forward to make or update a new dictionary
 (polarity or valence shifter). To create a key from scratch the user
@@ -523,19 +523,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 21779.3182 21790.5171 22425.3604 21801.7160
-        sentimentr_hu_liu()   244.9946   249.7149   256.6540   254.4351
-     sentimentr_sentiword()  1033.6447  1037.1151  1038.9009  1040.5856
-             syuzhet_binn()   303.5696   306.9817   311.0837   310.3938
-              syuzhet_nrc()   740.7189   745.8512   771.6648   750.9835
-            syuzhet_afinn()   144.5469   148.7858   194.3462   153.0247
+                 stanford() 21265.8889 21337.4803 21374.8379 21409.0716
+        sentimentr_hu_liu()   257.4906   262.9908   266.4460   268.4911
+     sentimentr_sentiword()  1000.5397  1001.6107  1006.1668  1002.6817
+             syuzhet_binn()   283.7611   291.4498   340.9702   299.1384
+              syuzhet_nrc()   715.0591   719.1763   721.0977   723.2936
+            syuzhet_afinn()   139.0008   142.2336   145.5763   145.4663
              uq        max neval
-     22748.3815 23695.0470     3
-       262.4836   270.5322     3
-      1041.5290  1042.4724     3
-       314.8408   319.2878     3
-       787.1377   823.2919     3
-       219.2458   285.4669     3
+     21429.3125 21449.5533     3
+       270.9237   273.3563     3
+      1008.9804  1015.2790     3
+       369.5747   440.0111     3
+       724.1170   724.9404     3
+       148.8641   152.2618     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
