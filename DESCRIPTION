@@ -1,13 +1,16 @@
 Package: sentimentr
 Title: Calculate Text Polarity Sentiment
 Version: 0.2.1
-Authors@R: c(person("Tyler", "Rinker", email = "tyler.rinker@gmail.com", role = c("aut", "cre")))
+Authors@R: c(person("Tyler", "Rinker", email =
+        "tyler.rinker@gmail.com", role = c("aut", "cre")))
 Maintainer: Tyler Rinker <tyler.rinker@gmail.com>
-Description: Calculate text polarity sentiment at the sentence level and optionally aggregate by rows or grouping variable(s).
+Description: Calculate text polarity sentiment at the sentence level
+        and optionally aggregate by rows or grouping variable(s).
 Depends: R (>= 3.1.0)
 Suggests: testthat
-Imports: data.table, ggplot2, graphics, grid, methods, stats, stringi, syuzhet, utils
-Date: 2016-05-02
+Imports: data.table, ggplot2, graphics, grid, methods, stats, stringi,
+        syuzhet, utils
+Date: 2016-05-03
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
