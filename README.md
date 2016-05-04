@@ -67,10 +67,10 @@ Functions
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
 
-<table style="width:100%;">
+<table style="width:104%;">
 <colgroup>
-<col width="25%" />
-<col width="74%" />
+<col width="26%" />
+<col width="77%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -217,11 +217,11 @@ amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(&radic;*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
-<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
+<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
 
 Where:
 
@@ -523,19 +523,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 20643.2509 20764.4544 20871.3814 20885.6579
-        sentimentr_hu_liu()   248.2293   257.2874   260.8887   266.3456
-     sentimentr_sentiword()  1014.5952  1015.9884  1030.3586  1017.3817
-             syuzhet_binn()   292.8556   295.0487   331.8268   297.2419
-              syuzhet_nrc()   716.3616   724.5808   740.4799   732.8000
-            syuzhet_afinn()   145.1182   145.7874   146.4155   146.4567
-             uq        max neval
-     20985.4467 21085.2355     3
-       267.2184   268.0912     3
-      1038.2403  1059.0988     3
-       351.3124   405.3828     3
-       752.5390   772.2780     3
-       147.0641   147.6716     3
+                 stanford() 22703.0940 23768.3892 24838.7348 24833.6845
+        sentimentr_hu_liu()   230.9233   250.9321   261.6013   270.9410
+     sentimentr_sentiword()  1021.4884  1026.1110  1029.2021  1030.7336
+             syuzhet_binn()   281.5323   330.5091   348.2324   379.4859
+              syuzhet_nrc()   691.1002   803.0014   894.2231   914.9026
+            syuzhet_afinn()   168.6679   170.2736   175.5506   171.8792
+             uq        max neval cld
+     25906.5552 26979.4258     3   b
+       276.9403   282.9396     3  a 
+      1033.0589  1035.3842     3  a 
+       381.5824   383.6789     3  a 
+       995.7845  1076.6664     3  a 
+       178.9920   186.1047     3  a 
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------

@@ -35,12 +35,16 @@ sentimentr 0.2.0 -
 
 * A section on creating and updating dictionaries was added to the README:
   https://github.com/trinker/sentimentr#making-and-updating-dictionaries
-
+  
+* `plot.sentiment_by` no longer color codes by grouping variables.  This was
+  distracting and removed.  A jitter + red average sentiment + boxplot visual
+  representation is used.
+  
 **CHANGES**
 
 * Default sentiment and valence shifters get the following additions: 
   - `polarity_table`: "excessively", 'overly', 'unduly', 'too much', 'too many', 
-  'too often', 'i wish', 'too good', 'too high', 'to tough'
+  'too often', 'i wish', 'too good', 'too high', 'too tough'
   - `valence_shifter_table`: "especially"
 
 
