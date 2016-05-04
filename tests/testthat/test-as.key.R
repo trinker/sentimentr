@@ -3,7 +3,7 @@ context("Checking as_key")
 test_that("as_key makes a data.table key",{
 
     key <- data.frame(
-        words = sample(LETTERS),
+        words = sample(letters),
         polarity = rnorm(26),
         stringsAsFactors = FALSE
     )
@@ -11,7 +11,7 @@ test_that("as_key makes a data.table key",{
     mykey <- as_key(key)
 
     key2 <- data.frame(
-        words = sample(LETTERS),
+        words = sample(letters),
         words2 = sample(letters),
         stringsAsFactors = FALSE
     )

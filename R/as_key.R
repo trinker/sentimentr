@@ -97,6 +97,14 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, sentiment
             "I found the following likely culprits:\n\n", culprits, "\n\nThese terms have been dropped\n")
     }
 
+    if (any(grepl("[A-Z]", x[[1]]))) {
+        culprits2 <- grep("[A-Z]", x[[1]], value=TRUE)
+        culprits2 <- paste(paste0("   * ", culprits2), collapse = "\n")
+        warning("One or more terms in the first column contain capital letters. Capitals are ignored.\n  ",
+            "I found the following suspects:\n\n", culprits2, "\n\nThese terms have been lower cased.\n")
+        x[[1]] <- tolower(x[[1]])
+    }
+
     if (is.factor(x[[1]])) {
         warning("Column 1 was a factor...\nConverting to character.")
         x[[1]] <- as.character(x[[1]])
@@ -130,6 +138,14 @@ update_key <- function(key, drop = NULL, x = NULL,
     comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...){
 
     stopifnot(is_key(key, sentiment = sentiment))
+
+    if (any(grepl("[A-Z]", x[[1]]))) {
+        culprits2 <- grep("[A-Z]", x[[1]], value=TRUE)
+        culprits2 <- paste(paste0("   * ", culprits2), collapse = "\n")
+        warning("One or more terms in the first column contain capital letters. Capitals are ignored.\n  ",
+            "I found the following suspects:\n\n", culprits2, "\n\nThese terms have been lower cased.\n")
+        x[[1]] <- tolower(x[[1]])
+    }
 
     key1 <- data.table::copy(key)
 

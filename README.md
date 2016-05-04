@@ -54,6 +54,7 @@ Table of Contents
     -   [Plotting](#plotting)
         -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
     -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
     -   [Text Highlighting](#text-highlighting)
@@ -66,10 +67,10 @@ Functions
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
 
-<table style="width:104%;">
+<table style="width:100%;">
 <colgroup>
-<col width="26%" />
-<col width="77%" />
+<col width="25%" />
+<col width="74%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -216,11 +217,11 @@ amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(&radic;*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
-<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
+<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
 
 Where:
 
@@ -332,6 +333,96 @@ overall shape of the text's sentiment. The user can see
 
 ![](inst/figure/unnamed-chunk-8-1.png)
 
+Making and Updating Dictionaries
+--------------------------------
+
+It is pretty straight forward to make or update a new dictionary
+(polarity or valence shifter). To create a key from scratch the user
+needs to create a 2 column `data.frame`, with words on the left and
+values on the right (see `?polarity_table` & `?valence_shifters_table`
+for what the values mean). Note that the words need to be lower cased.
+Here I show an example `data.frame` ready for key conversion:
+
+    set.seed(10)
+    key <- data.frame(
+        words = sample(letters),
+        polarity = rnorm(26),
+        stringsAsFactors = FALSE
+    )
+
+This is not yet a key. **sentimentr** provides the `is_key` function to
+test if a table is a key.
+
+    is_key(key)
+
+    ## [1] FALSE
+
+It still needs to be **data.table**-ified. The `as_key` function coerces
+a `data.frame` to a **data.table** with the left column named `x` and
+the right column named `y`. It also checks the key against another key
+to make sure there is not overlap using the `compare` argument. By
+default `as_key` checks against `valence_shifters_table`, assuming the
+user is creating a sentiment dictionary. If the user is creating a
+valence shifter key then a sentiment key needs to be passed to `compare`
+instead and set the argument `sentiment = FALSE`. Below I coerce `key`
+to a dictionary that **sentimentr** can use.
+
+    mykey <- as_key(key)
+
+Now we can check that `mykey` is a usable dictionary:
+
+    is_key(mykey)
+
+    ## [1] TRUE
+
+The key is ready for use:
+
+    sentiment_by("I am a human.", polarity_dt = mykey)
+
+    ##    element_id word_count sd ave_sentiment
+    ## 1:          1          4 NA    -0.7594893
+
+You can see the values of a key that correspond to a word using
+**data.table** syntax:
+
+    mykey[c("a", "b")][[2]]
+
+    ## [1] -0.2537805 -0.1951504
+
+Updating (adding or removing terms) a key is also useful. The
+`update_key` function allows the user to add or drop terms via the `x`
+(add a `data.frame`) and `drop` (drop a term) arguments. Below I drop
+the "a" and "h" terms (notice there are now 24 rows rather than 26):
+
+    mykey_dropped <- update_key(mykey, drop = c("a", "h"))
+    nrow(mykey_dropped)
+
+    ## [1] 24
+
+    sentiment_by("I am a human.", polarity_dt = mykey_dropped)
+
+    ##    element_id word_count sd ave_sentiment
+    ## 1:          1          4 NA     -0.632599
+
+Next I add the terms "dog" and "cat" as a `data.frame` with sentiment
+values:
+
+    mykey_added <- update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
+
+    ## Warning in as_key(x, sentiment = sentiment): Column 1 was a factor...
+    ## Converting to character.
+
+    nrow(mykey_added)
+
+    ## [1] 28
+
+    sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
+
+    ##    element_id sentence_id word_count  sentiment
+    ## 1:          1           1          4 -0.7594893
+    ## 2:          1           2          2  0.7071068
+    ## 3:          1           3          2 -0.7071068
+
 Annie Swafford's Examples
 -------------------------
 
@@ -351,13 +442,6 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
     pacman::p_load(syuzhet, qdap, microbenchmark)
-
-    package 'microbenchmark' successfully unpacked and MD5 sums checked
-
-    The downloaded binary packages are in
-        C:\Users\Tyler\AppData\Local\Temp\RtmpI94Mwz\downloaded_packages
-
-    Warning: package 'microbenchmark' was built under R version 3.2.5
 
     ase <- c(
         "I haven't been sad in a long time.",
@@ -439,19 +523,19 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 23902.2941 24113.7397 24791.0538 24325.1854
-        sentimentr_hu_liu()   263.0135   274.3819   280.4202   285.7504
-     sentimentr_sentiword()  1003.0783  1008.5073  1013.3484  1013.9364
-             syuzhet_binn()   363.0287   365.6942   371.9197   368.3596
-              syuzhet_nrc()   945.8715   949.7894   951.9423   953.7072
-            syuzhet_afinn()   168.0045   169.0485   176.5775   170.0925
-             uq        max neval cld
-     25235.4336 26145.6819     3   b
-       289.1236   292.4969     3  a 
-      1018.4834  1023.0304     3  a 
-       376.3653   384.3709     3  a 
-       954.9777   956.2481     3  a 
-       180.8640   191.6355     3  a 
+                 stanford() 20643.2509 20764.4544 20871.3814 20885.6579
+        sentimentr_hu_liu()   248.2293   257.2874   260.8887   266.3456
+     sentimentr_sentiword()  1014.5952  1015.9884  1030.3586  1017.3817
+             syuzhet_binn()   292.8556   295.0487   331.8268   297.2419
+              syuzhet_nrc()   716.3616   724.5808   740.4799   732.8000
+            syuzhet_afinn()   145.1182   145.7874   146.4155   146.4567
+             uq        max neval
+     20985.4467 21085.2355     3
+       267.2184   268.0912     3
+      1038.2403  1059.0988     3
+       351.3124   405.3828     3
+       752.5390   772.2780     3
+       147.0641   147.6716     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------

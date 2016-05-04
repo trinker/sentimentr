@@ -28,7 +28,13 @@ sentimentr 0.2.0 -
 
 **MINOR FEATURES**
 
+* `as_key` and `update_key` now coerce the first column of the `x` argument 
+  data.frame to lower case and warn if capital letters are found.
+
 **IMPROVEMENTS**
+
+* A section on creating and updating dictionaries was added to the README:
+  https://github.com/trinker/sentimentr#making-and-updating-dictionaries
 
 **CHANGES**
 
