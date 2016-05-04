@@ -612,7 +612,7 @@ in the reverse, often assigning positive scores to negative statements.
 We can now see that the reason for the NRC's poorer performance in
 accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
-does not perform well. We can deduce to things from this observation:
+does not perform well. We can deduce two things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
     20,102\] vs. Hu & Lu \[n = 6,836\])
