@@ -20,7 +20,7 @@
 #' @rdname as_key
 #' @examples
 #' key <- data.frame(
-#'     words = sample(LETTERS),
+#'     words = sample(letters),
 #'     polarity = rnorm(26),
 #'     stringsAsFactors = FALSE
 #' )
@@ -28,23 +28,23 @@
 #' (mykey <- as_key(key))
 #'
 #' ## Looking up values
-#' mykey[c("A", "K")][[2]]
+#' mykey[c("a", "k")][[2]]
 #'
 
 #' ## Drop terms from key
-#' update_key(mykey, drop = c("F", "H"))
+#' update_key(mykey, drop = c("f", "h"))
 #'
 #' ## Add terms to key
-#' update_key(mykey, x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+#' update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 #'
 #' ## Add terms & drop to/from a key
-#' update_key(mykey, drop = c("F", "H"), x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+#' update_key(mykey, drop = c("f", "h"), x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 #'
 #' ## Checking if you have a key
 #' is_key(mykey)
 #' is_key(key)
 #' is_key(mtcars)
-#' is_key(update_key(mykey, drop = c("F", "H")))
+#' is_key(update_key(mykey, drop = c("f", "h")))
 #'
 #' ## Using syuzhet's sentiment lexicons
 #' \dontrun{
@@ -105,6 +105,7 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, sentiment
         x[[1]] <- tolower(x[[1]])
     }
 
+    
     if (is.factor(x[[1]])) {
         warning("Column 1 was a factor...\nConverting to character.")
         x[[1]] <- as.character(x[[1]])
@@ -116,6 +117,12 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, sentiment
     colnames(x) <- c("x", "y")
 
     if (!is.null(comparison)) {
+        if (any(x[[1]] %in% comparison[[1]])) {
+            culprits3 <- paste(paste0("   * ",  x[[1]][x[[1]] %in% comparison[[1]]]), collapse = "\n")
+            warning("One or more terms in the first column appear as terms in the comparison.\n  ",
+            "I found the following dubious fellas:\n\n", culprits3, "\n\nThese terms have been removed.\n")
+                    
+        }           
         x <- x[!x[["x"]] %in% comparison[["x"]], ]
     }
     data.table::setDT(x)
@@ -154,7 +161,7 @@ update_key <- function(key, drop = NULL, x = NULL,
     }
 
     if (!is.null(x)){
-        key2 <- as_key(x, sentiment = sentiment)
+        key2 <- as_key(x, comparison = comparison, sentiment = sentiment)
         key1 <- rbind(key1, key2)
     }
 

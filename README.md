@@ -300,16 +300,16 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:    LEHRER time 1        765 0.3587244    0.12446845
-    ##  2:     OBAMA time 1       3598 0.4378548    0.09934365
-    ##  3:     OBAMA time 3       7241 0.4014063    0.09377629
-    ##  4:     OBAMA time 2       7476 0.3871870    0.08732534
-    ##  5:    ROMNEY time 3       8302 0.3881821    0.07609734
-    ##  6: SCHIEFFER time 3       1445 0.3773859    0.06669193
-    ##  7:    ROMNEY time 1       4085 0.3570658    0.06029240
-    ##  8:   CROWLEY time 2       1672 0.2144920    0.05560477
-    ##  9:    ROMNEY time 2       7534 0.3246025    0.04589893
-    ## 10:  QUESTION time 2        583 0.3255268    0.03334828
+    ##  1:    LEHRER time 1        765 0.3634981    0.13377765
+    ##  2:     OBAMA time 1       3598 0.4489512    0.10245522
+    ##  3:     OBAMA time 3       7241 0.4408708    0.08788677
+    ##  4:     OBAMA time 2       7476 0.3878883    0.08730120
+    ##  5:    ROMNEY time 3       8302 0.3866709    0.07109706
+    ##  6: SCHIEFFER time 3       1445 0.3810998    0.06892295
+    ##  7:   CROWLEY time 2       1672 0.2279950    0.06725135
+    ##  8:    ROMNEY time 1       4085 0.3669465    0.05259171
+    ##  9:    ROMNEY time 2       7534 0.3266628    0.04314391
+    ## 10:  QUESTION time 2        583 0.3282897    0.02209842
 
 Plotting
 --------
@@ -409,7 +409,7 @@ values:
 
     mykey_added <- update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 
-    ## Warning in as_key(x, sentiment = sentiment): Column 1 was a factor...
+    ## Warning in as_key(x, comparison = comparison, sentiment = sentiment): Column 1 was a factor...
     ## Converting to character.
 
     nrow(mykey_added)
@@ -522,20 +522,20 @@ see that Stanford takes the longest time while **sentimentr** and
     )
 
     Unit: milliseconds
-                       expr        min         lq       mean     median
-                 stanford() 22703.0940 23768.3892 24838.7348 24833.6845
-        sentimentr_hu_liu()   230.9233   250.9321   261.6013   270.9410
-     sentimentr_sentiword()  1021.4884  1026.1110  1029.2021  1030.7336
-             syuzhet_binn()   281.5323   330.5091   348.2324   379.4859
-              syuzhet_nrc()   691.1002   803.0014   894.2231   914.9026
-            syuzhet_afinn()   168.6679   170.2736   175.5506   171.8792
-             uq        max neval cld
-     25906.5552 26979.4258     3   b
-       276.9403   282.9396     3  a 
-      1033.0589  1035.3842     3  a 
-       381.5824   383.6789     3  a 
-       995.7845  1076.6664     3  a 
-       178.9920   186.1047     3  a 
+                       expr        min         lq       mean     median         uq        max
+                 stanford() 24135.2014 24383.2544 24722.0227 24631.3073 25015.4333 25399.5592
+        sentimentr_hu_liu()   260.1970   264.2076   267.2291   268.2182   270.7452   273.2721
+     sentimentr_sentiword()  1002.0269  1002.3177  1044.2365  1002.6086  1065.3412  1128.0739
+             syuzhet_binn()   359.2443   360.5437   370.2354   361.8431   375.7309   389.6187
+              syuzhet_nrc()   846.1898   861.7990   904.8287   877.4082   934.1482   990.8883
+            syuzhet_afinn()   158.7434   161.6556   163.9161   164.5678   166.5025   168.4372
+     neval  cld
+         3    d
+         3 ab  
+         3   c 
+         3 a c 
+         3  bc 
+         3 a   
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -615,7 +615,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce two things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,102\] vs. Hu & Lu \[n = 6,836\])
+    20,101\] vs. Hu & Lu \[n = 6,871\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a

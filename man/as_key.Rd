@@ -47,7 +47,7 @@ arguments such as \code{polarity_dt} in the \code{sentiment} function.
 }
 \examples{
 key <- data.frame(
-    words = sample(LETTERS),
+    words = sample(letters),
     polarity = rnorm(26),
     stringsAsFactors = FALSE
 )
@@ -55,22 +55,22 @@ key <- data.frame(
 (mykey <- as_key(key))
 
 ## Looking up values
-mykey[c("A", "K")][[2]]
+mykey[c("a", "k")][[2]]
 
 ## Drop terms from key
-update_key(mykey, drop = c("F", "H"))
+update_key(mykey, drop = c("f", "h"))
 
 ## Add terms to key
-update_key(mykey, x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 
 ## Add terms & drop to/from a key
-update_key(mykey, drop = c("F", "H"), x = data.frame(x = c("Dog", "Cat"), y = c(1, -1)))
+update_key(mykey, drop = c("f", "h"), x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 
 ## Checking if you have a key
 is_key(mykey)
 is_key(key)
 is_key(mtcars)
-is_key(update_key(mykey, drop = c("F", "H")))
+is_key(update_key(mykey, drop = c("f", "h")))
 
 ## Using syuzhet's sentiment lexicons
 \dontrun{

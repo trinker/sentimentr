@@ -15,7 +15,7 @@ NULL
 #' @details
 #' \itemize{
 #'   \item x. Words
-#'   \item y. Sentiment values (+1, -1, -2); -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evilcomparison both connotate negative though the following word is positive and negative respectively).
+#'   \item y. Sentiment values (+1, 0, -1.05, -1, -2), -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evilcomparison both connotate negative though the following word is positive and negative respectively).
 #'   
 #' }
 #'
@@ -23,7 +23,7 @@ NULL
 #' @keywords datasets
 #' @name polarity_table
 #' @usage data(polarity_table)
-#' @format A data frame with 6836 rows and 2 variables
+#' @format A data frame with 6871 rows and 2 variables
 #' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
 #' reviews. National Conference on Artificial Intelligence.
 #'
@@ -64,7 +64,7 @@ NULL
 #' @keywords datasets
 #' @name valence_shifters_table
 #' @usage data(valence_shifters_table)
-#' @format A data frame with 97 rows and 2 variables
+#' @format A data frame with 92 rows and 2 variables
 NULL
 
 
@@ -121,7 +121,7 @@ NULL
 #' @keywords datasets
 #' @name sentiword
 #' @usage data(sentiword)
-#' @format A data frame with 20102 rows and 2 variables
+#' @format A data frame with 20101 rows and 2 variables
 #' @references Baccianella S., Esuli, A. and Sebastiani, F. (2010). SentiWordNet
 #' 3.0: An Enhanced Lexical Resource for Sentiment Analysis and Opinion Mining.
 #' International Conference on Language Resources and Evaluation.

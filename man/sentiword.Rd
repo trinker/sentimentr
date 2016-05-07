@@ -4,7 +4,7 @@
 \name{sentiword}
 \alias{sentiword}
 \title{Polarity Lookup Key 2}
-\format{A data frame with 20102 rows and 2 variables}
+\format{A data frame with 20101 rows and 2 variables}
 \usage{
 data(sentiword)
 }
