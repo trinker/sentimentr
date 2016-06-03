@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.2.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.2.1-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.2.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.2.2-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -308,7 +308,7 @@ argument.
     ##  6: SCHIEFFER time 3       1445 0.3810998    0.06892295
     ##  7:   CROWLEY time 2       1672 0.2279950    0.06725135
     ##  8:    ROMNEY time 1       4085 0.3669465    0.05259171
-    ##  9:    ROMNEY time 2       7534 0.3266628    0.04314391
+    ##  9:    ROMNEY time 2       7534 0.3271200    0.04277505
     ## 10:  QUESTION time 2        583 0.3282897    0.02209842
 
 Plotting
@@ -522,20 +522,20 @@ see that Stanford takes the longest time while **sentimentr** and
     )
 
     Unit: milliseconds
-                       expr        min         lq       mean     median         uq        max
-                 stanford() 24135.2014 24383.2544 24722.0227 24631.3073 25015.4333 25399.5592
-        sentimentr_hu_liu()   260.1970   264.2076   267.2291   268.2182   270.7452   273.2721
-     sentimentr_sentiword()  1002.0269  1002.3177  1044.2365  1002.6086  1065.3412  1128.0739
-             syuzhet_binn()   359.2443   360.5437   370.2354   361.8431   375.7309   389.6187
-              syuzhet_nrc()   846.1898   861.7990   904.8287   877.4082   934.1482   990.8883
-            syuzhet_afinn()   158.7434   161.6556   163.9161   164.5678   166.5025   168.4372
-     neval  cld
-         3    d
-         3 ab  
-         3   c 
-         3 a c 
-         3  bc 
-         3 a   
+                       expr        min         lq       mean     median
+                 stanford() 23819.4040 23920.7718 24293.6964 24022.1396
+        sentimentr_hu_liu()   266.0033   269.0650   273.6439   272.1266
+     sentimentr_sentiword()  1014.7579  1023.2222  1027.4597  1031.6864
+             syuzhet_binn()   300.0993   337.3244   392.7968   374.5495
+              syuzhet_nrc()   700.9090   811.8448   853.3103   922.7806
+            syuzhet_afinn()   168.5472   170.4854   173.1693   172.4236
+             uq        max neval cld
+     24530.8426 25039.5455     3   c
+       277.4642   282.8017     3 ab 
+      1033.8106  1035.9348     3  b 
+       439.1456   503.7417     3 ab 
+       929.5109   936.2412     3 ab 
+       175.4804   178.5371     3 a  
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -615,7 +615,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 does not perform well. We can deduce two things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,101\] vs. Hu & Lu \[n = 6,871\])
+    20,100\] vs. Hu & Lu \[n = 6,872\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a

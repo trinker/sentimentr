@@ -142,7 +142,7 @@ plot.sentiment_by <- function(x, ...){
         ggplot2::theme_bw() +
 #         ggplot2::geom_crossbar(data=center_dat, aes(x=grouping.vars, ymax = upper, 
 #             ymin = lower, y=means), color='grey70', width=0.55) +
-        ggplot2::geom_point(data=x, aes(y=ave_sentiment, x=grouping.vars), 
+        ggplot2::geom_point(data=x, ggplot2::aes(y=ave_sentiment, x=grouping.vars), 
             colour = "red", shape=18, size=4) +
         ggplot2::ylab("Sentiment") +
         ggplot2::xlab("Groups") +

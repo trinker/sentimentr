@@ -23,7 +23,7 @@ NULL
 #' @keywords datasets
 #' @name polarity_table
 #' @usage data(polarity_table)
-#' @format A data frame with 6871 rows and 2 variables
+#' @format A data frame with 6872 rows and 2 variables
 #' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
 #' reviews. National Conference on Artificial Intelligence.
 #'
@@ -64,7 +64,7 @@ NULL
 #' @keywords datasets
 #' @name valence_shifters_table
 #' @usage data(valence_shifters_table)
-#' @format A data frame with 92 rows and 2 variables
+#' @format A data frame with 93 rows and 2 variables
 NULL
 
 
@@ -121,7 +121,7 @@ NULL
 #' @keywords datasets
 #' @name sentiword
 #' @usage data(sentiword)
-#' @format A data frame with 20101 rows and 2 variables
+#' @format A data frame with 20,100 rows and 2 variables
 #' @references Baccianella S., Esuli, A. and Sebastiani, F. (2010). SentiWordNet
 #' 3.0: An Enhanced Lexical Resource for Sentiment Analysis and Opinion Mining.
 #' International Conference on Language Resources and Evaluation.

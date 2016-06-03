@@ -16,7 +16,7 @@ sentiment(text.var, polarity_dt = sentimentr::polarity_table,
 weights with x and y as column names..}
 
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
-can alter a polarized word's meaning and a numeric key for negators (1),
+can alter a polarized word's meaning and an integer key for negators (1),
 amplifiers(2), and de-amplifiers (3) with x and y as column names.}
 
 \item{hyphen}{The character string to replace hyphens with.  Default replaces

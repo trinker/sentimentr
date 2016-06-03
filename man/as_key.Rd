@@ -45,6 +45,19 @@ arguments such as \code{polarity_dt} in the \code{sentiment} function.
 
 \code{is_key} - Logical check if an object is a key.
 }
+\details{
+For updating keys via \code{update_key} note that a 
+\code{polarity_dt} and \code{valence_shifters_dt} are the primary dictionary 
+keys used in the \pkg{sentimentr} package.  The \code{polarity_dt} takes a 
+2 column \code{data.frame} (named x and y) with the first column being 
+character and containing the words and the second column being numeric values
+that are positive or negative.  \code{valence_shifters_dt} takes a 2 column 
+\code{data.frame} (named x and y) with the first column being character and 
+containing the words and the second column being integer coresponding to:
+(1) negators, (2) amplifiers, and (3) de-amplifiers.  Also, note that if you
+are updating a \code{valence_shifters_dt} you need an appropriate 
+\code{comparison}; most likely, \code{comparison = sentimentr::polarity_dt}.
+}
 \examples{
 key <- data.frame(
     words = sample(letters),
