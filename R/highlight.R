@@ -9,7 +9,7 @@
 #' \code{sentiment_by} object that is striped of many punctuation marks and
 #' capitalizations.
 #' @param file A nam of the html file output.
-#' @param open logical.  If ]code{TRUE} the text highlighting document will
+#' @param open logical.  If \code{TRUE} the text highlighting document will
 #' attempt to be opened.
 #' @param digits  The number of digits to print for each row level average
 #' sentiment score.
@@ -49,7 +49,7 @@ highlight <- function(x, original.text = NULL, file = "polarity.html",
         polarity := ifelse(is.na(polarity), "", polarity)]
 
     if (!is.null(original.text)){
-        txt <- get_sentences2(original.text)
+        txt <- get_sentences2(gsub("(\\s*)([;:,]+)", " rsreplacers\\2", original.text))
     } else {
         txt <- get_sentences(x)
     }
@@ -57,7 +57,6 @@ highlight <- function(x, original.text = NULL, file = "polarity.html",
     y[["txt"]] <- unlist(txt)
 
     y[, txt := ifelse(polarity == "", txt, sprintf("<mark class = \"%s\">%s</mark>", polarity, txt))]
-
 
     mygrps_1 <- paste(sprintf("%s=%s[1L]", grps, grps), collapse=", ")
 
@@ -74,7 +73,7 @@ highlight <- function(x, original.text = NULL, file = "polarity.html",
     y[, txt := sprintf("<h1>%s: <em><span style=\"color: %s\">%s</span></em></h1><p class=\"indented\">%s</p>",
         grouping.var, ifelse(sentiment < 0, "red", ifelse(sentiment > 0, "green", "#D0D0D0")), formdig(sentiment, digits), txt)]
 
-    body <- paste(y[["txt"]], collapse="\n")
+    body <- gsub(" rsreplacers", "", paste(y[["txt"]], collapse="\n"))
 
     cat(sprintf(html, body), file = file)
 

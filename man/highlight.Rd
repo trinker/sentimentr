@@ -17,7 +17,7 @@ capitalizations.}
 
 \item{file}{A nam of the html file output.}
 
-\item{open}{logical.  If ]code{TRUE} the text highlighting document will
+\item{open}{logical.  If \code{TRUE} the text highlighting document will
 attempt to be opened.}
 
 \item{digits}{The number of digits to print for each row level average
