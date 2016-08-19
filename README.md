@@ -56,7 +56,7 @@ Table of Contents
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, and Stanford](#comparing-sentimentr-syuzhet-and-stanford)
+    -   [Comparing sentimentr, syuzhet, RSentiment, and Stanford](#comparing-sentimentr-syuzhet-rsentiment-and-stanford)
     -   [Text Highlighting](#text-highlighting)
 -   [Contact](#contact)
 
@@ -530,24 +530,24 @@ is a bit slower that the fastest versions of either **sentimentr** or
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 23901.6982 24212.6145 24420.7089 24523.5307
-        sentimentr_hu_liu()   262.0304   265.6752   268.1520   269.3200
-     sentimentr_sentiword()   985.2018   985.9211   987.4349   986.6404
-               RSentiment()   696.2638   699.6278   706.0410   702.9919
-             syuzhet_binn()   350.4889   357.2229   387.5712   363.9569
-              syuzhet_nrc()   825.6596   828.7303   847.3057   831.8010
-            syuzhet_afinn()   158.9437   160.4709   171.7213   161.9981
+                 stanford() 24014.8171 24419.2510 24589.1795 24823.6849
+        sentimentr_hu_liu()   261.0229   267.3564   271.4851   273.6899
+     sentimentr_sentiword()   980.5635   993.4797  1002.8831  1006.3959
+               RSentiment()   680.4725   681.5991   698.2822   682.7256
+             syuzhet_binn()   366.0203   375.6336   409.4138   385.2470
+              syuzhet_nrc()   805.4800   807.3414   828.6333   809.2028
+            syuzhet_afinn()   166.9616   167.6922   170.9374   168.4228
              uq        max neval
-     24680.2143 24836.8979     3
-       271.2129   273.1057     3
-       988.5515   990.4626     3
-       710.9296   718.8673     3
-       406.1124   448.2680     3
-       858.1287   884.4565     3
-       178.1100   194.2220     3
+     24876.3607 24929.0365     3
+       276.7162   279.7426     3
+      1014.0430  1021.6900     3
+       707.1870   731.6484     3
+       431.1106   476.9743     3
+       840.2100   871.2172     3
+       172.9253   177.4277     3
 
-Comparing sentimentr, syuzhet, and Stanford
--------------------------------------------
+Comparing sentimentr, syuzhet, RSentiment, and Stanford
+-------------------------------------------------------
 
 The accuracy of an algorithm weighs heavily into the decision as to what
 approach to take in sentiment detection. Both **syuzhet** and
