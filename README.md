@@ -434,7 +434,7 @@ Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford
 wrapper (note I use my own [GitHub Stanford wrapper
 package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), the
-[RSentiment](https://cran.rstudio.com/web/packages/RSentiment) package,
+[RSentiment](https://cran.r-project.org/package=RSentiment) package,
 and my own algorithm with both the default [Hu & Liu
 (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
 lexicon as well as [Baccianella, Esuli and Sebastiani's
