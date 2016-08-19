@@ -222,13 +222,13 @@ sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 
 ## Annie Swafford's Examples
 
-[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), and my own algorithm with both the default [Hu & Liu (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
+[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.rstudio.com/web/packages/RSentiment) package, and my own algorithm with both the default [Hu & Liu (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
 
 ```{r, message=FALSE, comment=NA}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
-pacman::p_load(syuzhet, qdap, microbenchmark)
+pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
 
 ase <- c(
     "I haven't been sad in a long time.",
@@ -250,6 +250,7 @@ left_just(data.frame(
     stanford = sentiment_stanford(ase)[["sentiment"]],
     hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
     sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
+    RSentiment = calculate_score(ase), 
     syuzhet,
     sentences = ase,
     stringsAsFactors = FALSE
@@ -257,7 +258,7 @@ left_just(data.frame(
 
 ```
 
-Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that Stanford takes the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.
+Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that Stanford takes the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.  **RSentiment** is a bit slower that the fastest versions of either **sentimentr** or **syuzhet**. 
 
 
 ```{r, message = FALSE, comment=NA}
@@ -268,6 +269,8 @@ stanford <- function() {sentiment_stanford(ase_100)}
 sentimentr_hu_liu <- function() sentiment(ase_100)
 sentimentr_sentiword <- function() sentiment(ase_100, sentiword) 
     
+RSentiment <- function() calculate_score(ase_100) 
+    
 syuzhet_binn <- function() get_sentiment(ase_100, method="bing")
 syuzhet_nrc <- function() get_sentiment(ase_100, method="nrc")
 syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
@@ -276,6 +279,7 @@ microbenchmark(
     stanford(),
     sentimentr_hu_liu(),
     sentimentr_sentiword(),
+    RSentiment(), 
     syuzhet_binn(), 
     syuzhet_nrc(),
     syuzhet_afinn(),
@@ -297,9 +301,9 @@ The data sets are hand scored as either positive or negative.  The testing here 
 
 <img src="inst/figure/comparisons_between_sentiment_detectors_b.png" width="100%" alt="sent comp">  
 
-The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot on the right shows how the rankings for the methods varied across the three review contexts (note that rank ties were determined by `ties.method = "first"`).  
+The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot on the right shows how the rankings for the methods varied across the three review contexts.  
 
-The take away here seems that, unsurprisingly, Stanford's algorithm consistently out scores **syuzhet** and **sentimentr**.  The **sentimentr** approach loaded with the `hu_lu` dictionary is a top pick for speed and accuracy.  The `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comparable.
+The take away here seems that, unsurprisingly, Stanford's algorithm consistently outscores **sentimentr**, **syuzhet**, and **RSentiment**.  The **sentimentr** approach loaded with the `hu_lu` dictionary is a top pick for speed and accuracy.  The `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comparable.
 
 It is important to point out that this is a small sample data set that covers a narrow range of uses for sentiment detection.  Jocker's **syuzhet** was designed to be applied across book chunks and it is, to some extent, unfair to test it out of this context.  Still this initial analysis provides a guide that may be of use for selecting the sentiment detection set up most applicable to the reader's needs.
 
@@ -319,7 +323,7 @@ Across all three contexts, notice that the Stanford coreNLP algorithm is better 
 - Detecting negative sentiment as negative
 - Discrimination (i.e., reducing neutral assignments)
 
-The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements.  We can now see that the reason for the NRC's poorer performance in accuracy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but does not perform well.  We can deduce two things from this observation:
+The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements.  We can now see that the reason for the NRC's poorer performance in accuracy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but lacks accuracy.  We can deduce two things from this observation:
 
 1. Larger dictionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(polarity_table), big.mark=",")`])
 2. The Sentiword dictionary may have words with reversed polarities

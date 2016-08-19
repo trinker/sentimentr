@@ -433,15 +433,16 @@ of sentences (`ase` for Annie Swafford example). Here I test each of
 Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford
 wrapper (note I use my own [GitHub Stanford wrapper
 package](https://github.com/trinker/stansent) based off of Jocker's
-approach as it works more reliably on my own Windows machine), and my
-own algorithm with both the default [Hu & Liu
+approach as it works more reliably on my own Windows machine), the
+[RSentiment](https://cran.rstudio.com/web/packages/RSentiment) package,
+and my own algorithm with both the default [Hu & Liu
 (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
 lexicon as well as [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
-    pacman::p_load(syuzhet, qdap, microbenchmark)
+    pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
 
     ase <- c(
         "I haven't been sad in a long time.",
@@ -463,21 +464,22 @@ lexicon as well as [Baccianella, Esuli and Sebastiani's
         stanford = sentiment_stanford(ase)[["sentiment"]],
         hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
         sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
+        RSentiment = calculate_score(ase), 
         syuzhet,
         sentences = ase,
         stringsAsFactors = FALSE
     ), "sentences")
 
-      stanford hu_liu sentiword bing afinn nrc
-    1     -0.5   0.35      0.18   -1    -2   0
-    2        1    0.8      0.65    1     3   1
-    3      0.5    0.5      0.32    1     3   1
-    4     -0.5      0         0    1     3   1
-    5     -0.5  -0.41     -0.56    1     3   1
-    6     -0.5   0.06      0.11    1     3   1
-    7     -0.5  -0.38     -0.05    1     2   1
-    8        0      0     -0.14    0     0  -1
-    9     -0.5   0.38      0.24   -1    -3  -1
+      stanford hu_liu sentiword RSentiment bing afinn nrc
+    1     -0.5   0.35      0.18         -1   -1    -2   0
+    2        1    0.8      0.65          1    1     3   1
+    3      0.5    0.5      0.32          1    1     3   1
+    4     -0.5      0         0          0    1     3   1
+    5     -0.5  -0.41     -0.56         -1    1     3   1
+    6     -0.5   0.06      0.11          1    1     3   1
+    7     -0.5  -0.38     -0.05         -1    1     2   1
+    8        0      0     -0.14          0    0     0  -1
+    9     -0.5   0.38      0.24         -1   -1    -3  -1
       sentences                                              
     1 I haven't been sad in a long time.                     
     2 I am extremely happy today.                            
@@ -498,7 +500,9 @@ uses the **openNLP** package, this is a time expensive task.
 **sentimentr** uses a much faster regex based approach that is nearly as
 accurate in parsing sentences with a much lower computational time. We
 see that Stanford takes the longest time while **sentimentr** and
-**syuzhet** are comparable depending upon lexicon used.
+**syuzhet** are comparable depending upon lexicon used. **RSentiment**
+is a bit slower that the fastest versions of either **sentimentr** or
+**syuzhet**.
 
     ase_100 <- rep(ase, 100)
 
@@ -506,6 +510,8 @@ see that Stanford takes the longest time while **sentimentr** and
 
     sentimentr_hu_liu <- function() sentiment(ase_100)
     sentimentr_sentiword <- function() sentiment(ase_100, sentiword) 
+        
+    RSentiment <- function() calculate_score(ase_100) 
         
     syuzhet_binn <- function() get_sentiment(ase_100, method="bing")
     syuzhet_nrc <- function() get_sentiment(ase_100, method="nrc")
@@ -515,6 +521,7 @@ see that Stanford takes the longest time while **sentimentr** and
         stanford(),
         sentimentr_hu_liu(),
         sentimentr_sentiword(),
+        RSentiment(), 
         syuzhet_binn(), 
         syuzhet_nrc(),
         syuzhet_afinn(),
@@ -523,19 +530,21 @@ see that Stanford takes the longest time while **sentimentr** and
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 23819.4040 23920.7718 24293.6964 24022.1396
-        sentimentr_hu_liu()   266.0033   269.0650   273.6439   272.1266
-     sentimentr_sentiword()  1014.7579  1023.2222  1027.4597  1031.6864
-             syuzhet_binn()   300.0993   337.3244   392.7968   374.5495
-              syuzhet_nrc()   700.9090   811.8448   853.3103   922.7806
-            syuzhet_afinn()   168.5472   170.4854   173.1693   172.4236
-             uq        max neval cld
-     24530.8426 25039.5455     3   c
-       277.4642   282.8017     3 ab 
-      1033.8106  1035.9348     3  b 
-       439.1456   503.7417     3 ab 
-       929.5109   936.2412     3 ab 
-       175.4804   178.5371     3 a  
+                 stanford() 23901.6982 24212.6145 24420.7089 24523.5307
+        sentimentr_hu_liu()   262.0304   265.6752   268.1520   269.3200
+     sentimentr_sentiword()   985.2018   985.9211   987.4349   986.6404
+               RSentiment()   696.2638   699.6278   706.0410   702.9919
+             syuzhet_binn()   350.4889   357.2229   387.5712   363.9569
+              syuzhet_nrc()   825.6596   828.7303   847.3057   831.8010
+            syuzhet_afinn()   158.9437   160.4709   171.7213   161.9981
+             uq        max neval
+     24680.2143 24836.8979     3
+       271.2129   273.1057     3
+       988.5515   990.4626     3
+       710.9296   718.8673     3
+       406.1124   448.2680     3
+       858.1287   884.4565     3
+       178.1100   194.2220     3
 
 Comparing sentimentr, syuzhet, and Stanford
 -------------------------------------------
@@ -571,16 +580,15 @@ output to determine accuracy rates.
 The bar graph on the left shows the accuracy rates for the various
 sentiment set-ups in the three review contexts. The rank plot on the
 right shows how the rankings for the methods varied across the three
-review contexts (note that rank ties were determined by
-`ties.method = "first"`).
+review contexts.
 
 The take away here seems that, unsurprisingly, Stanford's algorithm
-consistently out scores **syuzhet** and **sentimentr**. The
-**sentimentr** approach loaded with the `hu_lu` dictionary is a top pick
-for speed and accuracy. The `bing` dictionary also performs well within
-both the **syuzhet** and **sentimentr** algorithms. Generally, the
-**sentimentr** algorithm out performs **syuzhet** when their dictonaries
-are comparable.
+consistently outscores **sentimentr**, **syuzhet**, and **RSentiment**.
+The **sentimentr** approach loaded with the `hu_lu` dictionary is a top
+pick for speed and accuracy. The `bing` dictionary also performs well
+within both the **syuzhet** and **sentimentr** algorithms. Generally,
+the **sentimentr** algorithm out performs **syuzhet** when their
+dictonaries are comparable.
 
 It is important to point out that this is a small sample data set that
 covers a narrow range of uses for sentiment detection. Jocker's
@@ -612,7 +620,7 @@ in the reverse, often assigning positive scores to negative statements.
 We can now see that the reason for the NRC's poorer performance in
 accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
-does not perform well. We can deduce two things from this observation:
+lacks accuracy. We can deduce two things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
     20,100\] vs. Hu & Lu \[n = 6,872\])

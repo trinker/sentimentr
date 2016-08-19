@@ -1,6 +1,6 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape")
-pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2)
+pacman::p_load_current_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape")
+pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2, RSentiment)
 
 loc <- "sentiment_data"
 dir.create(loc)
@@ -16,6 +16,10 @@ signer <- function(x, y) {
     m<- sign(x) == sign(y)
     m[sapply(m, is.na)] <- FALSE
     m
+}
+
+replace_emograte <- function(text.var, ...){
+    replace_rating(replace_emoticon(text.var))
 }
 
 ## Make syuzhet dictionaries into sentimentr keys
@@ -39,11 +43,16 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         setNames(c("text", "rating")) %>%
         na.omit() %>%
         mutate(rating = 2*(as.numeric(rating) - .5)) %>%
+        mutate(text = replace_emograte(text)) %>%  
         split_sentence() #%>% slice(1:10)
 
     ## syuzhet sentiment
     syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
         function(x) get_sentiment(dat$text, method=x))), paste0("syuzhet_", c("bing", "afinn", "nrc")))
+
+    ## RSentiment and replace sarcasm with negative
+    RSentiment <- calculate_score(dat$text)
+    RSentiment[RSentiment == 99] <- -1    
 
     ## calculate sentimentr sentiment and put all the pieces together
     data.frame(
@@ -56,6 +65,8 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         sentimentr_bing = round(sentiment_by(dat$text, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_nrc = round(sentiment_by(dat$text, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
+
+        RSentiment = RSentiment,
 
         syuzhet,
         stringsAsFactors = FALSE
@@ -95,7 +106,9 @@ results_list %>%
     bind_list("Context") %>%
     separate(Context, c("Method", "Context"), "\\.") %>%
     gather(Predicted, n, - c(Method, Context, Actual)) %>%
-    mutate(Method = relevel(factor(Method), ref = "stanford")) %>%
+    mutate(Method = factor(Method, levels = c("stanford", "sentimentr_afinn", "sentimentr_bing", 
+        "sentimentr_hu_liu", "sentimentr_nrc", "sentimentr_sentiword", 
+        "RSentiment", "syuzhet_afinn", "syuzhet_bing", "syuzhet_nrc"))) %>%
     ggplot(aes(Predicted, Actual, fill =n)) +
         geom_tile() +
         facet_grid(Method~Context) +
