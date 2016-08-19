@@ -17,16 +17,16 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 0.2.0 -
+sentimentr 0.2.0 - 0.2.3
 ----------------------------------------------------------------
 
 BUG FIXES
 
-* Commas were not handled properly in some cases.  THis has been fixed (see #7).
+* Commas were not handled properly in some cases.  This has been fixed (see #7).
 
 * `highlight` parsed sentences differently than the main `sentiment` function 
-  resulting in an error when `original.text` was supplied that cotained a colon
-  or sei-colon.  Spotted by Patrick Carlson (see #2).
+  resulting in an error when `original.text` was supplied that contained a colon
+  or semi-colon.  Spotted by Patrick Carlson (see #2).
 
 NEW FEATURES
 
