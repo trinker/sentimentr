@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.2.3-orange.svg"><img src="https://img.shields.io/badge/Version-0.2.3-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.3.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.3.0-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -434,8 +434,8 @@ Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford
 wrapper (note I use my own [GitHub Stanford wrapper
 package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), the
-[RSentiment](https://cran.r-project.org/package=RSentiment) package,
-and my own algorithm with both the default [Hu & Liu
+[RSentiment](https://cran.r-project.org/package=RSentiment) package, and
+my own algorithm with both the default [Hu & Liu
 (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
 lexicon as well as [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
@@ -501,7 +501,7 @@ uses the **openNLP** package, this is a time expensive task.
 accurate in parsing sentences with a much lower computational time. We
 see that Stanford takes the longest time while **sentimentr** and
 **syuzhet** are comparable depending upon lexicon used. **RSentiment**
-is a bit slower that the fastest versions of either **sentimentr** or
+is a bit slower than the fastest versions of either **sentimentr** or
 **syuzhet**.
 
     ase_100 <- rep(ase, 100)
@@ -530,21 +530,21 @@ is a bit slower that the fastest versions of either **sentimentr** or
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24014.8171 24419.2510 24589.1795 24823.6849
-        sentimentr_hu_liu()   261.0229   267.3564   271.4851   273.6899
-     sentimentr_sentiword()   980.5635   993.4797  1002.8831  1006.3959
-               RSentiment()   680.4725   681.5991   698.2822   682.7256
-             syuzhet_binn()   366.0203   375.6336   409.4138   385.2470
-              syuzhet_nrc()   805.4800   807.3414   828.6333   809.2028
-            syuzhet_afinn()   166.9616   167.6922   170.9374   168.4228
-             uq        max neval
-     24876.3607 24929.0365     3
-       276.7162   279.7426     3
-      1014.0430  1021.6900     3
-       707.1870   731.6484     3
-       431.1106   476.9743     3
-       840.2100   871.2172     3
-       172.9253   177.4277     3
+                 stanford() 24619.1619 24873.4132 25094.2435 25127.6645
+        sentimentr_hu_liu()   246.9551   247.9069   248.7541   248.8588
+     sentimentr_sentiword()   965.5202   966.0129   969.0653   966.5055
+               RSentiment()   685.4484   686.4825   687.3158   687.5167
+             syuzhet_binn()   350.6091   353.7377   378.1905   356.8663
+              syuzhet_nrc()   832.0863   848.9331   872.6505   865.7799
+            syuzhet_afinn()   156.6089   158.0899   158.8592   159.5710
+             uq        max neval  cld
+     25331.7843 25535.9042     3    d
+       249.6536   250.4484     3 ab  
+       970.8378   975.1701     3   c 
+       688.2495   688.9824     3  bc 
+       391.9812   427.0961     3 ab  
+       892.9326   920.0854     3   c 
+       159.9844   160.3978     3 a   
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------
