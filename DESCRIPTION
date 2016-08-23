@@ -11,7 +11,7 @@ Suggests: testthat
 Imports: data.table, ggplot2, graphics, grid, methods, stats, stringi,
         syuzhet, utils
 Date: 2016-08-19
-License: GPL-2
+License: MIT + file LICENSE
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
 RoxygenNote: 5.0.1
