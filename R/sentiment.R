@@ -4,7 +4,7 @@
 #'
 #' @param text.var The text variable.
 #' @param polarity_dt A \pkg{data.table} of positive/negative words and
-#' weights with x and y as column names..
+#' weights with x and y as column names.
 #' @param valence_shifters_dt A \pkg{data.table} of valence shifters that
 #' can alter a polarized word's meaning and an integer key for negators (1),
 #' amplifiers(2), and de-amplifiers (3) with x and y as column names.
