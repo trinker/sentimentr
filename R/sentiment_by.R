@@ -83,10 +83,11 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
 
         uncombined <- out2 <- cbind(group_dat, out)
 
-        out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
-            'sd' = stats::sd(sentiment, na.rm = TRUE),
-            'ave_sentiment' = mean(sentiment, na.rm = TRUE)), keyby = G][order(-ave_sentiment)]
-
+        out2 <-
+            out2[, list(word_count = sum(word_count, na.rm = TRUE),
+                        sd = stats::sd(sentiment, na.rm = TRUE),
+                        ave_sentiment = mean(sentiment, na.rm = TRUE)),
+                 keyby = G]
     }
 
     class(out2) <- unique(c("sentiment_by", class(out)))
