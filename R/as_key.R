@@ -24,9 +24,10 @@
 #' that are positive or negative.  \code{valence_shifters_dt} takes a 2 column 
 #' \code{data.frame} (named x and y) with the first column being character and 
 #' containing the words and the second column being integer coresponding to:
-#' (1) negators, (2) amplifiers, and (3) de-amplifiers.  Also, note that if you
-#' are updating a \code{valence_shifters_dt} you need an appropriate 
-#' \code{comparison}; most likely, \code{comparison = sentimentr::polarity_dt}.  
+#' (1) negators, (2) amplifiers, (3) de-amplifiers, and ``but'' conjunction (4). 
+#' Also, note that if you are updating a \code{valence_shifters_dt} you need an 
+#' appropriate \code{comparison}; most likely, 
+#' \code{comparison = sentimentr::polarity_dt}.  
 #' @export
 #' @rdname as_key
 #' @examples
@@ -185,6 +186,26 @@ update_key <- function(key, drop = NULL, x = NULL,
     data.table::setkey(key1, "x")
     key1
 }
+
+#' Convert data.frame to a Hash Key
+#'
+#' \code{update_polarity_table} - Wrapper for \code{update_key} specifically for
+#' updating polarity tables.
+#'
+update_polarity_table <- update_key
+
+
+#' Convert data.frame to a Hash Key
+#'
+#' \code{update_valence_shifter_table} - Wrapper for \code{update_key} 
+#' specifically for updating valence shifter tables.
+#'
+update_valence_shifter_table <- function(key, drop = NULL, x = NULL,
+    comparison = sentimentr::polarity_table, sentiment = FALSE, ...){
+
+    update_key(key = key, drop = drop, x = x, comparison = comparison, sentiment = sentiment, ...)
+}
+
 
 
 #' Convert data.frame to a Hash Key
