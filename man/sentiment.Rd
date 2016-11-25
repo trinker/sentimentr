@@ -13,7 +13,7 @@ sentiment(text.var, polarity_dt = sentimentr::polarity_table,
 \item{text.var}{The text variable.}
 
 \item{polarity_dt}{A \pkg{data.table} of positive/negative words and
-weights with x and y as column names..}
+weights with x and y as column names.}
 
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
 can alter a polarized word's meaning and an integer key for negators (1),

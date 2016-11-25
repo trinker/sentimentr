@@ -22,11 +22,23 @@ sentimentr 0.3.0 -
 
 **BUG FIXES**
 
+* Missing documentation for `but' conjunctions added tot he documentation.  
+  Spotted by Richard Watson (see #23).
+  
 **NEW FEATURES**
 
+* `extract_sentiment_terms` added to enable users to extract the sentiment terms 
+  from text as `polarity` would return in the **qdap** package.
+  
 **MINOR FEATURES**
 
+* `update_polarity_table` and `update_valence_shifter_table` added to abstract 
+  away thinking about the `comparison` argument to `update_key`.
+
+
 **IMPROVEMENTS**
+
+
 
 **CHANGES**
 

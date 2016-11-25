@@ -222,7 +222,7 @@ sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 
 ## Annie Swafford's Examples
 
-[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, and my own algorithm with both the default [Hu & Liu (2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
+[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, and my own algorithm with both the default Hu & Liu (2004) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
 
 ```{r, message=FALSE, comment=NA}

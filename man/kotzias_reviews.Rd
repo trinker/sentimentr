@@ -35,8 +35,7 @@ Each data set contains a dataframe of:
 Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
 group to individual labels using deep features. Proceedings of the 21th ACM
 SIGKDD International Conference on Knowledge Discovery and Data Mining.
-597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} \cr\cr
-\url{http://archive.ics.uci.edu/ml/machine-learning-databases/00331/}
+597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf}
 }
 \keyword{datasets}
 

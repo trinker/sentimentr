@@ -261,3 +261,10 @@ trimws <- function (x, which = c("both", "left", "right")) {
         return(mysub("[ \t\r\n]+$", x))
     mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
 }
+
+## helper to remove class
+rm_class <- function (x, remove, ...) {
+    class(x) <- class(x)[!class(x) %in% remove]
+    x
+}
+

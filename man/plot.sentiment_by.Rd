@@ -4,10 +4,12 @@
 \alias{plot.sentiment_by}
 \title{Plots a sentiment_by object}
 \usage{
-\method{plot}{sentiment_by}(x, ...)
+\method{plot}{sentiment_by}(x, ordered = TRUE, ...)
 }
 \arguments{
 \item{x}{The sentiment_by object.}
+
+\item{ordered}{logical.  If \code{TRUE} order the output grouping by sentiment.}
 
 \item{\ldots}{ignored}
 }

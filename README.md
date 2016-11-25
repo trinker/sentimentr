@@ -300,16 +300,16 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:    LEHRER time 1        765 0.3634981    0.13377765
-    ##  2:     OBAMA time 1       3598 0.4489512    0.10245522
+    ##  1:     OBAMA time 1       3598 0.4489512    0.10245522
+    ##  2:     OBAMA time 2       7476 0.3878883    0.08730120
     ##  3:     OBAMA time 3       7241 0.4408708    0.08788677
-    ##  4:     OBAMA time 2       7476 0.3878883    0.08730120
-    ##  5:    ROMNEY time 3       8302 0.3866709    0.07109706
-    ##  6: SCHIEFFER time 3       1445 0.3810998    0.06892295
+    ##  4:    ROMNEY time 1       4085 0.3669465    0.05259171
+    ##  5:    ROMNEY time 2       7534 0.3271200    0.04277505
+    ##  6:    ROMNEY time 3       8302 0.3866709    0.07109706
     ##  7:   CROWLEY time 2       1672 0.2279950    0.06725135
-    ##  8:    ROMNEY time 1       4085 0.3669465    0.05259171
-    ##  9:    ROMNEY time 2       7534 0.3271200    0.04277505
-    ## 10:  QUESTION time 2        583 0.3282897    0.02209842
+    ##  8:    LEHRER time 1        765 0.3634981    0.13377765
+    ##  9:  QUESTION time 2        583 0.3282897    0.02209842
+    ## 10: SCHIEFFER time 3       1445 0.3810998    0.06892295
 
 Plotting
 --------
@@ -435,9 +435,8 @@ wrapper (note I use my own [GitHub Stanford wrapper
 package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), the
 [RSentiment](https://cran.r-project.org/package=RSentiment) package, and
-my own algorithm with both the default [Hu & Liu
-(2004)](https://www.aaai.org/Papers/AAAI/2004/AAAI04-119.pdf) polarity
-lexicon as well as [Baccianella, Esuli and Sebastiani's
+my own algorithm with both the default Hu & Liu (2004) polarity lexicon
+as well as [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
 
     if (!require("pacman")) install.packages("pacman")
@@ -530,21 +529,21 @@ is a bit slower than the fastest versions of either **sentimentr** or
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 24619.1619 24873.4132 25094.2435 25127.6645
-        sentimentr_hu_liu()   246.9551   247.9069   248.7541   248.8588
-     sentimentr_sentiword()   965.5202   966.0129   969.0653   966.5055
-               RSentiment()   685.4484   686.4825   687.3158   687.5167
-             syuzhet_binn()   350.6091   353.7377   378.1905   356.8663
-              syuzhet_nrc()   832.0863   848.9331   872.6505   865.7799
-            syuzhet_afinn()   156.6089   158.0899   158.8592   159.5710
-             uq        max neval  cld
-     25331.7843 25535.9042     3    d
-       249.6536   250.4484     3 ab  
-       970.8378   975.1701     3   c 
-       688.2495   688.9824     3  bc 
-       391.9812   427.0961     3 ab  
-       892.9326   920.0854     3   c 
-       159.9844   160.3978     3 a   
+                 stanford() 25681.7832 26316.1778 27328.7280 26950.5723
+        sentimentr_hu_liu()   257.5393   266.1022   270.3374   274.6652
+     sentimentr_sentiword()   999.4655  1002.5251  1019.6132  1005.5847
+               RSentiment()   908.5591   926.2719   949.4043   943.9847
+             syuzhet_binn()   349.5689   354.2951   367.5217   359.0213
+              syuzhet_nrc()   674.3208   767.2540   857.4535   860.1873
+            syuzhet_afinn()   154.9327   158.3493   160.3708   161.7658
+             uq        max neval cld
+     28152.2003 29353.8283     3   b
+       276.7364   278.8076     3  a 
+      1029.6870  1053.7893     3  a 
+       969.8269   995.6691     3  a 
+       376.4981   393.9748     3  a 
+       949.0198  1037.8524     3  a 
+       163.0899   164.4139     3  a 
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------

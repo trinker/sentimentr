@@ -117,16 +117,20 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
 plot.sentiment_by <- function(x, ordered = TRUE, ...){
 
     ave_sentiment <- sentiment <- grouping.vars <- NULL
-    x <- x[order(-ave_sentiment)]
+    
     dat2 <- uncombine(x)
 
     grps <- attributes(x)[["groups"]]
     if (length(grps) == 1 && grps == "element_id") return(plot(dat2))
 
     x[, "grouping.vars"] <- paste2(x[, attributes(x)[["groups"]], with=FALSE])
-    x[, grouping.vars := factor(grouping.vars, levels = rev(grouping.vars))]
 
+    # 
     dat2[, "grouping.vars"] <- paste2(dat2[, attributes(x)[["groups"]], with=FALSE])
+    
+    x <- x[order(-ave_sentiment)]    
+    x[, grouping.vars := factor(grouping.vars, levels = rev(grouping.vars))]
+    
     dat2[, grouping.vars := factor(grouping.vars, levels = levels(x[["grouping.vars"]]))]
 
 #     center_dat <- dat2[, list(upper = mean(sentiment, na.rm = TRUE) + 2*SE(sentiment),
