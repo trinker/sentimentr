@@ -16,7 +16,7 @@
 #' @examples
 #' library(data.table)
 #' set.seed(10)
-#' x <- sample(cannon_reviews[[3]], 3000, T)
+#' x <- sample(cannon_reviews[[3]], 3000, TRUE)
 #' sentiment(x)
 #' 
 #' pol_words <- extract_sentiment_terms(x)
@@ -30,7 +30,7 @@
 extract_sentiment_terms  <- function(text.var, polarity_dt = sentimentr::polarity_table,
     hyphen = "", ...){
 
-    sentences <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
+    sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
 
     ## Add "~~" holder for any words `polarity_frame` & `valence_shifters_dt`
     ## that have spaces
@@ -80,7 +80,7 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = sentimentr::polarit
 #' 
 #' Prints an extract_sentiment_terms object
 #' 
-#' @param x
+#' @param x An extract_sentiment_terms object.
 #' @param \ldots ignored
 #' @method print extract_sentiment_terms
 #' @export 

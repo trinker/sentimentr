@@ -7,6 +7,8 @@
 \method{print}{extract_sentiment_terms}(x, ...)
 }
 \arguments{
+\item{x}{An extract_sentiment_terms object.}
+
 \item{\ldots}{ignored}
 }
 \description{
