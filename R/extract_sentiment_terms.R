@@ -14,7 +14,7 @@
 #' @export
 #' @importFrom data.table .N :=
 #' @examples
-#' p_load(sentimentr, data.table)
+#' library(data.table)
 #' set.seed(10)
 #' x <- sample(cannon_reviews[[3]], 3000, T)
 #' sentiment(x)

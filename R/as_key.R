@@ -192,6 +192,7 @@ update_key <- function(key, drop = NULL, x = NULL,
 #' \code{update_polarity_table} - Wrapper for \code{update_key} specifically for
 #' updating polarity tables.
 #'
+#' @rdname as_key
 update_polarity_table <- update_key
 
 
@@ -200,6 +201,7 @@ update_polarity_table <- update_key
 #' \code{update_valence_shifter_table} - Wrapper for \code{update_key} 
 #' specifically for updating valence shifter tables.
 #'
+#' @rdname as_key
 update_valence_shifter_table <- function(key, drop = NULL, x = NULL,
     comparison = sentimentr::polarity_table, sentiment = FALSE, ...){
 

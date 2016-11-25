@@ -4,6 +4,8 @@
 \alias{as_key}
 \alias{is_key}
 \alias{update_key}
+\alias{update_polarity_table}
+\alias{update_valence_shifter_table}
 \title{Create/Manipulate Hash Keys}
 \usage{
 as_key(x, comparison = sentimentr::valence_shifters_table, sentiment = TRUE,
@@ -11,6 +13,12 @@ as_key(x, comparison = sentimentr::valence_shifters_table, sentiment = TRUE,
 
 update_key(key, drop = NULL, x = NULL,
   comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...)
+
+update_polarity_table(key, drop = NULL, x = NULL,
+  comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...)
+
+update_valence_shifter_table(key, drop = NULL, x = NULL,
+  comparison = sentimentr::polarity_table, sentiment = FALSE, ...)
 
 is_key(key, sentiment = TRUE)
 }
@@ -42,6 +50,12 @@ Returns a \pkg{data.table} object that can be used as a hash key.
 arguments such as \code{polarity_dt} in the \code{sentiment} function.
 
 \code{update_key} - Add/remove terms to a current key.
+
+\code{update_polarity_table} - Wrapper for \code{update_key} specifically for
+updating polarity tables.
+
+\code{update_valence_shifter_table} - Wrapper for \code{update_key} 
+specifically for updating valence shifter tables.
 
 \code{is_key} - Logical check if an object is a key.
 }
