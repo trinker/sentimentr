@@ -10,9 +10,10 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.3.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.3.0-orange.svg" alt="Version"/></a>
-[![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
+<a href="https://img.shields.io/badge/Version-0.4.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.4.0-orange.svg" alt="Version"/></a>
 </p>
+[![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
+
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
 **sentimentr** is designed to quickly calculate text polarity sentiment
@@ -444,6 +445,15 @@ as well as [Baccianella, Esuli and Sebastiani's
     pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
     pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
 
+    package 'microbenchmark' successfully unpacked and MD5 sums checked
+
+    The downloaded binary packages are in
+        C:\Users\Tyler\AppData\Local\Temp\RtmpwJpARf\downloaded_packages
+    package 'RSentiment' successfully unpacked and MD5 sums checked
+
+    The downloaded binary packages are in
+        C:\Users\Tyler\AppData\Local\Temp\RtmpwJpARf\downloaded_packages
+
     ase <- c(
         "I haven't been sad in a long time.",
         "I am extremely happy today.",
@@ -477,7 +487,7 @@ as well as [Baccianella, Esuli and Sebastiani's
     4     -0.5      0         0          0    1     3   1
     5     -0.5  -0.41     -0.56         -1    1     3   1
     6     -0.5   0.06      0.11          1    1     3   1
-    7     -0.5  -0.38     -0.05         -1    1     2   1
+    7     -0.5  -0.38     -0.05          0    1     2   1
     8        0      0     -0.14          0    0     0  -1
     9     -0.5   0.38      0.24         -1   -1    -3  -1
       sentences                                              
@@ -529,22 +539,22 @@ is a bit slower than the fastest versions of either **sentimentr** or
     )
 
     Unit: milliseconds
-                       expr        min         lq       mean     median
-                 stanford() 25681.7832 26316.1778 27328.7280 26950.5723
-        sentimentr_hu_liu()   257.5393   266.1022   270.3374   274.6652
-     sentimentr_sentiword()   999.4655  1002.5251  1019.6132  1005.5847
-               RSentiment()   908.5591   926.2719   949.4043   943.9847
-             syuzhet_binn()   349.5689   354.2951   367.5217   359.0213
-              syuzhet_nrc()   674.3208   767.2540   857.4535   860.1873
-            syuzhet_afinn()   154.9327   158.3493   160.3708   161.7658
-             uq        max neval cld
-     28152.2003 29353.8283     3   b
-       276.7364   278.8076     3  a 
-      1029.6870  1053.7893     3  a 
-       969.8269   995.6691     3  a 
-       376.4981   393.9748     3  a 
-       949.0198  1037.8524     3  a 
-       163.0899   164.4139     3  a 
+                       expr         min          lq        mean      median
+                 stanford()  27555.9649  29336.0280  30124.1588  31116.0911
+        sentimentr_hu_liu()    262.6678    267.3538    272.7080    272.0398
+     sentimentr_sentiword()   1057.2413   1087.2625   1102.4927   1117.2838
+               RSentiment() 145682.8551 148026.6238 151587.5462 150370.3924
+             syuzhet_binn()    394.5227    439.8974    462.2086    485.2720
+              syuzhet_nrc()    980.6292   1003.1331   1024.1288   1025.6370
+            syuzhet_afinn()    169.6761    173.3827    181.3841    177.0894
+              uq         max neval
+      31408.2557  31700.4203     3
+        277.7281    283.4165     3
+       1125.1184   1132.9531     3
+     154539.8918 158709.3912     3
+        496.0516    506.8311     3
+       1045.8786   1066.1202     3
+        187.2381    197.3868     3
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------

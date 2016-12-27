@@ -13,8 +13,7 @@ replace_emoticon(text.var, emoticon_dt = sentimentr::emoticons, ...)
 and corresponding word meanings.}
 
 \item{\ldots}{Other arguments passed to \code{.mgsub} (see
-\href{http://www.inside-r.org/packages/cran/qdap/docs/multigsub}{multigsub}
-from the \pkg{qdap} for details).}
+\code{sentimentr:::.mgsub} for details).}
 }
 \value{
 Returns a vector of strings with emoticons replaced with word
