@@ -22,7 +22,7 @@ sentimentr 0.3.0 -
 
 BUG FIXES
 
-* Missing documentation for `but' conjunctions added tot he documentation.  
+* Missing documentation for `but' conjunctions added to the documentation.  
   Spotted by Richard Watson (see #23).
   
 NEW FEATURES
