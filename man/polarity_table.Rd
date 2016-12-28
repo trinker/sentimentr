@@ -15,7 +15,7 @@ positive/negative word list as sentiment lookup values.
 \details{
 \itemize{
   \item x. Words
-  \item y. Sentiment values (+1, 0, -1.05, -1, -2), -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evilcomparison both connotate negative though the following word is positive and negative respectively).
+  \item y. Sentiment values (+1, 0, -1.05, -1, -2), -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evil' both denote negative though the following word is positive and negative respectively).
   
 }
 }

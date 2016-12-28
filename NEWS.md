@@ -17,7 +17,22 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 0.3.0 -
+sentimentr 0.5.0 - 
+----------------------------------------------------------------
+
+**BUG FIXES**
+
+**NEW FEATURES**
+
+**MINOR FEATURES**
+
+**IMPROVEMENTS**
+
+**CHANGES**
+
+
+
+sentimentr 0.3.0 - 0.4.0
 ----------------------------------------------------------------
 
 **BUG FIXES**
@@ -34,13 +49,6 @@ sentimentr 0.3.0 -
 
 * `update_polarity_table` and `update_valence_shifter_table` added to abstract 
   away thinking about the `comparison` argument to `update_key`.
-
-
-**IMPROVEMENTS**
-
-
-
-**CHANGES**
 
 
 sentimentr 0.2.0 - 0.2.3

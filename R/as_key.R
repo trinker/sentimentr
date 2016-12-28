@@ -23,7 +23,7 @@
 #' character and containing the words and the second column being numeric values
 #' that are positive or negative.  \code{valence_shifters_dt} takes a 2 column 
 #' \code{data.frame} (named x and y) with the first column being character and 
-#' containing the words and the second column being integer coresponding to:
+#' containing the words and the second column being integer corresponding to:
 #' (1) negators, (2) amplifiers, (3) de-amplifiers, and ``but'' conjunction (4). 
 #' Also, note that if you are updating a \code{valence_shifters_dt} you need an 
 #' appropriate \code{comparison}; most likely, 

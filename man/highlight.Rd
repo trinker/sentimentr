@@ -15,7 +15,7 @@ punctuation and capitalization).  Default uses the text stored in the
 \code{sentiment_by} object that is striped of many punctuation marks and
 capitalizations.}
 
-\item{file}{A nam of the html file output.}
+\item{file}{A name of the html file output.}
 
 \item{open}{logical.  If \code{TRUE} the text highlighting document will
 attempt to be opened.}

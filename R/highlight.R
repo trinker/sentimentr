@@ -8,7 +8,7 @@
 #' punctuation and capitalization).  Default uses the text stored in the
 #' \code{sentiment_by} object that is striped of many punctuation marks and
 #' capitalizations.
-#' @param file A nam of the html file output.
+#' @param file A name of the html file output.
 #' @param open logical.  If \code{TRUE} the text highlighting document will
 #' attempt to be opened.
 #' @param digits  The number of digits to print for each row level average

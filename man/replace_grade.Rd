@@ -9,7 +9,7 @@ replace_grade(text.var, grade_dt = sentimentr::grades, ...)
 \arguments{
 \item{text.var}{The text variable.}
 
-\item{grade_dt}{A \pkg{data.table} of gradess and corresponding word meanings.}
+\item{grade_dt}{A \pkg{data.table} of grades and corresponding word meanings.}
 
 \item{\ldots}{ignored.}
 }
@@ -18,7 +18,7 @@ Returns a vector of strings with grades replaced with word
 equivalents.
 }
 \description{
-Replaces gradess with word equivalents.
+Replaces grades with word equivalents.
 }
 \examples{
 (text <- replace_grade(c(
