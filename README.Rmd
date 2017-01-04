@@ -106,7 +106,7 @@ Download the [zip ball](https://github.com/trinker/sentimentr/zipball/master) or
 
 ```r
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_gh("trinker/sentimentr")
+pacman::p_load_current_gh("trinker/lexicon", "trinker/sentimentr")
 ```
 
 # Examples

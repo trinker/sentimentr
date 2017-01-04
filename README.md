@@ -259,7 +259,7 @@ and run `R CMD INSTALL` on it, or use the **pacman** package to install
 the development version:
 
     if (!require("pacman")) install.packages("pacman")
-    pacman::p_load_gh("trinker/sentimentr")
+    pacman::p_load_current_gh("trinker/lexicon", "trinker/sentimentr")
 
 Examples
 ========
