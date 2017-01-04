@@ -16,7 +16,7 @@
 #' @examples
 #' library(data.table)
 #' set.seed(10)
-#' x <- sample(cannon_reviews[[3]], 3000, TRUE)
+#' x <- sample(cannon_reviews[[3]], 1000, TRUE)
 #' sentiment(x)
 #' 
 #' pol_words <- extract_sentiment_terms(x)
@@ -27,7 +27,7 @@
 #' 
 #' attributes(extract_sentiment_terms(x))$counts
 #' attributes(extract_sentiment_terms(x))$elements
-extract_sentiment_terms  <- function(text.var, polarity_dt = sentimentr::polarity_table,
+extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment,
     hyphen = "", ...){
 
     sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL

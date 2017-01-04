@@ -97,7 +97,7 @@
 #'
 #' geninq_pol %>% plot()
 #' }
-as_key <- function(x, comparison = sentimentr::valence_shifters_table, sentiment = TRUE, ...){
+as_key <- function(x, comparison = lexicon::hash_valence_shifters, sentiment = TRUE, ...){
 
     stopifnot(is.data.frame(x))
 
@@ -154,7 +154,7 @@ as_key <- function(x, comparison = sentimentr::valence_shifters_table, sentiment
 #' @export
 #' @rdname as_key
 update_key <- function(key, drop = NULL, x = NULL,
-    comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...){
+    comparison = lexicon::hash_valence_shifters, sentiment = FALSE, ...){
 
     stopifnot(is_key(key, sentiment = sentiment))
 
@@ -203,7 +203,7 @@ update_polarity_table <- update_key
 #'
 #' @rdname as_key
 update_valence_shifter_table <- function(key, drop = NULL, x = NULL,
-    comparison = sentimentr::polarity_table, sentiment = FALSE, ...){
+    comparison = lexicon::hash_sentiment, sentiment = FALSE, ...){
 
     update_key(key = key, drop = drop, x = x, comparison = comparison, sentiment = sentiment, ...)
 }

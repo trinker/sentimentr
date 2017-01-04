@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-<a href="https://img.shields.io/badge/Version-0.4.0-orange.svg"><img src="https://img.shields.io/badge/Version-0.4.0-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.5.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.5.1-orange.svg" alt="Version"/></a>
 </p>
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
 
@@ -341,9 +341,10 @@ Making and Updating Dictionaries
 It is pretty straight forward to make or update a new dictionary
 (polarity or valence shifter). To create a key from scratch the user
 needs to create a 2 column `data.frame`, with words on the left and
-values on the right (see `?polarity_table` & `?valence_shifters_table`
-for what the values mean). Note that the words need to be lower cased.
-Here I show an example `data.frame` ready for key conversion:
+values on the right (see `?lexicon::hash_sentiment` &
+`?lexicon::hash_valence_shifters` for what the values mean). Note that
+the words need to be lower cased. Here I show an example `data.frame`
+ready for key conversion:
 
     set.seed(10)
     key <- data.frame(
@@ -439,20 +440,12 @@ approach as it works more reliably on my own Windows machine), the
 [RSentiment](https://cran.r-project.org/package=RSentiment) package, and
 my own algorithm with both the default Hu & Liu (2004) polarity lexicon
 as well as [Baccianella, Esuli and Sebastiani's
-(2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon.
+(2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon from the
+[**lexicon**](https://github.com/trinker/lexicon) package.
 
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
     pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
-
-    package 'microbenchmark' successfully unpacked and MD5 sums checked
-
-    The downloaded binary packages are in
-        C:\Users\Tyler\AppData\Local\Temp\RtmpwJpARf\downloaded_packages
-    package 'RSentiment' successfully unpacked and MD5 sums checked
-
-    The downloaded binary packages are in
-        C:\Users\Tyler\AppData\Local\Temp\RtmpwJpARf\downloaded_packages
 
     ase <- c(
         "I haven't been sad in a long time.",
@@ -473,7 +466,7 @@ as well as [Baccianella, Esuli and Sebastiani's
     left_just(data.frame(
         stanford = sentiment_stanford(ase)[["sentiment"]],
         hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
-        sentiword = round(sentiment(ase, sentiword, question.weight = 0)[["sentiment"]], 2),    
+        sentiword = round(sentiment(ase, lexicon::hash_sentiword, question.weight = 0)[["sentiment"]], 2),    
         RSentiment = calculate_score(ase), 
         syuzhet,
         sentences = ase,
@@ -487,7 +480,7 @@ as well as [Baccianella, Esuli and Sebastiani's
     4     -0.5      0         0          0    1     3   1
     5     -0.5  -0.41     -0.56         -1    1     3   1
     6     -0.5   0.06      0.11          1    1     3   1
-    7     -0.5  -0.38     -0.05          0    1     2   1
+    7     -0.5  -0.38     -0.05         -1    1     2   1
     8        0      0     -0.14          0    0     0  -1
     9     -0.5   0.38      0.24         -1   -1    -3  -1
       sentences                                              
@@ -519,7 +512,7 @@ is a bit slower than the fastest versions of either **sentimentr** or
     stanford <- function() {sentiment_stanford(ase_100)}
 
     sentimentr_hu_liu <- function() sentiment(ase_100)
-    sentimentr_sentiword <- function() sentiment(ase_100, sentiword) 
+    sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiword) 
         
     RSentiment <- function() calculate_score(ase_100) 
         
@@ -539,22 +532,22 @@ is a bit slower than the fastest versions of either **sentimentr** or
     )
 
     Unit: milliseconds
-                       expr         min          lq        mean      median
-                 stanford()  27555.9649  29336.0280  30124.1588  31116.0911
-        sentimentr_hu_liu()    262.6678    267.3538    272.7080    272.0398
-     sentimentr_sentiword()   1057.2413   1087.2625   1102.4927   1117.2838
-               RSentiment() 145682.8551 148026.6238 151587.5462 150370.3924
-             syuzhet_binn()    394.5227    439.8974    462.2086    485.2720
-              syuzhet_nrc()    980.6292   1003.1331   1024.1288   1025.6370
-            syuzhet_afinn()    169.6761    173.3827    181.3841    177.0894
-              uq         max neval
-      31408.2557  31700.4203     3
-        277.7281    283.4165     3
-       1125.1184   1132.9531     3
-     154539.8918 158709.3912     3
-        496.0516    506.8311     3
-       1045.8786   1066.1202     3
-        187.2381    197.3868     3
+                       expr        min         lq       mean     median
+                 stanford() 26441.1055 26491.7614 27088.2566 26542.4172
+        sentimentr_hu_liu()   237.2977   237.3858   243.3549   237.4738
+     sentimentr_sentiword()   817.1309   865.2953   918.9546   913.4598
+               RSentiment()   635.8550   688.5078   723.0021   741.1605
+             syuzhet_binn()   328.8688   329.9826   333.1931   331.0964
+              syuzhet_nrc()   785.3160   800.2997   806.9575   815.2834
+            syuzhet_afinn()   157.3504   160.8444   173.0523   164.3383
+             uq        max neval cld
+     27411.8321 28281.2471     3   b
+       246.3835   255.2932     3  a 
+       969.8665  1026.2733     3  a 
+       766.5756   791.9907     3  a 
+       335.3552   339.6140     3  a 
+       817.7783   820.2732     3  a 
+       180.9032   197.4682     3  a 
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------

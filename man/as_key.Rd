@@ -8,17 +8,17 @@
 \alias{update_valence_shifter_table}
 \title{Create/Manipulate Hash Keys}
 \usage{
-as_key(x, comparison = sentimentr::valence_shifters_table, sentiment = TRUE,
+as_key(x, comparison = lexicon::hash_valence_shifters, sentiment = TRUE,
   ...)
 
 update_key(key, drop = NULL, x = NULL,
-  comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...)
+  comparison = lexicon::hash_valence_shifters, sentiment = FALSE, ...)
 
 update_polarity_table(key, drop = NULL, x = NULL,
-  comparison = sentimentr::valence_shifters_table, sentiment = FALSE, ...)
+  comparison = lexicon::hash_valence_shifters, sentiment = FALSE, ...)
 
 update_valence_shifter_table(key, drop = NULL, x = NULL,
-  comparison = sentimentr::polarity_table, sentiment = FALSE, ...)
+  comparison = lexicon::hash_sentiment, sentiment = FALSE, ...)
 
 is_key(key, sentiment = TRUE)
 }

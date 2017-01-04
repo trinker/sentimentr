@@ -7,68 +7,6 @@
 #' @aliases sentimentr package-sentiment
 NULL
 
-#' Polarity Lookup Key
-#'
-#' A \pkg{data.table} dataset containing an augmented version of Hu & Liu's (2004)
-#' positive/negative word list as sentiment lookup values.
-#'
-#' @details
-#' \itemize{
-#'   \item x. Words
-#'   \item y. Sentiment values (+1, 0, -1.05, -1, -2), -2 indicate phrasing that is always negative (e.g., 'too much fun' and 'too much evil' both denote negative though the following word is positive and negative respectively).
-#'   
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name polarity_table
-#' @usage data(polarity_table)
-#' @format A data frame with 6872 rows and 2 variables
-#' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
-#' reviews. National Conference on Artificial Intelligence.
-#'
-#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
-NULL
-
-#' Valence Shifters
-#'
-#' A \pkg{data.table} dataset containing a vector of valence shifter words that
-#' can alter a polarized word's meaning and a numeric key for negators (1),
-#' amplifiers(2), de-amplifiers (3) and ``but'' conjunction (4).
-#'
-#' @details
-#' Valence shifters are words that alter or intensify the meaning of the polarized
-#' words and include negators and amplifiers. Negators are, generally, adverbs
-#' that negate sentence meaning; for example the word like in the sentence, "I do
-#' like pie.", is given the opposite meaning in the sentence, "I do not like
-#' pie.", now containing the negator not. Amplifiers are, generally, adverbs or
-#' adjectives that intensify sentence meaning. Using our previous example, the
-#' sentiment of the negator altered sentence, "I seriously do not like pie.", is
-#' heightened with addition of the amplifier seriously.  Whereas de-amplifiers
-#' decrease the intensity of a polarized word as in the sentence "I barely like
-#' pie"; the word "barely" deamplifies the word like.  ``but'' conjunction trump
-#' the previous clause (e.g., ``He's a nice guy but not too smart.'').
-#'
-#' @details
-#' \itemize{
-#'   \item x. Valence shifter
-#'   \item y. Number key value corresponding to:
-#' \tabular{lr}{
-#'   \bold{Valence Shifter}     \tab \bold{Value}\cr
-#'   Negator     \tab 1 \cr
-#'   Amplifier  \tab 2 \cr
-#'  De-amplifier  \tab 3 \cr
-#'  `but' contraction \tab 4 \cr
-#' }
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name valence_shifters_table
-#' @usage data(valence_shifters_table)
-#' @format A data frame with 93 rows and 2 variables
-NULL
-
 
 #' Sam I Am Text
 #'
@@ -103,54 +41,7 @@ NULL
 #' @format A data frame with 2912 rows and 4 variables
 NULL
 
-#' Polarity Lookup Key 2
-#'
-#' A \pkg{data.table} dataset containing an augmented version of Baccianella,
-#' Esuli and Sebastiani's (2010) positive/negative word list as sentiment lookup
-#' values.  This list has be restructured to long format.  A polarity value
-#' was assigned by taking the difference between the original data set's
-#' negative and positive attribution (\code{PosScore - NegScore}).  All rows
-#' with a zero polarity were removed from the data set as well as any duplicated
-#' in the valence shifter's data set.
-#'
-#' @details
-#' \itemize{
-#'   \item x. Words
-#'   \item y. Sentiment values
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name sentiword
-#' @usage data(sentiword)
-#' @format A data frame with 20,100 rows and 2 variables
-#' @references Baccianella S., Esuli, A. and Sebastiani, F. (2010). SentiWordNet
-#' 3.0: An Enhanced Lexical Resource for Sentiment Analysis and Opinion Mining.
-#' International Conference on Language Resources and Evaluation.
-#'
-#' \url{http://sentiwordnet.isti.cnr.it/}
-NULL
 
-
-
-#' Emoticons Data Set
-#'
-#' A dataset containing common emoticons (adapted from
-#' \href{http://www.lingo2word.com/lists/emoticon_listH.html}{Popular Emoticon List}).
-#'
-#' @details
-#' \itemize{
-#'   \item x. The graphic representation of the emoticon
-#'   \item y. The meaning of the emoticon
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name emoticons
-#' @usage data(emoticons)
-#' @format A data frame with 75 rows and 2 variables
-#' @references \url{http://www.lingo2word.com/lists/emoticon_listH.html}
-NULL
 
 
 #' Cannon G3 Camera Product Reviews From Amazon

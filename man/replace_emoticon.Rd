@@ -4,7 +4,7 @@
 \alias{replace_emoticon}
 \title{Replace Emoticons With Words}
 \usage{
-replace_emoticon(text.var, emoticon_dt = sentimentr::emoticons, ...)
+replace_emoticon(text.var, emoticon_dt = lexicon::hash_emoticons, ...)
 }
 \arguments{
 \item{text.var}{The text variable.}

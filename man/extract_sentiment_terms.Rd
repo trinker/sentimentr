@@ -4,7 +4,7 @@
 \alias{extract_sentiment_terms}
 \title{Extract Sentiment Words}
 \usage{
-extract_sentiment_terms(text.var, polarity_dt = sentimentr::polarity_table,
+extract_sentiment_terms(text.var, polarity_dt = lexicon::hash_sentiment,
   hyphen = "", ...)
 }
 \arguments{
@@ -29,7 +29,7 @@ Extract the sentiment words from a text.
 \examples{
 library(data.table)
 set.seed(10)
-x <- sample(cannon_reviews[[3]], 3000, TRUE)
+x <- sample(cannon_reviews[[3]], 1000, TRUE)
 sentiment(x)
 
 pol_words <- extract_sentiment_terms(x)

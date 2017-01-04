@@ -176,8 +176,8 @@
 #' y <- "He was not the sort of man that one would describe as especially handsome."
 #' sentiment(y)
 #' sentiment(y, n.before=Inf)
-sentiment <- function(text.var, polarity_dt = sentimentr::polarity_table,
-    valence_shifters_dt = sentimentr::valence_shifters_table, hyphen = "",
+sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment,
+    valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     but.weight = .85, missing_value = 0, ...){
 
