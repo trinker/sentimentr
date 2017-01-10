@@ -24,22 +24,25 @@ sentimentr 0.5.0 -
 
 **NEW FEATURES**
 
+* `downweighted_zero_average` added for use with `sentiment_by` to downweight
+  zero values in the group by averaging.
+
 **MINOR FEATURES**
 
 **IMPROVEMENTS**
 
 * `sentiment_by` picks up an `averaging.function` argument for performing the 
   group by averaging.  The default uses `downweighted_zero_average`, which 
-    downweights zero values in the averaging (making them have less impact).  To
-    get the old behavior back use `mean` as follows:
-    `averaging.function = function(x) {mean(x, na.rm = TRUE)}`.
+  downweights zero values in the averaging (making them have less impact).  To
+  get the old behavior back use `mean` as follows:
+  `averaging.function = function(x) {mean(x, na.rm = TRUE)}`.
 
 **CHANGES**
 
-* The hash keys `polarity_table`, valence_shifters_table`, and `sentiword` have
+* The hash keys `polarity_table`, `valence_shifters_table`, and `sentiword` have
   been moved to the **lexicon** (https://github.com/trinker/lexicon) package in
   order to make them more modular and maintainable.  They have been renamed to
-  `hash_sentiment`, hash_valence_shifters`, and `hash_sentiword`.
+  `hash_sentiment`, `hash_valence_shifters`, and `hash_sentiword`.
 
 
 
