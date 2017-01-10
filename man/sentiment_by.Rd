@@ -4,7 +4,8 @@
 \alias{sentiment_by}
 \title{Polarity Score (Sentiment Analysis) By Groups}
 \usage{
-sentiment_by(text.var, by = NULL, group.names, ...)
+sentiment_by(text.var, by = NULL,
+  averaging.function = downweighted_zero_average, group.names, ...)
 }
 \arguments{
 \item{text.var}{The text variable.}

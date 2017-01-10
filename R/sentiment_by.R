@@ -7,6 +7,10 @@
 #' row/element indices; if you used a column of 12 rows for \code{text.var}
 #' these 12 rows will be used as the grouping variable.  Also takes a single
 #' grouping variable or a list of 1 or more grouping variables.
+#' @averaging.function A function for performing the group by averaging.  The 
+#' defualt, \code{\link[sentimentr]{downweighted_zero_average}}, downweights 
+#' zero values in the averaging.  Note that the function should handle 
+#' \code{NA}s.  See the example with \code{mean} below.
 #' @param group.names A vector of names that corresponds to group.  Generally
 #' for internal use.
 #' @param \ldots Other arguments passed to \code{\link[sentimentr]{sentiment}}.
@@ -23,13 +27,14 @@
 #' @family sentiment functions
 #' @examples
 #' mytext <- c(
-#'    'do you like it?  But I hate really bad dogs',
+#'    'do you like it?  It is red. But I hate really bad dogs',
 #'    'I am the best friend.',
 #'    'Do you really like it?  I\'m not happy'
 #' )
 #' sentiment(mytext)
 #'
 #' sentiment_by(mytext)
+#' sentiment_by(mytext, averaging.function = function(x) {mean(x, na.rm = TRUE)})
 #' get_sentences(sentiment_by(mytext))
 #'
 #' (mysentiment <- sentiment_by(mytext, question.weight = 0))
@@ -45,7 +50,8 @@
 #' \dontrun{
 #' highlight(with(cannon_reviews, sentiment_by(review, number)))
 #' }
-sentiment_by <- function(text.var, by = NULL, group.names, ...){
+sentiment_by <- function(text.var, by = NULL, 
+    averaging.function = downweighted_zero_average, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
     out <- sentiment(text.var = text.var, ...)
@@ -53,7 +59,7 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
     if (is.null(by)){
         out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),
         	  'sd' = stats::sd(sentiment, na.rm = TRUE),
-        	  'ave_sentiment' = mean(sentiment, na.rm = TRUE)), by = "element_id"]
+        	  'ave_sentiment' = averaging.function(sentiment)), by = "element_id"]
         G <- "element_id"
         uncombined <- out
     } else {
@@ -85,7 +91,7 @@ sentiment_by <- function(text.var, by = NULL, group.names, ...){
 
         out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
             'sd' = stats::sd(sentiment, na.rm = TRUE),
-            'ave_sentiment' = mean(sentiment, na.rm = TRUE)), keyby = G]#[order(-ave_sentiment)]
+            'ave_sentiment' = averaging.function(sentiment)), keyby = G]#[order(-ave_sentiment)]
 
     }
 
