@@ -10,10 +10,9 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
+[![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
 <a href="https://img.shields.io/badge/Version-0.5.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.5.1-orange.svg" alt="Version"/></a>
 </p>
-[![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
 **sentimentr** is designed to quickly calculate text polarity sentiment
@@ -294,7 +293,7 @@ To aggregate by element (column cell or vector element) use
     ##    element_id word_count       sd ave_sentiment
     ## 1:          1         10 2.247262    -1.0890544
     ## 2:          2          5       NA     0.4472136
-    ## 3:          3          9 0.569210     0.4024922
+    ## 3:          3          9 0.569210     0.4392690
 
 To aggregate by grouping variables use `sentiment_by` using the `by`
 argument.
@@ -302,16 +301,16 @@ argument.
     (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.4489512    0.10245522
-    ##  2:     OBAMA time 2       7476 0.3878883    0.08730120
-    ##  3:     OBAMA time 3       7241 0.4408708    0.08788677
-    ##  4:    ROMNEY time 1       4085 0.3669465    0.05259171
-    ##  5:    ROMNEY time 2       7534 0.3271200    0.04277505
-    ##  6:    ROMNEY time 3       8302 0.3866709    0.07109706
-    ##  7:   CROWLEY time 2       1672 0.2279950    0.06725135
-    ##  8:    LEHRER time 1        765 0.3634981    0.13377765
-    ##  9:  QUESTION time 2        583 0.3282897    0.02209842
-    ## 10: SCHIEFFER time 3       1445 0.3810998    0.06892295
+    ##  1:     OBAMA time 1       3598 0.4489512    0.17963450
+    ##  2:     OBAMA time 2       7476 0.3878883    0.21629706
+    ##  3:     OBAMA time 3       7241 0.4408708    0.19103322
+    ##  4:    ROMNEY time 1       4085 0.3669465    0.11715169
+    ##  5:    ROMNEY time 2       7534 0.3271200    0.10396263
+    ##  6:    ROMNEY time 3       8302 0.3866709    0.13649872
+    ##  7:   CROWLEY time 2       1672 0.2356299    0.24872950
+    ##  8:    LEHRER time 1        765 0.3634981    0.32699539
+    ##  9:  QUESTION time 2        583 0.3282897    0.04967577
+    ## 10: SCHIEFFER time 3       1445 0.3810998    0.16056579
 
 Plotting
 --------
@@ -533,21 +532,21 @@ is a bit slower than the fastest versions of either **sentimentr** or
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 26441.1055 26491.7614 27088.2566 26542.4172
-        sentimentr_hu_liu()   237.2977   237.3858   243.3549   237.4738
-     sentimentr_sentiword()   817.1309   865.2953   918.9546   913.4598
-               RSentiment()   635.8550   688.5078   723.0021   741.1605
-             syuzhet_binn()   328.8688   329.9826   333.1931   331.0964
-              syuzhet_nrc()   785.3160   800.2997   806.9575   815.2834
-            syuzhet_afinn()   157.3504   160.8444   173.0523   164.3383
-             uq        max neval cld
-     27411.8321 28281.2471     3   b
-       246.3835   255.2932     3  a 
-       969.8665  1026.2733     3  a 
-       766.5756   791.9907     3  a 
-       335.3552   339.6140     3  a 
-       817.7783   820.2732     3  a 
-       180.9032   197.4682     3  a 
+                 stanford() 71224.7998 71383.4273 71552.2334 71542.0548
+        sentimentr_hu_liu()   710.6544   718.4679   781.7368   726.2814
+     sentimentr_sentiword()  2933.1637  3001.6327  3107.3385  3070.1018
+               RSentiment()  1957.0957  1996.5305  2417.8363  2035.9652
+             syuzhet_binn()  1062.6873  1067.5361  1222.5334  1072.3849
+              syuzhet_nrc()  2521.1855  2522.6444  3068.6970  2524.1032
+            syuzhet_afinn()   457.6414   476.3599   558.2571   495.0784
+             uq        max neval  cld
+     71715.9502 71889.8456     3    d
+       817.2781   908.2747     3 a   
+      3194.4258  3318.7499     3   c 
+      2648.2066  3260.4480     3  bc 
+      1302.4565  1532.5281     3 ab  
+      3342.4528  4160.8024     3   c 
+       608.5650   722.0516     3 a   
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------
@@ -626,7 +625,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 lacks accuracy. We can deduce two things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,100\] vs. Hu & Lu \[n = 6,872\])
+    20,100\] vs. Hu & Lu \[n = 6,875\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a

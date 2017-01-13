@@ -96,6 +96,7 @@ update_key(mykey, drop = c("f", "h"), x = data.frame(x = c("dog", "cat"), y = c(
 
 ## Explicity key type (wrapper for `update_key` for sentiment table.
 ## See `update_valence_shifter_table` a corresponding valence shifter updater.
+library(lexicon)
 updated_hash_sentiment <- sentimentr:::update_polarity_table(hash_sentiment,
     x = data.frame(
         words = c('frickin', 'hairy'),

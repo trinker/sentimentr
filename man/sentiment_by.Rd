@@ -4,7 +4,8 @@
 \alias{sentiment_by}
 \title{Polarity Score (Sentiment Analysis) By Groups}
 \usage{
-sentiment_by(text.var, by = NULL, group.names, ...)
+sentiment_by(text.var, by = NULL,
+  averaging.function = average_downweighted_zero, group.names, ...)
 }
 \arguments{
 \item{text.var}{The text variable.}
@@ -13,6 +14,16 @@ sentiment_by(text.var, by = NULL, group.names, ...)
 row/element indices; if you used a column of 12 rows for \code{text.var}
 these 12 rows will be used as the grouping variable.  Also takes a single
 grouping variable or a list of 1 or more grouping variables.}
+
+\item{averaging.function}{A function for performing the group by averaging.
+The defualt, \code{\link[sentimentr]{average_downweighted_zero}}, downweights 
+zero values in the averaging.  Note that the function must handle 
+\code{NA}s.  The \pkg{sentimentr} functions 
+\code{average_weighted_mixed_sentiment} and \code{average_mean} are also 
+available.  The former upweights negative when the analysts suspects the 
+speaker is likely to surround negatives with positives (mixed) as a polite 
+social convention but still the affective state is negative.  The later is a 
+standard mean average.}
 
 \item{group.names}{A vector of names that corresponds to group.  Generally
 for internal use.}
