@@ -22,6 +22,9 @@ sentimentr 0.5.0 -
 
 BUG FIXES
 
+* Previously `update_polarity_table` and `update_valence_shifter_table` were
+  accidentally not exported.  This has been corrected.
+
 NEW FEATURES
 
 MINOR FEATURES

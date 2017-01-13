@@ -8,9 +8,9 @@ Description: Calculate text polarity sentiment at the sentence level
         and optionally aggregate by rows or grouping variable(s).
 Depends: R (>= 3.1.0)
 Suggests: testthat
-Imports: data.table, ggplot2, graphics, grid, lexicon, methods, stats, stringi,
-        syuzhet, utils
-Date: 2017-01-03
+Imports: data.table, ggplot2, graphics, grid, lexicon, methods, stats,
+        stringi, syuzhet, utils
+Date: 2017-01-12
 License: MIT + file LICENSE
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)

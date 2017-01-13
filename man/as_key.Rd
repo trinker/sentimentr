@@ -94,6 +94,16 @@ update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 ## Add terms & drop to/from a key
 update_key(mykey, drop = c("f", "h"), x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 
+## Explicity key type (wrapper for `update_key` for sentiment table.
+## See `update_valence_shifter_table` a corresponding valence shifter updater.
+updated_hash_sentiment <- sentimentr:::update_polarity_table(hash_sentiment,
+    x = data.frame(
+        words = c('frickin', 'hairy'),
+        polarity = c(-1, -1),
+        stringsAsFactors = FALSE
+    )
+)
+
 ## Checking if you have a key
 is_key(mykey)
 is_key(key)

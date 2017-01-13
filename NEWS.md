@@ -22,6 +22,9 @@ sentimentr 0.5.0 -
 
 **BUG FIXES**
 
+* Previously `update_polarity_table` and `update_valence_shifter_table` were
+  accidentally not exported.  This has been corrected.
+
 **NEW FEATURES**
 
 **MINOR FEATURES**
@@ -29,6 +32,11 @@ sentimentr 0.5.0 -
 **IMPROVEMENTS**
 
 **CHANGES**
+
+* The hash keys `polarity_table`, valence_shifters_table`, and `sentiword` have
+  been moved to the **lexicon** (https://github.com/trinker/lexicon) package in
+  order to make them more modular and maintainable.  They have been renamed to
+  `hash_sentiment`, hash_valence_shifters`, and `hash_sentiword`.
 
 
 

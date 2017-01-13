@@ -51,7 +51,17 @@
 #'
 #' ## Add terms & drop to/from a key
 #' update_key(mykey, drop = c("f", "h"), x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
-#'
+#' 
+#' ## Explicity key type (wrapper for `update_key` for sentiment table.
+#' ## See `update_valence_shifter_table` a corresponding valence shifter updater.
+#' updated_hash_sentiment <- sentimentr:::update_polarity_table(hash_sentiment,
+#'     x = data.frame(
+#'         words = c('frickin', 'hairy'),
+#'         polarity = c(-1, -1),
+#'         stringsAsFactors = FALSE
+#'     )
+#' )
+#' 
 #' ## Checking if you have a key
 #' is_key(mykey)
 #' is_key(key)
@@ -191,7 +201,8 @@ update_key <- function(key, drop = NULL, x = NULL,
 #'
 #' \code{update_polarity_table} - Wrapper for \code{update_key} specifically for
 #' updating polarity tables.
-#'
+#' 
+#' @export
 #' @rdname as_key
 update_polarity_table <- update_key
 
@@ -200,7 +211,8 @@ update_polarity_table <- update_key
 #'
 #' \code{update_valence_shifter_table} - Wrapper for \code{update_key} 
 #' specifically for updating valence shifter tables.
-#'
+#' 
+#' @export
 #' @rdname as_key
 update_valence_shifter_table <- function(key, drop = NULL, x = NULL,
     comparison = lexicon::hash_sentiment, sentiment = FALSE, ...){
