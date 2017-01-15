@@ -17,7 +17,7 @@ weights with x and y as column names.}
 with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
 would result in a space between words (e.g., 'sugar free').}
 
-\item{\ldots}{ignored.}
+\item{\ldots}{Ignored.}
 }
 \value{
 Returns a \pkg{data.table} with columns of positive and 

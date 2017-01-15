@@ -102,7 +102,7 @@ with several helper functions summarized in the table below:
 </tr>
 <tr class="even">
 <td align="left"><code>replace_grade</code></td>
-<td align="left">Replace gradess (e.g., &quot;A+&quot;) with word equivalent</td>
+<td align="left">Replace grades (e.g., &quot;A+&quot;) with word equivalent</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>replace_rating</code></td>
@@ -532,21 +532,21 @@ is a bit slower than the fastest versions of either **sentimentr** or
 
     Unit: milliseconds
                        expr        min         lq       mean     median
-                 stanford() 71224.7998 71383.4273 71552.2334 71542.0548
-        sentimentr_hu_liu()   710.6544   718.4679   781.7368   726.2814
-     sentimentr_sentiword()  2933.1637  3001.6327  3107.3385  3070.1018
-               RSentiment()  1957.0957  1996.5305  2417.8363  2035.9652
-             syuzhet_binn()  1062.6873  1067.5361  1222.5334  1072.3849
-              syuzhet_nrc()  2521.1855  2522.6444  3068.6970  2524.1032
-            syuzhet_afinn()   457.6414   476.3599   558.2571   495.0784
-             uq        max neval  cld
-     71715.9502 71889.8456     3    d
-       817.2781   908.2747     3 a   
-      3194.4258  3318.7499     3   c 
-      2648.2066  3260.4480     3  bc 
-      1302.4565  1532.5281     3 ab  
-      3342.4528  4160.8024     3   c 
-       608.5650   722.0516     3 a   
+                 stanford() 26401.7466 26787.5156 27360.8073 27173.2847
+        sentimentr_hu_liu()   270.7224   279.0113   281.9663   287.3003
+     sentimentr_sentiword()   971.2202   988.4731  1000.2441  1005.7259
+               RSentiment()   706.5924   719.5848   757.7893   732.5772
+             syuzhet_binn()   393.1390   394.5057   432.2248   395.8724
+              syuzhet_nrc()   982.4704   985.5732   990.2867   988.6759
+            syuzhet_afinn()   186.3573   188.2666   223.8937   190.1758
+             uq        max neval cld
+     27840.3377 28507.3907     3   b
+       287.5883   287.8763     3  a 
+      1014.7561  1023.7863     3  a 
+       783.3878   834.1984     3  a 
+       451.7677   507.6629     3  a 
+       994.1949   999.7138     3  a 
+       242.6619   295.1479     3  a 
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------

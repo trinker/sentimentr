@@ -51,6 +51,13 @@ sentimentr 0.5.0 -
   been moved to the **lexicon** (https://github.com/trinker/lexicon) package in
   order to make them more modular and maintainable.  They have been renamed to
   `hash_sentiment`, `hash_valence_shifters`, and `hash_sentiword`.
+  
+* The `replace_emoticon`, `replace_grade` and `replace_rating` functions have 
+  been moved from **sentimentr** to the **textclean** package as these are 
+  cleaning functions.  This makes the functions more modular and generalizable 
+  to all types of text cleaning.  These functions are still imported and 
+  exported by **sentimentr**.
+
 
 
 

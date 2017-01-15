@@ -113,38 +113,4 @@ NULL
 NULL
 
 
-#' Ratings Data Set
-#'
-#' A dataset containing common ratings.
-#'
-#' @details
-#' \itemize{
-#'   \item x. The graphic representation of the rating
-#'   \item y. The meaning of the rating
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name ratings
-#' @usage data(ratings)
-#' @format A data frame with 35 rows and 2 variables
-NULL
-
-
-#' Grades Data Set
-#'
-#' A dataset containing common grades.
-#'
-#' @details
-#' \itemize{
-#'   \item x. The graphic representation of the grade
-#'   \item y. The meaning of the grade
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name grades
-#' @usage data(grades)
-#' @format A data frame with 15 rows and 2 variables
-NULL
 

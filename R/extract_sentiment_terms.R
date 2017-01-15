@@ -8,7 +8,7 @@
 #' @param hyphen The character string to replace hyphens with.  Default replaces
 #' with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
 #' would result in a space between words (e.g., 'sugar free').
-#' @param \ldots ignored.
+#' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} with columns of positive and 
 #' negative terms.
 #' @export

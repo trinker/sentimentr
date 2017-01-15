@@ -51,7 +51,7 @@ There are two main functions (top 2 in table below) in **sentimentr** with sever
 | `uncombine`      | Extract sentence level sentiment from  `sentiment_by` |
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
 | `replace_emoticon`| Replace emoticons with word equivalent               |
-| `replace_grade`  | Replace gradess (e.g., "A+") with word equivalent     |
+| `replace_grade`  | Replace grades (e.g., "A+") with word equivalent     |
 | `replace_rating` | Replace ratings (e.g., "10 out of 10", "3 stars") with word equivalent |
 | `as_key`         | Coerce a `data.frame` lexicon to a polarity hash key  |
 | `is_key`         | Check if an object is a hash key                      |

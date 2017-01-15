@@ -162,20 +162,7 @@ make_sentence_df2 <- function(sents){
     text.var
 }
 
-.mgsub2 <- function (pattern, replacement, text.var, ...) {
 
-    ord <- rev(order(nchar(pattern)))
-    pattern <- pattern[ord]
-    if (length(replacement) != 1) replacement <- replacement[ord]
-
-    if (length(replacement) == 1) replacement <- rep(replacement, length(pattern))
-
-    text.var <- stringi::stri_replace_all_fixed(text.var, pattern, replacement,
-        vectorize_all=FALSE, opts_fixed = list(case_insensitive = TRUE)
-    )
-
-    text.var
-}
 
 space_fill <- function(x, doubles){
 
@@ -268,3 +255,14 @@ rm_class <- function (x, remove, ...) {
     x
 }
 
+## convert a data.table to tibble
+set_tibble <- function(x, ...){
+    stopifnot(is.data.frame(x))
+    class(x) <- c("tbl_df", "tbl", "data.frame")
+    x
+}
+
+if_tibble <- function(x, as.tibble, ...){
+    if(!isTRUE(as.tibble)) return(x)
+    set_tibble(x)
+}
