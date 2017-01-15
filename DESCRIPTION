@@ -15,3 +15,5 @@ License: MIT + file LICENSE
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
 RoxygenNote: 5.0.1
+URL: http://github.com/trinker/sentimentr
+BugReports: http://github.com/trinker/sentimentr/issues
