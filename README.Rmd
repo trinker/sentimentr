@@ -57,6 +57,7 @@ There are two main functions (top 2 in table below) in **sentimentr** with sever
 | `is_key`         | Check if an object is a hash key                      |
 | `update_key`     | Add/remove terms to/from a hash key                   |
 | `highlight`      | Highlight positive/negative sentences as an HTML document |
+| `general_rescale` | Generalized rescaling function to rescale sentiment scoring |
 
 
 # The Equation 
@@ -223,12 +224,12 @@ sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 
 ## Annie Swafford's Examples
 
-[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, and my own algorithm with both the default Hu & Liu (2004) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon from the [**lexicon**](https://github.com/trinker/lexicon) package.
+[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 4 dictionary approaches (syuzhet, Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, the lookup based [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis) package, the [meanr](https://github.com/wrathematics/meanr) package (written in C level code), and my own algorithm with both the default Hu & Liu (2004) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
 
 ```{r, message=FALSE, comment=NA}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
+pacman::p_load_gh("trinker/sentimentr", "trinker/stansent", "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
 pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
 
 ase <- c(
@@ -243,15 +244,19 @@ ase <- c(
     "I don't feel so bad after all!"
 )
 
-syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
-    function(x) get_sentiment(ase, method=x))), c("bing", "afinn", "nrc"))
+syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
+    function(x) get_sentiment(ase, method=x))), c("syuzhet", "bing", "afinn", "nrc"))
 
+SentimentAnalysis <- apply(analyzeSentiment(ase)[c('SentimentGI', 'SentimentLM', 'SentimentQDAP') ], 2, round, 2)
+colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnalysis))
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase)[["sentiment"]],
     hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
     sentiword = round(sentiment(ase, lexicon::hash_sentiword, question.weight = 0)[["sentiment"]], 2),    
     RSentiment = calculate_score(ase), 
+    SentimentAnalysis,
+    meanr = score(ase)[['score']]
     syuzhet,
     sentences = ase,
     stringsAsFactors = FALSE
@@ -259,7 +264,7 @@ left_just(data.frame(
 
 ```
 
-Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that Stanford takes the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.  **RSentiment** is a bit slower than the fastest versions of either **sentimentr** or **syuzhet**. 
+Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that **RSentiment** and Stanford take the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.  **meanr** is lighting fast.  **RSentiment** is a bit slower than othe rmethods but is returning 3 scores from 3 different dictionaries. 
 
 
 ```{r, message = FALSE, comment=NA}
@@ -272,6 +277,11 @@ sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiword)
     
 RSentiment <- function() calculate_score(ase_100) 
     
+SentimentAnalysis <- function() analyzeSentiment(ase_100)
+
+meanr <- function() score(ase_100)
+
+syuzhet_syuzhet <- function() get_sentiment(ase_100, method="syuzhet")
 syuzhet_binn <- function() get_sentiment(ase_100, method="bing")
 syuzhet_nrc <- function() get_sentiment(ase_100, method="nrc")
 syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
@@ -281,9 +291,12 @@ microbenchmark(
     sentimentr_hu_liu(),
     sentimentr_sentiword(),
     RSentiment(), 
+    SentimentAnalysis(),
+    syuzhet_syuzhet(),
     syuzhet_binn(), 
     syuzhet_nrc(),
     syuzhet_afinn(),
+    meanr(),
     times = 3
 )
 ```

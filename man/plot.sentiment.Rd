@@ -4,7 +4,8 @@
 \alias{plot.sentiment}
 \title{Plots a sentiment object}
 \usage{
-\method{plot}{sentiment}(x, ...)
+\method{plot}{sentiment}(x,
+  transformation.function = syuzhet::get_dct_transform, ...)
 }
 \arguments{
 \item{x}{The sentiment object.}

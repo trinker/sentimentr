@@ -31,6 +31,9 @@ NEW FEATURES
   `average_mean` added for use with `sentiment_by` to reweight
   zero and negative values in the group by averaging (depending upon the 
   assumptions the analysts is making).
+  
+* `general_rescale` added as a means to rescale sentiment scores in a 
+  generalized way.
 
 MINOR FEATURES
 

@@ -178,6 +178,11 @@
 #' plot(sam)
 #' plot(sam, scale_range = TRUE, low_pass_size = 5)
 #' plot(sam, scale_range = TRUE, low_pass_size = 10)
+#'     
+#' plot(sam, transformation.function = syuzhet::get_transformed_values)
+#' plot(sam, transformation.function = syuzhet::get_transformed_values,  
+#'     scale_range = TRUE, low_pass_size = 5)
+#' 
 #' y <- "He was not the sort of man that one would describe as especially handsome."
 #' sentiment(y)
 #' sentiment(y, n.before=Inf)
@@ -318,9 +323,9 @@ replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}
 #' @return Returns a \pkg{ggplot2} object.
 #' @method plot sentiment
 #' @export
-plot.sentiment <- function(x, ...){
+plot.sentiment <- function(x, transformation.function = syuzhet::get_dct_transform, ...){
 
-    m <- syuzhet::get_transformed_values(stats::na.omit(x[["sentiment"]]), ...)
+    m <- transformation.function(stats::na.omit(x[["sentiment"]]), ...)
 
     dat <- data.frame(
         Emotional_Valence = m,

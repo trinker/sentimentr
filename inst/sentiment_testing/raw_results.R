@@ -47,8 +47,8 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         split_sentence() #%>% slice(1:10)
 
     ## syuzhet sentiment
-    syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
-        function(x) get_sentiment(dat$text, method=x))), paste0("syuzhet_", c("bing", "afinn", "nrc")))
+    syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
+        function(x) get_sentiment(dat$text, method=x))), paste0("syuzhet_", c("syuzhet", "bing", "afinn", "nrc")))
 
     ## RSentiment and replace sarcasm with negative
     RSentiment <- calculate_score(dat$text)
