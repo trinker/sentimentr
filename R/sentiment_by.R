@@ -1,6 +1,8 @@
 #' Polarity Score (Sentiment Analysis) By Groups
 #'
-#' Approximate the sentiment (polarity) of text by grouping variable(s).
+#' Approximate the sentiment (polarity) of text by grouping variable(s).  For a
+#' full description of the sentiment detection algorithm see 
+#' \code{\link[sentimentr]{sentiment}}.
 #'
 #' @param text.var The text variable.
 #' @param by The grouping variable(s).  Default \code{NULL} uses the original

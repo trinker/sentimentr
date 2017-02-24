@@ -41,7 +41,9 @@ Returns a \pkg{data.table} with grouping variables plus:
 }
 }
 \description{
-Approximate the sentiment (polarity) of text by grouping variable(s).
+Approximate the sentiment (polarity) of text by grouping variable(s).  For a
+full description of the sentiment detection algorithm see 
+\code{\link[sentimentr]{sentiment}}.
 }
 \seealso{
 Other sentiment.functions: \code{\link{sentiment}}

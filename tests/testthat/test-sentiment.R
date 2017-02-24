@@ -43,7 +43,7 @@ test_that("sentiment n.before/n.after alters the output",{
     expect_false(all(x == y))
 })
 
-test_that("sentiment but.weight = 0 alters the output",{
+test_that("sentiment adversative.weight = 0 alters the output",{
 
     mytext <- c(
        'do you like it?  But I hate really bad dogs',
@@ -51,7 +51,7 @@ test_that("sentiment but.weight = 0 alters the output",{
        'I like it but I really like eggs'
     )
     x <- sentiment(mytext)[["sentiment"]]
-    y <- sentiment(mytext, but.weight=3)[["sentiment"]]
+    y <- sentiment(mytext, adversative.weight=3)[["sentiment"]]
 
     expect_false(all(x == y))
 })

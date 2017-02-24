@@ -58,7 +58,8 @@ CHANGES
   to all types of text cleaning.  These functions are still imported and 
   exported by **sentimentr**.
 
-
+* `but.weight` argument in `sentiment` function renamed to `adversative.weight`
+  to better describe the function with a linguistics term.
 
 
 sentimentr 0.3.0 - 0.4.0

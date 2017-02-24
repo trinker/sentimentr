@@ -68,61 +68,61 @@ Functions
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
 
-<table style="width:104%;">
+<table style="width:100%;">
 <colgroup>
-<col width="26%" />
-<col width="77%" />
+<col width="25%" />
+<col width="74%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Function</th>
-<th align="left">Description</th>
+<th>Function</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>sentiment</code></td>
-<td align="left">Sentiment at the sentence level</td>
+<td><code>sentiment</code></td>
+<td>Sentiment at the sentence level</td>
 </tr>
 <tr class="even">
-<td align="left"><code>sentiment_by</code></td>
-<td align="left">Aggregated sentiment by group(s)</td>
+<td><code>sentiment_by</code></td>
+<td>Aggregated sentiment by group(s)</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>uncombine</code></td>
-<td align="left">Extract sentence level sentiment from <code>sentiment_by</code></td>
+<td><code>uncombine</code></td>
+<td>Extract sentence level sentiment from <code>sentiment_by</code></td>
 </tr>
 <tr class="even">
-<td align="left"><code>get_sentences</code></td>
-<td align="left">Regex based string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code>)</td>
+<td><code>get_sentences</code></td>
+<td>Regex based string to sentence parser (or get sentences from <code>sentiment</code>/<code>sentiment_by</code>)</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>replace_emoticon</code></td>
-<td align="left">Replace emoticons with word equivalent</td>
+<td><code>replace_emoticon</code></td>
+<td>Replace emoticons with word equivalent</td>
 </tr>
 <tr class="even">
-<td align="left"><code>replace_grade</code></td>
-<td align="left">Replace grades (e.g., &quot;A+&quot;) with word equivalent</td>
+<td><code>replace_grade</code></td>
+<td>Replace grades (e.g., &quot;A+&quot;) with word equivalent</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>replace_rating</code></td>
-<td align="left">Replace ratings (e.g., &quot;10 out of 10&quot;, &quot;3 stars&quot;) with word equivalent</td>
+<td><code>replace_rating</code></td>
+<td>Replace ratings (e.g., &quot;10 out of 10&quot;, &quot;3 stars&quot;) with word equivalent</td>
 </tr>
 <tr class="even">
-<td align="left"><code>as_key</code></td>
-<td align="left">Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
+<td><code>as_key</code></td>
+<td>Coerce a <code>data.frame</code> lexicon to a polarity hash key</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>is_key</code></td>
-<td align="left">Check if an object is a hash key</td>
+<td><code>is_key</code></td>
+<td>Check if an object is a hash key</td>
 </tr>
 <tr class="even">
-<td align="left"><code>update_key</code></td>
-<td align="left">Add/remove terms to/from a hash key</td>
+<td><code>update_key</code></td>
+<td>Add/remove terms to/from a hash key</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>highlight</code></td>
-<td align="left">Highlight positive/negative sentences as an HTML document</td>
+<td><code>highlight</code></td>
+<td>Highlight positive/negative sentences as an HTML document</td>
 </tr>
 </tbody>
 </table>
@@ -200,29 +200,32 @@ number of negators (*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>) plus 2.
 Simply, this is a result of a belief that two negatives equal a
 positive, 3 negatives a negative, and so on.
 
-The "but" conjunctions (i.e., 'but', 'however', and 'although') also
-weight the context cluster. A but conjunction before the polarized word
-(*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>)
+The adversative conjunctions (i.e., 'but', 'however', and 'although')
+also weight the context cluster. An adversative conjunction before the
+polarized word
+(*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>, ..., *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>)
 up-weights the cluster by 1 +
-*z*<sub>2</sub> \* {|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>}
+*z*<sub>2</sub> \* {|*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>}
 (.85 is the default weight (*z*<sub>2</sub>) where
-|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>| are the
-number of but conjunctions before the polarized word). A but conjunction
-after the polarized word down-weights the cluster by 1 +
+|*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|
+are the number of adversative conjunctions before the polarized word). A
+adversative conjunction after the polarized word down-weights the
+cluster by 1 +
 {*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1}\**z*<sub>2</sub>.
-This corresponds to the belief that a but makes the next clause of
-greater values while lowering the value placed on the prior clause.
+This corresponds to the belief that an adversative conjunction makes the
+next clause of greater values while lowering the value placed on the
+prior clause.
 
 The researcher may provide a weight (*z*) to be utilized with
 amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(&radic;*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
-<em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
+<em>c</em>'<sub>*i**j*</sub>/√*w*<sub>*i**j**n*</sub>
 
 Where:
 
@@ -236,7 +239,7 @@ Where:
 
 *w*<sub>*b*</sub> = 1 + *z*<sub>2</sub> \* *w*<sub>*b*′</sub>
 
-*w*<sub>*b*′</sub> = ∑(|*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1)
+*w*<sub>*b*′</sub> = ∑(|*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, *w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1)
 
 *w*<sub>*n**e**g*</sub> = (∑*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup> )
 mod 2
@@ -479,7 +482,7 @@ as well as [Baccianella, Esuli and Sebastiani's
     4     -0.5      0         0          0    1     3   1
     5     -0.5  -0.41     -0.56         -1    1     3   1
     6     -0.5   0.06      0.11          1    1     3   1
-    7     -0.5  -0.38     -0.05         -1    1     2   1
+    7     -0.5  -0.38     -0.05          0    1     2   1
     8        0      0     -0.14          0    0     0  -1
     9     -0.5   0.38      0.24         -1   -1    -3  -1
       sentences                                              
@@ -531,22 +534,22 @@ is a bit slower than the fastest versions of either **sentimentr** or
     )
 
     Unit: milliseconds
-                       expr        min         lq       mean     median
-                 stanford() 26401.7466 26787.5156 27360.8073 27173.2847
-        sentimentr_hu_liu()   270.7224   279.0113   281.9663   287.3003
-     sentimentr_sentiword()   971.2202   988.4731  1000.2441  1005.7259
-               RSentiment()   706.5924   719.5848   757.7893   732.5772
-             syuzhet_binn()   393.1390   394.5057   432.2248   395.8724
-              syuzhet_nrc()   982.4704   985.5732   990.2867   988.6759
-            syuzhet_afinn()   186.3573   188.2666   223.8937   190.1758
-             uq        max neval cld
-     27840.3377 28507.3907     3   b
-       287.5883   287.8763     3  a 
-      1014.7561  1023.7863     3  a 
-       783.3878   834.1984     3  a 
-       451.7677   507.6629     3  a 
-       994.1949   999.7138     3  a 
-       242.6619   295.1479     3  a 
+                       expr         min          lq        mean      median
+                 stanford()  25243.6973  25759.9738  25994.3613  26276.2504
+        sentimentr_hu_liu()    253.1846    272.8394    307.0844    292.4941
+     sentimentr_sentiword()    986.7520    987.9601   1005.3939    989.1681
+               RSentiment() 130230.7203 133565.5782 134762.1407 136900.4361
+             syuzhet_binn()    348.6886    364.2166    375.0956    379.7445
+              syuzhet_nrc()    815.4548    816.5545    863.1480    817.6541
+            syuzhet_afinn()    155.3988    157.6219    160.2877    159.8450
+              uq         max neval
+      26369.6933  26463.1361     3
+        334.0343    375.5746     3
+       1014.7148   1040.2616     3
+     137027.8509 137155.2658     3
+        388.2991    396.8536     3
+        886.9946    956.3350     3
+        162.7322    165.6194     3
 
 Comparing sentimentr, syuzhet, RSentiment, and Stanford
 -------------------------------------------------------

@@ -24,20 +24,22 @@
 #' Default is 1.  A 0 corresponds with the belief that questions (pure questions)
 #' are not polarized.  A weight may be applied based on the evidence that the
 #' questions function with polarized sentiment.
-#' @param but.weight The weight to give to "but" style conjunctions that overrule
-#' the previous clause.  Weighting a but statement stems from the belief that
-#' the conjunctions "but", "however", and "although" amplify the current clause
-#' and/or down weight the prior clause.  If a but conjunction is located before
-#' polarized word in the context cluster the cluster is up-weighted 1 + number
-#' of occurrences of the but conjunctions before the polarized word times the
-#' weight given (\eqn{1 + N_{but\,conjunctions} * z_2} where \eqn{z_2} is the
-#' \code{but.weight}).  Conversely,
-#' a but conjunction found after the polarized word in a context cluster
-#' down weights the cluster 1 - number of occurrences of the but conjunctions
-#' after the polarized word times the weight given
-#' (\eqn{1 + N_{but\,conjunctions}*-1 * z_2}).  These are added to the
-#' deamplifier and amplifier weights and thus the down weight is constrained to
-#' -1 as the lower bound.  Set to zero to remove but conjunction weighting.
+#' @param adversative.weight The weight to give to adversative conjunctions or 
+#' contrasting conjunctions (e.g., "but") that overrule the previous clause 
+#' (Halliday & Hasan, 2013).  Weighting a contrasting statement stems from the 
+#' belief that the adversative conjunctions like "but", "however", and "although" 
+#' amplify the current clause and/or down weight the prior clause.  If an 
+#' adversative conjunction is located before the polarized word in the context 
+#' cluster the cluster is up-weighted 1 + number of occurrences of the 
+#' adversative conjunctions before the polarized word times the
+#' weight given (\eqn{1 + N_{adversative\,conjunctions} * z_2} where \eqn{z_2} 
+#' is the \code{adversative.weight}).  Conversely, an adversative conjunction 
+#' found after the polarized word in a context cluster down weights the cluster 
+#' 1 - number of occurrences of the adversative conjunctions after the polarized 
+#' word times the weight given (\eqn{1 + N_{adversative\,conjunctions}*-1 * z_2}).  
+#' These are added to the deamplifier and amplifier weights and thus the down 
+#' weight is constrained to -1 as the lower bound.  Set to zero to remove 
+#' adversative conjunction weighting.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
 #' @param \ldots Ignored.
@@ -50,7 +52,9 @@
 #' }
 #' @references Hu, M., & Liu, B. (2004). Mining opinion features in customer
 #' reviews. National Conference on Artificial Intelligence.
-#'
+#' 
+#' Halliday, M. A. K. & Hasan, R. (2013). Cohesion in English. New York, NY: Routledge.
+#' 
 #' \url{http://www.slideshare.net/jeffreybreen/r-by-example-mining-twitter-for}
 #'
 #' \url{http://hedonometer.org/papers.html} Links to papers on hedonometrics
@@ -122,18 +126,19 @@
 #' negators (\eqn{w_{i,j,k}^{n}}) + 2.  Simply, this is a result of a belief that two
 #' negatives equal a positive, 3 negatives a negative and so on.
 #'
-#' The "but" conjunctions (i.e., 'but', 'however', and 'although') also weight
-#' the context cluster.  A but conjunction before the polarized word
-#' (\eqn{w_{but\,conjunction}, ..., w_{i, j, k}^{p}}) up-weights the cluster by
-#' \eqn{1 + z_2 * \{|w_{but\,conjunction}|, ..., w_{i, j, k}^{p}\}} (.85 is the
-#' default weight (\eqn{z_2})).  A but conjunction after the polarized word
-#' down-weights the cluster by
-#' \eqn{1 + \{w_{i, j, k}^{p}, ..., |w_{but\,conjunction}| * -1\} * z_2}.  The
-#' number of occurrences before and after the polarized word are multiplied by
+#' The adversative conjunctions (i.e., 'but', 'however', and 'although') also 
+#' weight the context cluster.  A adversative conjunction before the polarized 
+#' word (\eqn{w_{adversative\,conjunction}, ..., w_{i, j, k}^{p}}) up-weights 
+#' the cluster by 
+#' \eqn{1 + z_2 * \{|w_{adversative\,conjunction}|, ..., w_{i, j, k}^{p}\}} 
+#' (.85 is the default weight (\eqn{z_2})).  An adversative conjunction after 
+#' the polarized word down-weights the cluster by
+#' \eqn{1 + \{w_{i, j, k}^{p}, ..., |w_{adversative\,conjunction}| * -1\} * z_2}.  
+#' The number of occurrences before and after the polarized word are multiplied by
 #' 1 and -1 respectively and then summed within context cluster.  It is this
 #' value that is multiplied by the weight and added to 1. This
-#' corresponds to the belief that a but makes the next clause of greater values
-#' while lowering the value placed on the prior clause.
+#' corresponds to the belief that an adversative conjunction makes the next 
+#' clause of greater values while lowering the value placed on the prior clause.
 #'
 #' The researcher may provide a weight \eqn{z} to be utilized with
 #' amplifiers/de-amplifiers (default is .8; de-amplifier weight is constrained
@@ -155,7 +160,7 @@
 #'
 #' \deqn{w_{b} = 1 + z_2 * w_{b'}}
 #'
-#' \deqn{w_{b'} = \sum{\\(|w_{but\,conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{but\,conjunction}| * -1}\\)}
+#' \deqn{w_{b'} = \sum{\\(|w_{adversative\,conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, k}^{p}, ..., |w_{adversative\,conjunction}| * -1}\\)}
 #'
 #' \deqn{w_{neg}= \left(\sum{w_{i,j,k}^{n}}\right) \bmod {2}}
 #'
@@ -179,7 +184,7 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    but.weight = .85, missing_value = 0, ...){
+    adversative.weight = .85, missing_value = 0, ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -245,7 +250,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment,
     but_dat <- word_dat[cluster_tag == "4", list(
     	b =  before*sum2(cluster_tag %in% "4")),
         by = c("id", "id2", "pol_loc", "before")][, before := NULL][,
-            list(b = 1 + but.weight*sum2(b)), by = c("id", "id2", "pol_loc")]
+            list(b = 1 + adversative.weight*sum2(b)), by = c("id", "id2", "pol_loc")]
 
     ## Get counts of negators (neg), amplifiers (a), and deamplifiers (d)
     ## neg is changed to a simple 0/1 if it flips the sign or not
@@ -263,7 +268,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment,
     sent_dat <- merge(merge(pol_dat, sent_dat[,  c("id", "id2", "wc"), with=FALSE],
         by = c("id", "id2")),	word_dat, by = c("id", "id2", "pol_loc"))
 
-    ## add in the but weights
+    ## add in the adversative weights
     sent_dat[, a := a + ifelse(!is.na(b) & b > 1, b, 0)]
     sent_dat[, d := d + ifelse(!is.na(b) & b < 1, b, 0)]
 
