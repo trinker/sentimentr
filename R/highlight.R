@@ -81,7 +81,7 @@ highlight <- function(x, original.text = NULL, file = "polarity.html",
         message(sprintf("Saved in %s", file))
         if (open){
             path <- normalizePath(file)
-            message(sprintf("Oppening %s ...", file))
+            message(sprintf("Opening %s ...", file))
             utils::browseURL(paste0("file://", path))
         }
     }
