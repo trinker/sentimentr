@@ -31,6 +31,7 @@
 #' @export
 #' @rdname as_key
 #' @examples
+#' \dontrun{
 #' key <- data.frame(
 #'     words = sample(letters),
 #'     polarity = rnorm(26),
@@ -70,7 +71,6 @@
 #' is_key(update_key(mykey, drop = c("f", "h")))
 #'
 #' ## Using syuzhet's sentiment lexicons
-#' \dontrun{
 #' library(syuzhet)
 #' as_key(syuzhet:::bing)
 #' as_key(syuzhet:::afinn)

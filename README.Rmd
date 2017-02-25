@@ -17,6 +17,7 @@ verbadge <- sprintf('<a href="https://img.shields.io/badge/Version-%s-orange.svg
 
 ```{r, echo=FALSE}
 library(knitr)
+options(scipen=999)
 knit_hooks$set(htmlcap = function(before, options, envir) {
   if(!before) {
     paste('<p class="caption"><b><em>',options$htmlcap,"</em></b></p>",sep="")

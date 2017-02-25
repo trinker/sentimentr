@@ -74,6 +74,7 @@ appropriate \code{comparison}; most likely,
 \code{comparison = sentimentr::polarity_dt}.
 }
 \examples{
+\dontrun{
 key <- data.frame(
     words = sample(letters),
     polarity = rnorm(26),
@@ -112,10 +113,10 @@ is_key(mtcars)
 is_key(update_key(mykey, drop = c("f", "h")))
 
 ## Using syuzhet's sentiment lexicons
-\dontrun{
 library(syuzhet)
 as_key(syuzhet:::bing)
 as_key(syuzhet:::afinn)
+as_key(syuzhet:::syuzhet_dict)
 nrc <- data.frame(
     words = rownames(syuzhet:::nrc),
     polarity = syuzhet:::nrc[, "positive"] - syuzhet:::nrc[, "negative"],
