@@ -74,6 +74,7 @@
 #' library(syuzhet)
 #' as_key(syuzhet:::bing)
 #' as_key(syuzhet:::afinn)
+#' as_key(syuzhet:::syuzhet_dict)
 #' nrc <- data.frame(
 #'     words = rownames(syuzhet:::nrc),
 #'     polarity = syuzhet:::nrc[, "positive"] - syuzhet:::nrc[, "negative"],

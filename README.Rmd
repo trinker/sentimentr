@@ -256,7 +256,7 @@ left_just(data.frame(
     sentiword = round(sentiment(ase, lexicon::hash_sentiword, question.weight = 0)[["sentiment"]], 2),    
     RSentiment = calculate_score(ase), 
     SentimentAnalysis,
-    meanr = score(ase)[['score']]
+    meanr = score(ase)[['score']],
     syuzhet,
     sentences = ase,
     stringsAsFactors = FALSE
@@ -301,9 +301,9 @@ microbenchmark(
 )
 ```
 
-## Comparing sentimentr, syuzhet, RSentiment, and Stanford
+## Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
 
-The accuracy of an algorithm weighs heavily into the decision as to what approach to take in sentiment detection.  Both **syuzhet** and **sentimentr** provide multiple dictionaries with a general algorithm to compute sentiment scores. **syuzhet** provides 3 approaches while **sentimentr** provides 2, but can be extended easily using the 3 dictionaries from the **syuzhet** package.  The follow visualization provides the accuracy of these approaches in comparison to Stanford's **Java** based implementation of sentiment detection.  The visualization is generated from testing on three reviews data sets from Kotzias, Denil, De Freitas, & Smyth (2015).  These authors utilized the three 1000 element data sets from:
+The accuracy of an algorithm weighs heavily into the decision as to what approach to take in sentiment detection. I have selected algorithms/packages that stand out as fast and/or accurate to perform benchmarking on actual data. Both **syuzhet** and **sentimentr** provide multiple dictionaries with a general algorithm to compute sentiment scores. **syuzhet** provides 4 approaches while **sentimentr** provides 2, but can be extended easily using the 4 dictionaries from the **syuzhet** package.  **meanr** is a very fast algorithm.  The follow visualization provides the accuracy of these approaches in comparison to Stanford's **Java** based implementation of sentiment detection.  The visualization is generated from testing on three reviews data sets from Kotzias, Denil, De Freitas, & Smyth (2015).  These authors utilized the three 1000 element data sets from:
 
 - amazon.com
 - imdb.com
@@ -317,9 +317,9 @@ The data sets are hand scored as either positive or negative.  The testing here 
 
 The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot on the right shows how the rankings for the methods varied across the three review contexts.  
 
-The take away here seems that, unsurprisingly, Stanford's algorithm consistently outscores **sentimentr**, **syuzhet**, and **RSentiment**.  The **sentimentr** approach loaded with the `hu_lu` dictionary is a top pick for speed and accuracy.  The `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comparable.
+The take away here seems that, unsurprisingly, Stanford's algorithm consistently outscores **sentimentr**, **syuzhet**, and **meanr**.  The **sentimentr** approach loaded with the Jockers' custom **syuzhet** dictionary is a top pick for speed and accuracy.  In addition to Jockers' custom dictionary the `bing` dictionary also performs well within both the **syuzhet** and **sentimentr** algorithms.  Generally, the **sentimentr** algorithm out performs **syuzhet** when their dictonaries are comparable.
 
-It is important to point out that this is a small sample data set that covers a narrow range of uses for sentiment detection.  Jocker's **syuzhet** was designed to be applied across book chunks and it is, to some extent, unfair to test it out of this context.  Still this initial analysis provides a guide that may be of use for selecting the sentiment detection set up most applicable to the reader's needs.
+It is important to point out that this is a small sample data set that covers a narrow range of uses for sentiment detection.  Jockers' **syuzhet** was designed to be applied across book chunks and it is, to some extent, unfair to test it out of this context.  Still this initial analysis provides a guide that may be of use for selecting the sentiment detection set up most applicable to the reader's needs.
 
 The reader may access the R script used to generate this visual via:
 
@@ -337,7 +337,7 @@ Across all three contexts, notice that the Stanford coreNLP algorithm is better 
 - Detecting negative sentiment as negative
 - Discrimination (i.e., reducing neutral assignments)
 
-The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements.  We can now see that the reason for the NRC's poorer performance in accuracy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but lacks accuracy.  We can deduce two things from this observation:
+The Jockers, Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements, though Jockers' dictionary outperforms the others.  We can now see that the reason for the NRC's poorer performance in accuracy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but lacks accuracy.  We can deduce two things from this observation:
 
 1. Larger dictionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(lexicon::hash_sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(lexicon::hash_sentiment), big.mark=",")`])
 2. The Sentiword dictionary may have words with reversed polarities

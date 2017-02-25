@@ -1,5 +1,6 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_current_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape")
+pacman::p_load_current_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape", 
+    "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
 pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2, RSentiment)
 
 loc <- "sentiment_data"
@@ -32,6 +33,8 @@ nrc <- data.frame(
 ) %>%
     {as_key(.[.[["polarity"]] != 0, ])}
 
+syuzhet_dict <- as_key(syuzhet:::syuzhet_dict)
+
 results_list <- file.path(loc, "sentiment labelled sentences") %>%
     dir(pattern = "labelled\\.txt$", full.names = TRUE) %>%
     lapply(function(x){
@@ -48,11 +51,14 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
     ## syuzhet sentiment
     syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
-        function(x) get_sentiment(dat$text, method=x))), paste0("syuzhet_", c("syuzhet", "bing", "afinn", "nrc")))
+        function(x) round(get_sentiment(dat$text, method=x), 2))), paste0("syuzhet_", c("syuzhet", "bing", "afinn", "nrc")))
 
     ## RSentiment and replace sarcasm with negative
-    RSentiment <- calculate_score(dat$text)
-    RSentiment[RSentiment == 99] <- -1    
+    #RSentiment <- calculate_score(dat$text)
+    #RSentiment[RSentiment == 99] <- -1    
+
+    ## meanr scores
+    meanr <- meanr::score(dat$text)$score
 
     ## calculate sentimentr sentiment and put all the pieces together
     data.frame(
@@ -62,11 +68,14 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
         sentimentr_hu_liu = round(sentiment_by(dat$text, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_sentiword = round(sentiment_by(dat$text, polarity_dt = lexicon::hash_sentiword, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_syuzhet_dict = round(sentiment_by(dat$text, polarity_dt = syuzhet_dict, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_bing = round(sentiment_by(dat$text, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_nrc = round(sentiment_by(dat$text, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
 
-        RSentiment = RSentiment,
+        #RSentiment = RSentiment,
+
+        meanr = meanr,
 
         syuzhet,
         stringsAsFactors = FALSE
@@ -77,12 +86,12 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         gsub("_[^_]+$", "", .)
     )
 
-saveRDS(results_list, file = "results_list.rds")
+#saveRDS(results_list, file = "results_list.rds")
 #results_list <- readRDS("inst/sentiment_testing/results_list.rds")
 
 
 results_list %>%
-    bind_list("Context") %>%
+    tidy_list("Context") %>%
     gather(Method, Score, -c(text, rating, Context, element_id, sentence_id)) %>%
     tbl_df() %>%
     group_by(Method, Context, element_id) %>%
@@ -103,12 +112,12 @@ results_list %>%
             setNames(c("Actual", "Predicted", "n")) %>%
             spread(Predicted, n)
     }) %>%
-    bind_list("Context") %>%
+    tidy_list("Context") %>%
     separate(Context, c("Method", "Context"), "\\.") %>%
-    gather(Predicted, n, - c(Method, Context, Actual)) %>%
+    gather(Predicted, n, - c(Method, Context, Actual)) %>% #select(Method) %>% unlist() %>% unique() %>% sort()
     mutate(Method = factor(Method, levels = c("stanford", "sentimentr_afinn", "sentimentr_bing", 
-        "sentimentr_hu_liu", "sentimentr_nrc", "sentimentr_sentiword", 
-        "RSentiment", "syuzhet_afinn", "syuzhet_bing", "syuzhet_nrc"))) %>%
+        "sentimentr_hu_liu", "sentimentr_nrc", "sentimentr_sentiword", "sentimentr_syuzhet_dict",
+        "meanr", "syuzhet_syuzhet", "syuzhet_afinn", "syuzhet_bing", "syuzhet_nrc"))) %>%
     ggplot(aes(Predicted, Actual, fill =n)) +
         geom_tile() +
         facet_grid(Method~Context) +
@@ -121,8 +130,8 @@ results_list %>%
             strip.text.y = element_text(angle=0, hjust = 0)
         )
 
-ggsave("comparisons_between_sentiment_detectors2.pdf", width=6, height=5.5)
-ggsave("comparisons_between_sentiment_detectors2.png", width=6, height=5.5)
+ggsave("comparisons_between_sentiment_detectors2.pdf", width=7, height=5.5)
+ggsave("comparisons_between_sentiment_detectors2.png", width=7, height=5.5)
 
 
 

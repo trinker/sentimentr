@@ -11,7 +11,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-<a href="https://img.shields.io/badge/Version-0.5.1-orange.svg"><img src="https://img.shields.io/badge/Version-0.5.1-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.5.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.5.2-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -57,7 +57,7 @@ Table of Contents
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, RSentiment, and Stanford](#comparing-sentimentr-syuzhet-rsentiment-and-stanford)
+    -   [Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford](#comparing-sentimentr-syuzhet-rsentiment-meanr-and-stanford)
     -   [Text Highlighting](#text-highlighting)
 -   [Contact](#contact)
 
@@ -123,6 +123,10 @@ with several helper functions summarized in the table below:
 <tr class="odd">
 <td><code>highlight</code></td>
 <td>Highlight positive/negative sentences as an HTML document</td>
+</tr>
+<tr class="even">
+<td><code>general_rescale</code></td>
+<td>Generalized rescaling function to rescale sentiment scoring</td>
 </tr>
 </tbody>
 </table>
@@ -435,18 +439,21 @@ Annie Swafford's Examples
 Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/)
 critiqued Jocker's approach to sentiment and gave the following examples
 of sentences (`ase` for Annie Swafford example). Here I test each of
-Jocker's 3 dictionary approaches (Bing, NRC, Afinn), his Stanford
-wrapper (note I use my own [GitHub Stanford wrapper
+Jocker's 4 dictionary approaches (syuzhet, Bing, NRC, Afinn), his
+Stanford wrapper (note I use my own [GitHub Stanford wrapper
 package](https://github.com/trinker/stansent) based off of Jocker's
 approach as it works more reliably on my own Windows machine), the
-[RSentiment](https://cran.r-project.org/package=RSentiment) package, and
-my own algorithm with both the default Hu & Liu (2004) polarity lexicon
-as well as [Baccianella, Esuli and Sebastiani's
-(2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon from the
-[**lexicon**](https://github.com/trinker/lexicon) package.
+[RSentiment](https://cran.r-project.org/package=RSentiment) package, the
+lookup based
+[SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis)
+package, the [meanr](https://github.com/wrathematics/meanr) package
+(written in C level code), and my own algorithm with both the default Hu
+& Liu (2004) polarity lexicon as well as [Baccianella, Esuli and
+Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon
+from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
     if (!require("pacman")) install.packages("pacman")
-    pacman::p_load_gh("trinker/sentimentr", "trinker/stansent")
+    pacman::p_load_gh("trinker/sentimentr", "trinker/stansent", "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
     pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
 
     ase <- c(
@@ -461,40 +468,44 @@ as well as [Baccianella, Esuli and Sebastiani's
         "I don't feel so bad after all!"
     )
 
-    syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
-        function(x) get_sentiment(ase, method=x))), c("bing", "afinn", "nrc"))
+    syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
+        function(x) get_sentiment(ase, method=x))), c("syuzhet", "bing", "afinn", "nrc"))
 
+    SentimentAnalysis <- apply(analyzeSentiment(ase)[c('SentimentGI', 'SentimentLM', 'SentimentQDAP') ], 2, round, 2)
+    colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnalysis))
 
     left_just(data.frame(
         stanford = sentiment_stanford(ase)[["sentiment"]],
         hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
         sentiword = round(sentiment(ase, lexicon::hash_sentiword, question.weight = 0)[["sentiment"]], 2),    
         RSentiment = calculate_score(ase), 
+        SentimentAnalysis,
+        meanr = score(ase)[['score']],
         syuzhet,
         sentences = ase,
         stringsAsFactors = FALSE
     ), "sentences")
 
-      stanford hu_liu sentiword RSentiment bing afinn nrc
-    1     -0.5   0.35      0.18         -1   -1    -2   0
-    2        1    0.8      0.65          1    1     3   1
-    3      0.5    0.5      0.32          1    1     3   1
-    4     -0.5      0         0          0    1     3   1
-    5     -0.5  -0.41     -0.56         -1    1     3   1
-    6     -0.5   0.06      0.11          1    1     3   1
-    7     -0.5  -0.38     -0.05          0    1     2   1
-    8        0      0     -0.14          0    0     0  -1
-    9     -0.5   0.38      0.24         -1   -1    -3  -1
-      sentences                                              
-    1 I haven't been sad in a long time.                     
-    2 I am extremely happy today.                            
-    3 It's a good day.                                       
-    4 But suddenly I'm only a little bit happy.              
-    5 Then I'm not happy at all.                             
-    6 In fact, I am now the least happy person on the planet.
-    7 There is no happiness left in me.                      
-    8 Wait, it's returned!                                   
-    9 I don't feel so bad after all!                         
+      stanford hu_liu sentiword RSentiment SA_GI SA_LM SA_QDAP meanr syuzhet
+    1     -0.5   0.35      0.18         -1 -0.25     0   -0.25    -1    -0.5
+    2        1    0.8      0.65          1  0.33  0.33       0     1    0.75
+    3      0.5    0.5      0.32          1   0.5   0.5     0.5     1    0.75
+    4     -0.5      0         0          0     0  0.25    0.25     1    0.75
+    5     -0.5  -0.41     -0.56         -1     1     1       1     1    0.75
+    6     -0.5   0.06      0.11          1  0.17  0.17    0.33     1    0.75
+    7     -0.5  -0.38     -0.05          0   0.5   0.5     0.5     1    0.75
+    8        0      0     -0.14          0     0     0       0     0   -0.25
+    9     -0.5   0.38      0.24         -1 -0.33 -0.33   -0.33    -1   -0.75
+      bing afinn nrc sentences                                              
+    1   -1    -2   0 I haven't been sad in a long time.                     
+    2    1     3   1 I am extremely happy today.                            
+    3    1     3   1 It's a good day.                                       
+    4    1     3   1 But suddenly I'm only a little bit happy.              
+    5    1     3   1 Then I'm not happy at all.                             
+    6    1     3   1 In fact, I am now the least happy person on the planet.
+    7    1     2   1 There is no happiness left in me.                      
+    8    0     0  -1 Wait, it's returned!                                   
+    9   -1    -3  -1 I don't feel so bad after all!                         
 
 Also of interest is the computational time used by each of these
 methods. To demonstrate this I increased Annie's examples by 100
@@ -504,10 +515,10 @@ into sentence parts **syuzhet** has the `get_sentences` function that
 uses the **openNLP** package, this is a time expensive task.
 **sentimentr** uses a much faster regex based approach that is nearly as
 accurate in parsing sentences with a much lower computational time. We
-see that Stanford takes the longest time while **sentimentr** and
-**syuzhet** are comparable depending upon lexicon used. **RSentiment**
-is a bit slower than the fastest versions of either **sentimentr** or
-**syuzhet**.
+see that **RSentiment** and Stanford take the longest time while
+**sentimentr** and **syuzhet** are comparable depending upon lexicon
+used. **meanr** is lighting fast. **RSentiment** is a bit slower than
+othe rmethods but is returning 3 scores from 3 different dictionaries.
 
     ase_100 <- rep(ase, 100)
 
@@ -518,6 +529,11 @@ is a bit slower than the fastest versions of either **sentimentr** or
         
     RSentiment <- function() calculate_score(ase_100) 
         
+    SentimentAnalysis <- function() analyzeSentiment(ase_100)
+
+    meanr <- function() score(ase_100)
+
+    syuzhet_syuzhet <- function() get_sentiment(ase_100, method="syuzhet")
     syuzhet_binn <- function() get_sentiment(ase_100, method="bing")
     syuzhet_nrc <- function() get_sentiment(ase_100, method="nrc")
     syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
@@ -527,44 +543,55 @@ is a bit slower than the fastest versions of either **sentimentr** or
         sentimentr_hu_liu(),
         sentimentr_sentiword(),
         RSentiment(), 
+        SentimentAnalysis(),
+        syuzhet_syuzhet(),
         syuzhet_binn(), 
         syuzhet_nrc(),
         syuzhet_afinn(),
+        meanr(),
         times = 3
     )
 
-    Unit: milliseconds
-                       expr         min          lq        mean      median
-                 stanford()  25243.6973  25759.9738  25994.3613  26276.2504
-        sentimentr_hu_liu()    253.1846    272.8394    307.0844    292.4941
-     sentimentr_sentiword()    986.7520    987.9601   1005.3939    989.1681
-               RSentiment() 130230.7203 133565.5782 134762.1407 136900.4361
-             syuzhet_binn()    348.6886    364.2166    375.0956    379.7445
-              syuzhet_nrc()    815.4548    816.5545    863.1480    817.6541
-            syuzhet_afinn()    155.3988    157.6219    160.2877    159.8450
-              uq         max neval
-      26369.6933  26463.1361     3
-        334.0343    375.5746     3
-       1014.7148   1040.2616     3
-     137027.8509 137155.2658     3
-        388.2991    396.8536     3
-        886.9946    956.3350     3
-        162.7322    165.6194     3
+    Unit: microseconds
+                       expr          min           lq         mean
+                 stanford() 2.556110e+07 2.556248e+07  27211748.47
+        sentimentr_hu_liu() 2.616082e+05 2.780404e+05    349766.86
+     sentimentr_sentiword() 1.006437e+06 1.024019e+06   1084011.83
+               RSentiment() 1.361300e+08 1.364065e+08 136723981.28
+        SentimentAnalysis() 2.462136e+06 2.543187e+06   2632127.31
+          syuzhet_syuzhet() 5.096355e+05 5.360054e+05    544836.57
+             syuzhet_binn() 3.620195e+05 3.673681e+05    384811.06
+              syuzhet_nrc() 1.074796e+06 1.101377e+06   1116452.20
+            syuzhet_afinn() 1.689156e+05 1.718098e+05    198726.18
+                    meanr() 7.283120e+02 7.747035e+02       839.57
+           median           uq          max neval
+     2.556387e+07 2.803707e+07 3.051028e+07     3
+     2.944726e+05 3.938462e+05 4.932198e+05     3
+     1.041600e+06 1.122799e+06 1.203998e+06     3
+     1.366830e+08 1.370210e+08 1.373589e+08     3
+     2.624237e+06 2.717123e+06 2.810009e+06     3
+     5.623753e+05 5.624371e+05 5.624989e+05     3
+     3.727167e+05 3.962068e+05 4.196969e+05     3
+     1.127959e+06 1.137281e+06 1.146602e+06     3
+     1.747040e+05 2.136314e+05 2.525589e+05     3
+     8.210950e+02 8.951990e+02 9.693030e+02     3
 
-Comparing sentimentr, syuzhet, RSentiment, and Stanford
--------------------------------------------------------
+Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
+--------------------------------------------------------------
 
 The accuracy of an algorithm weighs heavily into the decision as to what
-approach to take in sentiment detection. Both **syuzhet** and
-**sentimentr** provide multiple dictionaries with a general algorithm to
-compute sentiment scores. **syuzhet** provides 3 approaches while
-**sentimentr** provides 2, but can be extended easily using the 3
-dictionaries from the **syuzhet** package. The follow visualization
-provides the accuracy of these approaches in comparison to Stanford's
-**Java** based implementation of sentiment detection. The visualization
-is generated from testing on three reviews data sets from Kotzias,
-Denil, De Freitas, & Smyth (2015). These authors utilized the three 1000
-element data sets from:
+approach to take in sentiment detection. I have selected
+algorithms/packages that stand out as fast and/or accurate to perform
+benchmarking on actual data. Both **syuzhet** and **sentimentr** provide
+multiple dictionaries with a general algorithm to compute sentiment
+scores. **syuzhet** provides 4 approaches while **sentimentr** provides
+2, but can be extended easily using the 4 dictionaries from the
+**syuzhet** package. **meanr** is a very fast algorithm. The follow
+visualization provides the accuracy of these approaches in comparison to
+Stanford's **Java** based implementation of sentiment detection. The
+visualization is generated from testing on three reviews data sets from
+Kotzias, Denil, De Freitas, & Smyth (2015). These authors utilized the
+three 1000 element data sets from:
 
 -   amazon.com
 -   imdb.com
@@ -588,15 +615,16 @@ right shows how the rankings for the methods varied across the three
 review contexts.
 
 The take away here seems that, unsurprisingly, Stanford's algorithm
-consistently outscores **sentimentr**, **syuzhet**, and **RSentiment**.
-The **sentimentr** approach loaded with the `hu_lu` dictionary is a top
-pick for speed and accuracy. The `bing` dictionary also performs well
-within both the **syuzhet** and **sentimentr** algorithms. Generally,
-the **sentimentr** algorithm out performs **syuzhet** when their
-dictonaries are comparable.
+consistently outscores **sentimentr**, **syuzhet**, and **meanr**. The
+**sentimentr** approach loaded with the Jockers' custom **syuzhet**
+dictionary is a top pick for speed and accuracy. In addition to Jockers'
+custom dictionary the `bing` dictionary also performs well within both
+the **syuzhet** and **sentimentr** algorithms. Generally, the
+**sentimentr** algorithm out performs **syuzhet** when their dictonaries
+are comparable.
 
 It is important to point out that this is a small sample data set that
-covers a narrow range of uses for sentiment detection. Jocker's
+covers a narrow range of uses for sentiment detection. Jockers'
 **syuzhet** was designed to be applied across book chunks and it is, to
 some extent, unfair to test it out of this context. Still this initial
 analysis provides a guide that may be of use for selecting the sentiment
@@ -619,9 +647,10 @@ better at:
 -   Detecting negative sentiment as negative
 -   Discrimination (i.e., reducing neutral assignments)
 
-The Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not
-assigning negative scores to positive statements, but perform less well
-in the reverse, often assigning positive scores to negative statements.
+The Jockers, Bing, Hu & Lu, and Afinn dictionaries all do well with
+regard to not assigning negative scores to positive statements, but
+perform less well in the reverse, often assigning positive scores to
+negative statements, though Jockers' dictionary outperforms the others.
 We can now see that the reason for the NRC's poorer performance in
 accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but

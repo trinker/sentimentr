@@ -28,6 +28,8 @@ nrc <- data.frame(
 ) %>%
     {as_key(.[.[["polarity"]] != 0, ])}
 
+syuzhet_dict <- as_key(syuzhet:::syuzhet_dict)
+
 results_list <- file.path(loc, "sentiment labelled sentences") %>%
     dir(pattern = "labelled\\.txt$", full.names = TRUE) %>%
     lapply(function(x){
@@ -39,16 +41,19 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         setNames(c("text", "rating")) %>%
         na.omit() %>%
         mutate(rating = 2*(as.numeric(rating) - .5)) %>%
-        split_sentence() #%>% slice(1:10)
+        split_sentence()# %>% slice(1:10)
 
     ## syuzhet sentiment
-    syuzhet <- setNames(as.data.frame(lapply(c("bing", "afinn", "nrc"),
-        function(x) get_sentiment(dat$text, method=x))), paste0("syuzhet_", c("bing", "afinn", "nrc")))
+    syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
+        function(x) round(get_sentiment(dat$text, method=x), 2))), paste0("syuzhet_", c("syuzhet", "bing", "afinn", "nrc")))
 
-
+    ## throws error as or 2/24/2017
     ## RSentiment and replace sarcasm with negative
-    RSentiment <- calculate_score(dat$text)
-    RSentiment[RSentiment == 99] <- -1    
+    #RSentiment <- calculate_score(dat$text)
+    #RSentiment[RSentiment == 99] <- -1    
+
+    ## meanr scores
+    meanr <- meanr::score(dat$text)$score
 
     ## calculate sentimentr sentiment and put all the pieces together
     out <- data.frame(
@@ -58,11 +63,14 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
         sentimentr_hu_liu = round(sentiment_by(dat$text, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_sentiword = round(sentiment_by(dat$text, polarity_dt = lexicon::hash_sentiword, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_syuzhet_dict = round(sentiment_by(dat$text, polarity_dt = syuzhet_dict, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_bing = round(sentiment_by(dat$text, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_nrc = round(sentiment_by(dat$text, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
 
-        RSentiment = RSentiment,
+        #RSentiment = RSentiment,
+
+        meanr = meanr,
 
         syuzhet,
         stringsAsFactors = FALSE
@@ -70,8 +78,10 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
     data_frame(
             Method =  c("stanford", "sentimentr_hu_liu", "sentimentr_bing", "sentimentr_afinn",
-                "sentimentr_nrc", "sentimentr_sentiword", "RSentiment", "syuzhet_bing", "syuzhet_afinn", "syuzhet_nrc"),
-            package = c('java', rep('sentimentr', 5), "RSentiment", rep('syuzhet', 3))
+                "sentimentr_nrc", "sentimentr_sentiword", "sentimentr_syuzhet_dict",
+                "meanr", "syuzhet_bing", "syuzhet_afinn", "syuzhet_nrc",
+                "syuzhet_syuzhet"),
+            package = c('java', rep('sentimentr', 6), "meanr", rep('syuzhet', 4))
         ) %>%
         {suppressWarnings(left_join(.,
             out %>%
@@ -95,14 +105,14 @@ plots <- results_list %>%
         dir(pattern = "labelled\\.txt$") %>%
         gsub("_[^_]+$", "", .)
     ) %>%
-    bind_list("context") %>%
+    tidy_list("context") %>%
     split(., .[["context"]]) %>%
     lapply(function(x){
         x %>%
             arrange(desc(accurate)) %>%
             mutate(Method = factor(Method, levels=rev(.[["Method"]]))) %>%
             ggplot(aes(weight = accurate, x = Method, fill=package)) +
-                geom_bar() +
+                geom_bar(width = .85) +
                 geom_hline(yintercept = .5, color="blue", alpha = .4, size=.8, linetype = 2) +
                 coord_flip() +
                 #facet_wrap(~context, ncol=1) +
@@ -124,9 +134,9 @@ plots <- results_list %>%
                 ) +
                 annotate("segment", x=-Inf, xend=Inf, y=-Inf, yend=-Inf, color = "gray40")+
                 annotate("segment", x=-Inf, xend=-Inf, y=-Inf, yend=Inf, color = "gray40") +
-                geom_text(aes(y = accurate + .05,
+                geom_text(aes(y = accurate + .01,
                     label = paste0(round(100*accurate, 1), "%")),
-                    color = "grey70", size = 3) +
+                    color = "grey70", size = 3, hjust = 0) +
                 ylab(if (x[["context"]][1] == "yelp") {"Accuracy Rate"} else {""}) +
                 xlab(if (x[["context"]][1] == "imdb") {"Method"} else {""}) +
                 scale_fill_manual(values = brewer.pal(7, "BrBG")[c(1, 7, 2, 6)], "Package")
@@ -141,7 +151,7 @@ ranked <- results_list %>%
         dir(pattern = "labelled\\.txt$") %>%
         gsub("_[^_]+$", "", .)
     ) %>%
-    bind_list("context") %>%
+    tidy_list("context") %>%
     mutate(Method = factor(Method, levels=rev(results_list[[1]][["Method"]]))) %>%
     group_by(context) %>%
     mutate(Rank = rank(accurate, ties.method="random"))
@@ -164,20 +174,22 @@ rank_plot <- ggplot(ranked, mapping = aes(context, y = Rank, group = Method, col
     geom_line(size = 3) +
     geom_point(size = 4) +
     geom_point(size = 1.75, color = "white") +
-    scale_y_continuous(breaks=1:9, labels = 9:1) +
+    scale_y_continuous(breaks=1:12, labels = 12:1) +
     theme_bw() +
     theme(
         legend.position="none",
         axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = 'gray65'),
         axis.text.y = element_text(size=10, color = "gray65"),
         axis.title = element_text(size=10, color = "gray65"),
         axis.text.x = element_text(size=12, color = "gray40"),
+        panel.grid.minor.y = element_blank(),
         panel.border = element_rect(colour = "gray85")
     ) +
     scale_color_manual(values = brewer.pal(7, "BrBG")[c(1, 7, 2, 6)], "Package") +
     geom_text(data=rank_dat[[1]], aes(label = Method), x = .9, hjust = 1, size = 3.2, color="gray65") +
     geom_text(data=rank_dat[[2]], aes(label = Method), x = 3.1, hjust = 0, size = 3.2, color="gray65") +
-    coord_cartesian(xlim = c(.5, 3.5)) +
+    coord_cartesian(xlim = c(.38, 3.65)) +
     xlab(NULL)
 
 
@@ -191,10 +203,10 @@ grid.arrange(do.call(arrangeGrob, plots), rank_plot, ncol = 2)
 
 
 
-pdf("comparisons_between_sentiment_detectors.pdf", width=11.3, height=7.5)
+pdf("comparisons_between_sentiment_detectors.pdf", width=12, height=10)
 grid.arrange(do.call(arrangeGrob, plots), rank_plot, ncol = 2)
 dev.off()
 
-png("comparisons_between_sentiment_detectors.png", width=800, height=800)
+png("comparisons_between_sentiment_detectors.png", width=900, height=900)
 grid.arrange(do.call(arrangeGrob, plots), rank_plot, ncol = 2)
 dev.off()
