@@ -34,6 +34,13 @@ NEW FEATURES
   
 * `general_rescale` added as a means to rescale sentiment scores in a 
   generalized way.
+  
+* `validate_sentiment` added as a means to assess sentiment model performance
+  against known sentiment scores.
+  
+* `sentiment_attributes` added as a means to assess the rate that sentiment
+  attributes (attributes about polarized words and valence shifters) occur and 
+  cooccur.
 
 MINOR FEATURES
 

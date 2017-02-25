@@ -31,6 +31,16 @@ sentimentr 0.5.0 -
   `average_mean` added for use with `sentiment_by` to reweight
   zero and negative values in the group by averaging (depending upon the 
   assumptions the analysts is making).
+  
+* `general_rescale` added as a means to rescale sentiment scores in a 
+  generalized way.
+  
+* `validate_sentiment` added as a means to assess sentiment model performance
+  against known sentiment scores.
+  
+* `sentiment_attributes` added as a means to assess the rate that sentiment
+  attributes (attributes about polarized words and valence shifters) occur and 
+  cooccur.
 
 **MINOR FEATURES**
 
@@ -58,7 +68,8 @@ sentimentr 0.5.0 -
   to all types of text cleaning.  These functions are still imported and 
   exported by **sentimentr**.
 
-
+* `but.weight` argument in `sentiment` function renamed to `adversative.weight`
+  to better describe the function with a linguistics term.
 
 
 sentimentr 0.3.0 - 0.4.0

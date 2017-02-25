@@ -17,7 +17,8 @@ weights with x and y as column names.}
 
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
 can alter a polarized word's meaning and an integer key for negators (1),
-amplifiers(2), and de-amplifiers (3) with x and y as column names.}
+amplifiers(2), de-amplifiers (3) and (4) adversative conjunctions with x and 
+y as column names.}
 
 \item{hyphen}{The character string to replace hyphens with.  Default replaces
 with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}

@@ -11,7 +11,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-<a href="https://img.shields.io/badge/Version-0.5.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.5.2-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.5.3-orange.svg"><img src="https://img.shields.io/badge/Version-0.5.3-orange.svg" alt="Version"/></a>
 </p>
 <img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
 
@@ -553,28 +553,28 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
     )
 
     Unit: microseconds
-                       expr           min             lq           mean
-                 stanford()  23887939.841  25649513.9945  26241092.4893
-        sentimentr_hu_liu()    251392.578    263890.4635    275943.8630
-     sentimentr_sentiword()   1000127.271   1020699.3930   1039625.3570
-               RSentiment() 131123111.277 133226694.2480 134286350.0093
-        SentimentAnalysis()   2395413.036   2497025.7895   2631099.2990
-          syuzhet_syuzhet()    516169.823    562906.7510    578778.0367
-             syuzhet_binn()    322320.398    325867.9385    333363.4403
-              syuzhet_nrc()    818436.619    859331.0465    909560.9120
-            syuzhet_afinn()    150952.553    152872.6835    153597.0260
-                    meanr()       707.784       721.5375       740.9017
-            median             uq          max neval
-      27411088.148  27417668.8135  27424249.48     3
-        276388.349    288219.5055    300050.66     3
-       1041271.515   1059374.4000   1077477.28     3
-     135330277.219 135867969.3755 136405661.53     3
-       2598638.543   2748942.4305   2899246.32     3
-        609643.679    610082.1435    610520.61     3
-        329415.479    338884.9615    348354.44     3
-        900225.474    955123.0585   1010020.64     3
-        154792.814    154919.2625    155045.71     3
-           735.291       757.4605       779.63     3
+                       expr           min             lq         mean
+                 stanford()  23733978.797  23979963.2320  24672149.39
+        sentimentr_hu_liu()    253161.627    256135.2220    271203.27
+     sentimentr_sentiword()    992787.092   1004282.6265   1015919.39
+               RSentiment() 130505546.907 133680695.2790 135695094.07
+        SentimentAnalysis()   2376481.871   2406404.8280   2420071.61
+          syuzhet_syuzhet()    485924.791    504605.9320    541067.61
+             syuzhet_binn()    340723.599    350984.0010    386203.22
+              syuzhet_nrc()    832601.328    863116.4990    886315.17
+            syuzhet_afinn()    169502.730    177362.4555    210106.42
+                    meanr()       820.274       835.0535       879.94
+            median            uq           max neval
+      24225947.667  25141234.689  26056521.711     3
+        259108.817    280224.094    301339.370     3
+       1015778.161   1027485.537   1039192.913     3
+     136855843.651 138289867.648 139723891.645     3
+       2436327.785   2441866.481   2447405.177     3
+        523287.073    568639.019    613990.966     3
+        361244.403    408943.038    456641.673     3
+        893631.670    913172.087    932712.504     3
+        185222.181    230408.265    275594.350     3
+           849.833       909.773       969.713     3
 
 Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
 --------------------------------------------------------------

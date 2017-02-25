@@ -1,0 +1,60 @@
+function (text.var, polarity_dt = lexicon::hash_sentiment, 
+    valence_shifters_dt = lexicon::hash_valence_shifters, ...) {
+
+    local_packages <- list.files(.libPaths())
+    if (!'gofastr' %in% local_packages) {
+        message('The \'gofastr\' package is missing.  Should I attempt to install from CRAN?')
+        ans <- utils::menu(c("Yes", "No"))
+        if (ans == "2") {
+            stop("'sentiment_feature_profile' aborted.  Install 'gofastr' before using.")
+        } else {
+            utils::install.packages('gofastr')
+            gf <- require('gofastr', quietly = TRUE)
+            if(!gf) stop('Could not install \'gofastr\'.')
+        }
+
+    }
+    if (!'termco' %in% local_packages) {
+        message('The \'termco\' package is missing.  Should I attempt to install from GitHub?')
+        ans <- utils::menu(c("Yes", "No"))
+        if (ans == "2") {
+            stop("'sentiment_feature_profile' aborted.  Install 'termco' before using.")
+        } else {
+            if(!'ghit' %in% local_packages) utils::install.packages('ghit')
+            ghit::install_github('trinker/termco')
+            gf <- require('termco', quietly = TRUE)
+            if(!gf) stop('Could not install \'termco\'.')
+        }
+
+    }
+    
+    if (any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
+        stop("`polarity_dt` & `valence_shifters_dt` not mutually exclusive")
+    }
+
+    vals <- split(valence_shifters_dt[['x']], valence_shifters_dt[['y']])
+    names(vals) <- stats::na.omit(c('negator', 'amplifier', 'de-amplifier', 'adversative')[match(1:4, names(vals))])
+
+    pols <- split(polarity_dt[['x']], polarity_dt[['y']] > 0 )
+    names(pols) <- stats::na.omit(c('negative', 'positive')[match(c("FALSE", "TRUE"), names(pols))])
+
+    trms <- unlist(list(vals, pols), recursive=FALSE)
+
+    x <- textshape::split_sentence(text.var)
+
+    mod <- termco::token_count(x, TRUE, trms)
+    cnts <- termco::term_cols(mod)
+    cnts['polarized'] <- rowSums(cnts[c('negative', 'positive')])
+    X <- t(as.matrix(cnts)) > 0
+  
+    tab <- X %*% t(X)
+    N <- sum(mod[['n.tokens']])
+    Features <- textshape::tidy_vector(colSums(cnts)/N, "Attribute", "Rate")
+    Cooccurrences <- textshape::tidy_vector(tab[-c(5:7), 'polarized']/tab[7, 'polarized'],'Valence_Shifter', 'Cooccurrence')
+
+    list(Meta = data.frame(Stat = c("words", "sentences", "questions"), 
+        n = c(N, length(x), sum(stringi::stri_count_regex(x, "\\?\\s*$"), na.rm =TRUE))), 
+        Attributes=Features, Polarized_Cooccurrences = Cooccurrences, Cooccurrences = tab)
+    
+}
+

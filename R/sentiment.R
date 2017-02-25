@@ -7,7 +7,8 @@
 #' weights with x and y as column names.
 #' @param valence_shifters_dt A \pkg{data.table} of valence shifters that
 #' can alter a polarized word's meaning and an integer key for negators (1),
-#' amplifiers(2), and de-amplifiers (3) with x and y as column names.
+#' amplifiers(2), de-amplifiers (3) and (4) adversative conjunctions with x and 
+#' y as column names.
 #' @param hyphen The character string to replace hyphens with.  Default replaces
 #' with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
 #' would result in a space between words (e.g., 'sugar free').
@@ -197,7 +198,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment,
 
     ## check to ake sure valence_shifters_dt polarity_dt are mutually exclusive
     if(any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
-        stop('`polarity_frame` & `valence_shifters_dt` not mutually exclusive')
+        stop('`polarity_dt` & `valence_shifters_dt` not mutually exclusive')
     }
 
     ## Add "~~" holder for any words `polarity_frame` & `valence_shifters_dt`
