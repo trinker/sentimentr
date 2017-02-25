@@ -10,6 +10,9 @@
 \arguments{
 \item{x}{The sentiment object.}
 
+\item{transformation.function}{A transformation function to smooth the sentiment
+scores.}
+
 \item{\ldots}{Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.}
 }
 \value{

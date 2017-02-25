@@ -317,6 +317,8 @@ replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}
 #' Plots a sentiment object.
 #'
 #' @param x The sentiment object.
+#' @param transformation.function A transformation function to smooth the sentiment
+#' scores.
 #' @param \ldots Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.
 #' @details Utilizes Matthew Jocker's \pkg{syuzhet} package to calculate smoothed
 #' sentiment across the duration of the text.
