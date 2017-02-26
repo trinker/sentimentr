@@ -44,6 +44,28 @@ dictionary approach that does not consider valence shifters but will
 likely still be less accurate than Stanford's approach. Simply,
 **sentimentr** attempts to balance accuracy and speed.
 
+
+Table of Contents
+============
+
+-   [Why sentimentr](#why-sentimentr)
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford](#comparing-sentimentr-syuzhet-rsentiment-meanr-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
+
+Why sentimentr
+============
+
+
 ***So what does*** **sentimentr** ***do that other packages don't and
 why does it matter?***
 
@@ -151,26 +173,8 @@ downloaded via:
     val_shift_freq <- system.file("the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R", package = "sentimentr")
     file.copy(val_shift_freq, getwd())
 
-
-Table of Contents
-============
-
--   [Functions](#functions)
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Examples](#examples)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford](#comparing-sentimentr-syuzhet-rsentiment-meanr-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
-
 Functions
-============
-
+=========
 
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
@@ -668,28 +672,28 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
     )
 
     Unit: microseconds
-                       expr           min             lq           mean
-                 stanford()  24142020.272  24298337.6530  24354361.4377
-        sentimentr_hu_liu()    265770.770    307730.7730    333707.0687
-     sentimentr_sentiword()    988950.116   1003806.5965   1068438.5350
-               RSentiment() 127583738.954 129559866.0305 133258929.1337
-        SentimentAnalysis()   1902871.452   2152961.5670   2332010.5503
-          syuzhet_syuzhet()    487677.008    492210.6835    494078.9483
-             syuzhet_binn()    259257.025    310379.2150    358523.9783
-              syuzhet_nrc()    715554.658    803274.6915    849399.2877
-            syuzhet_afinn()    160650.094    161578.3420    165991.8637
-                    meanr()       663.446       697.3155       708.6057
-            median             uq           max neval
-      24454655.034  24460532.0205  24466409.007     3
-        349690.776    367675.2180    385659.660     3
-       1018663.077   1108182.7445   1197702.412     3
-     131535993.107 136096524.2235 140657055.340     3
-       2403051.682   2546580.0995   2690108.517     3
-        496744.359    497279.9185    497815.478     3
-        361501.405    408157.4550    454813.505     3
-        890994.725    916321.6025    941648.480     3
-        162506.590    168662.7485    174818.907     3
-           731.185       731.1855       731.186     3
+                       expr           min            lq           mean
+                 stanford()  23745156.362  24930749.882  26303859.3110
+        sentimentr_hu_liu()    250435.591    253090.191    276322.1140
+     sentimentr_sentiword()    852312.942    920218.724    946581.6180
+               RSentiment() 129398002.359 131773138.045 133924084.7127
+        SentimentAnalysis()   2287147.977   2345505.245   2365900.4213
+          syuzhet_syuzhet()    394194.121    394527.074    415856.1093
+             syuzhet_binn()    337997.975    341126.552    362917.3840
+              syuzhet_nrc()    785783.316    825401.146    924618.5607
+            syuzhet_afinn()    158885.561    170145.236    181527.5273
+                    meanr()       788.252       817.606       842.3073
+           median            uq          max neval
+      26116343.40  27583210.785  29050078.17     3
+        255744.79    289265.376    322785.96     3
+        988124.51    993715.956    999307.41     3
+     134148273.73 136187125.890 138225978.05     3
+       2403862.51   2405276.644   2406690.77     3
+        394860.03    426687.103    458514.18     3
+        344255.13    375377.089    406499.05     3
+        865018.98    994036.183   1123053.39     3
+        181404.91    192848.510    204292.11     3
+           846.96       869.335       891.71     3
 
 Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
 --------------------------------------------------------------
