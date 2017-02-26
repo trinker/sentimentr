@@ -44,6 +44,113 @@ dictionary approach that does not consider valence shifters but will
 likely still be less accurate than Stanford's approach. Simply,
 **sentimentr** attempts to balance accuracy and speed.
 
+***So what does*** **sentimentr** ***do that other packages don't and
+why does it matter?***
+
+> **sentimentr** attempts to take into account valence shifters (i.e.,
+> negators, amplifiers, de-amplifiers, and adversative conjunctions)
+> while maintaining speed. Simply put, **sentimentr** is an augmented
+> dictionary lookup. The next questions address why it matters.
+
+***So what are these valence shifters?***
+
+> A *negator* flips the sign of a polarized word (e.g., "I do ***not***
+> like it."). See `lexicon::hash_valence_shifters[y==1]` for examples.
+> An *amplifier* increases the impact of a polarized word (e.g., "I
+> ***really*** like it."). See `lexicon::hash_valence_shifters[y==2]`
+> for examples. A *de-amplifier* reduces the impact of a polarized word
+> (e.g., "I ***hardly*** like it."). See
+> `lexicon::hash_valence_shifters[y==3]` for examples. An *adversative
+> conjunction* overrule the previous clause with a polarized word (e.g.,
+> "I like it ***but*** it's not worth it."). See
+> `lexicon::hash_valence_shifters[y==4]` for examples.
+
+***Do valence shifters really matter?***
+
+> Well valence shifters affect the polarize word. In the case of
+> *negators* and *adversative conjunctions* the entire sentiment of the
+> clause may be reversed or overruled. So if valence occur fairly
+> frequently a simple dictionary lookup may not be modeling the
+> sentiment appropriately. You may be wondering how frequently these
+> valence shifters co-occur with polarized words, potentially changing,
+> or even reversing and overruling the clause's sentiment. The table
+> below shows the rate of sentence level co-occurrence of valence
+> shifters with polarized words across a few types of texts.
+
+<table>
+<thead>
+<tr class="header">
+<th align="left">Text</th>
+<th align="right">Negator</th>
+<th align="right">Amplifier</th>
+<th align="right">Deamplifier</th>
+<th align="right">Adversative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cannon reviews</td>
+<td align="right">20%</td>
+<td align="right">23%</td>
+<td align="right">9%</td>
+<td align="right">12%</td>
+</tr>
+<tr class="even">
+<td align="left">2012 presidential debate</td>
+<td align="right">23%</td>
+<td align="right">20%</td>
+<td align="right">1%</td>
+<td align="right">11%</td>
+</tr>
+<tr class="odd">
+<td align="left">Trump speeches</td>
+<td align="right">12%</td>
+<td align="right">15%</td>
+<td align="right">2%</td>
+<td align="right">10%</td>
+</tr>
+<tr class="even">
+<td align="left">Trump tweets</td>
+<td align="right">20%</td>
+<td align="right">18%</td>
+<td align="right">4%</td>
+<td align="right">5%</td>
+</tr>
+<tr class="odd">
+<td align="left">Dylan songs</td>
+<td align="right">19%</td>
+<td align="right">6%</td>
+<td align="right">2%</td>
+<td align="right">7%</td>
+</tr>
+<tr class="even">
+<td align="left">Austen books</td>
+<td align="right">21%</td>
+<td align="right">19%</td>
+<td align="right">6%</td>
+<td align="right">11%</td>
+</tr>
+<tr class="odd">
+<td align="left">Hamlet</td>
+<td align="right">27%</td>
+<td align="right">18%</td>
+<td align="right">2%</td>
+<td align="right">18%</td>
+</tr>
+</tbody>
+</table>
+
+Indeed *negators* appear ~20% of the time a polarized word appears in a
+sentence. Conversely, *adversative conjunctions* appear with polarized
+words ~10% of the time. Not accounting for the valence shifters could
+significantly impact the modeling of the text sentiment.
+
+The script to replicate the frequency analysis from the table can be
+downloaded via:
+
+    val_shift_freq <- system.file("the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R", package = "sentimentr")
+    file.copy(val_shift_freq, getwd())
+
 
 Table of Contents
 ============
@@ -127,6 +234,14 @@ with several helper functions summarized in the table below:
 <tr class="even">
 <td><code>general_rescale</code></td>
 <td>Generalized rescaling function to rescale sentiment scoring</td>
+</tr>
+<tr class="odd">
+<td><code>sentiment_attribute</code></td>
+<td>Extract the sentiment based attributes from a text</td>
+</tr>
+<tr class="even">
+<td><code>validate_sentiment</code></td>
+<td>Validate sentiment score sign against known results</td>
 </tr>
 </tbody>
 </table>
@@ -326,7 +441,7 @@ Plotting
 
     plot(out)
 
-![](inst/figure/unnamed-chunk-7-1.png)
+![](inst/figure/unnamed-chunk-9-1.png)
 
 ### Plotting at the Sentence Level
 
@@ -339,7 +454,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](inst/figure/unnamed-chunk-8-1.png)
+![](inst/figure/unnamed-chunk-10-1.png)
 
 Making and Updating Dictionaries
 --------------------------------
@@ -553,28 +668,28 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
     )
 
     Unit: microseconds
-                       expr           min             lq         mean
-                 stanford()  23733978.797  23979963.2320  24672149.39
-        sentimentr_hu_liu()    253161.627    256135.2220    271203.27
-     sentimentr_sentiword()    992787.092   1004282.6265   1015919.39
-               RSentiment() 130505546.907 133680695.2790 135695094.07
-        SentimentAnalysis()   2376481.871   2406404.8280   2420071.61
-          syuzhet_syuzhet()    485924.791    504605.9320    541067.61
-             syuzhet_binn()    340723.599    350984.0010    386203.22
-              syuzhet_nrc()    832601.328    863116.4990    886315.17
-            syuzhet_afinn()    169502.730    177362.4555    210106.42
-                    meanr()       820.274       835.0535       879.94
-            median            uq           max neval
-      24225947.667  25141234.689  26056521.711     3
-        259108.817    280224.094    301339.370     3
-       1015778.161   1027485.537   1039192.913     3
-     136855843.651 138289867.648 139723891.645     3
-       2436327.785   2441866.481   2447405.177     3
-        523287.073    568639.019    613990.966     3
-        361244.403    408943.038    456641.673     3
-        893631.670    913172.087    932712.504     3
-        185222.181    230408.265    275594.350     3
-           849.833       909.773       969.713     3
+                       expr           min             lq           mean
+                 stanford()  24142020.272  24298337.6530  24354361.4377
+        sentimentr_hu_liu()    265770.770    307730.7730    333707.0687
+     sentimentr_sentiword()    988950.116   1003806.5965   1068438.5350
+               RSentiment() 127583738.954 129559866.0305 133258929.1337
+        SentimentAnalysis()   1902871.452   2152961.5670   2332010.5503
+          syuzhet_syuzhet()    487677.008    492210.6835    494078.9483
+             syuzhet_binn()    259257.025    310379.2150    358523.9783
+              syuzhet_nrc()    715554.658    803274.6915    849399.2877
+            syuzhet_afinn()    160650.094    161578.3420    165991.8637
+                    meanr()       663.446       697.3155       708.6057
+            median             uq           max neval
+      24454655.034  24460532.0205  24466409.007     3
+        349690.776    367675.2180    385659.660     3
+       1018663.077   1108182.7445   1197702.412     3
+     131535993.107 136096524.2235 140657055.340     3
+       2403051.682   2546580.0995   2690108.517     3
+        496744.359    497279.9185    497815.478     3
+        361501.405    408157.4550    454813.505     3
+        890994.725    916321.6025    941648.480     3
+        162506.590    168662.7485    174818.907     3
+           731.185       731.1855       731.186     3
 
 Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
 --------------------------------------------------------------

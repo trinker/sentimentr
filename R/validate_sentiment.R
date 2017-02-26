@@ -1,11 +1,17 @@
 #' Validate Sentiment Score Sign Against Known Results
 #' 
-#' Provides a miulticlass macroaverage/microaverage of precision, recall, accuracy, and F-score for the sign of the predicted sentiment against known sentiment scores. Macroaveraging allows every class to have an equal say.  Microaveraging gives larger say to larger classes.
+#' Provides a miulticlass macroaverage/microaverage of precision, recall, 
+#' accuracy, and F-score for the sign of the predicted sentiment against known 
+#' sentiment scores. Macroaveraging allows every class to have an equal say.  
+#' Microaveraging gives larger say to larger classes.
 #' 
-#' @param predicted A numeric vector of predicted sentiment scores or a \pkg{sentimentr} object that returns sentiment scores.
+#' @param predicted A numeric vector of predicted sentiment scores or a 
+#' \pkg{sentimentr} object that returns sentiment scores.
 #' @param actual A numeric vector of known sentiment ratings.
 #' @param \ldots ignored.
-#' @return Returns a \code{\link[base]{data.frame}} with a macroaveraged and microaveraged model validation scores.  Additionally, the \code{{\link[base]{data.frame}} has the following attributes:
+#' @return Returns a \code{\link[base]{data.frame}} with a macroaveraged and 
+#' microaveraged model validation scores.  Additionally, the
+#'  \code{{\link[base]{data.frame}} has the following attributes:
 #' \item{confusion_matrix}{A confusion matrix of all classes}
 #' \item{class_confusion_matrices}{A \code{\link[base]{list}} of class level (class vs. all) confusion matrices}
 #' \item{macro_stats}{A \code{\link[base]{data.frame}} of the macroaverged class level stats before averaging}

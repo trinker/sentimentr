@@ -1,7 +1,7 @@
 #' Extract Sentiment Attributes from Text
 #' 
 #' This function utilizes \pkg{gofastr} and \pkg{termco} to extract sentiment
-#' based sentiment attributes (attributes about polarized words and valence 
+#' based attributes (attributes concerning polarized words and valence 
 #' shifters) from a text.  Attributes include the rate of polarized terms
 #' and valence shifters relative to number of words.  Additionally, coocurrence
 #' rates for valence shifters are computed.

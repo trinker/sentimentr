@@ -7,14 +7,18 @@
 validate_sentiment(predicted, actual, ...)
 }
 \arguments{
-\item{predicted}{A numeric vector of predicted sentiment scores or a \pkg{sentimentr} object that returns sentiment scores.}
+\item{predicted}{A numeric vector of predicted sentiment scores or a 
+\pkg{sentimentr} object that returns sentiment scores.}
 
 \item{actual}{A numeric vector of known sentiment ratings.}
 
 \item{\ldots}{ignored.}
 }
 \description{
-Provides a miulticlass macroaverage/microaverage of precision, recall, accuracy, and F-score for the sign of the predicted sentiment against known sentiment scores. Macroaveraging allows every class to have an equal say.  Microaveraging gives larger say to larger classes.
+Provides a miulticlass macroaverage/microaverage of precision, recall, 
+accuracy, and F-score for the sign of the predicted sentiment against known 
+sentiment scores. Macroaveraging allows every class to have an equal say.  
+Microaveraging gives larger say to larger classes.
 }
 \examples{
 actual <- c(1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1,-1)
