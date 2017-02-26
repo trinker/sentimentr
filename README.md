@@ -91,7 +91,7 @@ why does it matter?***
 
 > Well valence shifters affect the polarized words. In the case of
 > *negators* and *adversative conjunctions* the entire sentiment of the
-> clause may be reversed or overruled. So if valence occur fairly
+> clause may be reversed or overruled. So if valence shifters occur fairly
 > frequently a simple dictionary lookup may not be modeling the
 > sentiment appropriately. You may be wondering how frequently these
 > valence shifters co-occur with polarized words, potentially changing,
