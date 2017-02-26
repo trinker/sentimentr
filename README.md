@@ -26,23 +26,20 @@ dictionary lookup approach that tries to incorporate weighting for
 valence shifters (negation and amplifiers/deamplifiers). Matthew
 Jocker's created the
 [**syuzhet**](http://www.matthewjockers.net/2015/02/02/syuzhet/) package
-that utilizes dictionary lookups for the Bing, NRC, and Afinn methods.
-He also utilizes a wrapper for the [Stanford
-coreNLP](http://nlp.stanford.edu/software/corenlp.shtml) which uses much
-more sophisticated analysis. Jocker's dictionary methods are fast but
-are more prone to error in the case of valence shifters. Jocker's
-[addressed these
+that utilizes dictionary lookups for the Bing, NRC, and Afinn methods as
+well as a custom dictionary. He also utilizes a wrapper for the
+[Stanford coreNLP](http://nlp.stanford.edu/software/corenlp.shtml) which
+uses much more sophisticated analysis. Jocker's dictionary methods are
+fast but are more prone to error in the case of valence shifters.
+Jocker's [addressed these
 critiques](http://www.matthewjockers.net/2015/03/04/some-thoughts-on-annies-thoughts-about-syuzhet/)
 explaining that the method is good with regard to analyzing general
 sentiment in a piece of literature. He points to the accuracy of the
 Stanford detection as well. In my own work I need better accuracy than a
 simple dictionary lookup; something that considers valence shifters yet
 optimizes speed which the Stanford's parser does not. This leads to a
-trade off of speed vs. accuracy. The equation below describes the
-dictionary method of **sentimentr** that may give better results than a
-dictionary approach that does not consider valence shifters but will
-likely still be less accurate than Stanford's approach. Simply,
-**sentimentr** attempts to balance accuracy and speed.
+trade off of speed vs. accuracy. Simply, **sentimentr** attempts to
+balance accuracy and speed.
 
 
 Table of Contents
@@ -253,8 +250,11 @@ with several helper functions summarized in the table below:
 The Equation
 ============
 
-The equation used by the algorithm to assign value to polarity of each
-sentence fist utilizes the sentiment dictionary (Hu and Liu,
+The equation below describes the augmented dictionary method of
+**sentimentr** that may give better results than a simple lookup
+dictionary approach that does not consider valence shifters. The
+equation used by the algorithm to assign value to polarity of each
+sentence fist utilizes the a sentiment dictionary (e.g., Hu and Liu,
 [2004](http://www.cs.uic.edu/~liub/publications/kdd04-revSummary.pdf))
 to tag polarized words. Each paragraph
 (*p*<sub>*i*</sub> = {*s*<sub>1</sub>, *s*<sub>2</sub>, ..., *s*<sub>*n*</sub>})
@@ -273,9 +273,10 @@ For example it may be a cell level response in a questionnaire composed
 of sentences.
 
 The words in each sentence (*w*<sub>*i*, *j*, *k*</sub>) are searched
-and compared to a modified version of Hu, M., & Liu, B.'s (2004)
-dictionary of polarized words. Positive
-(*w*<sub>*i*, *j*, *k*</sub><sup>+</sup>) and negative
+and compared to a dictionary of polarized words (e.g., the modified
+version of Hu, M., & Liu, B.'s (2004) dictionary in the
+[**lexicon**](https://cran.r-project.org/package=lexicon) package).
+Positive (*w*<sub>*i*, *j*, *k*</sub><sup>+</sup>) and negative
 (*w*<sub>*i*, *j*, *k*</sub><sup>−</sup>) words are tagged with a +1 and
 −1 respectively (or other positive/negative weighting if the user
 provides the sentiment dictionary). I will denote polarized words as
@@ -636,8 +637,9 @@ uses the **openNLP** package, this is a time expensive task.
 accurate in parsing sentences with a much lower computational time. We
 see that **RSentiment** and Stanford take the longest time while
 **sentimentr** and **syuzhet** are comparable depending upon lexicon
-used. **meanr** is lighting fast. **RSentiment** is a bit slower than
-othe rmethods but is returning 3 scores from 3 different dictionaries.
+used. **meanr** is lighting fast. **SentimentAnalysis** is a bit slower
+than other methods but is returning 3 scores from 3 different
+dictionaries.
 
     ase_100 <- rep(ase, 100)
 
@@ -672,28 +674,28 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
     )
 
     Unit: microseconds
-                       expr           min             lq          mean
-                 stanford()  23943546.441  26462201.1015  27313930.040
-        sentimentr_hu_liu()    275689.597    280173.5965    288060.624
-     sentimentr_sentiword()    793995.087    947170.5485   1008928.997
-               RSentiment() 134982132.976 139220151.7635 142206426.136
-        SentimentAnalysis()   1983698.392   2171783.7305   2333115.059
-          syuzhet_syuzhet()    419250.242    419562.4630    445944.311
-             syuzhet_binn()    341960.168    368772.8170    385575.635
-              syuzhet_nrc()    771180.555    791712.4440    887863.069
-            syuzhet_afinn()    166188.379    169139.6000    172922.316
-                    meanr()       823.558       826.0215       840.391
-            median             uq          max neval
-      28980855.762  28999121.8395  29017387.92     3
-        284657.596    294246.1375    303834.68     3
-       1100346.010   1116395.9525   1132445.90     3
-     143458170.551 145818572.7155 148178974.88     3
-       2359869.069   2507823.3930   2655777.72     3
-        419874.684    459291.3460    498708.01     3
-        395585.466    407383.3680    419181.27     3
-        812244.333    946204.3255   1080164.32     3
-        172090.821    176289.2845    180487.75     3
-           828.485       848.8075       869.13     3
+                       expr           min            lq           mean
+                 stanford()  24722271.967  27249225.606  29046187.7640
+        sentimentr_hu_liu()    287929.304    297120.834    302476.7617
+     sentimentr_sentiword()   1025805.751   1065164.271   1091425.3857
+               RSentiment() 146856692.018 147457614.517 148631731.1743
+        SentimentAnalysis()   2460683.766   2506186.532   2608373.1050
+          syuzhet_syuzhet()    565117.058    565323.563    616355.5067
+             syuzhet_binn()    366786.341    370827.765    411550.8757
+              syuzhet_nrc()    897579.621   1001062.086   1123118.2417
+            syuzhet_afinn()    169940.985    186679.805    195677.3517
+                    meanr()       723.384       803.646       864.2017
+            median             uq           max neval
+      29776179.245  31208145.6625  32640112.080     3
+        306312.365    309750.4905    313188.616     3
+       1104522.791   1124235.2030   1143947.615     3
+     148058537.017 149519250.7525 150979964.488     3
+       2551689.298   2682217.7745   2812746.251     3
+        565530.068    641974.7310    718419.394     3
+        374869.190    433933.1430    492997.096     3
+       1104544.550   1235887.5520   1367230.554     3
+        203418.625    208545.5350    213672.445     3
+           883.908       934.6105       985.313     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------

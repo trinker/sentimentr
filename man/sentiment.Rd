@@ -73,12 +73,17 @@ Returns a \pkg{data.table} of:
 }
 }
 \description{
-Approximate the sentiment (polarity) of text by sentence.
+Approximate the sentiment (polarity) of text by sentence.  This function allows
+the user to easily alter (add, change, replace) the default polarity an 
+valence shifters dictionaries to suit the context dependent needs of a particular
+data set.  See the \code{polarity_dt} and \code{valence_shifters_dt} arguments
+for more information.  Other hyper-parameters may add additional fine tuned 
+control of the algorithm that may boost performance in different contexts.
 }
 \details{
 The equation used by the algorithm to assign value to polarity of
-each sentence fist utilizes the sentiment dictionary (Hu and Liu, 2004) to
-tag polarized words.  Each paragraph
+each sentence fist utilizes the sentiment dictionary (e.g., Hu and Liu, 2004) 
+to tag polarized words.  Each paragraph
 (\eqn{p_i = \{s_1, s_2, ..., s_n\}}{p_i = \{s_1, s_2, ... s_n\}}) composed of
 sentences, is broken into element sentences
 (\eqn{s_i,j = \{w_1, w_2, ..., w_n\}}{s_i,j = \{w_1, w_2, ... w_n\}}) where \eqn{w}
@@ -93,7 +98,8 @@ merely represent a complete turn of talk.  For example t may be a cell level
 response in a questionnaire composed of sentences.
 
 The words in each sentence (\eqn{w_{i,j,k}}) are searched and compared to a
-modified version of Hu, M., & Liu, B.'s (2004) dictionary of polarized words.
+dictionary of polarized words (e.g., the modified version of Hu, M., & Liu, 
+B.'s (2004) dictionary found in the \pkg{lexicon} package).
 Positive (\eqn{w_{i,j,k}^{+}}{w_i,j,k^+}) and negative
 (\eqn{w_{i,j,k}^{-}}{w_i,j,k^-}) words are tagged with a \eqn{+1} and \eqn{-1}
 respectively.  I will denote polarized words as \eqn{pw} for convenience. These
@@ -173,12 +179,12 @@ Where:
 \note{
 The polarity score is dependent upon the polarity dictionary used.
 This function defaults to the word polarity dictionary used by Hu, M., &
-Liu, B. (2004), however, this may not be appropriate for the context of
-children in a classroom.  The user may (is encouraged) to provide/augment the
-dictionary (see the \code{as_key} function).  For instance the word
-"sick" in a high school setting may mean that something is good, whereas
-"sick" used by a typical adult indicates something is not right or negative
-connotation (\strong{deixis}).
+Liu, B. (2004), however, this may not be appropriate, for example, in the 
+context of children in a classroom.  The user may (is encouraged) to 
+provide/augment the dictionary (see the \code{as_key} function).  For 
+instance the word "sick" in a high school setting may mean that something is 
+good, whereas "sick" used by a typical adult indicates something is not right 
+or negative connotation (\strong{deixis}).
 }
 \references{
 Hu, M., & Liu, B. (2004). Mining opinion features in customer
