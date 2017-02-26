@@ -89,7 +89,7 @@ why does it matter?***
 
 ***Do valence shifters really matter?***
 
-> Well valence shifters affect the polarize words. In the case of
+> Well valence shifters affect the polarized words. In the case of
 > *negators* and *adversative conjunctions* the entire sentiment of the
 > clause may be reversed or overruled. So if valence occur fairly
 > frequently a simple dictionary lookup may not be modeling the

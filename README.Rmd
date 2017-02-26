@@ -53,7 +53,7 @@ knitr::opts_chunk$set(fig.path = "inst/figure/")
 
 ***Do valence shifters really matter?***
 
-> Well valence shifters affect the polarize words.  In the case of *negators* and *adversative conjunctions* the entire sentiment of the clause may be reversed or overruled.  So if valence occur fairly frequently a simple dictionary lookup may not be modeling the sentiment appropriately.  You may be wondering how frequently these valence shifters co-occur with polarized words, potentially changing, or even reversing and overruling the clause's sentiment.  The table below shows the rate of sentence level co-occurrence of valence shifters with polarized words across a few types of texts. 
+> Well valence shifters affect the polarized words.  In the case of *negators* and *adversative conjunctions* the entire sentiment of the clause may be reversed or overruled.  So if valence occur fairly frequently a simple dictionary lookup may not be modeling the sentiment appropriately.  You may be wondering how frequently these valence shifters co-occur with polarized words, potentially changing, or even reversing and overruling the clause's sentiment.  The table below shows the rate of sentence level co-occurrence of valence shifters with polarized words across a few types of texts. 
 
 ```{r, echo=FALSE, results='asis'}
 val_tab <- readRDS(system.file("the_case_for_sentimentr/attributes_rate.rds", package = "sentimentr"))
