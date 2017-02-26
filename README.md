@@ -83,7 +83,7 @@ why does it matter?***
 > for examples. A *de-amplifier* reduces the impact of a polarized word
 > (e.g., "I ***hardly*** like it."). See
 > `lexicon::hash_valence_shifters[y==3]` for examples. An *adversative
-> conjunction* overrule the previous clause with a polarized word (e.g.,
+> conjunction* overrules the previous clause containing a polarized word (e.g.,
 > "I like it ***but*** it's not worth it."). See
 > `lexicon::hash_valence_shifters[y==4]` for examples.
 

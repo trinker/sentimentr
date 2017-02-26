@@ -49,7 +49,7 @@ knitr::opts_chunk$set(fig.path = "inst/figure/")
 
 ***So what are these valence shifters?***  
 
-> A *negator* flips the sign of a polarized word (e.g., "I do ***not*** like it.").  See `lexicon::hash_valence_shifters[y==1]` for examples.  An *amplifier* increases the impact of a polarized word (e.g., "I ***really*** like it.").  See `lexicon::hash_valence_shifters[y==2]` for examples.  A *de-amplifier* reduces the impact of a polarized word (e.g., "I ***hardly*** like it.").  See `lexicon::hash_valence_shifters[y==3]` for examples.  An *adversative conjunction* overrule the previous clause with a polarized word (e.g., "I like it ***but*** it's not worth it.").  See `lexicon::hash_valence_shifters[y==4]` for examples.     
+> A *negator* flips the sign of a polarized word (e.g., "I do ***not*** like it.").  See `lexicon::hash_valence_shifters[y==1]` for examples.  An *amplifier* increases the impact of a polarized word (e.g., "I ***really*** like it.").  See `lexicon::hash_valence_shifters[y==2]` for examples.  A *de-amplifier* reduces the impact of a polarized word (e.g., "I ***hardly*** like it.").  See `lexicon::hash_valence_shifters[y==3]` for examples.  An *adversative conjunction* overrules the previous clause containing a polarized word (e.g., "I like it ***but*** it's not worth it.").  See `lexicon::hash_valence_shifters[y==4]` for examples.     
 
 ***Do valence shifters really matter?***
 
