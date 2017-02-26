@@ -58,7 +58,7 @@ Table of Contents
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
+    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
     -   [Text Highlighting](#text-highlighting)
 -   [Contact](#contact)
 
@@ -83,16 +83,16 @@ why does it matter?***
 > for examples. A *de-amplifier* reduces the impact of a polarized word
 > (e.g., "I ***hardly*** like it."). See
 > `lexicon::hash_valence_shifters[y==3]` for examples. An *adversative
-> conjunction* overrules the previous clause containing a polarized word (e.g.,
-> "I like it ***but*** it's not worth it."). See
+> conjunction* overrules the previous clause containing a polarized word
+> (e.g., "I like it ***but*** it's not worth it."). See
 > `lexicon::hash_valence_shifters[y==4]` for examples.
 
 ***Do valence shifters really matter?***
 
 > Well valence shifters affect the polarized words. In the case of
 > *negators* and *adversative conjunctions* the entire sentiment of the
-> clause may be reversed or overruled. So if valence shifters occur fairly
-> frequently a simple dictionary lookup may not be modeling the
+> clause may be reversed or overruled. So if valence shifters occur
+> fairly frequently a simple dictionary lookup may not be modeling the
 > sentiment appropriately. You may be wondering how frequently these
 > valence shifters co-occur with polarized words, potentially changing,
 > or even reversing and overruling the clause's sentiment. The table
@@ -672,31 +672,31 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
     )
 
     Unit: microseconds
-                       expr           min            lq           mean
-                 stanford()  23530796.397  23681912.347  23821011.0257
-        sentimentr_hu_liu()    248860.321    249778.921    251795.4617
-     sentimentr_sentiword()    988515.757    994506.260   1005683.6197
-               RSentiment() 131230312.608 138317771.327 141687617.5887
-        SentimentAnalysis()   2064899.753   2239627.930   2323193.3590
-          syuzhet_syuzhet()    459958.076    472368.309    477583.0150
-             syuzhet_binn()    326190.218    331183.912    362197.9677
-              syuzhet_nrc()    815265.551    839491.546    861115.6280
-            syuzhet_afinn()    151646.378    151796.228    153463.1873
-                    meanr()       763.619       769.982       779.3563
-            median            uq           max neval
-      23833028.297  23966118.340  24099208.383     3
-        250697.521    253263.032    255828.543     3
-       1000496.763   1014267.551   1028038.339     3
-     145405230.047 146916270.079 148427310.111     3
-       2414356.106   2452340.162   2490324.218     3
-        484778.543    486395.485    488012.426     3
-        336177.607    380201.843    424226.078     3
-        863717.541    884040.667    904363.792     3
-        151946.078    154371.592    156797.106     3
-           776.345       787.225       798.105     3
+                       expr           min             lq          mean
+                 stanford()  23943546.441  26462201.1015  27313930.040
+        sentimentr_hu_liu()    275689.597    280173.5965    288060.624
+     sentimentr_sentiword()    793995.087    947170.5485   1008928.997
+               RSentiment() 134982132.976 139220151.7635 142206426.136
+        SentimentAnalysis()   1983698.392   2171783.7305   2333115.059
+          syuzhet_syuzhet()    419250.242    419562.4630    445944.311
+             syuzhet_binn()    341960.168    368772.8170    385575.635
+              syuzhet_nrc()    771180.555    791712.4440    887863.069
+            syuzhet_afinn()    166188.379    169139.6000    172922.316
+                    meanr()       823.558       826.0215       840.391
+            median             uq          max neval
+      28980855.762  28999121.8395  29017387.92     3
+        284657.596    294246.1375    303834.68     3
+       1100346.010   1116395.9525   1132445.90     3
+     143458170.551 145818572.7155 148178974.88     3
+       2359869.069   2507823.3930   2655777.72     3
+        419874.684    459291.3460    498708.01     3
+        395585.466    407383.3680    419181.27     3
+        812244.333    946204.3255   1080164.32     3
+        172090.821    176289.2845    180487.75     3
+           828.485       848.8075       869.13     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
---------------------------------------------------------------
+--------------------------------------------------
 
 The accuracy of an algorithm weighs heavily into the decision as to what
 approach to take in sentiment detection. I have selected
