@@ -89,7 +89,7 @@ why does it matter?***
 
 ***Do valence shifters really matter?***
 
-> Well valence shifters affect the polarize word. In the case of
+> Well valence shifters affect the polarize words. In the case of
 > *negators* and *adversative conjunctions* the entire sentiment of the
 > clause may be reversed or overruled. So if valence occur fairly
 > frequently a simple dictionary lookup may not be modeling the
@@ -673,27 +673,27 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
 
     Unit: microseconds
                        expr           min            lq           mean
-                 stanford()  23745156.362  24930749.882  26303859.3110
-        sentimentr_hu_liu()    250435.591    253090.191    276322.1140
-     sentimentr_sentiword()    852312.942    920218.724    946581.6180
-               RSentiment() 129398002.359 131773138.045 133924084.7127
-        SentimentAnalysis()   2287147.977   2345505.245   2365900.4213
-          syuzhet_syuzhet()    394194.121    394527.074    415856.1093
-             syuzhet_binn()    337997.975    341126.552    362917.3840
-              syuzhet_nrc()    785783.316    825401.146    924618.5607
-            syuzhet_afinn()    158885.561    170145.236    181527.5273
-                    meanr()       788.252       817.606       842.3073
-           median            uq          max neval
-      26116343.40  27583210.785  29050078.17     3
-        255744.79    289265.376    322785.96     3
-        988124.51    993715.956    999307.41     3
-     134148273.73 136187125.890 138225978.05     3
-       2403862.51   2405276.644   2406690.77     3
-        394860.03    426687.103    458514.18     3
-        344255.13    375377.089    406499.05     3
-        865018.98    994036.183   1123053.39     3
-        181404.91    192848.510    204292.11     3
-           846.96       869.335       891.71     3
+                 stanford()  23530796.397  23681912.347  23821011.0257
+        sentimentr_hu_liu()    248860.321    249778.921    251795.4617
+     sentimentr_sentiword()    988515.757    994506.260   1005683.6197
+               RSentiment() 131230312.608 138317771.327 141687617.5887
+        SentimentAnalysis()   2064899.753   2239627.930   2323193.3590
+          syuzhet_syuzhet()    459958.076    472368.309    477583.0150
+             syuzhet_binn()    326190.218    331183.912    362197.9677
+              syuzhet_nrc()    815265.551    839491.546    861115.6280
+            syuzhet_afinn()    151646.378    151796.228    153463.1873
+                    meanr()       763.619       769.982       779.3563
+            median            uq           max neval
+      23833028.297  23966118.340  24099208.383     3
+        250697.521    253263.032    255828.543     3
+       1000496.763   1014267.551   1028038.339     3
+     145405230.047 146916270.079 148427310.111     3
+       2414356.106   2452340.162   2490324.218     3
+        484778.543    486395.485    488012.426     3
+        336177.607    380201.843    424226.078     3
+        863717.541    884040.667    904363.792     3
+        151946.078    154371.592    156797.106     3
+           776.345       787.225       798.105     3
 
 Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
 --------------------------------------------------------------
