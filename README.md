@@ -58,7 +58,7 @@ Table of Contents
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
     -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
     -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford](#comparing-sentimentr-syuzhet-rsentiment-meanr-and-stanford)
+    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
     -   [Text Highlighting](#text-highlighting)
 -   [Contact](#contact)
 
@@ -695,7 +695,7 @@ othe rmethods but is returning 3 scores from 3 different dictionaries.
         151946.078    154371.592    156797.106     3
            776.345       787.225       798.105     3
 
-Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
+Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------------------
 
 The accuracy of an algorithm weighs heavily into the decision as to what
