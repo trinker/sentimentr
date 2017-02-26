@@ -336,7 +336,7 @@ microbenchmark(
 )
 ```
 
-## Comparing sentimentr, syuzhet, RSentiment, meanr, and Stanford
+## Comparing sentimentr, syuzhet, meanr, and Stanford
 
 The accuracy of an algorithm weighs heavily into the decision as to what approach to take in sentiment detection. I have selected algorithms/packages that stand out as fast and/or accurate to perform benchmarking on actual data. Both **syuzhet** and **sentimentr** provide multiple dictionaries with a general algorithm to compute sentiment scores. **syuzhet** provides 4 approaches while **sentimentr** provides 2, but can be extended easily using the 4 dictionaries from the **syuzhet** package.  **meanr** is a very fast algorithm.  The follow visualization provides the accuracy of these approaches in comparison to Stanford's **Java** based implementation of sentiment detection.  The visualization is generated from testing on three reviews data sets from Kotzias, Denil, De Freitas, & Smyth (2015).  These authors utilized the three 1000 element data sets from:
 
