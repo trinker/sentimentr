@@ -370,9 +370,13 @@ Where:
 mod 2
 
 To get the mean of all sentences (*s*<sub>*i*, *j*</sub>) within a
-paragraph (*p*<sub>*i*</sub>) simply take the average sentiment score
-*p*<sub>*i*, *δ*<sub>*i*, *j*</sub></sub> = 1/n ⋅ ∑
-*δ*<sub>*i*, *j*</sub>.
+paragraph/turn of talk (*p*<sub>*i*</sub>) simply take the average
+sentiment score *p*<sub>*i*, *δ*<sub>*i*, *j*</sub></sub> = 1/n ⋅ ∑
+*δ*<sub>*i*, *j*</sub> or use an available weighted average (the default
+`average_weighted_mixed_sentiment` which upweights the negative values
+in a vector while also downweighting the zeros in a vector or
+`average_downweighted_zero` which simply downweights the zero polarity
+scores).
 
 Installation
 ============
@@ -674,29 +678,29 @@ dictionaries.
         times = 3
     )
 
-    Unit: microseconds
-                       expr           min             lq           mean
-                 stanford()  26443793.454  27455997.3725  27957369.7627
-        sentimentr_hu_liu()    255450.935    261691.6590    265106.5883
-     sentimentr_sentiword()    988393.017    998927.2415   1034428.0573
-               RSentiment() 130486894.726 132928724.9445 135293957.3653
-        SentimentAnalysis()   2486177.501   2492121.3995   2505382.6133
-          syuzhet_syuzhet()    523007.667    537457.8935    576967.0847
-             syuzhet_binn()    362501.053    372639.9205    379016.5353
-              syuzhet_nrc()    865343.064    902037.9560    954618.8250
-            syuzhet_afinn()    169605.978    175114.2865    176976.6643
-                    meanr()       960.681       968.0705       986.8187
-           median             uq           max neval
-      28468201.29  28714157.9170  28960114.543     3
-        267932.38    269934.4150    271936.447     3
-       1009461.47   1057445.5775   1105429.689     3
-     135370555.16 137697488.6850 140024422.207     3
-       2498065.30   2514985.1695   2531905.041     3
-        551908.12    603946.7935    655985.467     3
-        382778.79    387274.2765    391769.765     3
-        938732.85    999256.7055   1059780.563     3
-        180622.60    180662.0075    180701.420     3
-           975.46       999.8875      1024.315     3
+    Unit: milliseconds
+                       expr           min            lq          mean
+                 stanford()  25342.088248  25667.271198  25858.924573
+        sentimentr_hu_liu()    261.527030    265.817862    272.531057
+     sentimentr_sentiword()    901.600518    954.936520    973.222623
+               RSentiment() 133102.352640 137742.101795 140458.324079
+        SentimentAnalysis()   2306.062342   2388.762099   2480.423685
+          syuzhet_syuzhet()    444.586220    452.511008    481.272012
+             syuzhet_binn()    368.831276    377.697653    381.947704
+              syuzhet_nrc()    876.016053    961.488028   1024.621048
+            syuzhet_afinn()    171.294969    178.924984    182.295711
+                    meanr()      1.025546      1.051821      1.062496
+            median            uq           max neval
+      25992.454148  26117.342736  26242.231323     3
+        270.108693    278.033070    285.957447     3
+       1008.272522   1009.033676   1009.794829     3
+     142381.850951 144136.309799 145890.768647     3
+       2471.461855   2567.604356   2663.746857     3
+        460.435796    499.614908    538.794019     3
+        386.564030    388.505918    390.447805     3
+       1046.960003   1098.923546   1150.887089     3
+        186.554999    187.796082    189.037165     3
+          1.078097      1.080971      1.083845     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------

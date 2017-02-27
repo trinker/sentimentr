@@ -132,7 +132,7 @@ $$w_{b'} = \sum{(|w_{adversative\,conjunction}|, ..., w_{i, j, k}^{p}, w_{i, j, 
 
 $w_{neg}$ = ($\sum{w_{i,j,k}^{n}}$ ) mod 2
 
-To get the mean of all sentences ($s_{i,j}$) within a paragraph ($p_{i}$) simply take the average sentiment score $p_{i,\delta_{i,j}}$ = 1/n $\cdot$ $\sum$ $\delta_{i,j}$.
+To get the mean of all sentences ($s_{i,j}$) within a paragraph/turn of talk ($p_{i}$) simply take the average sentiment score $p_{i,\delta_{i,j}}$ = 1/n $\cdot$ $\sum$ $\delta_{i,j}$ or use an available weighted average (the default `average_weighted_mixed_sentiment` which upweights the negative values in a vector while also downweighting the zeros in a vector or `average_downweighted_zero` which simply downweights the zero polarity scores).
 
 # Installation
 

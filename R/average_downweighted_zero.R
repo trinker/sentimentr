@@ -65,7 +65,7 @@ average_weighted_mixed_sentiment <- function (x, mixed.less.than.zero.weight = 4
 #' 
 #' @export
 #' @rdname average_downweighted_zero
-average_mean <- function(x, na.rm = TRUE, ...) mean(x, na.rm = TRUE)
+average_mean <- function(x, na.rm = TRUE, ...) mean(x, na.rm = na.rm)
 
 
 
