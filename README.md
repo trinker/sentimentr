@@ -164,8 +164,9 @@ sentence. Conversely, *adversative conjunctions* appear with polarized
 words ~10% of the time. Not accounting for the valence shifters could
 significantly impact the modeling of the text sentiment.
 
-The script to replicate the frequency analysis from the table can be
-downloaded via:
+The [script to replicate the frequency
+analysis](https://raw.githubusercontent.com/trinker/sentimentr/master/inst/the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R),
+shown in the table above, can be accessed via:
 
     val_shift_freq <- system.file("the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R", package = "sentimentr")
     file.copy(val_shift_freq, getwd())
@@ -675,27 +676,27 @@ dictionaries.
 
     Unit: microseconds
                        expr           min            lq           mean
-                 stanford()  24722271.967  27249225.606  29046187.7640
-        sentimentr_hu_liu()    287929.304    297120.834    302476.7617
-     sentimentr_sentiword()   1025805.751   1065164.271   1091425.3857
-               RSentiment() 146856692.018 147457614.517 148631731.1743
-        SentimentAnalysis()   2460683.766   2506186.532   2608373.1050
-          syuzhet_syuzhet()    565117.058    565323.563    616355.5067
-             syuzhet_binn()    366786.341    370827.765    411550.8757
-              syuzhet_nrc()    897579.621   1001062.086   1123118.2417
-            syuzhet_afinn()    169940.985    186679.805    195677.3517
-                    meanr()       723.384       803.646       864.2017
-            median             uq           max neval
-      29776179.245  31208145.6625  32640112.080     3
-        306312.365    309750.4905    313188.616     3
-       1104522.791   1124235.2030   1143947.615     3
-     148058537.017 149519250.7525 150979964.488     3
-       2551689.298   2682217.7745   2812746.251     3
-        565530.068    641974.7310    718419.394     3
-        374869.190    433933.1430    492997.096     3
-       1104544.550   1235887.5520   1367230.554     3
-        203418.625    208545.5350    213672.445     3
-           883.908       934.6105       985.313     3
+                 stanford()  22337258.162  22958609.683  23178618.8520
+        sentimentr_hu_liu()    254653.242    258395.993    260421.5637
+     sentimentr_sentiword()   1000158.061   1000723.179   1007206.7417
+               RSentiment() 128213871.561 130366396.938 133321154.0477
+        SentimentAnalysis()   2002378.709   2218326.817   2308570.9210
+          syuzhet_syuzhet()    532370.601    535591.752    573956.6810
+             syuzhet_binn()    348611.018    353064.220    359514.4603
+              syuzhet_nrc()    821840.277    869101.826    928435.5090
+            syuzhet_afinn()    162513.780    164677.978    167709.7990
+                    meanr()       787.019       789.482       799.0613
+            median             uq          max neval
+      23579961.204  23599299.1970  23618637.19     3
+        262138.745    263305.7245    264472.70     3
+       1001288.297   1010731.0820   1020173.87     3
+     132518922.314 135874795.2910 139230668.27     3
+       2434274.924   2461667.0270   2489059.13     3
+        538812.904    594749.7210    650686.54     3
+        357517.423    364966.1815    372414.94     3
+        916363.376    981733.1250   1047102.87     3
+        166842.177    170307.8085    173773.44     3
+           791.945       805.0825       818.22     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------
@@ -741,8 +742,8 @@ consistently outscores **sentimentr**, **syuzhet**, and **meanr**. The
 dictionary is a top pick for speed and accuracy. In addition to Jockers'
 custom dictionary the `bing` dictionary also performs well within both
 the **syuzhet** and **sentimentr** algorithms. Generally, the
-**sentimentr** algorithm out performs **syuzhet** when their dictonaries
-are comparable.
+**sentimentr** algorithm out performs **syuzhet** when their
+dictionaries are comparable.
 
 It is important to point out that this is a small sample data set that
 covers a narrow range of uses for sentiment detection. Jockers'
