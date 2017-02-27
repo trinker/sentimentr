@@ -336,7 +336,7 @@ up-weights the cluster by 1 +
 are the number of adversative conjunctions before the polarized word). A
 adversative conjunction after the polarized word down-weights the
 cluster by 1 +
-{*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*b**u**t* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1}\**z*<sub>2</sub>.
+{*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1}\**z*<sub>2</sub>.
 This corresponds to the belief that an adversative conjunction makes the
 next clause of greater values while lowering the value placed on the
 prior clause.
@@ -675,28 +675,28 @@ dictionaries.
     )
 
     Unit: microseconds
-                       expr           min            lq           mean
-                 stanford()  22337258.162  22958609.683  23178618.8520
-        sentimentr_hu_liu()    254653.242    258395.993    260421.5637
-     sentimentr_sentiword()   1000158.061   1000723.179   1007206.7417
-               RSentiment() 128213871.561 130366396.938 133321154.0477
-        SentimentAnalysis()   2002378.709   2218326.817   2308570.9210
-          syuzhet_syuzhet()    532370.601    535591.752    573956.6810
-             syuzhet_binn()    348611.018    353064.220    359514.4603
-              syuzhet_nrc()    821840.277    869101.826    928435.5090
-            syuzhet_afinn()    162513.780    164677.978    167709.7990
-                    meanr()       787.019       789.482       799.0613
-            median             uq          max neval
-      23579961.204  23599299.1970  23618637.19     3
-        262138.745    263305.7245    264472.70     3
-       1001288.297   1010731.0820   1020173.87     3
-     132518922.314 135874795.2910 139230668.27     3
-       2434274.924   2461667.0270   2489059.13     3
-        538812.904    594749.7210    650686.54     3
-        357517.423    364966.1815    372414.94     3
-        916363.376    981733.1250   1047102.87     3
-        166842.177    170307.8085    173773.44     3
-           791.945       805.0825       818.22     3
+                       expr           min             lq           mean
+                 stanford()  26443793.454  27455997.3725  27957369.7627
+        sentimentr_hu_liu()    255450.935    261691.6590    265106.5883
+     sentimentr_sentiword()    988393.017    998927.2415   1034428.0573
+               RSentiment() 130486894.726 132928724.9445 135293957.3653
+        SentimentAnalysis()   2486177.501   2492121.3995   2505382.6133
+          syuzhet_syuzhet()    523007.667    537457.8935    576967.0847
+             syuzhet_binn()    362501.053    372639.9205    379016.5353
+              syuzhet_nrc()    865343.064    902037.9560    954618.8250
+            syuzhet_afinn()    169605.978    175114.2865    176976.6643
+                    meanr()       960.681       968.0705       986.8187
+           median             uq           max neval
+      28468201.29  28714157.9170  28960114.543     3
+        267932.38    269934.4150    271936.447     3
+       1009461.47   1057445.5775   1105429.689     3
+     135370555.16 137697488.6850 140024422.207     3
+       2498065.30   2514985.1695   2531905.041     3
+        551908.12    603946.7935    655985.467     3
+        382778.79    387274.2765    391769.765     3
+        938732.85    999256.7055   1059780.563     3
+        180622.60    180662.0075    180701.420     3
+           975.46       999.8875      1024.315     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------
