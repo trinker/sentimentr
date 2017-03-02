@@ -8,7 +8,8 @@ sentiment_by(text.var, by = NULL,
   averaging.function = average_downweighted_zero, group.names, ...)
 }
 \arguments{
-\item{text.var}{The text variable.}
+\item{text.var}{The text variable.  Also takes a \code{sentimentr} or
+\code{sentiment_by} object.}
 
 \item{by}{The grouping variable(s).  Default \code{NULL} uses the original
 row/element indices; if you used a column of 12 rows for \code{text.var}

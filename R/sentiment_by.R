@@ -4,7 +4,8 @@
 #' full description of the sentiment detection algorithm see 
 #' \code{\link[sentimentr]{sentiment}}.
 #'
-#' @param text.var The text variable.
+#' @param text.var The text variable.  Also takes a \code{sentimentr} or
+#' \code{sentiment_by} object.
 #' @param by The grouping variable(s).  Default \code{NULL} uses the original
 #' row/element indices; if you used a column of 12 rows for \code{text.var}
 #' these 12 rows will be used as the grouping variable.  Also takes a single
@@ -53,12 +54,24 @@
 #' (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
 #' plot(out)
 #' plot(uncombine(out))
+#' 
+#' sentiment_by(out, presidential_debates_2012$person)
+#' with(presidential_debates_2012, sentiment_by(out, time))
 #'
 #' with(cannon_reviews, sentiment_by(review, number))[order(as.numeric(number))]
 #' \dontrun{
 #' highlight(with(cannon_reviews, sentiment_by(review, number)))
 #' }
 sentiment_by <- function(text.var, by = NULL, 
+    averaging.function = average_downweighted_zero, group.names, ...){
+
+    UseMethod("sentiment_by")
+}
+
+
+#' @export
+#' @method sentiment_by character    
+sentiment_by.character <- function(text.var, by = NULL, 
     averaging.function = average_downweighted_zero, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
@@ -115,6 +128,130 @@ sentiment_by <- function(text.var, by = NULL,
     out2
 
 }
+
+
+#' @export
+#' @method sentiment_by sentiment_by    
+sentiment_by.sentiment_by <- function(text.var, by = NULL, 
+    averaging.function = average_downweighted_zero, group.names, ...){
+
+	word_count <- ave_sentiment <- NULL
+    out <- attributes(text.var)[['sentiment']][['sentiment']]
+
+    if (is.null(by)){
+        out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),
+        	  'sd' = stats::sd(sentiment, na.rm = TRUE),
+        	  'ave_sentiment' = averaging.function(sentiment)), by = "element_id"]
+        G <- "element_id"
+        uncombined <- out
+    } else {
+        if (is.list(by) & length(by) > 1) {
+            m <- unlist(as.character(substitute(by))[-1])
+            G <- sapply(strsplit(m, "$", fixed=TRUE), function(x) {
+                    x[length(x)]
+                }
+            )
+            grouping <- by
+        } else {
+            G <- as.character(substitute(by))
+            G <- G[length(G)]
+            grouping <- unlist(by)
+        }
+
+        if(!missing(group.names)) {
+            G <- group.names
+        }
+
+
+        group_dat <- stats::setNames(as.data.frame(grouping,
+            stringsAsFactors = FALSE), G)
+
+        data.table::setDT(group_dat)
+        group_dat <- group_dat[out[["element_id"]], ]
+
+        uncombined <- out2 <- cbind(group_dat, out)
+
+        out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
+            'sd' = stats::sd(sentiment, na.rm = TRUE),
+            'ave_sentiment' = averaging.function(sentiment)), keyby = G]#[order(-ave_sentiment)]
+
+    }
+
+    class(out2) <- unique(c("sentiment_by", class(out)))
+    sentiment <- new.env(FALSE)
+    sentiment[["sentiment"]] <- out
+    attributes(out2)[["sentiment"]] <- sentiment
+    attributes(out2)[["groups"]] <- G
+
+    uncombine <- new.env(FALSE)
+    uncombine[["uncombine"]] <- uncombined
+    attributes(out2)[["uncombine"]] <- uncombine
+    out2
+
+}
+
+
+#' @export
+#' @method sentiment_by sentiment    
+sentiment_by.sentiment <- function(text.var, by = NULL, 
+    averaging.function = average_downweighted_zero, group.names, ...){
+
+	word_count <- ave_sentiment <- NULL
+    out <- text.var
+
+    if (is.null(by)){
+        out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),
+        	  'sd' = stats::sd(sentiment, na.rm = TRUE),
+        	  'ave_sentiment' = averaging.function(sentiment)), by = "element_id"]
+        G <- "element_id"
+        uncombined <- out
+    } else {
+        if (is.list(by) & length(by) > 1) {
+            m <- unlist(as.character(substitute(by))[-1])
+            G <- sapply(strsplit(m, "$", fixed=TRUE), function(x) {
+                    x[length(x)]
+                }
+            )
+            grouping <- by
+        } else {
+            G <- as.character(substitute(by))
+            G <- G[length(G)]
+            grouping <- unlist(by)
+        }
+
+        if(!missing(group.names)) {
+            G <- group.names
+        }
+
+
+        group_dat <- stats::setNames(as.data.frame(grouping,
+            stringsAsFactors = FALSE), G)
+
+        data.table::setDT(group_dat)
+        group_dat <- group_dat[out[["element_id"]], ]
+
+        uncombined <- out2 <- cbind(group_dat, out)
+
+        out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
+            'sd' = stats::sd(sentiment, na.rm = TRUE),
+            'ave_sentiment' = averaging.function(sentiment)), keyby = G]#[order(-ave_sentiment)]
+
+    }
+
+    class(out2) <- unique(c("sentiment_by", class(out)))
+    sentiment <- new.env(FALSE)
+    sentiment[["sentiment"]] <- out
+    attributes(out2)[["sentiment"]] <- sentiment
+    attributes(out2)[["groups"]] <- G
+
+    uncombine <- new.env(FALSE)
+    uncombine[["uncombine"]] <- uncombined
+    attributes(out2)[["uncombine"]] <- uncombine
+    out2
+
+}
+
+
 
 #' Plots a sentiment_by object
 #'

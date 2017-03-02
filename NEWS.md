@@ -44,6 +44,10 @@ sentimentr 0.5.0 -
 
 **MINOR FEATURES**
 
+* `sentiment_by` picks becomes a method function that now accepts `sentiment_by`
+  and `sentiment` oectes for `text.var` argument in addition to default
+  `character`.
+
 **IMPROVEMENTS**
 
 * `sentiment_by` picks up an `averaging.function` argument for performing the 
