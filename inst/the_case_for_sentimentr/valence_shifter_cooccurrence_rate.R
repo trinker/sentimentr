@@ -1,3 +1,4 @@
+if (!require("pacman")) install.packages("pacman"); library(pacman)
 p_load_current_gh('trinker/sentimentr', 'trinker/numform')
 p_load(sentimentr, tidyverse, lexicon, textshape, textreadr, janeaustenr, textclean)
 p_load(rvest, xml2)
