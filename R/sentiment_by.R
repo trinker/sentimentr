@@ -2,7 +2,9 @@
 #'
 #' Approximate the sentiment (polarity) of text by grouping variable(s).  For a
 #' full description of the sentiment detection algorithm see 
-#' \code{\link[sentimentr]{sentiment}}.
+#' \code{\link[sentimentr]{sentiment}}.  See \code{\link[sentimentr]{sentiment}}
+#' for more details about the algorithm and the sentiment/valence shifter keys
+#' that can be passed into the function.
 #'
 #' @param text.var The text variable.  Also takes a \code{sentimentr} or
 #' \code{sentiment_by} object.
