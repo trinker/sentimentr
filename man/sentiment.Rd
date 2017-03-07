@@ -13,7 +13,13 @@ sentiment(text.var, polarity_dt = lexicon::hash_sentiment,
 \item{text.var}{The text variable.}
 
 \item{polarity_dt}{A \pkg{data.table} of positive/negative words and
-weights with x and y as column names.}
+weights with x and y as column names.  The \pkg{lexicon} package has 4 
+dictionaries that can be used here: \code{lexicon::hash_sentiment_huliu}, 
+\code{lexicon::hash_sentiment_jockers}, \code{lexicon::hash_sentiment_nrc}, 
+and \code{lexicon::hash_sentiment_sentiword}.  Additionally, the 
+\code{as_key} function can be used to make a sentiment frame suitable for
+\code{polarity_dt}.  This takes a 2 column data.frame with the first column
+being words and the second column being polarity values.}
 
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
 can alter a polarized word's meaning and an integer key for negators (1),

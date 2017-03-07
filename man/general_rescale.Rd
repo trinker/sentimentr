@@ -4,7 +4,7 @@
 \alias{general_rescale}
 \title{Rescale a Numeric Vector}
 \usage{
-general_rescale(x, lower = -1, upper = 1, keep.zero = TRUE,
+general_rescale(x, lower = -1, upper = 1, mute = NULL, keep.zero = TRUE,
   sign = FALSE, ...)
 }
 \arguments{
@@ -13,6 +13,11 @@ general_rescale(x, lower = -1, upper = 1, keep.zero = TRUE,
 \item{lower}{An upper limit to rescale to.}
 
 \item{upper}{A lower limit to rescale to.}
+
+\item{mute}{A positive value greater than 1 to lower the extremes and pull 
+the fractions up.  This becomes the denominator in a power to raise each 
+element by (sign is retained) where the numrator is 1.  This is useful for 
+mellowing out the extremes.}
 
 \item{keep.zero}{logical.  If \code{TRUE} the zeros are kept as neutral.}
 
@@ -32,5 +37,12 @@ general_rescale(c(NA, -3:3))
 general_rescale(c(NA, -3:3), binary = TRUE)
 general_rescale(c(NA, -3:3), keep.zero = FALSE)
 general_rescale(c(NA, -3:3), keep.zero = FALSE, lower = 0, upper = 100)
+
+set.seed(10)
+x <- sort(c(NA, -100, -10, 0, rnorm(10, 0, .1), 10, 100))
+general_rescale(c(NA, x))
+general_rescale(c(NA, x), mute = 5)
+general_rescale(c(NA, x), mute = 10)
+general_rescale(c(NA, x), mute = 100)
 }
 

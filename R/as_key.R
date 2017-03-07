@@ -55,7 +55,7 @@
 #' ## Explicity key type (wrapper for `update_key` for sentiment table.
 #' ## See `update_valence_shifter_table` a corresponding valence shifter updater.
 #' library(lexicon)
-#' updated_hash_sentiment <- sentimentr:::update_polarity_table(hash_sentiment,
+#' updated_hash_sentiment <- sentimentr:::update_polarity_table(lexicon::hash_sentiment_huliu,
 #'     x = data.frame(
 #'         words = c('frickin', 'hairy'),
 #'         polarity = c(-1, -1),

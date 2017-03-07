@@ -6,6 +6,10 @@
 #' @param x A numeric vector.
 #' @param lower An upper limit to rescale to.
 #' @param upper A lower limit to rescale to.
+#' @param mute A positive value greater than 1 to lower the extremes and pull 
+#' the fractions up.  This becomes the denominator in a power to raise each 
+#' element by (sign is retained) where the numrator is 1.  This is useful for 
+#' mellowing out the extremes.
 #' @param keep.zero logical.  If \code{TRUE} the zeros are kept as neutral.
 #' @param sign logical.  If \code{TRUE} the vector will be scaled as (-1, 1, or 0)
 #' @param \ldots ignored.
@@ -16,7 +20,21 @@
 #' general_rescale(c(NA, -3:3), binary = TRUE)
 #' general_rescale(c(NA, -3:3), keep.zero = FALSE)
 #' general_rescale(c(NA, -3:3), keep.zero = FALSE, lower = 0, upper = 100)
-general_rescale <- function(x, lower = -1, upper = 1, keep.zero = TRUE, sign = FALSE, ...){
+#' 
+#' set.seed(10)
+#' x <- sort(c(NA, -100, -10, 0, rnorm(10, 0, .1), 10, 100))
+#' general_rescale(c(NA, x))
+#' general_rescale(c(NA, x), mute = 5)
+#' general_rescale(c(NA, x), mute = 10)
+#' general_rescale(c(NA, x), mute = 100)
+general_rescale <- function(x, lower = -1, upper = 1, mute = NULL, 
+    keep.zero = TRUE, sign = FALSE, ...){
+    
+    if (!is.null(mute)) {
+        stopifnot(is.numeric(mute) & mute >= 1)
+        x <- sign(x) * (abs(x) ^ (1/mute))
+    }
+    
     if (isTRUE(sign)) return(sign(x))
     if (!isTRUE(keep.zero)) return(general_rescale_h(x, lower=lower, upper=upper))
 
