@@ -64,7 +64,7 @@ sentimentr 0.5.0 -
 * The hash keys `polarity_table`, `valence_shifters_table`, and `sentiword` have
   been moved to the **lexicon** (https://github.com/trinker/lexicon) package in
   order to make them more modular and maintainable.  They have been renamed to
-  `hash_sentiment`, `hash_valence_shifters`, and `hash_sentiword`.
+  `hash_sentiment_huliu`, `hash_valence_shifters`, and `hash_sentiment_sentiword`.
   
 * The `replace_emoticon`, `replace_grade` and `replace_rating` functions have 
   been moved from **sentimentr** to the **textclean** package as these are 
