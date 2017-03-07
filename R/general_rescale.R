@@ -8,7 +8,7 @@
 #' @param upper A lower limit to rescale to.
 #' @param mute A positive value greater than 1 to lower the extremes and pull 
 #' the fractions up.  This becomes the denominator in a power to raise each 
-#' element by (sign is retained) where the numrator is 1.  This is useful for 
+#' element by (sign is retained) where the numerator is 1.  This is useful for 
 #' mellowing out the extremes.
 #' @param keep.zero logical.  If \code{TRUE} the zeros are kept as neutral.
 #' @param sign logical.  If \code{TRUE} the vector will be scaled as (-1, 1, or 0)

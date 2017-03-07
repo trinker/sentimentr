@@ -4,7 +4,7 @@
 \alias{sentiment}
 \title{Polarity Score (Sentiment Analysis)}
 \usage{
-sentiment(text.var, polarity_dt = lexicon::hash_sentiment,
+sentiment(text.var, polarity_dt = lexicon::hash_sentiment_huliu,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
   question.weight = 1, adversative.weight = 0.85, missing_value = 0, ...)
@@ -205,8 +205,7 @@ Halliday, M. A. K. & Hasan, R. (2013). Cohesion in English. New York, NY: Routle
 \seealso{
 \url{https://github.com/trestletech/Sermon-Sentiment-Analysis}
 
-Other sentiment.functions: \code{\link{sentiment_by}}
+Other sentiment functions: \code{\link{sentiment_by}}
 }
 \keyword{polarity}
 \keyword{sentiment,}
-

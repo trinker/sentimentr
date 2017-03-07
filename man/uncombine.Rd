@@ -24,4 +24,3 @@ Returns a \pkg{data.table} with grouping variables plus:
 Ungroup a \code{sentiment_by} object, stretching to the \code{element_id} and
 \code{sentence_id} levels.
 }
-

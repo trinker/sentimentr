@@ -20,4 +20,3 @@ Returns a \pkg{ggplot2} object.
 Plots a sentiment_by object.  Red centers are average sentiment.  Alpha
 jittered dots are raw sentence level sentiment data.  Boxes are boxplots.
 }
-

@@ -10,7 +10,7 @@ data(kotzias_reviews)
 }
 \description{
 A dataset containing a list of 4 review data sets.  Each data set contains
-sentences with a postive (1) or negative review (-1) taken from reviews of
+sentences with a positive (1) or negative review (-1) taken from reviews of
 products, movies, & restaurants.  The data, compiled by Kotzias, Denil, De Freitas,
 & Smyth (2015), was originally taken from amazon.com, imdb.com, & yelp.com.
 Kotzias et al. (2015) provide the following description in the README:
@@ -38,4 +38,3 @@ SIGKDD International Conference on Knowledge Discovery and Data Mining.
 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf}
 }
 \keyword{datasets}
-

@@ -25,4 +25,3 @@ Plots a sentiment object.
 Utilizes Matthew Jocker's \pkg{syuzhet} package to calculate smoothed
 sentiment across the duration of the text.
 }
-

@@ -36,4 +36,3 @@ force to lower case.
 get_sentences(x)
 get_sentences2(x)
 }
-

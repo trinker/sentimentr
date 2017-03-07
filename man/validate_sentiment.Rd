@@ -39,4 +39,3 @@ attributes(x)$macro_stats
 \references{
 \url{https://www.youtube.com/watch?v=OwwdYHWRB5E&index=31&list=PL6397E4B26D00A269}
 }
-

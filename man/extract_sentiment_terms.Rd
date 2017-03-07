@@ -4,7 +4,7 @@
 \alias{extract_sentiment_terms}
 \title{Extract Sentiment Words}
 \usage{
-extract_sentiment_terms(text.var, polarity_dt = lexicon::hash_sentiment,
+extract_sentiment_terms(text.var, polarity_dt = lexicon::hash_sentiment_huliu,
   hyphen = "", ...)
 }
 \arguments{
@@ -41,4 +41,3 @@ data.table::as.data.table(pol_words)
 attributes(extract_sentiment_terms(x))$counts
 attributes(extract_sentiment_terms(x))$elements
 }
-

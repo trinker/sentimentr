@@ -29,9 +29,8 @@ Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
 
 Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
    Reviews. Proceedings of Nineteeth National Conference on
-   Artificial Intellgience (AAAI-2004).
+   Artificial Intelligence (AAAI-2004).
 
 \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 }
 \keyword{datasets}
-

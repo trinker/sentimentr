@@ -71,7 +71,7 @@ NULL
 #'
 #' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
 #'    Reviews. Proceedings of Nineteeth National Conference on
-#'    Artificial Intellgience (AAAI-2004).
+#'    Artificial Intelligence (AAAI-2004).
 #'
 #' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 NULL
@@ -80,7 +80,7 @@ NULL
 #' Kotzias Reviews
 #'
 #' A dataset containing a list of 4 review data sets.  Each data set contains
-#' sentences with a postive (1) or negative review (-1) taken from reviews of
+#' sentences with a positive (1) or negative review (-1) taken from reviews of
 #' products, movies, & restaurants.  The data, compiled by Kotzias, Denil, De Freitas,
 #' & Smyth (2015), was originally taken from amazon.com, imdb.com, & yelp.com.
 #' Kotzias et al. (2015) provide the following description in the README:

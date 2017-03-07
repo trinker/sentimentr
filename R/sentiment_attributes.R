@@ -17,7 +17,7 @@
 #' @return Returns a list of four items:
 #' \item{Meta}{The number of words, sentences, and questions in the text}
 #' \item{Attributes}{The rate of sentiment attributes relative to the number of words}
-#' \item{Polarized_Cooccurrences}{The rate that valence shifters cooccur with a polized word in the same sentence}
+#' \item{Polarized_Cooccurrences}{The rate that valence shifters cooccur with a polarized word in the same sentence}
 #' \item{Cooccurrences}{A cooccurrence matrix of sentiment attributes; `polarized` is the sum of positive and negative}
 #' @note \pkg{gofastr} and \pkg{termco} must be installed.  If they are not (which
 #' they are not part of \pkg{sentimentr} install) then the function will prompt
@@ -28,7 +28,7 @@
 #' \dontrun{
 #' sentiment_attributes(presidential_debates_2012$dialogue)
 #' }
-sentiment_attributes <- function(text.var, polarity_dt = lexicon::hash_sentiment, 
+sentiment_attributes <- function(text.var, polarity_dt = lexicon::hash_sentiment_huliu, 
     valence_shifters_dt = lexicon::hash_valence_shifters, ...) {
     
         fun <- source(system.file("sfp/sfp", package = "sentimentr"))[["value"]]

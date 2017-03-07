@@ -13,7 +13,7 @@
 #' these 12 rows will be used as the grouping variable.  Also takes a single
 #' grouping variable or a list of 1 or more grouping variables.
 #' @param averaging.function A function for performing the group by averaging.  
-#' The defualt, \code{\link[sentimentr]{average_downweighted_zero}}, downweights 
+#' The default, \code{\link[sentimentr]{average_downweighted_zero}}, downweights 
 #' zero values in the averaging.  Note that the function must handle 
 #' \code{NA}s.  The \pkg{sentimentr} functions 
 #' \code{average_weighted_mixed_sentiment} and \code{average_mean} are also 

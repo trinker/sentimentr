@@ -16,7 +16,7 @@ general_rescale(x, lower = -1, upper = 1, mute = NULL, keep.zero = TRUE,
 
 \item{mute}{A positive value greater than 1 to lower the extremes and pull 
 the fractions up.  This becomes the denominator in a power to raise each 
-element by (sign is retained) where the numrator is 1.  This is useful for 
+element by (sign is retained) where the numerator is 1.  This is useful for 
 mellowing out the extremes.}
 
 \item{keep.zero}{logical.  If \code{TRUE} the zeros are kept as neutral.}
@@ -45,4 +45,3 @@ general_rescale(c(NA, x), mute = 5)
 general_rescale(c(NA, x), mute = 10)
 general_rescale(c(NA, x), mute = 100)
 }
-

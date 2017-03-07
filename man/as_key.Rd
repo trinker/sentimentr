@@ -2,10 +2,10 @@
 % Please edit documentation in R/as_key.R
 \name{as_key}
 \alias{as_key}
-\alias{is_key}
 \alias{update_key}
 \alias{update_polarity_table}
 \alias{update_valence_shifter_table}
+\alias{is_key}
 \title{Create/Manipulate Hash Keys}
 \usage{
 as_key(x, comparison = lexicon::hash_valence_shifters, sentiment = TRUE,
@@ -18,7 +18,7 @@ update_polarity_table(key, drop = NULL, x = NULL,
   comparison = lexicon::hash_valence_shifters, sentiment = FALSE, ...)
 
 update_valence_shifter_table(key, drop = NULL, x = NULL,
-  comparison = lexicon::hash_sentiment, sentiment = FALSE, ...)
+  comparison = lexicon::hash_sentiment_huliu, sentiment = FALSE, ...)
 
 is_key(key, sentiment = TRUE)
 }
@@ -155,4 +155,3 @@ geninq_pol \%>\% plot()
 \keyword{hash}
 \keyword{key}
 \keyword{lookup}
-

@@ -2,12 +2,11 @@
 % Please edit documentation in R/sentimentr-package.R
 \docType{package}
 \name{sentimentr}
-\alias{package-sentiment}
 \alias{sentimentr}
+\alias{package-sentiment}
 \alias{sentimentr-package}
 \title{Calculate Text Polarity Sentiment}
 \description{
 Calculate text polarity sentiment at the sentence level and optionally
 aggregate by rows or grouping variable(s).
 }
-

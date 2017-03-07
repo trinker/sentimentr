@@ -217,7 +217,7 @@ update_polarity_table <- update_key
 #' @export
 #' @rdname as_key
 update_valence_shifter_table <- function(key, drop = NULL, x = NULL,
-    comparison = lexicon::hash_sentiment, sentiment = FALSE, ...){
+    comparison = lexicon::hash_sentiment_huliu, sentiment = FALSE, ...){
 
     update_key(key = key, drop = drop, x = x, comparison = comparison, sentiment = sentiment, ...)
 }

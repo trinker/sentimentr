@@ -15,4 +15,3 @@ A dataset containing a character vector of the text from Seuss's 'Sam I Am'.
 Seuss, Dr. (1960). Green Eggs and Ham.
 }
 \keyword{datasets}
-

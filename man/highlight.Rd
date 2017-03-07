@@ -50,4 +50,3 @@ highlight(sent_dat, original.text = dat[["dialogue"]])
 highlight(with(cannon_reviews, sentiment_by(review, number)))
 }
 }
-

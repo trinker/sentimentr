@@ -4,7 +4,7 @@
 \alias{sentiment_attributes}
 \title{Extract Sentiment Attributes from Text}
 \usage{
-sentiment_attributes(text.var, polarity_dt = lexicon::hash_sentiment,
+sentiment_attributes(text.var, polarity_dt = lexicon::hash_sentiment_huliu,
   valence_shifters_dt = lexicon::hash_valence_shifters, ...)
 }
 \arguments{
@@ -24,7 +24,7 @@ y as column names.}
 Returns a list of four items:
 \item{Meta}{The number of words, sentences, and questions in the text}
 \item{Attributes}{The rate of sentiment attributes relative to the number of words}
-\item{Polarized_Cooccurrences}{The rate that valence shifters cooccur with a polized word in the same sentence}
+\item{Polarized_Cooccurrences}{The rate that valence shifters cooccur with a polarized word in the same sentence}
 \item{Cooccurrences}{A cooccurrence matrix of sentiment attributes; `polarized` is the sum of positive and negative}
 }
 \description{
@@ -45,4 +45,3 @@ you to attempt to install them using \code{install.packages} and
 sentiment_attributes(presidential_debates_2012$dialogue)
 }
 }
-

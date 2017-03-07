@@ -2,8 +2,8 @@
 % Please edit documentation in R/average_downweighted_zero.R
 \name{average_downweighted_zero}
 \alias{average_downweighted_zero}
-\alias{average_mean}
 \alias{average_weighted_mixed_sentiment}
+\alias{average_mean}
 \title{Downweighted Zeros Averaging}
 \usage{
 average_downweighted_zero(x, na.rm = TRUE, ...)
@@ -42,7 +42,7 @@ but then uses the social convention of several positive sentences in an
 attempt to negate the impact of the negative.  The affective state isn't
 a neutral but a slightly lessened negative state.
 
-\code{average_mean}- Standard mean averaging with `na.rm` set to `TRUE`.
+\code{average_mean}- Standard mean averaging with \code{na.rm} set to \code{TRUE}.
 }
 \examples{
 x <- c(1, 2, 0, 0, 0, -1)
@@ -52,4 +52,3 @@ average_downweighted_zero(c(NA, x))
 mean(c(0, 0, 0, x))
 average_downweighted_zero(c(0, 0, 0, x))
 }
-

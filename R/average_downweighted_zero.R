@@ -61,7 +61,7 @@ average_weighted_mixed_sentiment <- function (x, mixed.less.than.zero.weight = 4
 
 #' Downweighted Zeros Averaging
 #' 
-#' \code{average_mean}- Standard mean averaging with `na.rm` set to `TRUE`.  
+#' \code{average_mean}- Standard mean averaging with \code{na.rm} set to \code{TRUE}.  
 #' 
 #' @export
 #' @rdname average_downweighted_zero

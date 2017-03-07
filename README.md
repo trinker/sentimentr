@@ -472,7 +472,7 @@ Making and Updating Dictionaries
 It is pretty straight forward to make or update a new dictionary
 (polarity or valence shifter). To create a key from scratch the user
 needs to create a 2 column `data.frame`, with words on the left and
-values on the right (see `?lexicon::hash_sentiment` &
+values on the right (see `?lexicon::hash_sentiment_huliu` &
 `?lexicon::hash_valence_shifters` for what the values mean). Note that
 the words need to be lower cased. Here I show an example `data.frame`
 ready for key conversion:

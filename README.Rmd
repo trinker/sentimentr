@@ -198,7 +198,7 @@ plot(uncombine(out))
 
 ## Making and Updating Dictionaries
 
-It is pretty straight forward to make or update a new dictionary (polarity or valence shifter).  To create a key from scratch the user needs to create a 2 column `data.frame`, with words on the left and values on the right (see `?lexicon::hash_sentiment` & `?lexicon::hash_valence_shifters` for what the values mean).  Note that the words need to be lower cased.  Here I show an example `data.frame` ready for key conversion:
+It is pretty straight forward to make or update a new dictionary (polarity or valence shifter).  To create a key from scratch the user needs to create a 2 column `data.frame`, with words on the left and values on the right (see `?lexicon::hash_sentiment_huliu` & `?lexicon::hash_valence_shifters` for what the values mean).  Note that the words need to be lower cased.  Here I show an example `data.frame` ready for key conversion:
 
 ```{r}
 set.seed(10)
@@ -374,7 +374,7 @@ Across all three contexts, notice that the Stanford coreNLP algorithm is better 
 
 The Jockers, Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements, though Jockers' dictionary outperforms the others.  We can now see that the reason for the NRC's poorer performance in accuracy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but lacks accuracy.  We can deduce two things from this observation:
 
-1. Larger dictionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(lexicon::hash_sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(lexicon::hash_sentiment), big.mark=",")`])
+1. Larger dictionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(lexicon::hash_sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(lexicon::hash_sentiment_huliu), big.mark=",")`])
 2. The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a dictionary lookup approach to sentiment detection, potentially, improving on discrimination and accuracy.

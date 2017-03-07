@@ -14,4 +14,3 @@
 \description{
 Prints an extract_sentiment_terms object
 }
-

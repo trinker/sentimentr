@@ -17,7 +17,7 @@ these 12 rows will be used as the grouping variable.  Also takes a single
 grouping variable or a list of 1 or more grouping variables.}
 
 \item{averaging.function}{A function for performing the group by averaging.
-The defualt, \code{\link[sentimentr]{average_downweighted_zero}}, downweights 
+The default, \code{\link[sentimentr]{average_downweighted_zero}}, downweights 
 zero values in the averaging.  Note that the function must handle 
 \code{NA}s.  The \pkg{sentimentr} functions 
 \code{average_weighted_mixed_sentiment} and \code{average_mean} are also 
@@ -49,9 +49,8 @@ for more details about the algorithm and the sentiment/valence shifter keys
 that can be passed into the function.
 }
 \seealso{
-Other sentiment.functions: \code{\link{sentiment}}
+Other sentiment functions: \code{\link{sentiment}}
 }
 \keyword{group}
 \keyword{polarity,}
 \keyword{sentiment,}
-

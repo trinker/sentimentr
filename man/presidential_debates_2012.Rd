@@ -21,4 +21,3 @@ the 2012 election.
 }
 }
 \keyword{datasets}
-

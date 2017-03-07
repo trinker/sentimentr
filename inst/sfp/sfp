@@ -1,4 +1,4 @@
-function (text.var, polarity_dt = lexicon::hash_sentiment, 
+function (text.var, polarity_dt = lexicon::hash_sentiment_huliu, 
     valence_shifters_dt = lexicon::hash_valence_shifters, ...) {
 
     local_packages <- list.files(.libPaths())
