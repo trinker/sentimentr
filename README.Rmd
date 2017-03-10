@@ -325,6 +325,7 @@ syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
      
 microbenchmark(
     stanford(),
+    sentimentr_jockers(),
     sentimentr_huliu(),
     sentimentr_sentiword(),
     RSentiment(), 
