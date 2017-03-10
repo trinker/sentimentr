@@ -24,10 +24,10 @@
 #' that are positive or negative.  \code{valence_shifters_dt} takes a 2 column 
 #' \code{data.frame} (named x and y) with the first column being character and 
 #' containing the words and the second column being integer corresponding to:
-#' (1) negators, (2) amplifiers, (3) de-amplifiers, and ``but'' conjunction (4). 
-#' Also, note that if you are updating a \code{valence_shifters_dt} you need an 
-#' appropriate \code{comparison}; most likely, 
-#' \code{comparison = sentimentr::polarity_dt}.  
+#' (1) negators, (2) amplifiers, (3) de-amplifiers, and (4) dversative 
+#' conjunctions (i.e., 'but', 'however', and 'although').  Also, note that if 
+#' you are updating a \code{valence_shifters_dt} you need an appropriate 
+#' \code{comparison}; most likely, \code{comparison = sentimentr::polarity_dt}.  
 #' @export
 #' @rdname as_key
 #' @examples
@@ -217,7 +217,7 @@ update_polarity_table <- update_key
 #' @export
 #' @rdname as_key
 update_valence_shifter_table <- function(key, drop = NULL, x = NULL,
-    comparison = lexicon::hash_sentiment_huliu, sentiment = FALSE, ...){
+    comparison = lexicon::hash_sentiment_jockers, sentiment = FALSE, ...){
 
     update_key(key = key, drop = drop, x = x, comparison = comparison, sentiment = sentiment, ...)
 }

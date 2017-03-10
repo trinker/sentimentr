@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman"); library(pacman)
-p_load_current_gh('trinker/sentimentr', 'trinker/numform')
+p_load_current_gh('trinker/sentimentr', 'trinker/numform', 'trinker/textcorpus')
 p_load(sentimentr, tidyverse, lexicon, textshape, textreadr, janeaustenr, textclean)
 p_load(rvest, xml2)
 
@@ -21,10 +21,7 @@ trump_tweets <- 'https://raw.githubusercontent.com/sashaperigo/Trump-Tweets/mast
     download() %>%
     read_csv()
 
-dylan <- 'https://raw.githubusercontent.com/mulhod/bob_dylan_lyrics/gh-pages/full_lyrics_file_dumps/all_songs_unique.txt' %>%
-    download() %>%
-    readLines()
-
+dylan <- textcorpus::dylan_songs$corpus$text
 
 attributes_rate <- list(
     sentiment_attributes(cannon_reviews$review),

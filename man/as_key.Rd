@@ -18,7 +18,7 @@ update_polarity_table(key, drop = NULL, x = NULL,
   comparison = lexicon::hash_valence_shifters, sentiment = FALSE, ...)
 
 update_valence_shifter_table(key, drop = NULL, x = NULL,
-  comparison = lexicon::hash_sentiment_huliu, sentiment = FALSE, ...)
+  comparison = lexicon::hash_sentiment_jockers, sentiment = FALSE, ...)
 
 is_key(key, sentiment = TRUE)
 }
@@ -68,10 +68,10 @@ character and containing the words and the second column being numeric values
 that are positive or negative.  \code{valence_shifters_dt} takes a 2 column 
 \code{data.frame} (named x and y) with the first column being character and 
 containing the words and the second column being integer corresponding to:
-(1) negators, (2) amplifiers, (3) de-amplifiers, and ``but'' conjunction (4). 
-Also, note that if you are updating a \code{valence_shifters_dt} you need an 
-appropriate \code{comparison}; most likely, 
-\code{comparison = sentimentr::polarity_dt}.
+(1) negators, (2) amplifiers, (3) de-amplifiers, and (4) dversative 
+conjunctions (i.e., 'but', 'however', and 'although').  Also, note that if 
+you are updating a \code{valence_shifters_dt} you need an appropriate 
+\code{comparison}; most likely, \code{comparison = sentimentr::polarity_dt}.
 }
 \examples{
 key <- data.frame(

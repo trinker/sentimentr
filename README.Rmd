@@ -97,9 +97,9 @@ There are two main functions (top 2 in table below) in **sentimentr** with sever
 
 # The Equation 
 
-The equation below describes the augmented dictionary method of **sentimentr** that may give better results than a simple lookup dictionary approach that does not consider valence shifters.  The equation used by the algorithm to assign value to polarity of each sentence fist utilizes the a sentiment dictionary (e.g., Hu and Liu, [2004](http://www.cs.uic.edu/~liub/publications/kdd04-revSummary.pdf)) to tag polarized words.  Each paragraph ($p_i = \{s_1, s_2, ..., s_n\}$) composed of sentences, is broken into element sentences ($s_i,j = \{w_1, w_2, ..., w_n\}$) where $w$ are the words within sentences.  Each sentence ($s_j$) is broken into a an ordered bag of words.  Punctuation is removed with the exception of pause punctuations (commas, colons, semicolons) which are considered a word within the sentence.  I will denote pause words as $cw$ (comma words) for convenience.  We can represent these words as an i,j,k notation as $w_{i,j,k}$.  For example $w_{3,2,5}$ would be the fifth word of the second sentence of the third paragraph.  While I use the term paragraph this merely represent a complete turn of talk.  For example it may be a cell level response in a questionnaire composed of sentences.
+The equation below describes the augmented dictionary method of **sentimentr** that may give better results than a simple lookup dictionary approach that does not consider valence shifters.  The equation used by the algorithm to assign value to polarity of each sentence fist utilizes the a sentiment dictionary (e.g., Jockers, [(2017)](https://github.com/mjockers/syuzhet)) to tag polarized words.  Each paragraph ($p_i = \{s_1, s_2, ..., s_n\}$) composed of sentences, is broken into element sentences ($s_i,j = \{w_1, w_2, ..., w_n\}$) where $w$ are the words within sentences.  Each sentence ($s_j$) is broken into a an ordered bag of words.  Punctuation is removed with the exception of pause punctuations (commas, colons, semicolons) which are considered a word within the sentence.  I will denote pause words as $cw$ (comma words) for convenience.  We can represent these words as an i,j,k notation as $w_{i,j,k}$.  For example $w_{3,2,5}$ would be the fifth word of the second sentence of the third paragraph.  While I use the term paragraph this merely represent a complete turn of talk.  For example it may be a cell level response in a questionnaire composed of sentences.
 
-The words in each sentence ($w_{i,j,k}$) are searched and compared to a dictionary of polarized words (e.g., the modified version of Hu, M., & Liu, B.'s (2004) dictionary in the [**lexicon**](https://cran.r-project.org/package=lexicon) package). Positive ($w_{i,j,k}^{+}$) and negative ($w_{i,j,k}^{-}$) words are tagged with a $+1$ and $-1$ respectively (or other positive/negative weighting if the user provides the sentiment dictionary).  I will denote polarized words as $pw$ for convenience. These will form a polar cluster ($c_{i,j,l}$) which is a subset of the a sentence ($c_{i,j,l} \subseteq s_i,j$).
+The words in each sentence ($w_{i,j,k}$) are searched and compared to a dictionary of polarized words (e.g., a slightly modified version of Jocker's (2017) dictionary in the [**lexicon**](https://cran.r-project.org/package=lexicon) package originally exported by the [**syuzhet**](https://github.com/mjockers/syuzhet) package). Positive ($w_{i,j,k}^{+}$) and negative ($w_{i,j,k}^{-}$) words are tagged with a $+1$ and $-1$ respectively (or other positive/negative weighting if the user provides the sentiment dictionary).  I will denote polarized words as $pw$ for convenience. These will form a polar cluster ($c_{i,j,l}$) which is a subset of the a sentence ($c_{i,j,l} \subseteq s_i,j$).
 
 The polarized context cluster ($c_{i,j,l}$) of words is pulled from around the polarized word ($pw$) and defaults to 4 words before and two words after $pw$ to be considered as valence shifters.  The cluster can be represented as ($c_{i,j,l} = \{pw_{i,j,k - nb}, ..., pw_{i,j,k} , ..., pw_{i,j,k - na}\}$), where $nb$ & $na$ are the parameters `n.before` and `n.after` set by the user.  The words in this polarized context cluster are tagged as neutral ($w_{i,j,k}^{0}$), negator ($w_{i,j,k}^{n}$),
 amplifier ($w_{i,j,k}^{a}$), or de-amplifier ($w_{i,j,k}^{d}$). Neutral words hold no value in the equation but do affect word count ($n$).  Each polarized word is then weighted ($w$) based on the weights from the `polarity_dt` argument and then further weighted by the function and number of the valence shifters directly surrounding the positive or negative word ($pw$).  Pause ($cw$) locations (punctuation that denotes a pause including commas, colons, and semicolons) are indexed and considered in calculating the upper and lower bounds in the polarized context cluster. This is because these marks indicate a change in thought and words prior are not necessarily connected with words after these punctuation marks.  The lower bound of the polarized context cluster is constrained to $\max \{pw_{i,j,k - nb}, 1, \max \{cw_{i,j,k} < pw_{i,j,k}\}\}$ and the upper bound is constrained to $\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,j,k}\}\}$ where $w_{i,jn}$ is the number of words in the sentence.
@@ -259,7 +259,7 @@ sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 
 ## Annie Swafford's Examples
 
-[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 4 dictionary approaches (syuzhet, Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, the lookup based [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis) package, the [meanr](https://github.com/wrathematics/meanr) package (written in C level code), and my own algorithm with both the default Hu & Liu (2004) polarity lexicon as well as [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicon from the [**lexicon**](https://github.com/trinker/lexicon) package.
+[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 4 dictionary approaches (syuzhet, Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, the lookup based [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis) package, the [meanr](https://github.com/wrathematics/meanr) package (written in C level code), and my own algorithm with default Jockers (2017) polarity lexicon as well as Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicons available from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
 
 ```{r, message=FALSE, comment=NA}
@@ -287,8 +287,9 @@ colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnaly
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase)[["sentiment"]],
-    hu_liu = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
-    sentiword = round(sentiment(ase, lexicon::hash_sentiword, question.weight = 0)[["sentiment"]], 2),    
+    sentimentr_jockers = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
+    sentimentr_huliu = round(sentiment(ase, lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
+    sentimentr_sentiword = round(sentiment(ase, lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
     RSentiment = calculate_score(ase), 
     SentimentAnalysis,
     meanr = score(ase)[['score']],
@@ -307,8 +308,9 @@ ase_100 <- rep(ase, 100)
 
 stanford <- function() {sentiment_stanford(ase_100)}
 
-sentimentr_hu_liu <- function() sentiment(ase_100)
-sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiword) 
+sentimentr_jockers <- function() sentiment(ase_100, lexicon::hash_sentiment_jockers)
+sentimentr_huliu <- function() sentiment(ase_100, lexicon::hash_sentiment_huliu)
+sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiment_sentiword) 
     
 RSentiment <- function() calculate_score(ase_100) 
     
@@ -323,7 +325,7 @@ syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
      
 microbenchmark(
     stanford(),
-    sentimentr_hu_liu(),
+    sentimentr_huliu(),
     sentimentr_sentiword(),
     RSentiment(), 
     SentimentAnalysis(),
@@ -374,7 +376,7 @@ Across all three contexts, notice that the Stanford coreNLP algorithm is better 
 
 The Jockers, Bing, Hu & Lu, and Afinn dictionaries all do well with regard to not assigning negative scores to positive statements, but perform less well in the reverse, often assigning positive scores to negative statements, though Jockers' dictionary outperforms the others.  We can now see that the reason for the NRC's poorer performance in accuracy rate above is its inability to discriminate.  The Sentiword dictionary does well at discriminating (like Stanford's coreNLP) but lacks accuracy.  We can deduce two things from this observation:
 
-1. Larger dictionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(lexicon::hash_sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(lexicon::hash_sentiment_huliu), big.mark=",")`])
+1. Larger dictionaries discriminate better (Sentiword [n = `r  prettyNum(nrow(lexicon::hash_sentiment_sentiword), big.mark=",")`] vs. Hu & Lu [n = `r prettyNum(nrow(lexicon::hash_sentiment_huliu), big.mark=",")`])
 2. The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a dictionary lookup approach to sentiment detection, potentially, improving on discrimination and accuracy.

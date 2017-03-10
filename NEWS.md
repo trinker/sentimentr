@@ -17,7 +17,7 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 0.5.0 - 
+sentimentr 0.5.0 - 1.0.0
 ----------------------------------------------------------------
 
 **BUG FIXES**
@@ -44,8 +44,8 @@ sentimentr 0.5.0 -
 
 **MINOR FEATURES**
 
-* `sentiment_by` picks becomes a method function that now accepts `sentiment_by`
-  and `sentiment` oectes for `text.var` argument in addition to default
+* `sentiment_by` becomes a method function that now accepts `sentiment_by`
+  and `sentiment` objects for `text.var` argument in addition to default
   `character`.
 
 **IMPROVEMENTS**
@@ -75,6 +75,9 @@ sentimentr 0.5.0 -
 * `but.weight` argument in `sentiment` function renamed to `adversative.weight`
   to better describe the function with a linguistics term.
 
+* `sentimentr` now uses the Jockers (2017) dictionary by default rather than the 
+  Hu & Liu (2004).  THis may result in breaks to backwards compatibility,
+  hence the major version bump (1.0.0).
 
 sentimentr 0.3.0 - 0.4.0
 ----------------------------------------------------------------

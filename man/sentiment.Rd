@@ -4,7 +4,7 @@
 \alias{sentiment}
 \title{Polarity Score (Sentiment Analysis)}
 \usage{
-sentiment(text.var, polarity_dt = lexicon::hash_sentiment_huliu,
+sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
   question.weight = 1, adversative.weight = 0.85, missing_value = 0, ...)
@@ -19,7 +19,10 @@ dictionaries that can be used here: \code{lexicon::hash_sentiment_huliu},
 and \code{lexicon::hash_sentiment_sentiword}.  Additionally, the 
 \code{as_key} function can be used to make a sentiment frame suitable for
 \code{polarity_dt}.  This takes a 2 column data.frame with the first column
-being words and the second column being polarity values.}
+being words and the second column being polarity values.  Note that as of 
+version 1.0.0 \pkg{sentimentr} switched from the Liu & HU (2004) dictionary
+as the default to Jocker's (2017) dictionary from the \pkg{syuzhet} package.
+Use \code{lexicon::hash_sentiment_huliu} to obtain the old behavior.}
 
 \item{valence_shifters_dt}{A \pkg{data.table} of valence shifters that
 can alter a polarized word's meaning and an integer key for negators (1),
@@ -88,7 +91,7 @@ control of the algorithm that may boost performance in different contexts.
 }
 \details{
 The equation used by the algorithm to assign value to polarity of
-each sentence fist utilizes the sentiment dictionary (e.g., Hu and Liu, 2004) 
+each sentence fist utilizes the sentiment dictionary (e.g., Jockers, 2017) 
 to tag polarized words.  Each paragraph
 (\eqn{p_i = \{s_1, s_2, ..., s_n\}}{p_i = \{s_1, s_2, ... s_n\}}) composed of
 sentences, is broken into element sentences
@@ -104,13 +107,13 @@ merely represent a complete turn of talk.  For example t may be a cell level
 response in a questionnaire composed of sentences.
 
 The words in each sentence (\eqn{w_{i,j,k}}) are searched and compared to a
-dictionary of polarized words (e.g., the modified version of Hu, M., & Liu, 
-B.'s (2004) dictionary found in the \pkg{lexicon} package).
-Positive (\eqn{w_{i,j,k}^{+}}{w_i,j,k^+}) and negative
-(\eqn{w_{i,j,k}^{-}}{w_i,j,k^-}) words are tagged with a \eqn{+1} and \eqn{-1}
-respectively.  I will denote polarized words as \eqn{pw} for convenience. These
-will form a polar cluster (\eqn{c_{i,j,l}}{c_i,j,l}) which is a subset of the a
-sentence (\eqn{c_{i,j,l} \subseteq s_i,j }{l_i,j,l \subseteq s_i,j}).
+dictionary of polarized words (e.g., Jockers (2017) dictionary found in 
+the \pkg{lexicon} package).  Positive (\eqn{w_{i,j,k}^{+}}{w_i,j,k^+}) and
+ negative (\eqn{w_{i,j,k}^{-}}{w_i,j,k^-}) words are tagged with a \eqn{+1} 
+ and \eqn{-1} respectively.  I will denote polarized words as \eqn{pw} for 
+ convenience. These will form a polar cluster (\eqn{c_{i,j,l}}{c_i,j,l}) 
+ which is a subset of the a sentence 
+ (\eqn{c_{i,j,l} \subseteq s_i,j }{l_i,j,l \subseteq s_i,j}).
 
 The polarized context cluster (\eqn{c_{i,j,l}}) of words is pulled from around
 the polarized word (\eqn{pw}) and defaults to 4 words before and two words
@@ -184,15 +187,18 @@ Where:
 }
 \note{
 The polarity score is dependent upon the polarity dictionary used.
-This function defaults to the word polarity dictionary used by Hu, M., &
-Liu, B. (2004), however, this may not be appropriate, for example, in the 
-context of children in a classroom.  The user may (is encouraged) to 
-provide/augment the dictionary (see the \code{as_key} function).  For 
-instance the word "sick" in a high school setting may mean that something is 
-good, whereas "sick" used by a typical adult indicates something is not right 
-or negative connotation (\strong{deixis}).
+This function defaults to a slightly modified vaersion of the polarity word  
+dictionary used by Jockers (2017), however, this may not be appropriate, for 
+example, in the context of children in a classroom.  The user may (is 
+encouraged) to provide/augment the dictionary (see the \code{as_key} 
+function).  For instance the word "sick" in a high school setting may mean 
+that something is good, whereas "sick" used by a typical adult indicates 
+something is not right or negative connotation (\strong{deixis}).
 }
 \references{
+Jockers, M. L. (2017). Syuzhet: Extract sentiment and plot arcs 
+from text. Retrieved from https://github.com/mjockers/syuzhet
+
 Hu, M., & Liu, B. (2004). Mining opinion features in customer
 reviews. National Conference on Artificial Intelligence.
 

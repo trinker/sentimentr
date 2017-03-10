@@ -27,7 +27,7 @@
 #' 
 #' attributes(extract_sentiment_terms(x))$counts
 #' attributes(extract_sentiment_terms(x))$elements
-extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_huliu,
+extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     hyphen = "", ...){
 
     sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
