@@ -13,6 +13,7 @@ Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
 <a href="https://img.shields.io/badge/Version-1.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-1.0.1-orange.svg" alt="Version"/></a>
 </p>
+
 ![](tools/sentimentr_logo/r_sentimentr.png)
 
 **sentimentr** is designed to quickly calculate text polarity sentiment
