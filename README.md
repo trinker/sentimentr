@@ -1,20 +1,6 @@
--   [Why sentimentr](#why-sentimentr)
--   [Functions](#functions)
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Examples](#examples)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated
-            Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence
-            Level](#plotting-at-the-sentence-level)
-    -   [Making and Updating
-        Dictionaries](#making-and-updating-dictionaries)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, meanr, and
-        Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
+sentimentr   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
+============
+
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -25,7 +11,8 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-
+<a href="https://img.shields.io/badge/Version-1.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-1.0.1-orange.svg" alt="Version"/></a>
+</p>
 ![](tools/sentimentr_logo/r_sentimentr.png)
 
 **sentimentr** is designed to quickly calculate text polarity sentiment
@@ -54,8 +41,27 @@ optimizes speed which the Stanford's parser does not. This leads to a
 trade off of speed vs. accuracy. Simply, **sentimentr** attempts to
 balance accuracy and speed.
 
+
+Table of Contents
+============
+
+-   [Why sentimentr](#why-sentimentr)
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
+
 Why sentimentr
-==============
+============
+
 
 ***So what does*** **sentimentr** ***do that other packages don't and
 why does it matter?***
@@ -825,7 +831,7 @@ reviews.
 Contact
 =======
 
-You are welcome to: \* submit suggestions and bug-reports at:
-<https://github.com/trinker/sentimentr/issues> \* send a pull request
-on: <https://github.com/trinker/sentimentr/> \* compose a friendly
-e-mail to: <tyler.rinker@gmail.com>
+You are welcome to:    
+- submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues>    
+- send a pull request on: <https://github.com/trinker/sentimentr/>    
+- compose a friendly e-mail to: <tyler.rinker@gmail.com>    
