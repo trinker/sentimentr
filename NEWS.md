@@ -17,6 +17,10 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
+sentimentr 1.0.1 -
+----------------------------------------------------------------
+
+
 sentimentr 0.5.0 - 1.0.0
 ----------------------------------------------------------------
 
@@ -30,7 +34,7 @@ sentimentr 0.5.0 - 1.0.0
 * `downweighted_zero_average`, `average_weighted_mixed_sentiment`, and 
   `average_mean` added for use with `sentiment_by` to reweight
   zero and negative values in the group by averaging (depending upon the 
-  assumptions the analysts is making).
+  assumptions the analyst is making).
   
 * `general_rescale` added as a means to rescale sentiment scores in a 
   generalized way.
@@ -76,7 +80,7 @@ sentimentr 0.5.0 - 1.0.0
   to better describe the function with a linguistics term.
 
 * `sentimentr` now uses the Jockers (2017) dictionary by default rather than the 
-  Hu & Liu (2004).  THis may result in breaks to backwards compatibility,
+  Hu & Liu (2004).  This may result in breaks to backwards compatibility,
   hence the major version bump (1.0.0).
 
 sentimentr 0.3.0 - 0.4.0
