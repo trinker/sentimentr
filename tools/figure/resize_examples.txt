@@ -1,0 +1,2 @@
+cd C:\Users\Tyler\GitHub\sentimentr\tools\figure
+ffmpeg -i comparisons_between_sentiment_detectors2a.png -vf scale=1680:-1 comparisons_between_sentiment_detectors2.png

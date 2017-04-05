@@ -184,6 +184,7 @@
 #' \deqn{w_{neg}= \left(\sum{w_{i,j,k}^{n}}\right) \bmod {2}}
 #'
 #' @importFrom data.table := .N
+#' @importFrom lexicon hash_sentiment_jockers
 #' @examples
 #' mytext <- c(
 #'    'do you like it?  But I hate really bad dogs',
@@ -343,6 +344,7 @@ replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}
 #' sentiment across the duration of the text.
 #' @return Returns a \pkg{ggplot2} object.
 #' @method plot sentiment
+#' @importFrom syuzhet get_dct_transform
 #' @export
 plot.sentiment <- function(x, transformation.function = syuzhet::get_dct_transform, ...){
 

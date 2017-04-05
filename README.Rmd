@@ -18,6 +18,7 @@ verbadge <- sprintf('<a href="https://img.shields.io/badge/Version-%s-orange.svg
 ```{r, echo=FALSE}
 library(knitr)
 library(pander)
+library(dplyr)
 options(scipen=999)
 knit_hooks$set(htmlcap = function(before, options, envir) {
   if(!before) {
@@ -25,7 +26,7 @@ knit_hooks$set(htmlcap = function(before, options, envir) {
     }
     })
 knitr::opts_knit$set(self.contained = TRUE, cache = FALSE)
-knitr::opts_chunk$set(fig.path = "inst/figure/")
+knitr::opts_chunk$set(fig.path = "tools/figure/")
 ```
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
@@ -35,7 +36,7 @@ knitr::opts_chunk$set(fig.path = "inst/figure/")
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
 `r verbadge`
 
-<img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">  
+![](tools/sentimentr_logo/r_sentimentr.png)
 
 **sentimentr** is designed to quickly calculate text polarity sentiment at the sentence level and optionally aggregate by rows or grouping variable(s).
 
@@ -303,7 +304,7 @@ left_just(data.frame(
 Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that **RSentiment** and Stanford take the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.  **meanr** is lighting fast.  **SentimentAnalysis** is a bit slower than other methods but is returning 3 scores from 3 different dictionaries. 
 
 
-```{r, message = FALSE, comment=NA}
+```{r, message = FALSE, comment=NA, eval=FALSE}
 ase_100 <- rep(ase, 100)
 
 stanford <- function() {sentiment_stanford(ase_100)}
@@ -339,6 +340,34 @@ microbenchmark(
 )
 ```
 
+```
+Unit: microseconds
+                   expr           min            lq          mean
+             stanford()  29295281.790  29400023.402  29734984.964
+   sentimentr_jockers()    228599.112    234849.279    241180.734
+     sentimentr_huliu()    266767.251    271540.065    280659.613
+ sentimentr_sentiword()   1015145.899   1028339.030   1050132.847
+           RSentiment() 194034175.571 201517746.098 283900476.987
+    SentimentAnalysis()   8380587.287   8703374.491   8815665.514
+      syuzhet_syuzhet()    464279.337    483483.492    492185.992
+         syuzhet_binn()    400259.877    410813.191    417908.880
+          syuzhet_nrc()    765286.614    926356.089    987816.747
+        syuzhet_afinn()    177743.019    185607.456    190791.706
+                meanr()       978.744      1199.208      1358.363
+        median            uq           max neval
+  29504765.013  29954836.552  30404908.090     3
+    241099.445    247471.545    253843.644     3
+    276312.879    287605.794    298898.709     3
+   1041532.162   1067626.321   1093720.480     3
+ 209001316.624 328833627.696 448665938.767     3
+   9026161.695   9033204.628   9040247.560     3
+    502687.646    506139.319    509590.993     3
+    421366.506    426733.381    432100.256     3
+   1087425.564   1099081.813   1110738.062     3
+    193471.893    197316.050    201160.206     3
+      1419.672      1548.173      1676.674     3
+```
+
 ## Comparing sentimentr, syuzhet, meanr, and Stanford
 
 The accuracy of an algorithm weighs heavily into the decision as to what approach to take in sentiment detection. I have selected algorithms/packages that stand out as fast and/or accurate to perform benchmarking on actual data. Both **syuzhet** and **sentimentr** provide multiple dictionaries with a general algorithm to compute sentiment scores. **syuzhet** provides 4 approaches while **sentimentr** provides 2, but can be extended easily using the 4 dictionaries from the **syuzhet** package.  **meanr** is a very fast algorithm.  The follow visualization provides the accuracy of these approaches in comparison to Stanford's **Java** based implementation of sentiment detection.  The visualization is generated from testing on three reviews data sets from Kotzias, Denil, De Freitas, & Smyth (2015).  These authors utilized the three 1000 element data sets from:
@@ -351,7 +380,8 @@ The data sets are hand scored as either positive or negative.  The testing here 
 
 - Kotzias, D., Denil, M., De Freitas, N., & Smyth,P. (2015). *From group to individual labels using deep features*. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 597-606. http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 
-<img src="inst/figure/comparisons_between_sentiment_detectors_b.png" width="100%" alt="sent comp">  
+
+![](tools/figure/comparisons_between_sentiment_detectors_b.png)
 
 The bar graph on the left shows the accuracy rates for the various sentiment set-ups in the three review contexts.  The rank plot on the right shows how the rankings for the methods varied across the three review contexts.  
 
@@ -368,7 +398,8 @@ file.copy(testing, getwd())
 
 In the figure below we compare raw table counts as a heat map, plotting the predicted values from the various algorithms on the x axis versus the human scored values on the y axis.  
 
-<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width = "80%" alt="sent comp">  
+
+![](tools/figure/comparisons_between_sentiment_detectors2.png)
 
 Across all three contexts, notice that the Stanford coreNLP algorithm is better at:
 
@@ -398,7 +429,7 @@ set.seed(2)
 highlight(with(subset(cannon_reviews, number %in% sample(unique(number), 3)), sentiment_by(review, number)))
 ```
 
-![](inst/figure/highlight.png)
+![](tools/figure/highlight.png)
 
 # Contact
 

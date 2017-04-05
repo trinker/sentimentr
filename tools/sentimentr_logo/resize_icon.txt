@@ -1,0 +1,1 @@
+ffmpeg -i r_sentimentra.png -vf scale=150:-1 r_sentimentr.png

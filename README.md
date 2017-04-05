@@ -1,6 +1,20 @@
-sentimentr   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
-============
-
+-   [Why sentimentr](#why-sentimentr)
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated
+            Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence
+            Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating
+        Dictionaries](#making-and-updating-dictionaries)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, meanr, and
+        Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -11,9 +25,8 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-<a href="https://img.shields.io/badge/Version-1.0.0-orange.svg"><img src="https://img.shields.io/badge/Version-1.0.0-orange.svg" alt="Version"/></a>
-</p>
-<img src="inst/sentimentr_logo/r_sentimentr.png" width="150" alt="readability Logo">
+
+![](tools/sentimentr_logo/r_sentimentr.png)
 
 **sentimentr** is designed to quickly calculate text polarity sentiment
 at the sentence level and optionally aggregate by rows or grouping
@@ -41,27 +54,8 @@ optimizes speed which the Stanford's parser does not. This leads to a
 trade off of speed vs. accuracy. Simply, **sentimentr** attempts to
 balance accuracy and speed.
 
-
-Table of Contents
-============
-
--   [Why sentimentr](#why-sentimentr)
--   [Functions](#functions)
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Examples](#examples)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
-
 Why sentimentr
-============
-
+==============
 
 ***So what does*** **sentimentr** ***do that other packages don't and
 why does it matter?***
@@ -453,7 +447,7 @@ Plotting
 
     plot(out)
 
-![](inst/figure/unnamed-chunk-9-1.png)
+![](tools/figure/unnamed-chunk-9-1.png)
 
 ### Plotting at the Sentence Level
 
@@ -466,7 +460,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](inst/figure/unnamed-chunk-10-1.png)
+![](tools/figure/unnamed-chunk-10-1.png)
 
 Making and Updating Dictionaries
 --------------------------------
@@ -751,7 +745,7 @@ output to determine accuracy rates.
     Data Mining. 597-606.
     <http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf>
 
-<img src="inst/figure/comparisons_between_sentiment_detectors_b.png" width="100%" alt="sent comp">
+![](tools/figure/comparisons_between_sentiment_detectors_b.png)
 
 The bar graph on the left shows the accuracy rates for the various
 sentiment set-ups in the three review contexts. The rank plot on the
@@ -783,7 +777,7 @@ In the figure below we compare raw table counts as a heat map, plotting
 the predicted values from the various algorithms on the x axis versus
 the human scored values on the y axis.
 
-<img src="inst/figure/comparisons_between_sentiment_detectors2.png" width = "80%" alt="sent comp">
+![](tools/figure/comparisons_between_sentiment_detectors2.png)
 
 Across all three contexts, notice that the Stanford coreNLP algorithm is
 better at:
@@ -826,12 +820,12 @@ reviews.
     set.seed(2)
     highlight(with(subset(cannon_reviews, number %in% sample(unique(number), 3)), sentiment_by(review, number)))
 
-![](inst/figure/highlight.png)
+![](tools/figure/highlight.png)
 
 Contact
 =======
 
-You are welcome to:    
-- submit suggestions and bug-reports at: <https://github.com/trinker/sentimentr/issues>    
-- send a pull request on: <https://github.com/trinker/sentimentr/>    
-- compose a friendly e-mail to: <tyler.rinker@gmail.com>    
+You are welcome to: \* submit suggestions and bug-reports at:
+<https://github.com/trinker/sentimentr/issues> \* send a pull request
+on: <https://github.com/trinker/sentimentr/> \* compose a friendly
+e-mail to: <tyler.rinker@gmail.com>
