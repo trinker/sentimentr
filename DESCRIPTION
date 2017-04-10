@@ -10,7 +10,7 @@ Depends: R (>= 3.1.0)
 Suggests: testthat
 Imports: data.table, ggplot2, graphics, grid, lexicon (>= 0.2.0),
         methods, stats, stringi, syuzhet, textclean (>= 0.3.1), utils
-Date: 2017-04-04
+Date: 2017-04-09
 License: MIT + file LICENSE
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
