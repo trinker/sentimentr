@@ -40,8 +40,8 @@ function (text.var, polarity_dt = lexicon::hash_sentiment_huliu,
 
     trms <- unlist(list(vals, pols), recursive=FALSE)
 
-    x <- textshape::split_sentence(text.var)
-    mod <- termco::token_count(unlist(x), TRUE, trms)
+    x <- unlist(textshape::split_sentence(text.var))
+    mod <- termco::token_count(x, TRUE, trms)
 
     cnts <- termco::term_cols(mod)
     cnts['polarized'] <- rowSums(cnts[c('negative', 'positive')])
@@ -49,9 +49,9 @@ function (text.var, polarity_dt = lexicon::hash_sentiment_huliu,
   
     tab <- X %*% t(X)
     NT <- sum(mod[['n.tokens']])
-    N <- sum(stringi::stri_count_words(unlist(x)), na.rm =TRUE)
+    N <- sum(stringi::stri_count_words(x), na.rm =TRUE)
     Features <- textshape::tidy_vector(colSums(cnts)/N, "Attribute", "Rate")
-    Cooccurrences <- textshape::tidy_vector(tab[-c(5:7), 'polarized']/tab[7, 'polarized'],'Valence_Shifter', 'Cooccurrence')
+    Cooccurrences <- textshape::tidy_vector(tab[-c(5:7), 'polarized']/tab[7, 'polarized'], 'Valence_Shifter', 'Cooccurrence')
 
     list(Meta = data.frame(Stat = c("words", "tokens", "sentences", "questions"), 
         n = c(N, NT, length(x), sum(stringi::stri_count_regex(x, "\\?\\s*$"), na.rm =TRUE))), 
