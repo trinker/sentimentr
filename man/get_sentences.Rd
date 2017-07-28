@@ -2,17 +2,14 @@
 % Please edit documentation in R/get_sentences.R
 \name{get_sentences}
 \alias{get_sentences}
-\alias{get_sentences2}
 \title{Get Sentences}
 \usage{
 get_sentences(x, ...)
-
-get_sentences2(x, ...)
 }
 \arguments{
 \item{x}{A character vector, \code{sentiment}, or \code{sentiment_by} object.}
 
-\item{\ldots}{Ignored.}
+\item{\ldots}{Other arguments passed to \code{\link[textshape]{split_sentence}}.}
 }
 \value{
 Returns a list of vectors of sentences.
@@ -24,15 +21,18 @@ text to lower case and removing non-sentence boundary periods. \code{get_sentenc
 retains case and non-sentence boundary periods and should be preferable in
 such instances where these features are deemed important to the analysis at
 hand.
-
-\code{get_sentences2} - Get sentences from a character vector but does not
-force to lower case.
 }
 \examples{
-(x <- paste0(
-    "Mr. Brown comes! He says hello. i give him coffee.  i will ",
-    "go at 5 p. m. eastern time.  Or somewhere in between!go there"
-))
-get_sentences(x)
-get_sentences2(x)
+dat <- data.frame(
+    w = c('Person 1', 'Person 2'),
+    x = c(paste0(
+        "Mr. Brown comes! He says hello. i give him coffee.  i will ",
+        "go at 5 p. m. eastern time.  Or somewhere in between!go there"
+    ), "One more thought for the road! I am going now.  Good day."),
+    y = state.name[c(32, 38)], 
+    z = c(.456, .124),
+    stringsAsFactors = FALSE
+)
+get_sentences(dat$x)
+get_sentences(dat)
 }

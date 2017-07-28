@@ -10,7 +10,10 @@ sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
   question.weight = 1, adversative.weight = 0.85, missing_value = 0, ...)
 }
 \arguments{
-\item{text.var}{The text variable.}
+\item{text.var}{The text variable.  Can be a \code{get_sentences} object or
+a raw character vector though \code{get_sentences} is preferred as it avoids
+the repeated cost of doing sentence boundary disambiguation every time
+\code{sentiment} is run.}
 
 \item{polarity_dt}{A \pkg{data.table} of positive/negative words and
 weights with x and y as column names.  The \pkg{lexicon} package has 4 

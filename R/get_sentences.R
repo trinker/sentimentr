@@ -8,17 +8,23 @@
 #' hand.
 #'
 #' @param x A character vector, \code{sentiment}, or \code{sentiment_by} object.
-#' @param \ldots Ignored.
+#' @param \ldots Other arguments passed to \code{\link[textshape]{split_sentence}}.
 #' @export
 #' @return Returns a list of vectors of sentences.
 #' @rdname get_sentences
 #' @examples
-#' (x <- paste0(
-#'     "Mr. Brown comes! He says hello. i give him coffee.  i will ",
-#'     "go at 5 p. m. eastern time.  Or somewhere in between!go there"
-#' ))
-#' get_sentences(x)
-#' get_sentences2(x)
+#' dat <- data.frame(
+#'     w = c('Person 1', 'Person 2'),
+#'     x = c(paste0(
+#'         "Mr. Brown comes! He says hello. i give him coffee.  i will ",
+#'         "go at 5 p. m. eastern time.  Or somewhere in between!go there"
+#'     ), "One more thought for the road! I am going now.  Good day."),
+#'     y = state.name[c(32, 38)], 
+#'     z = c(.456, .124),
+#'     stringsAsFactors = FALSE
+#' )
+#' get_sentences(dat$x)
+#' get_sentences(dat)
 get_sentences <- function(x, ...) {
     UseMethod("get_sentences")
 }
@@ -28,10 +34,46 @@ get_sentences <- function(x, ...) {
 #' @export
 #' @method get_sentences character
 get_sentences.character <- function(x, ...) {
-    out <- lapply(get_sents(trimws(x)), function(x) gsub("^\\s+|\\s+$", "", x))
-    class(out) <- unique(c("get_sentences", class(out)))
+    out <- textshape::split_sentence(x, ...)
+    make_class(out, "get_sentences", "get_sentences_character")
+}
+
+
+#' @export
+#' @method get_sentences character
+get_sentences.data.frame <- function(x, ...) {
+    
+    dots <- list(...)
+    
+    ## detect text variable
+    if (is.null(dots[['text.var']])) {
+        
+        z <- data.table::data.table(data.frame(x, stringsAsFactors = FALSE)) 
+        
+        text.var <- names(which.max(sapply(as.data.frame(z), function(y) {
+                if (!is.character(y) && !is.factor(y)) return(0)
+                mean(nchar(as.character(y)), na.rm = TRUE)
+        }))[1])
+        
+        if (length(text.var) == 0) {
+            stop("Could not detect `text.var`.  Please supply `text.var` explicitly via\n    ellipsis (...) argument (e.g. `text.var = \'my_text_column\'` ).")
+        }
+    } else {
+        text.var <- dots[['text.var']]
+    }
+    
+    out <- textshape::split_sentence(x, text.var = text.var, ...)
+    out <- make_class(out, "get_sentences", "get_sentences_data_frame")
+    attributes(out)   [['text.var']] <- text.var
+        
     out
 }
+
+# get_sentences.character <- function(x, ...) {
+#     out <- lapply(get_sents(trimws(x)), function(x) gsub("^\\s+|\\s+$", "", x))
+#     class(out) <- unique(c("get_sentences", class(out)))
+#     out
+# }
 
 #' @export
 #' @method get_sentences get_sentences
@@ -53,16 +95,6 @@ get_sentences.sentiment_by <- function(x, ...) {
 }
 
 
-#' Get Sentences
-#'
-#' \code{get_sentences2} - Get sentences from a character vector but does not
-#' force to lower case.
-#'
-#' @rdname get_sentences
-#' @export
-get_sentences2 <- function(x, ...) {
-    lapply(lapply(get_sents2(x), function(x) gsub("<<<TEMP>>>", ".", x)),
-        function(x) gsub("^\\s+|\\s+$", "", x))
-}
+
 
 

@@ -7,7 +7,10 @@
 #' for more information.  Other hyper-parameters may add additional fine tuned 
 #' control of the algorithm that may boost performance in different contexts.
 #'
-#' @param text.var The text variable.
+#' @param text.var The text variable.  Can be a \code{get_sentences} object or
+#' a raw character vector though \code{get_sentences} is preferred as it avoids
+#' the repeated cost of doing sentence boundary disambiguation every time
+#' \code{sentiment} is run.
 #' @param polarity_dt A \pkg{data.table} of positive/negative words and
 #' weights with x and y as column names.  The \pkg{lexicon} package has 4 
 #' dictionaries that can be used here: \code{lexicon::hash_sentiment_huliu}, 
@@ -191,10 +194,21 @@
 #'    'I am the best friend.',
 #'    'Do you really like it?  I\'m not a fan'
 #' )
+#' 
+#' ## works on a character vector but not the preferred method avoiding the 
+#' ## repeated cost of doing sentence boundary disambiguation every time 
+#' ## `sentiment` is run
+#' \dontrun{
+#' sentiment(mytext)
+#' }
+#' 
+#' ## preferred method avoiding paying the cost 
+#' mytext <- get_sentences(mytext)
 #' sentiment(mytext)
 #' sentiment(mytext, question.weight = 0)
 #'
-#' (sam <- sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am)))
+#' sam_dat <- get_sentences(gsub("Sam-I-am", "Sam I am", sam_i_am))
+#' (sam <- sentiment(sam_dat))
 #' plot(sam)
 #' plot(sam, scale_range = TRUE, low_pass_size = 5)
 #' plot(sam, scale_range = TRUE, low_pass_size = 10)
@@ -203,10 +217,36 @@
 #' plot(sam, transformation.function = syuzhet::get_transformed_values,  
 #'     scale_range = TRUE, low_pass_size = 5)
 #' 
-#' y <- "He was not the sort of man that one would describe as especially handsome."
+#' y <- get_sentences(
+#'     "He was not the sort of man that one would describe as especially handsome."
+#' )
 #' sentiment(y)
 #' sentiment(y, n.before=Inf)
+#' 
+#' dat <- data.frame(
+#'     w = c('Person 1', 'Person 2'),
+#'     x = c(paste0(
+#'         "Mr. Brown is nasty! He says hello. i give him rage.  i will ",
+#'         "go at 5 p. m. eastern time.  Angry thought in between!go there"
+#'     ), "One more thought for the road! I am going now.  Good day and good riddance."),
+#'     y = state.name[c(32, 38)], 
+#'     z = c(.456, .124),
+#'     stringsAsFactors = FALSE
+#' )
+#' sentiment(get_sentences(dat$x))
+#' sentiment(get_sentences(dat))
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+    valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
+    amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
+    adversative.weight = .85, missing_value = 0, ...){
+    
+    UseMethod('sentiment')
+    
+}
+
+#' @export
+#' @method sentiment get_sentences_character
+sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, missing_value = 0, ...){
@@ -228,8 +268,9 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
 
     # break rows into sentences, count words
     # space fill (~~), break into words
-    sents <- get_sents(gsub("(\\s*)([;:,]+)", " \\2", text.var))
+    sents <- text.var
     sent_dat <- make_sentence_df2(sents)
+
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 
     # make sentence id for each row id
@@ -328,6 +369,47 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
      sentences[["sentences"]] <- sents
      attributes(out)[["sentences"]] <- sentences
      out[]
+}
+
+#' @export
+#' @method sentiment character
+sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+    valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
+    amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
+    adversative.weight = .85, missing_value = 0, ...){
+
+    warning(paste0('Each time `sentiment` is run it has to do sentence boundary ',
+        'disambiguation when a raw `character` vector is passed to `text.var`.\n', 
+        'This may be costly of time and memory.  It is highly recommended that ',
+        'the user first runs the raw `character` vector through the `get_sentences` function.'
+    ))
+    
+    sents <- get_sentences(text.var)
+    sentiment(sents, polarity_dt = polarity_dt, 
+        valence_shifters_dt = valence_shifters_dt, hyphen = hyphen,
+        amplifier.weight = amplifier.weight, n.before = n.before, 
+        n.after = n.after, question.weight = question.weight,
+        adversative.weight = adversative.weight, missing_value = missing_value, ...)
+  
+}
+
+#' @export
+#' @method sentiment get_sentences_data_frame
+sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+    valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
+    amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
+    adversative.weight = .85, missing_value = 0, ...){
+ 
+    x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
+
+    sent_out <- sentiment(x, polarity_dt = polarity_dt, 
+            valence_shifters_dt = valence_shifters_dt, hyphen = hyphen,
+            amplifier.weight = amplifier.weight, n.before = n.before, 
+            n.after = n.after, question.weight = question.weight,
+            adversative.weight = adversative.weight, missing_value = missing_value, ...)
+    
+    cbind(text.var, sent_out[, c('word_count',  'sentiment')])
+  
 }
 
 replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}

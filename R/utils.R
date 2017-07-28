@@ -1,3 +1,9 @@
+make_class <- function(x, ...) {
+    class(x) <- unique(c(..., class(x)))    
+    x
+}
+
+
 #get_sents <- function(x) {
 #    x <- stringi::stri_replace_all_regex(stringi::stri_trans_tolower(x), sent_regex, "")
 #    stringi::stri_split_regex(x, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!)\\s")
