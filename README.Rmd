@@ -150,8 +150,11 @@ pacman::p_load_current_gh("trinker/lexicon", "trinker/sentimentr")
 
 ```{r}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(sentimentr)
+pacman::p_load(sentimentr, dplyr, magrittr)
 ```
+
+## Preferred Workflow
+Here is a basic `sentiment` demo.  Notice that the first thing you should do is to split your text data into sentences (a process called sentence boundary disambiguation) via the `get_sentences` function.  This can be handled within `sentiment` (i.e., you can pass a raw character vector) but it slows the function down and should be done one time rather than every time the function is called.  Additionally, a warning will be thrown if a raw character vector is passed.  The preferred workflow is to spit the text into sentences with `get_sentences`before any sentiment analysis is done.
 
 ```{r}
 mytext <- c(
@@ -159,6 +162,8 @@ mytext <- c(
     'I am the best friend.',
     'Do you really like it?  I\'m not a fan'
 )
+
+mytext <- get_sentences(mytext)
 sentiment(mytext)
 ```
 
@@ -170,15 +175,42 @@ mytext <- c(
     'I am the best friend.',
     'Do you really like it?  I\'m not a fan'
 )
+mytext <- get_sentences(mytext)
 sentiment_by(mytext)
 ```
 
 To aggregate by grouping variables use `sentiment_by` using the `by` argument.
 
 ```{r}
-(out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+(out <- with(
+    presidential_debates_2012, 
+    sentiment_by(
+        get_sentences(dialogue), 
+        list(person, time)
+    )
+))
 ```
 
+## Tidy Approach
+
+Or if you prefer a more tidy approach:
+
+```{r}
+library(magrittr)
+library(dplyr)
+
+presidential_debates_2012 %>%
+    dplyr::mutate(dialogue_split = get_sentences(dialogue)) %$%
+    sentiment_by(dialogue_split, list(person, time))
+```
+
+Note that you can skip the `dplyr::mutate` step by using `get_sentences` on a `data.frame` as seen below:
+
+```{r}
+presidential_debates_2012 %>%
+    get_sentences() %$%
+    sentiment_by(dialogue, list(person, time))
+```
 
 ## Plotting 
 
@@ -232,7 +264,7 @@ is_key(mykey)
 The key is ready for use:
 
 ```{r}
-sentiment_by("I am a human.", polarity_dt = mykey)
+sentiment_by(get_sentences("I am a human."), polarity_dt = mykey)
 ```
 
 
@@ -247,7 +279,7 @@ Updating (adding or removing terms) a key is also useful.  The `update_key` func
 ```{r}
 mykey_dropped <- update_key(mykey, drop = c("a", "h"))
 nrow(mykey_dropped)
-sentiment_by("I am a human.", polarity_dt = mykey_dropped)
+sentiment_by(get_sentences("I am a human."), polarity_dt = mykey_dropped)
 ```
 
 Next I add the terms "dog" and "cat" as a `data.frame` with sentiment values:
@@ -255,7 +287,7 @@ Next I add the terms "dog" and "cat" as a `data.frame` with sentiment values:
 ```{r}
 mykey_added <- update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 nrow(mykey_added)
-sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
+sentiment(get_sentences("I am a human. The dog.  The cat"), polarity_dt = mykey_added)
 ```
 
 ## Annie Swafford's Examples
@@ -288,9 +320,9 @@ colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnaly
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase)[["sentiment"]],
-    sentimentr_jockers = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
-    sentimentr_huliu = round(sentiment(ase, lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
-    sentimentr_sentiword = round(sentiment(ase, lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
+    sentimentr_jockers = round(sentiment(get_sentences(ase), question.weight = 0)[["sentiment"]], 2),
+    sentimentr_huliu = round(sentiment(get_sentences(ase), lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
+    sentimentr_sentiword = round(sentiment(get_sentences(ase), lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
     RSentiment = calculate_score(ase), 
     SentimentAnalysis,
     meanr = score(ase)[['score']],
@@ -306,12 +338,13 @@ Also of interest is the computational time used by each of these methods. To dem
 
 ```{r, message = FALSE, comment=NA, eval=FALSE}
 ase_100 <- rep(ase, 100)
-
+ase_100_split <- get_sentences(ase_100)
+    
 stanford <- function() {sentiment_stanford(ase_100)}
 
-sentimentr_jockers <- function() sentiment(ase_100, lexicon::hash_sentiment_jockers)
-sentimentr_huliu <- function() sentiment(ase_100, lexicon::hash_sentiment_huliu)
-sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiment_sentiword) 
+sentimentr_jockers <- function() sentiment(ase_100_split, lexicon::hash_sentiment_jockers)
+sentimentr_huliu <- function() sentiment(ase_100_split, lexicon::hash_sentiment_huliu)
+sentimentr_sentiword <- function() sentiment(ase_100_split, lexicon::hash_sentiment_sentiword) 
     
 RSentiment <- function() calculate_score(ase_100) 
     
@@ -425,8 +458,15 @@ file.copy(testing2, getwd())
 The user may wish to see the output from `sentiment_by` line by line with positive/negative sentences highlighted.  The `highlight` function wraps a `sentiment_by` output to produces a highlighted HTML file (positive = green; negative = pink). Here we look at three random reviews from Hu and Liu's (2004) Cannon G3 Camera Amazon product reviews.  
 
 ```{r, eval=FALSE}
+library(magritrr)
+library(dplyr)
 set.seed(2)
-highlight(with(subset(cannon_reviews, number %in% sample(unique(number), 3)), sentiment_by(review, number)))
+
+cannon_reviews %>%
+    filter(number %in% sample(unique(number), 3)) %>%
+    mutate(review = get_sentences(review)) %$%
+    sentiment_by(review, number) %>%
+    highlight()
 ```
 
 ![](tools/figure/highlight.png)

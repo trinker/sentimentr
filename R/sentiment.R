@@ -235,6 +235,16 @@
 #' )
 #' sentiment(get_sentences(dat$x))
 #' sentiment(get_sentences(dat))
+#' 
+#' \dontrun{
+#' ## tidy approach
+#' library(dplyr)
+#' library(magrittr)
+#' 
+#' cannon_reviews %>%
+#'    mutate(review_split = get_sentences(review)) %$%
+#'    sentiment(review_split)
+#' }
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,

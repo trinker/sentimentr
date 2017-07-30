@@ -82,6 +82,16 @@
 #' \dontrun{
 #' highlight(with(cannon_reviews, sentiment_by(review, number)))
 #' }
+#' 
+#' \dontrun{
+#' ## tidy approach
+#' library(dplyr)
+#' library(magrittr)
+#' 
+#' cannon_reviews %>%
+#'    mutate(review_split = get_sentences(review)) %$%
+#'    sentiment_by(review_split, number)
+#' }
 sentiment_by <- function(text.var, by = NULL, 
     averaging.function = average_downweighted_zero, group.names, ...){
 

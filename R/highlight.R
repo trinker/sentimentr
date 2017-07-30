@@ -4,10 +4,6 @@
 #' (positive = green; negative = pink) as an html file.
 #'
 #' @param x A \code{sentiment_by} object.
-#' @param original.text Optional original text (if the user wants to retain all
-#' punctuation and capitalization).  Default uses the text stored in the
-#' \code{sentiment_by} object that is striped of many punctuation marks and
-#' capitalizations.
 #' @param file A name of the html file output.
 #' @param open logical.  If \code{TRUE} the text highlighting document will
 #' attempt to be opened.
@@ -23,17 +19,24 @@
 #'
 #' dat[, gr:={gr= paste(person, time); cumsum(c(TRUE, gr[-1]!= gr[-.N]))}]
 #' dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue,
-#'     collapse = ' ')), by = gr][,gr:= NULL][]
+#'     collapse = ' ')), by = gr][,gr:= NULL][, 
+#'     dialogue_split := get_sentences(dialogue)][]
 #'
-#' (sent_dat <- with(dat, sentiment_by(dialogue, list(person, time))))
+#' (sent_dat <- with(dat, sentiment_by(dialogue_split, list(person, time))))
 #'
 #' \dontrun{
 #' highlight(sent_dat)
-#' highlight(sent_dat, original.text = dat[["dialogue"]])
-#'
-#' highlight(with(cannon_reviews, sentiment_by(review, number)))
+#' 
+#' ## tidy approach
+#' library(dplyr)
+#' library(magrittr)
+#' 
+#' cannon_reviews %>%
+#'    mutate(review_split = get_sentences(review)) %$%
+#'    sentiment_by(review_split, number) %>%
+#'    highlight()
 #' }
-highlight <- function(x, original.text = NULL, file = "polarity.html",
+highlight <- function(x, file = "polarity.html",
     open = TRUE, digits = 3, ...){
 
     polarity <- grouping.var <- NULL
@@ -48,12 +51,8 @@ highlight <- function(x, original.text = NULL, file = "polarity.html",
     y[, polarity := ifelse(sentiment > 0, "pos", ifelse(sentiment < 0, "neg", ""))][,
         polarity := ifelse(is.na(polarity), "", polarity)]
 
-    if (!is.null(original.text)){
-        txt <- get_sentences2(gsub("(\\s*)([;:,]+)", " rsreplacers\\2", original.text))
-    } else {
-        txt <- get_sentences(x)
-    }
-
+    txt <- get_sentences(x)
+    
     y[["txt"]] <- unlist(txt)
 
     y[, txt := ifelse(polarity == "", txt, sprintf("<mark class = \"%s\">%s</mark>", polarity, txt))]

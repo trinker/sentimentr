@@ -26,12 +26,12 @@ predicted <- c(1, 0, 1, -1, 1, 0, -1, -1, -1, -1, 0, 1,-1)
 validate_sentiment(actual, predicted)
 
 scores <- cannon_reviews$opinion.score
-mod <- sentiment_by(cannon_reviews$review)
+mod <- sentiment_by(get_sentences(cannon_reviews$review))
 
 validate_sentiment(mod$ave_sentiment, scores)
 validate_sentiment(mod, scores)
 
-x <- validate_sentiment(mod, actual)
+x <- validate_sentiment(mod, scores)
 attributes(x)$confusion_matrix
 attributes(x)$class_confusion_matrices
 attributes(x)$macro_stats

@@ -19,11 +19,18 @@
 #'    'I am the best friend.',
 #'    'Do you really like it?  I\'m not happy'
 #' )
-#'
+#' 
+#' mytext <- get_sentences(mytext)
 #' (x <- sentiment_by(mytext))
 #' uncombine(x)
 #'
-#' (y <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+#' (y <- with(
+#'     presidential_debates_2012, 
+#'     sentiment_by(
+#'         text.var = get_sentences(dialogue), 
+#'         by = list(person, time)
+#'     )
+#' ))
 #' uncombine(y)
 uncombine <- function(x, ...){
      UseMethod("uncombine")

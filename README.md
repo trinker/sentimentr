@@ -1,4 +1,4 @@
-sentimentr   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
+sentimentr   
 ============
 
 
@@ -11,7 +11,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-<a href="https://img.shields.io/badge/Version-1.0.1-orange.svg"><img src="https://img.shields.io/badge/Version-1.0.1-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-2.0.0-orange.svg"><img src="https://img.shields.io/badge/Version-2.0.0-orange.svg" alt="Version"/></a>
 </p>
 
 ![](tools/sentimentr_logo/r_sentimentr.png)
@@ -51,6 +51,8 @@ Table of Contents
 -   [The Equation](#the-equation)
 -   [Installation](#installation)
 -   [Examples](#examples)
+    -   [Preferred Workflow](#preferred-workflow)
+    -   [Tidy Approach](#tidy-approach)
     -   [Plotting](#plotting)
         -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
         -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
@@ -399,19 +401,34 @@ Examples
 ========
 
     if (!require("pacman")) install.packages("pacman")
-    pacman::p_load(sentimentr)
+    pacman::p_load(sentimentr, dplyr, magrittr)
+
+Preferred Workflow
+------------------
+
+Here is a basic `sentiment` demo. Notice that the first thing you should
+do is to split your text data into sentences (a process called sentence
+boundary disambiguation) via the `get_sentences` function. This can be
+handled within `sentiment` (i.e., you can pass a raw character vector)
+but it slows the function down and should be done one time rather than
+every time the function is called. Additionally, a warning will be
+thrown if a raw character vector is passed. The preferred workflow is to
+spit the text into sentences with `get_sentences`before any sentiment
+analysis is done.
 
     mytext <- c(
         'do you like it?  But I hate really bad dogs',
         'I am the best friend.',
         'Do you really like it?  I\'m not a fan'
     )
+
+    mytext <- get_sentences(mytext)
     sentiment(mytext)
 
     ##    element_id sentence_id word_count  sentiment
     ## 1:          1           1          4  0.2500000
-    ## 2:          1           2          6 -2.0085816
-    ## 3:          2           1          5  0.5813777
+    ## 2:          1           2          5 -1.2074767
+    ## 3:          2           1          4  0.6500000
     ## 4:          3           1          5  0.4024922
     ## 5:          3           2          4  0.0000000
 
@@ -423,29 +440,85 @@ To aggregate by element (column cell or vector element) use
         'I am the best friend.',
         'Do you really like it?  I\'m not a fan'
     )
+    mytext <- get_sentences(mytext)
     sentiment_by(mytext)
 
     ##    element_id word_count       sd ave_sentiment
-    ## 1:          1         10 1.597058    -0.8792908
-    ## 2:          2          5       NA     0.5813777
+    ## 1:          1          9 1.030592    -0.4787384
+    ## 2:          2          4       NA     0.6500000
     ## 3:          3          9 0.284605     0.2196345
 
 To aggregate by grouping variables use `sentiment_by` using the `by`
 argument.
 
-    (out <- with(presidential_debates_2012, sentiment_by(dialogue, list(person, time))))
+    (out <- with(
+        presidential_debates_2012, 
+        sentiment_by(
+            get_sentences(dialogue), 
+            list(person, time)
+        )
+    ))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.3015097    0.16673169
-    ##  2:     OBAMA time 2       7476 0.2399589    0.11663216
-    ##  3:     OBAMA time 3       7241 0.2614870    0.11842952
-    ##  4:    ROMNEY time 1       4085 0.2505313    0.12462353
-    ##  5:    ROMNEY time 2       7534 0.2382667    0.08540709
-    ##  6:    ROMNEY time 3       8302 0.2846332    0.10652350
-    ##  7:   CROWLEY time 2       1672 0.1878174    0.17977897
-    ##  8:    LEHRER time 1        765 0.2847680    0.18338771
-    ##  9:  QUESTION time 2        583 0.2076347    0.06625726
-    ## 10: SCHIEFFER time 3       1445 0.2471048    0.08780297
+    ##  1:     OBAMA time 1       3562 0.3133775    0.16920196
+    ##  2:     OBAMA time 2       7336 0.2298367    0.10078788
+    ##  3:     OBAMA time 3       7150 0.3033695    0.11811328
+    ##  4:    ROMNEY time 1       4003 0.2361113    0.09478697
+    ##  5:    ROMNEY time 2       7339 0.2053664    0.06826036
+    ##  6:    ROMNEY time 3       8141 0.2634597    0.09287391
+    ##  7:   CROWLEY time 2       1624 0.1620184    0.11278320
+    ##  8:    LEHRER time 1        757 0.2541787    0.12512245
+    ##  9:  QUESTION time 2        565 0.2004974    0.02267896
+    ## 10: SCHIEFFER time 3       1423 0.2270669    0.05612479
+
+Tidy Approach
+-------------
+
+Or if you prefer a more tidy approach:
+
+    library(magrittr)
+    library(dplyr)
+
+    presidential_debates_2012 %>%
+        dplyr::mutate(dialogue_split = get_sentences(dialogue)) %$%
+        sentiment_by(dialogue_split, list(person, time))
+
+    ##        person   time word_count        sd ave_sentiment
+    ##  1:     OBAMA time 1       3562 0.3133775    0.16920196
+    ##  2:     OBAMA time 2       7336 0.2298367    0.10078788
+    ##  3:     OBAMA time 3       7150 0.3033695    0.11811328
+    ##  4:    ROMNEY time 1       4003 0.2361113    0.09478697
+    ##  5:    ROMNEY time 2       7339 0.2053664    0.06826036
+    ##  6:    ROMNEY time 3       8141 0.2634597    0.09287391
+    ##  7:   CROWLEY time 2       1624 0.1620184    0.11278320
+    ##  8:    LEHRER time 1        757 0.2541787    0.12512245
+    ##  9:  QUESTION time 2        565 0.2004974    0.02267896
+    ## 10: SCHIEFFER time 3       1423 0.2270669    0.05612479
+
+Note that you can skip the `dplyr::mutate` step by using `get_sentences`
+on a `data.frame` as seen below:
+
+    presidential_debates_2012 %>%
+        get_sentences() %$%
+        sentiment_by(dialogue, list(person, time))
+
+    ## Warning in sentiment_by.character(dialogue, list(person, time)): Each time
+    ## `sentiment_by` is run it has to do sentence boundary disambiguation when
+    ## a raw `character` vector is passed to `text.var`. This may be costly of
+    ## time and memory. It is highly recommended that the user first runs the raw
+    ## `character` vector through the `get_sentences` function.
+
+    ##        person   time word_count        sd ave_sentiment
+    ##  1:     OBAMA time 1       3562 0.3133775    0.16920196
+    ##  2:     OBAMA time 2       7336 0.2298367    0.10078788
+    ##  3:     OBAMA time 3       7150 0.3033695    0.11811328
+    ##  4:    ROMNEY time 1       4003 0.2361113    0.09478697
+    ##  5:    ROMNEY time 2       7339 0.2053664    0.06826036
+    ##  6:    ROMNEY time 3       8141 0.2634597    0.09287391
+    ##  7:   CROWLEY time 2       1624 0.1620184    0.11278320
+    ##  8:    LEHRER time 1        757 0.2541787    0.12512245
+    ##  9:  QUESTION time 2        565 0.2004974    0.02267896
+    ## 10: SCHIEFFER time 3       1423 0.2270669    0.05612479
 
 Plotting
 --------
@@ -454,7 +527,7 @@ Plotting
 
     plot(out)
 
-![](tools/figure/unnamed-chunk-9-1.png)
+![](tools/figure/unnamed-chunk-50-1.png)
 
 ### Plotting at the Sentence Level
 
@@ -467,7 +540,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](tools/figure/unnamed-chunk-10-1.png)
+![](tools/figure/unnamed-chunk-51-1.png)
 
 Making and Updating Dictionaries
 --------------------------------
@@ -514,10 +587,10 @@ Now we can check that `mykey` is a usable dictionary:
 
 The key is ready for use:
 
-    sentiment_by("I am a human.", polarity_dt = mykey)
+    sentiment_by(get_sentences("I am a human."), polarity_dt = mykey)
 
     ##    element_id word_count sd ave_sentiment
-    ## 1:          1          4 NA    -0.7594893
+    ## 1:          1          3 NA    -0.1465203
 
 You can see the values of a key that correspond to a word using
 **data.table** syntax:
@@ -536,10 +609,10 @@ the "a" and "h" terms (notice there are now 24 rows rather than 26):
 
     ## [1] 24
 
-    sentiment_by("I am a human.", polarity_dt = mykey_dropped)
+    sentiment_by(get_sentences("I am a human."), polarity_dt = mykey_dropped)
 
     ##    element_id word_count sd ave_sentiment
-    ## 1:          1          4 NA     -0.632599
+    ## 1:          1          3 NA             0
 
 Next I add the terms "dog" and "cat" as a `data.frame` with sentiment
 values:
@@ -553,10 +626,10 @@ values:
 
     ## [1] 28
 
-    sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
+    sentiment(get_sentences("I am a human. The dog.  The cat"), polarity_dt = mykey_added)
 
     ##    element_id sentence_id word_count  sentiment
-    ## 1:          1           1          4 -0.7594893
+    ## 1:          1           1          3 -0.1465203
     ## 2:          1           2          2  0.7071068
     ## 3:          1           3          2 -0.7071068
 
@@ -605,9 +678,9 @@ SentiWord lexicons available from the
 
     left_just(data.frame(
         stanford = sentiment_stanford(ase)[["sentiment"]],
-        sentimentr_jockers = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
-        sentimentr_huliu = round(sentiment(ase, lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
-        sentimentr_sentiword = round(sentiment(ase, lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
+        sentimentr_jockers = round(sentiment(get_sentences(ase), question.weight = 0)[["sentiment"]], 2),
+        sentimentr_huliu = round(sentiment(get_sentences(ase), lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
+        sentimentr_sentiword = round(sentiment(get_sentences(ase), lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
         RSentiment = calculate_score(ase), 
         SentimentAnalysis,
         meanr = score(ase)[['score']],
@@ -617,25 +690,25 @@ SentiWord lexicons available from the
     ), "sentences")
 
       stanford sentimentr_jockers sentimentr_huliu sentimentr_sentiword
-    1     -0.5               0.18             0.35                 0.18
-    2        1                0.6              0.8                 0.65
+    1     -0.5               0.19             0.38                 0.19
+    2        1               0.68              0.9                 0.73
     3      0.5               0.38              0.5                 0.32
     4     -0.5                  0                0                    0
-    5     -0.5              -0.31            -0.41                -0.56
-    6     -0.5               0.04             0.06                 0.11
+    5     -0.5              -0.31            -0.41                -0.66
+    6     -0.5               0.05             0.06                 0.04
     7     -0.5              -0.28            -0.38                -0.05
-    8        0              -0.14                0                -0.14
-    9     -0.5               0.28             0.38                 0.24
+    8        0                  0                0                    0
+    9     -0.5               0.31             0.41                 0.26
       RSentiment SA_GI SA_LM SA_QDAP meanr syuzhet bing afinn nrc
-    1         -1 -0.25     0   -0.25    -1    -0.5   -1    -2   0
+    1          1 -0.25     0   -0.25    -1    -0.5   -1    -2   0
     2          1  0.33  0.33       0     1    0.75    1     3   1
     3          1   0.5   0.5     0.5     1    0.75    1     3   1
     4          0     0  0.25    0.25     1    0.75    1     3   1
     5         -1     1     1       1     1    0.75    1     3   1
     6          1  0.17  0.17    0.33     1    0.75    1     3   1
-    7          0   0.5   0.5     0.5     1    0.75    1     2   1
-    8          0     0     0       0     0   -0.25    0     0  -1
-    9         -1 -0.33 -0.33   -0.33    -1   -0.75   -1    -3  -1
+    7          1   0.5   0.5     0.5     1    0.75    1     2   1
+    8         -1     0     0       0     0   -0.25    0     0  -1
+    9          0 -0.33 -0.33   -0.33    -1   -0.75   -1    -3  -1
       sentences                                              
     1 I haven't been sad in a long time.                     
     2 I am extremely happy today.                            
@@ -662,12 +735,13 @@ than other methods but is returning 3 scores from 3 different
 dictionaries.
 
     ase_100 <- rep(ase, 100)
-
+    ase_100_split <- get_sentences(ase_100)
+        
     stanford <- function() {sentiment_stanford(ase_100)}
 
-    sentimentr_jockers <- function() sentiment(ase_100, lexicon::hash_sentiment_jockers)
-    sentimentr_huliu <- function() sentiment(ase_100, lexicon::hash_sentiment_huliu)
-    sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiment_sentiword) 
+    sentimentr_jockers <- function() sentiment(ase_100_split, lexicon::hash_sentiment_jockers)
+    sentimentr_huliu <- function() sentiment(ase_100_split, lexicon::hash_sentiment_huliu)
+    sentimentr_sentiword <- function() sentiment(ase_100_split, lexicon::hash_sentiment_sentiword) 
         
     RSentiment <- function() calculate_score(ase_100) 
         
@@ -824,8 +898,15 @@ wraps a `sentiment_by` output to produces a highlighted HTML file
 reviews from Hu and Liu's (2004) Cannon G3 Camera Amazon product
 reviews.
 
+    library(magritrr)
+    library(dplyr)
     set.seed(2)
-    highlight(with(subset(cannon_reviews, number %in% sample(unique(number), 3)), sentiment_by(review, number)))
+
+    cannon_reviews %>%
+        filter(number %in% sample(unique(number), 3)) %>%
+        mutate(review = get_sentences(review)) %$%
+        sentiment_by(review, number) %>%
+        highlight()
 
 ![](tools/figure/highlight.png)
 

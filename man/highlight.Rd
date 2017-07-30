@@ -4,16 +4,10 @@
 \alias{highlight}
 \title{Polarity Text Highlighting}
 \usage{
-highlight(x, original.text = NULL, file = "polarity.html", open = TRUE,
-  digits = 3, ...)
+highlight(x, file = "polarity.html", open = TRUE, digits = 3, ...)
 }
 \arguments{
 \item{x}{A \code{sentiment_by} object.}
-
-\item{original.text}{Optional original text (if the user wants to retain all
-punctuation and capitalization).  Default uses the text stored in the
-\code{sentiment_by} object that is striped of many punctuation marks and
-capitalizations.}
 
 \item{file}{A name of the html file output.}
 
@@ -39,14 +33,21 @@ setDT(dat)
 
 dat[, gr:={gr= paste(person, time); cumsum(c(TRUE, gr[-1]!= gr[-.N]))}]
 dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue,
-    collapse = ' ')), by = gr][,gr:= NULL][]
+    collapse = ' ')), by = gr][,gr:= NULL][, 
+    dialogue_split := get_sentences(dialogue)][]
 
-(sent_dat <- with(dat, sentiment_by(dialogue, list(person, time))))
+(sent_dat <- with(dat, sentiment_by(dialogue_split, list(person, time))))
 
 \dontrun{
 highlight(sent_dat)
-highlight(sent_dat, original.text = dat[["dialogue"]])
 
-highlight(with(cannon_reviews, sentiment_by(review, number)))
+## tidy approach
+library(dplyr)
+library(magrittr)
+
+cannon_reviews \%>\%
+   mutate(review_split = get_sentences(review)) \%$\%
+   sentiment_by(review_split, number) \%>\%
+   highlight()
 }
 }
