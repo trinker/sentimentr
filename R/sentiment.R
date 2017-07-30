@@ -244,6 +244,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     
 }
 
+
 #' @export
 #' @method sentiment get_sentences_character
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
@@ -266,7 +267,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     words <- c(posneg, valence_shifters_dt[[1]])
     space_words <-  words[grep("\\s", words)]
 
-    # break rows into sentences, count words
+    # break rows into count words
     # space fill (~~), break into words
     sents <- text.var
     sent_dat <- make_sentence_df2(sents)
@@ -379,7 +380,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
     adversative.weight = .85, missing_value = 0, ...){
 
     warning(paste0('Each time `sentiment` is run it has to do sentence boundary ',
-        'disambiguation when a raw `character` vector is passed to `text.var`.\n', 
+        'disambiguation when a raw `character` vector is passed to `text.var`. ', 
         'This may be costly of time and memory.  It is highly recommended that ',
         'the user first runs the raw `character` vector through the `get_sentences` function.'
     ))

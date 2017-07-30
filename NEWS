@@ -26,6 +26,21 @@ BUG FIXES
   and number of tokens is reported as well now.  Thanks to Siva Kottapalli for
   catching this (see #42).
   
+* `extract_sentiment_terms` did not return positive, negative, and/or neutral
+  columns if these terms didn't exist in the data passed to `text.var` making it 
+  difficult to use for programming.  Thanks to Siva Kottapalli for
+  catching this (see #41).
+  
+CHANGES
+
+* Many **sentimentr** functions performed sentence splitting (sentence boundary 
+  disambiguation) internally.  This made it (1) difficult to maintain the code,
+  (2) slowed the functions down and potentially increased overhead memory, and 
+  (3) required a repeated cost of splitting the text every time one of these
+  functions was called.  Sentence splitting is now handled vie the **textshape**
+  package as the backend for `get_sentences`.  It is recommended that the user
+  spits their data into sentences prior to using the sentiment functions.  Using
+  a raw character vector still works but results in a warning.
   
   
 sentimentr 0.5.0 - 1.0.0

@@ -16,7 +16,7 @@
 #' @examples
 #' library(data.table)
 #' set.seed(10)
-#' x <- sample(cannon_reviews[[3]], 1000, TRUE)
+#' x <- get_sentences(sample(cannon_reviews[[3]], 1000, TRUE))
 #' sentiment(x)
 #' 
 #' pol_words <- extract_sentiment_terms(x)
@@ -30,6 +30,14 @@
 extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     hyphen = "", ...){
 
+    UseMethod('extract_sentiment_terms')   
+}
+
+#' @export
+#' @method extract_sentiment_terms get_sentences_character
+extract_sentiment_terms.get_sentences_character <- function(text.var, 
+    polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
+
     sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
 
     ## Add "~~" holder for any words `polarity_frame` & `valence_shifters_dt`
@@ -38,9 +46,10 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_senti
     words <- posneg    
     space_words <-  words[grep("\\s", words)]
 
-    # break rows into sentences, count words
+    # break rows into count words
     # space fill (~~), break into words
-    sents <- get_sents(gsub("(\\s*)([;:,]+)", " \\2", text.var))
+    sents <- text.var
+   
     sent_dat <- make_sentence_df2(sents)
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 
@@ -65,6 +74,30 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_senti
         element_id + sentence_id ~ senti, 
         list, value.var = 'words'
     )[, sentence := unlist(sents)][]
+    
+    nms <- colnames(out)
+    checks <- c("negative", "neutral", "positive")
+    missing <- checks[!checks %in% nms]
+    
+    if (length(missing) > 1){
+        
+        empty <- lapply(seq_len(nrow(out)), function(i) character(0))
+        if ('negative' %in% missing) {
+            out[['negative']] <- empty
+        }
+        if ('neutral' %in% missing) {
+            out[['neutral']] <- empty
+        }
+        if ('positive' %in% missing) {
+            out[['positive']] <- empty        
+        }    
+        data.table::setcolorder(out, c("element_id", "sentence_id", "negative", 
+           "neutral", "positive", "sentence"))
+        
+        out <- out[]
+        
+    }    
+    
     class(out) <- unique(c("extract_sentiment_terms", class(out)))
 
     attributes(out)[["counts"]] <- out_prime[, list(n = .N), by = c("polarity", "words")][order(-polarity, -n), ]
@@ -75,6 +108,35 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_senti
     out
 }
 
+#' @export
+#' @method extract_sentiment_terms get_sentences_data_frame
+extract_sentiment_terms.get_sentences_data_frame  <- function(text.var, 
+    polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
+    
+    x <- make_class(text.var[[attributes(text.var)[['text.var']]]], 
+        "get_sentences", "get_sentences_character")
+
+    extract_sentiment_terms(x, polarity_dt = polarity_dt, hyphen = hyphen, ...)
+
+}
+
+
+#' @export
+#' @method extract_sentiment_terms character
+extract_sentiment_terms.character  <- function(text.var, 
+    polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
+
+    warning(paste0('Each time `extract_sentiment_terms` is run it has to do sentence boundary ',
+        'disambiguation when a raw `character` vector is passed to `text.var`. ', 
+        'This may be costly of time and memory.  It is highly recommended that ',
+        'the user first runs the raw `character` vector through the `get_sentences` function.'
+    ))
+
+    sents <- get_sentences(text.var)      
+    extract_sentiment_terms(sents, polarity_dt = polarity_dt, hyphen = hyphen, ...)
+
+    
+}
 
 #' Prints an extract_sentiment_terms Object
 #' 

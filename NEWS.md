@@ -20,7 +20,29 @@ And constructed with the following guidelines:
 sentimentr 1.0.1 -
 ----------------------------------------------------------------
 
+**BUG FIXES**
 
+* `sentiment_attributes` gave an incorrect count of words.  This has been fixed 
+  and number of tokens is reported as well now.  Thanks to Siva Kottapalli for
+  catching this (see #42).
+  
+* `extract_sentiment_terms` did not return positive, negative, and/or neutral
+  columns if these terms didn't exist in the data passed to `text.var` making it 
+  difficult to use for programming.  Thanks to Siva Kottapalli for
+  catching this (see #41).
+  
+**CHANGES**
+
+* Many **sentimentr** functions performed sentence splitting (sentence boundary 
+  disambiguation) internally.  This made it (1) difficult to maintain the code,
+  (2) slowed the functions down and potentially increased overhead memory, and 
+  (3) required a repeated cost of splitting the text every time one of these
+  functions was called.  Sentence splitting is now handled vie the **textshape**
+  package as the backend for `get_sentences`.  It is recommended that the user
+  spits their data into sentences prior to using the sentiment functions.  Using
+  a raw character vector still works but results in a warning.
+  
+  
 sentimentr 0.5.0 - 1.0.0
 ----------------------------------------------------------------
 
@@ -28,7 +50,7 @@ sentimentr 0.5.0 - 1.0.0
 
 * Previously `update_polarity_table` and `update_valence_shifter_table` were
   accidentally not exported.  This has been corrected.
-
+  
 **NEW FEATURES**
 
 * `downweighted_zero_average`, `average_weighted_mixed_sentiment`, and 

@@ -40,13 +40,13 @@ get_sentences.character <- function(x, ...) {
 
 
 #' @export
-#' @method get_sentences character
+#' @method get_sentences data.frame
 get_sentences.data.frame <- function(x, ...) {
     
     dots <- list(...)
     
     ## detect text variable
-    if (is.null(dots[['text.var']])) {
+    if (is.null(dots[['text.var.name']])) {
         
         z <- data.table::data.table(data.frame(x, stringsAsFactors = FALSE)) 
         
@@ -56,7 +56,7 @@ get_sentences.data.frame <- function(x, ...) {
         }))[1])
         
         if (length(text.var) == 0) {
-            stop("Could not detect `text.var`.  Please supply `text.var` explicitly via\n    ellipsis (...) argument (e.g. `text.var = \'my_text_column\'` ).")
+            stop("Could not detect `text.var`.  Please supply `text.var` explicitly via\n    ellipsis (...) argument (e.g. `text.var.name = \'my_text_column\'` ).")
         }
     } else {
         text.var <- dots[['text.var']]
