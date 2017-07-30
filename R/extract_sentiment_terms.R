@@ -126,11 +126,7 @@ extract_sentiment_terms.get_sentences_data_frame  <- function(text.var,
 extract_sentiment_terms.character  <- function(text.var, 
     polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
 
-    warning(paste0('Each time `extract_sentiment_terms` is run it has to do sentence boundary ',
-        'disambiguation when a raw `character` vector is passed to `text.var`. ', 
-        'This may be costly of time and memory.  It is highly recommended that ',
-        'the user first runs the raw `character` vector through the `get_sentences` function.'
-    ))
+    split_warn(text.var, 'extract_sentiment', ...)
 
     sents <- get_sentences(text.var)      
     extract_sentiment_terms(sents, polarity_dt = polarity_dt, hyphen = hyphen, ...)

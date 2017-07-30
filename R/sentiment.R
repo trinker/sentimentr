@@ -197,7 +197,7 @@
 #' 
 #' ## works on a character vector but not the preferred method avoiding the 
 #' ## repeated cost of doing sentence boundary disambiguation every time 
-#' ## `sentiment` is run
+#' ## `sentiment` is run.  For small batches the loss is minimal.
 #' \dontrun{
 #' sentiment(mytext)
 #' }
@@ -389,11 +389,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, missing_value = 0, ...){
 
-    warning(paste0('Each time `sentiment` is run it has to do sentence boundary ',
-        'disambiguation when a raw `character` vector is passed to `text.var`. ', 
-        'This may be costly of time and memory.  It is highly recommended that ',
-        'the user first runs the raw `character` vector through the `get_sentences` function.'
-    ))
+    split_warn(text.var, 'sentiment', ...)
     
     sents <- get_sentences(text.var)
     sentiment(sents, polarity_dt = polarity_dt, 

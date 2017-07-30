@@ -207,7 +207,7 @@ mytext <- c(
 
 ## works on a character vector but not the preferred method avoiding the 
 ## repeated cost of doing sentence boundary disambiguation every time 
-## `sentiment` is run
+## `sentiment` is run.  For small batches the loss is minimal.
 \dontrun{
 sentiment(mytext)
 }

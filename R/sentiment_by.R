@@ -199,11 +199,7 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
 sentiment_by.character <- function(text.var, by = NULL, 
     averaging.function = average_downweighted_zero, group.names, ...){
 
-    warning(paste0('Each time `sentiment_by` is run it has to do sentence boundary ',
-        'disambiguation when a raw `character` vector is passed to `text.var`. ', 
-        'This may be costly of time and memory.  It is highly recommended that ',
-        'the user first runs the raw `character` vector through the `get_sentences` function.'
-    ))
+    split_warn(text.var, 'sentiment_by', ...)
     
 	word_count <- ave_sentiment <- NULL
     out <- suppressWarnings(sentiment(text.var = text.var, ...))

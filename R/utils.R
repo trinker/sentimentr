@@ -291,3 +291,16 @@ if_tibble <- function(x, as.tibble, ...){
     if(!isTRUE(as.tibble)) return(x)
     set_tibble(x)
 }
+
+split_warn <- function(data, fun, len = 1000, nchar = 25000, sentimentr.warning = getOption("sentimentr.warning"), ...){
+    
+    if (!is.null(sentimentr.warning) && !isTRUE(sentimentr.warning)) return(NULL)
+    if (length(data) <= len && max(nchar(data), na.rm = TRUE) <= nchar) return(NULL) 
+    
+    warning(paste0('Each time `', fun, '` is run it has to do sentence boundary ',
+        'disambiguation when a raw `character` vector is passed to `text.var`. ', 
+        'This may be costly of time and memory.  It is highly recommended that ',
+        'the user first runs the raw `character` vector through the `get_sentences` function.'
+    ))
+    
+}
