@@ -42,7 +42,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         na.omit() %>%
         mutate(rating = 2*(as.numeric(rating) - .5)) %>%
         split_sentence() %>%
-        mutate(text2 = get_sentences(text))# %>% slice(1:10)
+        mutate(text2 = sentimentr::get_sentences(text))# %>% slice(1:10)
 
     ## syuzhet sentiment
     syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
