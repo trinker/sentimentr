@@ -62,9 +62,9 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
         stanford = round(sentiment_stanford_by(dat[["text"]])[["ave_sentiment"]], 2),
 
-        sentimentr_hu_liu = round(sentiment_by(dat$text2, question.weight = 0)[["ave_sentiment"]], 2),
-        sentimentr_sentiword = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiword, question.weight = 0)[["ave_sentiment"]], 2),
-        sentimentr_syuzhet_dict = round(sentiment_by(dat$text2, polarity_dt = syuzhet_dict, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_hu_liu = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_huliu, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_sentiword = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_sentiword, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_syuzhet_dict = round(sentiment_by(dat$text2, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_bing = round(sentiment_by(dat$text2, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text2, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_nrc = round(sentiment_by(dat$text2, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
