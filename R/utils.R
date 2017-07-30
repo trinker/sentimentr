@@ -135,12 +135,30 @@ make_words <- function(x, hyphen = ""){
 
 
 #' @importFrom data.table :=
+# make_sentence_df2 <- function(sents){
+# 
+#     indx <- wc <- NULL
+# 
+#     ids <- add_row_id(sents)
+#     text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", unlist(sents))
+#     dat <- data.frame(
+#         id = ids,
+#         sentences = text.var,
+#     	  wc = count_words(text.var),
+#         stringsAsFactors = FALSE
+#     )
+#     data.table::setDT(dat)
+#     dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA][, 
+#         indx:=NULL]
+# }
 make_sentence_df2 <- function(sents){
 
     indx <- wc <- NULL
 
     ids <- add_row_id(sents)
-    text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", unlist(sents))
+    text.var <- gsub("[^a-z',;: ]|\\d:\\d|\\d ", "", 
+        stringi::stri_trans_tolower(gsub("(\\s*)([;:,]+)", " \\2", unlist(sents)))
+    )
     dat <- data.frame(
         id = ids,
         sentences = text.var,
@@ -149,7 +167,7 @@ make_sentence_df2 <- function(sents){
     )
     data.table::setDT(dat)
     dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA][, 
-        indx:=NULL][, sentences := stringi::stri_trans_tolower(sentences)]
+        indx:=NULL][]
 }
 
 .mgsub <- function (pattern, replacement, text.var, fixed = TRUE,
