@@ -11,8 +11,6 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
 [![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
-<a href="https://img.shields.io/badge/Version-2.0.0-orange.svg"><img src="https://img.shields.io/badge/Version-2.0.0-orange.svg" alt="Version"/></a>
-</p>
 
 ![](tools/sentimentr_logo/r_sentimentr.png)
 
@@ -527,7 +525,7 @@ Plotting
 
     plot(out)
 
-![](tools/figure/unnamed-chunk-50-1.png)
+![](tools/figure/unnamed-chunk-11-1.png)
 
 ### Plotting at the Sentence Level
 
@@ -540,7 +538,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](tools/figure/unnamed-chunk-51-1.png)
+![](tools/figure/unnamed-chunk-12-1.png)
 
 Making and Updating Dictionaries
 --------------------------------

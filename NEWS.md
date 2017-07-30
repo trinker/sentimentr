@@ -40,7 +40,9 @@ sentimentr 1.0.1 -
   functions was called.  Sentence splitting is now handled vie the **textshape**
   package as the backend for `get_sentences`.  It is recommended that the user
   spits their data into sentences prior to using the sentiment functions.  Using
-  a raw character vector still works but results in a warning.
+  a raw character vector still works but results in a warning.  While this won't
+  break any code it may cause errors and is a fundamental shift in workflow,
+  thus the major bump to 2.0.0
   
   
 sentimentr 0.5.0 - 1.0.0
@@ -66,7 +68,7 @@ sentimentr 0.5.0 - 1.0.0
   
 * `sentiment_attributes` added as a means to assess the rate that sentiment
   attributes (attributes about polarized words and valence shifters) occur and 
-  cooccur.
+  co-occur.
 
 **MINOR FEATURES**
 
