@@ -87,7 +87,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         {suppressWarnings(left_join(.,
             out %>%
                 tbl_df() %>%
-                select(-c(sentence_id, text)) %>%
+                select(-c(sentence_id, text, text2)) %>%
                 gather(Method, score, -c(rating, element_id)) %>%
                 group_by(Method, element_id) %>%
                 summarize(score = mean(score), rating=mean(rating)) %>%

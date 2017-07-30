@@ -39,7 +39,7 @@
 #' mytext <- c(
 #'    'do you like it?  It is red. But I hate really bad dogs',
 #'    'I am the best friend.',
-#'    'Do you really like it?  I\'m not happy'
+#'    "Do you really like it?  I'm not happy"
 #' )
 #' 
 #' ## works on a character vector but not the preferred method avoiding the 

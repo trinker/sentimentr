@@ -93,6 +93,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
 results_list %>%
     tidy_list("Context") %>%
+    select(-text2) %>%
     gather(Method, Score, -c(text, rating, Context, element_id, sentence_id)) %>%
     tbl_df() %>%
     group_by(Method, Context, element_id) %>%

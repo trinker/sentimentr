@@ -14,6 +14,14 @@ validate_sentiment(predicted, actual, ...)
 
 \item{\ldots}{ignored.}
 }
+\value{
+Returns a \code{\link[base]{data.frame}} with a macroaveraged and 
+microaveraged model validation scores.  Additionally, the
+ \code{\link[base]{data.frame}} has the following attributes:
+\item{confusion_matrix}{A confusion matrix of all classes}
+\item{class_confusion_matrices}{A \code{\link[base]{list}} of class level (class vs. all) confusion matrices}
+\item{macro_stats}{A \code{\link[base]{data.frame}} of the macroaverged class level stats before averaging}
+}
 \description{
 Provides a miulticlass macroaverage/microaverage of precision, recall, 
 accuracy, and F-score for the sign of the predicted sentiment against known 

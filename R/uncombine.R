@@ -17,7 +17,7 @@
 #' mytext <- c(
 #'    'do you like it?  But I hate really bad dogs',
 #'    'I am the best friend.',
-#'    'Do you really like it?  I\'m not happy'
+#'    "Do you really like it?  I'm not happy"
 #' )
 #' 
 #' mytext <- get_sentences(mytext)

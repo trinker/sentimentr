@@ -198,6 +198,64 @@ function).  For instance the word "sick" in a high school setting may mean
 that something is good, whereas "sick" used by a typical adult indicates 
 something is not right or negative connotation (\strong{deixis}).
 }
+\examples{
+mytext <- c(
+   'do you like it?  But I hate really bad dogs',
+   'I am the best friend.',
+   "Do you really like it?  I'm not a fan"
+)
+
+## works on a character vector but not the preferred method avoiding the 
+## repeated cost of doing sentence boundary disambiguation every time 
+## `sentiment` is run
+\dontrun{
+sentiment(mytext)
+}
+
+## preferred method avoiding paying the cost 
+mytext <- get_sentences(mytext)
+sentiment(mytext)
+sentiment(mytext, question.weight = 0)
+
+sam_dat <- get_sentences(gsub("Sam-I-am", "Sam I am", sam_i_am))
+(sam <- sentiment(sam_dat))
+plot(sam)
+plot(sam, scale_range = TRUE, low_pass_size = 5)
+plot(sam, scale_range = TRUE, low_pass_size = 10)
+    
+plot(sam, transformation.function = syuzhet::get_transformed_values)
+plot(sam, transformation.function = syuzhet::get_transformed_values,  
+    scale_range = TRUE, low_pass_size = 5)
+
+y <- get_sentences(
+    "He was not the sort of man that one would describe as especially handsome."
+)
+sentiment(y)
+sentiment(y, n.before=Inf)
+
+dat <- data.frame(
+    w = c('Person 1', 'Person 2'),
+    x = c(paste0(
+        "Mr. Brown is nasty! He says hello. i give him rage.  i will ",
+        "go at 5 p. m. eastern time.  Angry thought in between!go there"
+    ), "One more thought for the road! I am going now.  Good day and good riddance."),
+    y = state.name[c(32, 38)], 
+    z = c(.456, .124),
+    stringsAsFactors = FALSE
+)
+sentiment(get_sentences(dat$x))
+sentiment(get_sentences(dat))
+
+\dontrun{
+## tidy approach
+library(dplyr)
+library(magrittr)
+
+cannon_reviews \%>\%
+   mutate(review_split = get_sentences(review)) \%$\%
+   sentiment(review_split)
+}
+}
 \references{
 Jockers, M. L. (2017). Syuzhet: Extract sentiment and plot arcs 
 from text. Retrieved from https://github.com/mjockers/syuzhet

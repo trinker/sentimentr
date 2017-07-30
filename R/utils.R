@@ -148,7 +148,8 @@ make_sentence_df2 <- function(sents){
         stringsAsFactors = FALSE
     )
     data.table::setDT(dat)
-    dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA][, indx:=NULL]
+    dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA][, 
+        indx:=NULL][, sentences := stringi::stri_trans_tolower(sentences)]
 }
 
 .mgsub <- function (pattern, replacement, text.var, fixed = TRUE,
