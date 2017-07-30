@@ -161,7 +161,7 @@ sentiment_by.get_sentences_character <- function(text.var, by = NULL,
 
 
 #' @export
-#' @method sentiment_by get_sentences_character    
+#' @method sentiment_by get_sentences_data_frame    
 sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL, 
     averaging.function = average_downweighted_zero, group.names, ...){
 
