@@ -1,30 +1,6 @@
 sentimentr   
 ============
 
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following object is masked from 'package:qdap':
-    ## 
-    ##     %>%
-
-    ## The following object is masked from 'package:qdapTools':
-    ## 
-    ##     id
-
-    ## The following objects are masked from 'package:qdapRegex':
-    ## 
-    ##     escape, explain
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
