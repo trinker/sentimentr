@@ -28,7 +28,7 @@
 #' actual values (-1 to 1).  A value of 0 means perfect accuracy.  A value of
 #' 1 means perfectly wrong everytime.  A value of .5 represents expected value
 #' for random guessing.  This measure is related to 
-#' \href{Mean Absolute Error}{https://en.wikipedia.org/wiki/Mean_absolute_error}.
+#' \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{Mean Absolute Error}.
 #' @export
 #' @examples 
 #' actual <- c(1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1,-1)
