@@ -1,16 +1,16 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load_current_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape", 
-    "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
+    "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr", 'textreadr')
 pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2, RSentiment)
 
 loc <- "sentiment_data"
 dir.create(loc)
 
 'http://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment%20labelled%20sentences.zip' %>%
-    download(file.path(loc, "sentiment_labelled_sentences.zip"), mode = "wb")
-
-unzip(file.path(loc, "sentiment_labelled_sentences.zip"), exdir = loc)
-
+    download() %>%
+    unzip(exdir = loc)
+	
+	
 ## function to see if the signs of two columns differ row by row
 ## NA means you couldn't figure it out and thus results in a FALSE
 signer <- function(x, y) {
