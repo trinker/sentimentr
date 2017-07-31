@@ -93,7 +93,7 @@
 #'    sentiment_by(review_split, number)
 #' }
 sentiment_by <- function(text.var, by = NULL, 
-    averaging.function = average_downweighted_zero, group.names, ...){
+    averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
     UseMethod("sentiment_by")
 }
@@ -102,7 +102,7 @@ sentiment_by <- function(text.var, by = NULL,
 #' @export
 #' @method sentiment_by get_sentences_character    
 sentiment_by.get_sentences_character <- function(text.var, by = NULL, 
-    averaging.function = average_downweighted_zero, group.names, ...){
+    averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
     out <- sentiment(text.var = text.var, ...)
@@ -163,7 +163,7 @@ sentiment_by.get_sentences_character <- function(text.var, by = NULL,
 #' @export
 #' @method sentiment_by get_sentences_data_frame    
 sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL, 
-    averaging.function = average_downweighted_zero, group.names, ...){
+    averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 
@@ -197,7 +197,7 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
 #' @export
 #' @method sentiment_by character    
 sentiment_by.character <- function(text.var, by = NULL, 
-    averaging.function = average_downweighted_zero, group.names, ...){
+    averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
     split_warn(text.var, 'sentiment_by', ...)
     
@@ -260,7 +260,7 @@ sentiment_by.character <- function(text.var, by = NULL,
 #' @export
 #' @method sentiment_by sentiment_by    
 sentiment_by.sentiment_by <- function(text.var, by = NULL, 
-    averaging.function = average_downweighted_zero, group.names, ...){
+    averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
     out <- attributes(text.var)[['sentiment']][['sentiment']]
@@ -321,7 +321,7 @@ sentiment_by.sentiment_by <- function(text.var, by = NULL,
 #' @export
 #' @method sentiment_by sentiment    
 sentiment_by.sentiment <- function(text.var, by = NULL, 
-    averaging.function = average_downweighted_zero, group.names, ...){
+    averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
     out <- text.var

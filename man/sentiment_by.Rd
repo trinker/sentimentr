@@ -5,7 +5,8 @@
 \title{Polarity Score (Sentiment Analysis) By Groups}
 \usage{
 sentiment_by(text.var, by = NULL,
-  averaging.function = average_downweighted_zero, group.names, ...)
+  averaging.function = sentimentr::average_downweighted_zero, group.names,
+  ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Also takes a \code{sentimentr} or

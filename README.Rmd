@@ -155,7 +155,8 @@ pacman::p_load(sentimentr, dplyr, magrittr)
 ```
 
 ## Preferred Workflow
-Here is a basic `sentiment` demo.  Notice that the first thing you should do is to split your text data into sentences (a process called sentence boundary disambiguation) via the `get_sentences` function.  This can be handled within `sentiment` (i.e., you can pass a raw character vector) but it slows the function down and should be done one time rather than every time the function is called.  Additionally, a warning will be thrown if a raw character vector is passed.  The preferred workflow is to spit the text into sentences with `get_sentences`before any sentiment analysis is done.
+Here is a basic `sentiment` demo.  Notice that the first thing you should do is to split your text data into sentences (a process called sentence boundary disambiguation) via the `get_sentences` function.  This can be handled within `sentiment` (i.e., you can pass a raw character vector) but it slows the function down and should be done one time rather than every time the function is called.  Additionally, a warning will be thrown if a larger raw character vector is passed.  The preferred workflow is to spit the text into sentences with `get_sentences` before any sentiment analysis is done.  
+
 
 ```{r}
 mytext <- c(
@@ -265,7 +266,7 @@ is_key(mykey)
 The key is ready for use:
 
 ```{r}
-sentiment_by(get_sentences("I am a human."), polarity_dt = mykey)
+sentiment_by("I am a human.", polarity_dt = mykey)
 ```
 
 
@@ -280,7 +281,7 @@ Updating (adding or removing terms) a key is also useful.  The `update_key` func
 ```{r}
 mykey_dropped <- update_key(mykey, drop = c("a", "h"))
 nrow(mykey_dropped)
-sentiment_by(get_sentences("I am a human."), polarity_dt = mykey_dropped)
+sentiment_by("I am a human.", polarity_dt = mykey_dropped)
 ```
 
 Next I add the terms "dog" and "cat" as a `data.frame` with sentiment values:
@@ -288,7 +289,7 @@ Next I add the terms "dog" and "cat" as a `data.frame` with sentiment values:
 ```{r}
 mykey_added <- update_key(mykey, x = data.frame(x = c("dog", "cat"), y = c(1, -1)))
 nrow(mykey_added)
-sentiment(get_sentences("I am a human. The dog.  The cat"), polarity_dt = mykey_added)
+sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 ```
 
 ## Annie Swafford's Examples
@@ -321,9 +322,9 @@ colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnaly
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase)[["sentiment"]],
-    sentimentr_jockers = round(sentiment(get_sentences(ase), question.weight = 0)[["sentiment"]], 2),
-    sentimentr_huliu = round(sentiment(get_sentences(ase), lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
-    sentimentr_sentiword = round(sentiment(get_sentences(ase), lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
+    sentimentr_jockers = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
+    sentimentr_huliu = round(sentiment(ase, lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
+    sentimentr_sentiword = round(sentiment(ase, lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
     RSentiment = calculate_score(ase), 
     SentimentAnalysis,
     meanr = score(ase)[['score']],
@@ -339,13 +340,12 @@ Also of interest is the computational time used by each of these methods. To dem
 
 ```{r, message = FALSE, comment=NA, eval=FALSE}
 ase_100 <- rep(ase, 100)
-ase_100_split <- get_sentences(ase_100)
-    
+ 
 stanford <- function() {sentiment_stanford(ase_100)}
 
-sentimentr_jockers <- function() sentiment(ase_100_split, lexicon::hash_sentiment_jockers)
-sentimentr_huliu <- function() sentiment(ase_100_split, lexicon::hash_sentiment_huliu)
-sentimentr_sentiword <- function() sentiment(ase_100_split, lexicon::hash_sentiment_sentiword) 
+sentimentr_jockers <- function() sentiment(ase, lexicon::hash_sentiment_jockers)
+sentimentr_huliu <- function() sentiment(ase, lexicon::hash_sentiment_huliu)
+sentimentr_sentiword <- function() sentiment(ase, lexicon::hash_sentiment_sentiword) 
     
 RSentiment <- function() calculate_score(ase_100) 
     

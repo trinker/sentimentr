@@ -47,7 +47,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         na.omit() %>%
         mutate(rating = 2*(as.numeric(rating) - .5)) %>%
         mutate(text = replace_emograte(text)) %>%  
-        split_sentences() %>%
+        textshape::split_sentence() %>%
         mutate(text2 = sentimentr::get_sentences(text)) #%>% slice(1:10)
 
     ## syuzhet sentiment
