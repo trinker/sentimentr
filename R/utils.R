@@ -304,3 +304,11 @@ split_warn <- function(data, fun, len = 1000, nchar = 25000, sentimentr.warning 
     ))
     
 }
+
+log_loss <- function(a, p){
+    p[p == 0] <- .000000000000001
+    p[p == 1] <- .999999999999999
+    o <- -1 * (a * log(p) + (1 - a) * log(1 - p))
+    mean(o)
+}
+

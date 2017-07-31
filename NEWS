@@ -31,6 +31,16 @@ BUG FIXES
   difficult to use for programming.  Thanks to Siva Kottapalli for
   catching this (see #41).
   
+* `rescale_general` would allow `keep.zero` when `lower` >= 0 meaning the 
+original mid values were rescaled lower than the lowest values.
+  
+  
+MINOR FEATURES
+
+* `validate_sentiment` picks up Mean Directional Accuracy (MDA) and Mean 
+  Absolute Rescaled Error (MARE) measures accuracy.  These values are printed 
+  for the `validate_sentiment` object and can be accessed via `attributes`.
+
 CHANGES
 
 * Many **sentimentr** functions performed sentence splitting (sentence boundary 

@@ -21,12 +21,26 @@ microaveraged model validation scores.  Additionally, the
 \item{confusion_matrix}{A confusion matrix of all classes}
 \item{class_confusion_matrices}{A \code{\link[base]{list}} of class level (class vs. all) confusion matrices}
 \item{macro_stats}{A \code{\link[base]{data.frame}} of the macroaverged class level stats before averaging}
+\item{mda}{Mean Directional Accuracy}
+\item{mare}{Mean Absolute Rescaled Error}
 }
 \description{
 Provides a miulticlass macroaverage/microaverage of precision, recall, 
 accuracy, and F-score for the sign of the predicted sentiment against known 
-sentiment scores. Macroaveraging allows every class to have an equal say.  
-Microaveraging gives larger say to larger classes.
+sentiment scores.  There are three classes sentiment analysis generally 
+predicts: positive (> 0), negative (< 0) and neutral (= 0).  In assessing 
+model performance one can use macro- or micro- averaging across classes.  
+Macroaveraging allows every class to have an equal say.  Microaveraging gives 
+larger say to larger classes.
+}
+\note{
+Mean Absolute Rescaled Error (MARE) is defined as: 
+\eqn{\frac{\sum{|actual - predicted|}}{2n}} and gives a sense of, on average, 
+how far off were the recaled predicted values (-1 to 1) from the recaled 
+actual values (-1 to 1).  A value of 0 means perfect accuracy.  A value of
+1 means perfectly wrong everytime.  A value of .5 represents expected value
+for random guessing.  This measure is related to 
+\href{Mean Absolute Error}{https://en.wikipedia.org/wiki/Mean_absolute_error}.
 }
 \examples{
 actual <- c(1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1,-1)
@@ -43,7 +57,31 @@ x <- validate_sentiment(mod, scores)
 attributes(x)$confusion_matrix
 attributes(x)$class_confusion_matrices
 attributes(x)$macro_stats
+
+## Annie Swafford Example
+swafford <- data.frame(
+    text = c(
+        "I haven't been sad in a long time.",
+        "I am extremely happy today.",
+        "It's a good day.",
+        "But suddenly I'm only a little bit happy.",
+        "Then I'm not happy at all.",
+        "In fact, I am now the least happy person on the planet.",
+        "There is no happiness left in me.",
+        "Wait, it's returned!",
+        "I don't feel so bad after all!"
+    ), 
+    actual = c(.8, 1, .8, -.1, -.5, -1, -1, .5, .6), 
+    stringsAsFactors = FALSE
+)
+
+pred <- sentiment(swafford$text) 
+validate_sentiment(
+    pred,
+    actual = swafford$actual
+)
 }
 \references{
-\url{https://www.youtube.com/watch?v=OwwdYHWRB5E&index=31&list=PL6397E4B26D00A269}
+\url{https://www.youtube.com/watch?v=OwwdYHWRB5E&index=31&list=PL6397E4B26D00A269} \cr
+\url{https://en.wikipedia.org/wiki/Mean_Directional_Accuracy_(MDA)}
 }

@@ -4,8 +4,8 @@
 \alias{general_rescale}
 \title{Rescale a Numeric Vector}
 \usage{
-general_rescale(x, lower = -1, upper = 1, mute = NULL, keep.zero = TRUE,
-  sign = FALSE, ...)
+general_rescale(x, lower = -1, upper = 1, mute = NULL, keep.zero = lower
+  < 0, sign = FALSE, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
@@ -33,15 +33,19 @@ Rescale a numeric vector with the option to make signed (-1, 1, or 0) and
 retain zero as neutral.
 }
 \examples{
-general_rescale(c(NA, -3:3))
-general_rescale(c(NA, -3:3), binary = TRUE)
-general_rescale(c(NA, -3:3), keep.zero = FALSE)
-general_rescale(c(NA, -3:3), keep.zero = FALSE, lower = 0, upper = 100)
 
+general_rescale(c(1, 0, -1))
+general_rescale(c(1, 0, -1, 1.4, -2))
+general_rescale(c(1, 0, -1, 1.4, -2), lower = 0, upper = 1)
+general_rescale(c(NA, -4:3))
+general_rescale(c(NA, -4:3), keep.zero = FALSE)
+general_rescale(c(NA, -4:3), keep.zero = FALSE, lower = 0, upper = 100)
+
+## mute extreme values
 set.seed(10)
-x <- sort(c(NA, -100, -10, 0, rnorm(10, 0, .1), 10, 100))
-general_rescale(c(NA, x))
-general_rescale(c(NA, x), mute = 5)
-general_rescale(c(NA, x), mute = 10)
-general_rescale(c(NA, x), mute = 100)
+x <- sort(c(NA, -100, -10, 0, rnorm(10, 0, .1), 10, 100), na.last = FALSE)
+general_rescale(x)
+general_rescale(x, mute = 5)
+general_rescale(x, mute = 10)
+general_rescale(x, mute = 100)
 }

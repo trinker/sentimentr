@@ -410,7 +410,7 @@ The accuracy of an algorithm weighs heavily into the decision as to what approac
 - imdb.com
 - yelp.com
 
-The data sets are hand scored as either positive or negative.  The testing here merely matches the sign of the algorithm to the human coded output to determine accuracy rates.
+The data sets are hand scored as either positive or negative.  The testing here uses [Mean Directional Accuracy (MDA)](https://en.wikipedia.org/wiki/Mean_Directional_Accuracy_(MDA)) and merely matches the sign of the algorithm to the human coded output to determine accuracy rates.
 
 - Kotzias, D., Denil, M., De Freitas, N., & Smyth,P. (2015). *From group to individual labels using deep features*. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 597-606. http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 

@@ -16,19 +16,23 @@
 #' @return Returns a rescaled vector of the same length as \code{x}.
 #' @export
 #' @examples
-#' general_rescale(c(NA, -3:3))
-#' general_rescale(c(NA, -3:3), binary = TRUE)
-#' general_rescale(c(NA, -3:3), keep.zero = FALSE)
-#' general_rescale(c(NA, -3:3), keep.zero = FALSE, lower = 0, upper = 100)
 #' 
+#' general_rescale(c(1, 0, -1))
+#' general_rescale(c(1, 0, -1, 1.4, -2))
+#' general_rescale(c(1, 0, -1, 1.4, -2), lower = 0, upper = 1)
+#' general_rescale(c(NA, -4:3))
+#' general_rescale(c(NA, -4:3), keep.zero = FALSE)
+#' general_rescale(c(NA, -4:3), keep.zero = FALSE, lower = 0, upper = 100)
+#' 
+#' ## mute extreme values
 #' set.seed(10)
-#' x <- sort(c(NA, -100, -10, 0, rnorm(10, 0, .1), 10, 100))
-#' general_rescale(c(NA, x))
-#' general_rescale(c(NA, x), mute = 5)
-#' general_rescale(c(NA, x), mute = 10)
-#' general_rescale(c(NA, x), mute = 100)
+#' x <- sort(c(NA, -100, -10, 0, rnorm(10, 0, .1), 10, 100), na.last = FALSE)
+#' general_rescale(x)
+#' general_rescale(x, mute = 5)
+#' general_rescale(x, mute = 10)
+#' general_rescale(x, mute = 100)
 general_rescale <- function(x, lower = -1, upper = 1, mute = NULL, 
-    keep.zero = TRUE, sign = FALSE, ...){
+    keep.zero = lower < 0, sign = FALSE, ...){
     
     if (!is.null(mute)) {
         stopifnot(is.numeric(mute) & mute >= 1)
@@ -39,13 +43,19 @@ general_rescale <- function(x, lower = -1, upper = 1, mute = NULL,
     if (!isTRUE(keep.zero)) return(general_rescale_h(x, lower=lower, upper=upper))
 
     stopifnot(lower < -.001 | upper > .001)
+    if (isTRUE(keep.zero & lower >= 0)) stop('If `lower >= 0` then `keep.zero` must be set to `FALSE`')
 
     y <- sign(x)  
     na <- is.na(x)
-    x[y==-1 & !na] <- general_rescale_h(x[y==-1 & !na], lower=lower, upper = -.001)
-    x[y==1 & !na] <- general_rescale_h(x[y==1 & !na], lower=.001, upper = upper)
+    if (lower < 0) {
+        x[y==-1 & !na] <- -general_rescale_h(c(0, abs(x[y==-1 & !na])), lower=.001, upper = abs(lower))[-1]
+    } else {
+        x[y==-1 & !na] <- general_rescale_h(c(0, x[y==-1 & !na]), lower=.001, upper = abs(lower))[-1]
+    }
+    x[y==1 & !na] <- general_rescale_h(c(0, x[y==1 & !na]), lower=.001, upper = upper)[-1]
     x
 }
+
 
 
 general_rescale_h <- function(x, lower, upper){

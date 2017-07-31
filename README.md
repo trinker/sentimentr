@@ -1,29 +1,6 @@
-sentimentr   
+sentimentr   [![Follow](https://img.shields.io/twitter/follow/tylerrinker.svg?style=social)](https://twitter.com/intent/follow?screen_name=tylerrinker)
 ============
 
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following object is masked from 'package:qdap':
-    ## 
-    ##     %>%
-
-    ## The following object is masked from 'package:qdapTools':
-    ## 
-    ##     id
-
-    ## The following objects are masked from 'package:qdapRegex':
-    ## 
-    ##     escape, explain
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -63,29 +40,8 @@ optimizes speed which the Stanford's parser does not. This leads to a
 trade off of speed vs. accuracy. Simply, **sentimentr** attempts to
 balance accuracy and speed.
 
-
-Table of Contents
-============
-
--   [Why sentimentr](#why-sentimentr)
--   [Functions](#functions)
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Examples](#examples)
-    -   [Preferred Workflow](#preferred-workflow)
-    -   [Tidy Approach](#tidy-approach)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
-
 Why sentimentr
-============
-
+==============
 
 ***So what does*** **sentimentr** ***do that other packages don't and
 why does it matter?***
@@ -195,8 +151,29 @@ shown in the table above, can be accessed via:
     val_shift_freq <- system.file("the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R", package = "sentimentr")
     file.copy(val_shift_freq, getwd())
 
+
+Table of Contents
+============
+
+-   [Why sentimentr](#why-sentimentr)
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Preferred Workflow](#preferred-workflow)
+    -   [Tidy Approach](#tidy-approach)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
+
 Functions
-=========
+============
+
 
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
@@ -710,6 +687,16 @@ SentiWord lexicons available from the
         stringsAsFactors = FALSE
     ), "sentences")
 
+    [1] "Processing sentence: i have not been sad in a long time"
+    [1] "Processing sentence: i am extremely happy today"
+    [1] "Processing sentence: its a good day"
+    [1] "Processing sentence: but suddenly im only a little bit happy"
+    [1] "Processing sentence: then im not happy at all"
+    [1] "Processing sentence: in fact i am now the least happy person on the planet"
+    [1] "Processing sentence: there is no happiness left in me"
+    [1] "Processing sentence: wait its returned"
+    [1] "Processing sentence: i do not feel so bad after all"
+
       stanford sentimentr_jockers sentimentr_huliu sentimentr_sentiword
     1     -0.5               0.18             0.35                 0.18
     2        1                0.6              0.8                 0.65
@@ -837,8 +824,10 @@ three 1000 element data sets from:
 -   yelp.com
 
 The data sets are hand scored as either positive or negative. The
-testing here merely matches the sign of the algorithm to the human coded
-output to determine accuracy rates.
+testing here uses [Mean Directional Accuracy
+(MDA)](https://en.wikipedia.org/wiki/Mean_Directional_Accuracy_(MDA))
+and merely matches the sign of the algorithm to the human coded output
+to determine accuracy rates.
 
 -   Kotzias, D., Denil, M., De Freitas, N., & Smyth,P. (2015). *From
     group to individual labels using deep features*. Proceedings of the
@@ -895,8 +884,8 @@ accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
 lacks accuracy. We can deduce two things from this observation:
 
-1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,100\] vs. Hu & Lu \[n = 6,875\])
+1.  Larger dictionaries discriminate better (Sentiword \[n = 20,100\]
+    vs. Hu & Lu \[n = 6,875\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
