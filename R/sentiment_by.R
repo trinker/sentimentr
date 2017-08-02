@@ -105,8 +105,10 @@ sentiment_by.get_sentences_character <- function(text.var, by = NULL,
     averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
+    out <- suppressWarnings(sentiment(text.var = text.var, ...))
 
     if (is.null(by)){
+        
         out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),
         	  'sd' = stats::sd(sentiment, na.rm = TRUE),
         	  'ave_sentiment' = averaging.function(sentiment)), by = "element_id"]
