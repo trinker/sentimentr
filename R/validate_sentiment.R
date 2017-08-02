@@ -63,12 +63,11 @@
 #'     stringsAsFactors = FALSE
 #' )
 #' 
-#' pred <- sentiment(swafford$text) 
+#' pred <- sentiment_by(swafford$text) 
 #' validate_sentiment(
 #'     pred,
 #'     actual = swafford$actual
 #' )
-
 validate_sentiment <- function(predicted, actual, ...){
 
     UseMethod('validate_sentiment')
@@ -176,7 +175,52 @@ print.validate_sentiment <- function(x, ...){
 #' @export
 #' @method validate_sentiment sentiment_by
 validate_sentiment.sentiment_by <- function(predicted, actual, ...){
-    validate_sentiment(predicted[['ave_sentiment']], actual, ...)
+    
+    
+    if (missing(actual)) {
+        
+        n <- list(...)[['n']]
+        width <- list(...)[['width']]
+        if (is.null(n)) n <- 30
+        if (is.null(width)) width <- 50
+  
+        pred <- predicted[['ave_sentiment']]
+        classes <- ifelse(pred == 0, '0   (neutral)', ifelse(pred > 0, '+   (positive)', '-   (negative)'))   
+        
+        
+        
+        sents <- lapply(split(get_sentences(predicted), classes), function(x){
+            xn <- length(x)
+            len <- ifelse(xn <= n, xn, n)
+            locs <- sample.int(xn, len)
+            txt <- x[locs]
+            text <- unlist(lapply(txt, paste, collapse = ' '))
+        })
+        
+        dat <- textshape::tidy_list(sents, 'tag', 'text.var')
+        
+        results <- Map(tag_assessment, dat[['text.var']], dat[['tag']], seq_len(nrow(dat)), nrow(dat), width = width)    
+
+                sign <- substring(dat[['tag']], 1, 1)
+        predicted <- ifelse(sign == '0', 0, ifelse(sign == '-', -1, 1))
+        actual <- unlist(results)
+        return(validate_sentiment(predicted, actual))
+
+    }
+    
+    
+    validate_sentiment(predicted[['sentiment']], actual)
+}
+
+
+tag_assessment <- function(text.var, tag, number, total, width = 50){
+    lines <- paste(rep("-", width), collapse="")
+    text <- strwrap(text.var, width)
+    tag <- sprintf("\nTag: %s", tag)
+    numb <- sprintf("[%s of %s]", number, total)
+    clear <- paste(rep("\n", 20), collapse="")
+    message(paste(c(clear, numb, lines,  text, tag, lines,  "\n\nDoes this tag fit?"), collapse="\n"))
+    utils::menu(c("Yes", "No"))
 }
 
 #' @export

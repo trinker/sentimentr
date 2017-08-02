@@ -75,7 +75,7 @@ swafford <- data.frame(
     stringsAsFactors = FALSE
 )
 
-pred <- sentiment(swafford$text) 
+pred <- sentiment_by(swafford$text) 
 validate_sentiment(
     pred,
     actual = swafford$actual
