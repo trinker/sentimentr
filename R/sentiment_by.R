@@ -105,7 +105,6 @@ sentiment_by.get_sentences_character <- function(text.var, by = NULL,
     averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
 	word_count <- ave_sentiment <- NULL
-    out <- sentiment(text.var = text.var, ...)
 
     if (is.null(by)){
         out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),
@@ -166,7 +165,8 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
     averaging.function = sentimentr::average_downweighted_zero, group.names, ...){
 
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
-
+    sentsout <- make_class(unname(split(text.var[['text']], unlist(text.var[['element_id']]))), "get_sentences", "get_sentences_character")
+    
 	word_count <- ave_sentiment <- NULL
     out <- sentiment(text.var = x, ...)
 
@@ -175,7 +175,7 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
 
     }
     
-    uncombined <- out2 <- cbind(text.var, out)
+    uncombined <- out2 <- cbind(text.var, out[, c('word_count', 'sentiment')])
 
     out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
         'sd' = stats::sd(sentiment, na.rm = TRUE),
@@ -186,6 +186,8 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
     sentiment[["sentiment"]] <- out
     attributes(out2)[["sentiment"]] <- sentiment
     attributes(out2)[["groups"]] <- by
+    
+    attributes(attributes(out2)[["sentiment"]][["sentiment"]])[['sentences']][['sentences']] <- sentsout
 
     uncombine <- new.env(FALSE)
     uncombine[["uncombine"]] <- uncombined
