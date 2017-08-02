@@ -176,7 +176,7 @@ print.validate_sentiment <- function(x, ...){
 #' @method validate_sentiment sentiment_by
 validate_sentiment.sentiment_by <- function(predicted, actual, ...){
     
-    
+  
     if (missing(actual)) {
 
         if(!isTRUE(all.equal(attributes(predicted)[['groups']], 'element_id'))){
@@ -215,7 +215,7 @@ validate_sentiment.sentiment_by <- function(predicted, actual, ...){
     }
     
     
-    validate_sentiment(predicted[['sentiment']], actual)
+    validate_sentiment(predicted[['ave_sentiment']], actual)
 }
 
 tag_assessment <- function(text.var, tag, number, total, width = 50){
