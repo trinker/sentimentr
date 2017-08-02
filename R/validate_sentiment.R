@@ -178,6 +178,10 @@ validate_sentiment.sentiment_by <- function(predicted, actual, ...){
     
     
     if (missing(actual)) {
+
+        if(!isTRUE(all.equal(attributes(predicted)[['groups']], 'element_id'))){
+            stop('If you pass nothing to `actual` then `predicted` must be a `sentiment_by` object created with no `group.vars`.')
+        }
         
         n <- list(...)[['n']]
         width <- list(...)[['width']]
@@ -185,33 +189,34 @@ validate_sentiment.sentiment_by <- function(predicted, actual, ...){
         if (is.null(width)) width <- 50
   
         pred <- predicted[['ave_sentiment']]
+    
         classes <- ifelse(pred == 0, '0   (neutral)', ifelse(pred > 0, '+   (positive)', '-   (negative)'))   
-        
-        
-        
+       
         sents <- lapply(split(get_sentences(predicted), classes), function(x){
             xn <- length(x)
             len <- ifelse(xn <= n, xn, n)
             locs <- sample.int(xn, len)
             txt <- x[locs]
-            text <- unlist(lapply(txt, paste, collapse = ' '))
+            unlist(lapply(txt, paste, collapse = ' '))
         })
         
         dat <- textshape::tidy_list(sents, 'tag', 'text.var')
         
         results <- Map(tag_assessment, dat[['text.var']], dat[['tag']], seq_len(nrow(dat)), nrow(dat), width = width)    
 
-                sign <- substring(dat[['tag']], 1, 1)
+        sign <- substring(dat[['tag']], 1, 1)
         predicted <- ifelse(sign == '0', 0, ifelse(sign == '-', -1, 1))
         actual <- unlist(results)
-        return(validate_sentiment(predicted, actual))
+        out <- validate_sentiment(predicted, actual)
+      
+        attributes(out)[['text']] <- sents
+        return(out)
 
     }
     
     
     validate_sentiment(predicted[['sentiment']], actual)
 }
-
 
 tag_assessment <- function(text.var, tag, number, total, width = 50){
     lines <- paste(rep("-", width), collapse="")
