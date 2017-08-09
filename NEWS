@@ -17,7 +17,16 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 1.0.1 -
+sentimentr 2.0.1
+----------------------------------------------------------------
+
+BUG FIXES
+
+* `get_sentences` assigned the class to the data.frame when a data.frame was passed but not to the text column, meaning the individual column could not be passed to `sentiment` or `sentiment_by` without having sentence boundary detection re-done.  This has been fixed.  See #53.
+
+
+
+sentimentr 1.0.1 - 2.0.0
 ----------------------------------------------------------------
 
 BUG FIXES

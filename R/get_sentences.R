@@ -63,6 +63,7 @@ get_sentences.data.frame <- function(x, ...) {
     }
     
     out <- textshape::split_sentence(x, text.var = text.var, ...)
+    class(out[[text.var]]) <- unique(c("get_sentences", "get_sentences_character", class(out[[text.var]])))   
     out <- make_class(out, "get_sentences", "get_sentences_data_frame")
     attributes(out)   [['text.var']] <- text.var
         
