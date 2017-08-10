@@ -1,5 +1,6 @@
 sentimentr   
-==========
+============
+
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -39,29 +40,52 @@ optimizes speed which the Stanford's parser does not. This leads to a
 trade off of speed vs. accuracy. Simply, **sentimentr** attempts to
 balance accuracy and speed.
 
+
+Table of Contents
+============
+
+-   [Why sentimentr](#why-sentimentr)
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Preferred Workflow](#preferred-workflow)
+    -   [Tidy Approach](#tidy-approach)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
+
 Why sentimentr
-==============
+============
+
 
 ***So what does*** **sentimentr** ***do that other packages don't and
 why does it matter?***
 
 > **sentimentr** attempts to take into account valence shifters (i.e.,
-> negators, amplifiers, de-amplifiers, and adversative conjunctions)
-> while maintaining speed. Simply put, **sentimentr** is an augmented
-> dictionary lookup. The next questions address why it matters.
+> negators, amplifiers (intensifiers), de-amplifiers (downtoners), and
+> adversative conjunctions) while maintaining speed. Simply put,
+> **sentimentr** is an augmented dictionary lookup. The next questions
+> address why it matters.
 
 ***So what are these valence shifters?***
 
 > A *negator* flips the sign of a polarized word (e.g., "I do ***not***
 > like it."). See `lexicon::hash_valence_shifters[y==1]` for examples.
-> An *amplifier* increases the impact of a polarized word (e.g., "I
-> ***really*** like it."). See `lexicon::hash_valence_shifters[y==2]`
-> for examples. A *de-amplifier* reduces the impact of a polarized word
-> (e.g., "I ***hardly*** like it."). See
-> `lexicon::hash_valence_shifters[y==3]` for examples. An *adversative
-> conjunction* overrules the previous clause containing a polarized word
-> (e.g., "I like it ***but*** it's not worth it."). See
-> `lexicon::hash_valence_shifters[y==4]` for examples.
+> An *amplifier* (intensifier) increases the impact of a polarized word
+> (e.g., "I ***really*** like it."). See
+> `lexicon::hash_valence_shifters[y==2]` for examples. A *de-amplifier*
+> (downtoner) reduces the impact of a polarized word (e.g., "I
+> ***hardly*** like it."). See `lexicon::hash_valence_shifters[y==3]`
+> for examples. An *adversative conjunction* overrules the previous
+> clause containing a polarized word (e.g., "I like it ***but*** it's
+> not worth it."). See `lexicon::hash_valence_shifters[y==4]` for
+> examples.
 
 ***Do valence shifters really matter?***
 
@@ -150,29 +174,8 @@ shown in the table above, can be accessed via:
     val_shift_freq <- system.file("the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R", package = "sentimentr")
     file.copy(val_shift_freq, getwd())
 
-
-Table of Contents
-============
-
--   [Why sentimentr](#why-sentimentr)
--   [Functions](#functions)
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Examples](#examples)
-    -   [Preferred Workflow](#preferred-workflow)
-    -   [Tidy Approach](#tidy-approach)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
-
 Functions
-============
-
+=========
 
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
@@ -295,19 +298,20 @@ The cluster can be represented as
 where *n**b* & *n**a* are the parameters `n.before` and `n.after` set by
 the user. The words in this polarized context cluster are tagged as
 neutral (*w*<sub>*i*, *j*, *k*</sub><sup>0</sup>), negator
-(*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>), amplifier
+(*w*<sub>*i*, *j*, *k*</sub><sup>*n*</sup>), amplifier \[intensifier\]
 (*w*<sub>*i*, *j*, *k*</sub><sup>*a*</sup>), or de-amplifier
-(*w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>). Neutral words hold no value
-in the equation but do affect word count (*n*). Each polarized word is
-then weighted (*w*) based on the weights from the `polarity_dt` argument
-and then further weighted by the function and number of the valence
-shifters directly surrounding the positive or negative word (*p**w*).
-Pause (*c**w*) locations (punctuation that denotes a pause including
-commas, colons, and semicolons) are indexed and considered in
-calculating the upper and lower bounds in the polarized context cluster.
-This is because these marks indicate a change in thought and words prior
-are not necessarily connected with words after these punctuation marks.
-The lower bound of the polarized context cluster is constrained to
+\[downtoner\] (*w*<sub>*i*, *j*, *k*</sub><sup>*d*</sup>). Neutral words
+hold no value in the equation but do affect word count (*n*). Each
+polarized word is then weighted (*w*) based on the weights from the
+`polarity_dt` argument and then further weighted by the function and
+number of the valence shifters directly surrounding the positive or
+negative word (*p**w*). Pause (*c**w*) locations (punctuation that
+denotes a pause including commas, colons, and semicolons) are indexed
+and considered in calculating the upper and lower bounds in the
+polarized context cluster. This is because these marks indicate a change
+in thought and words prior are not necessarily connected with words
+after these punctuation marks. The lower bound of the polarized context
+cluster is constrained to
 max{*p**w*<sub>*i*, *j*, *k* − *n**b*</sub>, 1, max{*c**w*<sub>*i*, *j*, *k*</sub> &lt; *p**w*<sub>*i*, *j*, *k*</sub>}}
 and the upper bound is constrained to
 min{*p**w*<sub>*i*, *j*, *k* + *n**a*</sub>, *w*<sub>*i*, *j**n*</sub>, min{*c**w*<sub>*i*, *j*, *k*</sub> &gt; *p**w*<sub>*i*, *j*, *k*</sub>}}
@@ -498,12 +502,6 @@ on a `data.frame` as seen below:
     presidential_debates_2012 %>%
         get_sentences() %$%
         sentiment_by(dialogue, list(person, time))
-
-    ## Warning in split_warn(text.var, "sentiment_by", ...): Each time
-    ## `sentiment_by` is run it has to do sentence boundary disambiguation when
-    ## a raw `character` vector is passed to `text.var`. This may be costly of
-    ## time and memory. It is highly recommended that the user first runs the raw
-    ## `character` vector through the `get_sentences` function.
 
     ##        person   time word_count        sd ave_sentiment
     ##  1:     OBAMA time 1       3598 0.3015097    0.16673169
@@ -883,8 +881,8 @@ accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
 lacks accuracy. We can deduce two things from this observation:
 
-1.  Larger dictionaries discriminate better (Sentiword \[n = 20,100\]
-    vs. Hu & Lu \[n = 6,875\])
+1.  Larger dictionaries discriminate better (Sentiword \[n =
+    20,100\] vs. Hu & Lu \[n = 6,875\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
