@@ -7,7 +7,8 @@
 sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
-  question.weight = 1, adversative.weight = 0.85, missing_value = 0, ...)
+  question.weight = 1, adversative.weight = 0.85,
+  neutral.nonverb.like = FALSE, missing_value = 0, ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -69,6 +70,21 @@ word times the weight given (\eqn{1 + N_{adversative\,conjunctions}*-1 * z_2}).
 These are added to the deamplifier and amplifier weights and thus the down 
 weight is constrained to -1 as the lower bound.  Set to zero to remove 
 adversative conjunction weighting.}
+
+\item{neutral.nonverb.like}{logical.  If \code{TRUE}, and 'like' is found
+in the \code{polarity_dt}, when the word 'like' is preceded by one of the 
+following linking verbs: \code{"'s"}, \code{"was"}, \code{"is"}, \code{"has"}, 
+\code{"am"}, \code{"are"}, \code{"'re"}, \code{"had"}, or \code{"been"} it is 
+neutralized as this non-verb form of like is not likely polarized.  This is a 
+poor man's part of speech tagger, maintaining the balance between speed and 
+accuracy.  The word 'like', as a verb, tends to be polarized and is usually 
+preceded by a noun or pronoun, not one of the linking verbs above.  This 
+hyper parameter doesn't always yield improved results depending on the context 
+of where the text data comes from.  For example, it is likely to be more 
+useful in literary works, where like is often used in non-verb form, than 
+product comments.  Use of this parameter will add compute time, this must be 
+weighed against the need for accuracy and the likeliness that more accurate 
+results will come from setting this argument to \code{TRUE}.}
 
 \item{missing_value}{A value to replace \code{NA}/\code{NaN} with.  Use
 \code{NULL} to retain missing values.}

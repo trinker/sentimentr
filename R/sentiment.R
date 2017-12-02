@@ -58,6 +58,20 @@
 #' These are added to the deamplifier and amplifier weights and thus the down 
 #' weight is constrained to -1 as the lower bound.  Set to zero to remove 
 #' adversative conjunction weighting.
+#' @param neutral.nonverb.like logical.  If \code{TRUE}, and 'like' is found
+#' in the \code{polarity_dt}, when the word 'like' is preceded by one of the 
+#' following linking verbs: \code{"'s"}, \code{"was"}, \code{"is"}, \code{"has"}, 
+#' \code{"am"}, \code{"are"}, \code{"'re"}, \code{"had"}, or \code{"been"} it is 
+#' neutralized as this non-verb form of like is not likely polarized.  This is a 
+#' poor man's part of speech tagger, maintaining the balance between speed and 
+#' accuracy.  The word 'like', as a verb, tends to be polarized and is usually 
+#' preceded by a noun or pronoun, not one of the linking verbs above.  This 
+#' hyper parameter doesn't always yield improved results depending on the context 
+#' of where the text data comes from.  For example, it is likely to be more 
+#' useful in literary works, where like is often used in non-verb form, than 
+#' product comments.  Use of this parameter will add compute time, this must be 
+#' weighed against the need for accuracy and the likeliness that more accurate 
+#' results will come from setting this argument to \code{TRUE}.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
 #' @param \ldots Ignored.
@@ -250,7 +264,7 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
     
     UseMethod('sentiment')
     
@@ -262,7 +276,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -285,7 +299,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     sent_dat <- make_sentence_df2(sents)
 
     ## replace like when preposition
-    if ('like' %in% polarity_dt[[1]]) {
+    if (neutral.nonverb.like && 'like' %in% polarity_dt[[1]]) {
         sent_dat[, 'sentences' := stringi::stri_replace_all_regex(
                 sentences,
                 like_preverbs_regex,
@@ -405,7 +419,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -423,7 +437,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 

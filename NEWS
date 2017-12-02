@@ -26,6 +26,10 @@ NEW FEATURES
 
 MINOR FEATURES
 
+* `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the
+  user to treat specific non-verb uses of the word 'like' as neutral since 'like' 
+  as a verb is the usually when the word is polarized.
+
 IMPROVEMENTS
 
 CHANGES
