@@ -16,11 +16,7 @@ Returns a list of vectors of sentences.
 }
 \description{
 \code{get_sentences} - Get sentences from a character vector, \code{sentiment}, or
-\code{sentiment_by} object. This is optimized for internal use, converting the
-text to lower case and removing non-sentence boundary periods. \code{get_sentences2}
-retains case and non-sentence boundary periods and should be preferable in
-such instances where these features are deemed important to the analysis at
-hand.
+\code{sentiment_by} object.
 }
 \examples{
 dat <- data.frame(

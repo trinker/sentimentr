@@ -203,7 +203,8 @@ something is not right or negative connotation (\strong{deixis}).
 mytext <- c(
    'do you like it?  But I hate really bad dogs',
    'I am the best friend.',
-   "Do you really like it?  I'm not a fan"
+   "Do you really like it?  I'm not a fan",
+   "It's like a tree."
 )
 
 ## works on a character vector but not the preferred method avoiding the 

@@ -193,7 +193,8 @@
 #' mytext <- c(
 #'    'do you like it?  But I hate really bad dogs',
 #'    'I am the best friend.',
-#'    "Do you really like it?  I'm not a fan"
+#'    "Do you really like it?  I'm not a fan",
+#'    "It's like a tree."
 #' )
 #' 
 #' ## works on a character vector but not the preferred method avoiding the 
@@ -278,11 +279,23 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     words <- c(posneg, valence_shifters_dt[[1]])
     space_words <-  words[grep("\\s", words)]
 
-    # break rows into count words
-    # space fill (~~), break into words
     sents <- text.var
+    
+    # break rows into count words
     sent_dat <- make_sentence_df2(sents)
 
+    ## replace like when preposition
+    if ('like' %in% polarity_dt[[1]]) {
+        sent_dat[, 'sentences' := stringi::stri_replace_all_regex(
+                sentences,
+                like_preverbs_regex,
+                '$1 $1$3',
+                opts_regex = stringi::stri_opts_regex(case_insensitive=TRUE)
+            )
+        ][]
+    }
+
+    # space fill (~~), break into words    
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 
     # make sentence id for each row id
@@ -382,6 +395,10 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
      attributes(out)[["sentences"]] <- sentences
      out[]
 }
+
+like_preverbs <- c("'s", 'was', 'is', 'has', 'am', 'are', "'re", 'had', 'been')
+like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\\s+)(like\\b)')
+
 
 #' @export
 #' @method sentiment character
