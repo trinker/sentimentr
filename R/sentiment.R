@@ -274,7 +274,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    clause.breaks = c(';', ':',  ',', 'but'), 
     ...){
     
     UseMethod('sentiment')
@@ -288,7 +288,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    clause.breaks = c(';', ':',  ',', 'but'), 
     ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
@@ -433,7 +433,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    clause.breaks = c(';', ':',  ',', 'but'), 
     ...){
 
     split_warn(text.var, 'sentiment', ...)
@@ -454,7 +454,7 @@ sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    clause.breaks = c(';', ':',  ',', 'but'), 
     ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")

@@ -33,11 +33,8 @@ sentimentr 2.1.0 -
 * `sentiment` picks up the `clause.breaks` argument.  This is a vector of tokens
   that should be seen as clause boundaries, thus using this as the edge of the 
   window around the polarized word.  This was formerly done internally and only 
-  used: ';', ':', & ','.  The conjunctions: 'although', 'though', 'and', 'but', 
-  'however', & 'yet' have been added to the list and can be controlled by the 
-  user, meaning the statement, "Not enough money and poor life" is seen as 
-  negative rather than positive (though these tokens make not actually break up 
-  clauses in practice).
+  used: ';', ':', & ','.  The conjunction 'but'has have been added to the list 
+  as it has been shown to improve performance in practice.  
 
 **IMPROVEMENTS**
 
