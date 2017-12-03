@@ -16,7 +16,7 @@ verbadge <- ''
 ````
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
 library(pander)
 library(dplyr)
