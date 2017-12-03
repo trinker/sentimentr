@@ -92,13 +92,13 @@ results will come from setting this argument to \code{TRUE}.}
 
 \item{clause.breaks}{A vector of tokens that should be seen as clause 
 boundaries for use as the edge of the window around the polarized word.  The 
-default list includes: \code{";"}, \code{":"}, & \code{","}, \code{"although"}, 
-\code{"though"}, \code{"and"}, \code{"but"}, \code{"however"}, & \code{"yet"}.  
-This ensures that the statement "Not enough money and poor life" is seen as 
-negative rather than positive (if  bot for stopping at 'and' the 'not' negator 
-would be applied to 'poor' if `n.before` were set to >= 4.  Note that this is 
-not an exhaustive list, nor do these tokens always indicate clause boundaries 
-but in practice these usually boost accuracy without slowing the algorithm much.}
+default list includes: \code{";"}, \code{":"}, & \code{","}, & \code{"but"}.  
+The user may want to add other tokens such as \code{"and"} to ensure that the 
+statement "Not enough money and poor life" is seen as negative rather than 
+positive (by stopping at 'and' the 'not' negator would be applied to 'poor' 
+if `n.before` were set to >= 4).  Note that this is not an exhaustive list, 
+nor do these tokens always indicate clause boundaries but in practice these
+usually boost accuracy without slowing the algorithm much.}
 
 \item{\ldots}{Ignored.}
 }

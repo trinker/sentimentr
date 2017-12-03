@@ -1,6 +1,6 @@
 library(tidyverse)
 
-https://www.kaggle.com/c/si650winter11/data
+#https://www.kaggle.com/c/si650winter11/data
 
 kaggle_movie_reviews <- read.csv(
     "C:/Users/Tyler/Desktop/kaggle_training.txt" ,
@@ -12,8 +12,12 @@ kaggle_movie_reviews <- read.csv(
     tbl_df() %>%
     mutate(
         Sentiment = ifelse(Sentiment == 0, -1, Sentiment),
-        Polarity = ifelse(Sentiment == -1, 'Negative', 'Positive')
+        Polarity = ifelse(Sentiment == -1, 'Negative', 'Positive'),
+        Text = gsub("(\\s+'\\s+s\\s+)", "'s ", textclean::replace_non_ascii(Text), perl = TRUE)
     ) %>%
     select(Polarity, Sentiment, Text)
 
 pax::new_data(kaggle_movie_reviews)
+
+4054
+pp7 <- with(kaggle_movie_reviews, check_text(Text))
