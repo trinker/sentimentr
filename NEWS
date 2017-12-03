@@ -29,6 +29,15 @@ MINOR FEATURES
 * `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the
   user to treat specific non-verb uses of the word 'like' as neutral since 'like' 
   as a verb is the usually when the word is polarized.
+  
+* `sentiment` picks up the `clause.breaks` argument.  This is a vector of tokens
+  that should be seen as clause boundaries, thus using this as the edge of the 
+  window around the polarized word.  This was formerly done internally and only 
+  used: ';', ':', & ','.  The conjunctions: 'although', 'though', 'and', 'but', 
+  'however', & 'yet' have been added to the list and can be controlled by the 
+  user, meaning the statement, "Not enough money and poor life" is seen as 
+  negative rather than positive (though these tokens make not actually break up 
+  clauses in practice).
 
 IMPROVEMENTS
 

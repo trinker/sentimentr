@@ -74,6 +74,15 @@
 #' results will come from setting this argument to \code{TRUE}.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
+#' @param clause.breaks A vector of tokens that should be seen as clause 
+#' boundaries for use as the edge of the window around the polarized word.  The 
+#' default list includes: \code{";"}, \code{":"}, & \code{","}, \code{"although"}, 
+#' \code{"though"}, \code{"and"}, \code{"but"}, \code{"however"}, & \code{"yet"}.  
+#' This ensures that the statement "Not enough money and poor life" is seen as 
+#' negative rather than positive (if  bot for stopping at 'and' the 'not' negator 
+#' would be applied to 'poor' if `n.before` were set to >= 4.  Note that this is 
+#' not an exhaustive list, nor do these tokens always indicate clause boundaries 
+#' but in practice these usually boost accuracy without slowing the algorithm much.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -264,7 +273,9 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
+    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    ...){
     
     UseMethod('sentiment')
     
@@ -276,7 +287,9 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
+    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -325,7 +338,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     word_dat[, comma_loc:=pol_loc]
     word_dat[, "P"] <- polarity_dt[word_dat[["words"]]][[2]]
     word_dat[, pol_loc:=ifelse(is.na(P), NA, pol_loc)]
-    word_dat[, comma_loc:=ifelse(words %in% c(";", ":", ","), comma_loc, NA)]
+    word_dat[, comma_loc:=ifelse(words %in% clause.breaks, comma_loc, NA)]
 
     ## Get position of polarized word (hits = pol_loc)
     ## Get length of words vect
@@ -419,7 +432,9 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
+    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -428,7 +443,8 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
         valence_shifters_dt = valence_shifters_dt, hyphen = hyphen,
         amplifier.weight = amplifier.weight, n.before = n.before, 
         n.after = n.after, question.weight = question.weight,
-        adversative.weight = adversative.weight, missing_value = missing_value, ...)
+        adversative.weight = adversative.weight, missing_value = missing_value, 
+        neutral.nonverb.like = neutral.nonverb.like, clause.breaks = clause.breaks, ...)
   
 }
 
@@ -437,7 +453,9 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
+    clause.breaks = c(';', ':',  ',', 'although', 'though', 'and', 'but', 'however', 'yet'), 
+    ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 
@@ -445,7 +463,8 @@ sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::
             valence_shifters_dt = valence_shifters_dt, hyphen = hyphen,
             amplifier.weight = amplifier.weight, n.before = n.before, 
             n.after = n.after, question.weight = question.weight,
-            adversative.weight = adversative.weight, missing_value = missing_value, ...)
+            adversative.weight = adversative.weight, missing_value = missing_value, 
+            neutral.nonverb.like = neutral.nonverb.like, clause.breaks = clause.breaks, ...)
     
     cbind(text.var, sent_out[, c('word_count',  'sentiment')])
   
