@@ -114,3 +114,25 @@ NULL
 
 
 
+
+
+#' Movie Reviews 
+#' 
+#' A dataset containing sentiment scored movie reviews from a Kaggle competition
+#' posted by University of Michigan SI650.  The data was originally collected 
+#' from opinmind.com.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item Polarity. 
+#'   \item Sentiment. 
+#'   \item Text. 
+#' } 
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name kaggle_movie_reviews 
+#' @usage data(kaggle_movie_reviews) 
+#' @format A data frame with 7086 rows and 3 variables 
+#' @references \url{https://www.kaggle.com/c/si650winter11/data}
+NULL 

@@ -1,13 +1,14 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_current_gh("trinker/sentimentr", "trinker/stansent", "trinker/textshape", 
-    "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr", 'textreadr')
-pacman::p_load(syuzhet, dplyr, tidyr, downloader, ggplot2, RSentiment)
+pacman::p_load_current_gh("trinker/sentimentr", "trinker/coreNLPsetup", "trinker/stansent", 
+    "trinker/textshape", "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
+
+pacman::p_load(syuzhet, dplyr, tidyr, textreadr, ggplot2, RSentiment)
 
 loc <- "sentiment_data"
 dir.create(loc)
 
 'http://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment%20labelled%20sentences.zip' %>%
-    download() %>%
+    textreadr::download() %>%
     unzip(exdir = loc)
 	
 	
@@ -72,7 +73,7 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         sentimentr_syuzhet_dict = round(sentiment_by(dat$text2, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_bing = round(sentiment_by(dat$text2, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text2, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
-        sentimentr_nrc = round(sentiment_by(dat$text2, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_nrc = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_nrc, question.weight = 0)[["ave_sentiment"]], 2),
 
         #RSentiment = RSentiment,
 

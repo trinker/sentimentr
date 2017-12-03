@@ -2,6 +2,29 @@ sentimentr
 ============
 
 
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following object is masked from 'package:qdap':
+    ## 
+    ##     %>%
+
+    ## The following object is masked from 'package:qdapTools':
+    ## 
+    ##     id
+
+    ## The following object is masked from 'package:qdapRegex':
+    ## 
+    ##     explain
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
@@ -428,7 +451,7 @@ any sentiment analysis is done.
 
     ##    element_id sentence_id word_count  sentiment
     ## 1:          1           1          4  0.2500000
-    ## 2:          1           2          6 -2.0085816
+    ## 2:          1           2          6 -1.1022704
     ## 3:          2           1          5  0.5813777
     ## 4:          3           1          5  0.4024922
     ## 5:          3           2          4  0.0000000
@@ -444,10 +467,10 @@ To aggregate by element (column cell or vector element) use
     mytext <- get_sentences(mytext)
     sentiment_by(mytext)
 
-    ##    element_id word_count       sd ave_sentiment
-    ## 1:          1         10 1.597058    -0.8792908
-    ## 2:          2          5       NA     0.5813777
-    ## 3:          3          9 0.284605     0.2196345
+    ##    element_id word_count        sd ave_sentiment
+    ## 1:          1         10 0.9561996    -0.4261352
+    ## 2:          2          5        NA     0.5813777
+    ## 3:          3          9 0.2846050     0.2196345
 
 To aggregate by grouping variables use `sentiment_by` using the `by`
 argument.
@@ -461,16 +484,16 @@ argument.
     ))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.3015097    0.16673169
-    ##  2:     OBAMA time 2       7476 0.2399589    0.11663216
-    ##  3:     OBAMA time 3       7241 0.2614870    0.11842952
-    ##  4:    ROMNEY time 1       4085 0.2505313    0.12462353
-    ##  5:    ROMNEY time 2       7534 0.2382667    0.08540709
-    ##  6:    ROMNEY time 3       8302 0.2846332    0.10652350
-    ##  7:   CROWLEY time 2       1672 0.1878174    0.17977897
-    ##  8:    LEHRER time 1        765 0.2847680    0.18338771
-    ##  9:  QUESTION time 2        583 0.2076347    0.06625726
-    ## 10: SCHIEFFER time 3       1445 0.2471048    0.08780297
+    ##  1:     OBAMA time 1       3598 0.3252402    0.19541288
+    ##  2:     OBAMA time 2       7476 0.2461781    0.12158366
+    ##  3:     OBAMA time 3       7241 0.2581580    0.11662178
+    ##  4:    ROMNEY time 1       4085 0.2671649    0.12640525
+    ##  5:    ROMNEY time 2       7534 0.2274118    0.09269152
+    ##  6:    ROMNEY time 3       8302 0.2857863    0.10789839
+    ##  7:   CROWLEY time 2       1672 0.1871791    0.18028946
+    ##  8:    LEHRER time 1        765 0.2887583    0.19570031
+    ##  9:  QUESTION time 2        583 0.1970215    0.06057189
+    ## 10: SCHIEFFER time 3       1445 0.2516834    0.08803431
 
 Tidy Approach
 -------------
@@ -485,16 +508,16 @@ Or if you prefer a more tidy approach:
         sentiment_by(dialogue_split, list(person, time))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.3015097    0.16673169
-    ##  2:     OBAMA time 2       7476 0.2399589    0.11663216
-    ##  3:     OBAMA time 3       7241 0.2614870    0.11842952
-    ##  4:    ROMNEY time 1       4085 0.2505313    0.12462353
-    ##  5:    ROMNEY time 2       7534 0.2382667    0.08540709
-    ##  6:    ROMNEY time 3       8302 0.2846332    0.10652350
-    ##  7:   CROWLEY time 2       1672 0.1878174    0.17977897
-    ##  8:    LEHRER time 1        765 0.2847680    0.18338771
-    ##  9:  QUESTION time 2        583 0.2076347    0.06625726
-    ## 10: SCHIEFFER time 3       1445 0.2471048    0.08780297
+    ##  1:     OBAMA time 1       3598 0.3252402    0.19541288
+    ##  2:     OBAMA time 2       7476 0.2461781    0.12158366
+    ##  3:     OBAMA time 3       7241 0.2581580    0.11662178
+    ##  4:    ROMNEY time 1       4085 0.2671649    0.12640525
+    ##  5:    ROMNEY time 2       7534 0.2274118    0.09269152
+    ##  6:    ROMNEY time 3       8302 0.2857863    0.10789839
+    ##  7:   CROWLEY time 2       1672 0.1871791    0.18028946
+    ##  8:    LEHRER time 1        765 0.2887583    0.19570031
+    ##  9:  QUESTION time 2        583 0.1970215    0.06057189
+    ## 10: SCHIEFFER time 3       1445 0.2516834    0.08803431
 
 Note that you can skip the `dplyr::mutate` step by using `get_sentences`
 on a `data.frame` as seen below:
@@ -504,16 +527,16 @@ on a `data.frame` as seen below:
         sentiment_by(dialogue, list(person, time))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3598 0.3015097    0.16673169
-    ##  2:     OBAMA time 2       7476 0.2399589    0.11663216
-    ##  3:     OBAMA time 3       7241 0.2614870    0.11842952
-    ##  4:    ROMNEY time 1       4085 0.2505313    0.12462353
-    ##  5:    ROMNEY time 2       7534 0.2382667    0.08540709
-    ##  6:    ROMNEY time 3       8302 0.2846332    0.10652350
-    ##  7:   CROWLEY time 2       1672 0.1878174    0.17977897
-    ##  8:    LEHRER time 1        765 0.2847680    0.18338771
-    ##  9:  QUESTION time 2        583 0.2076347    0.06625726
-    ## 10: SCHIEFFER time 3       1445 0.2471048    0.08780297
+    ##  1:     OBAMA time 1       3598 0.3252402    0.19541288
+    ##  2:     OBAMA time 2       7476 0.2461781    0.12158366
+    ##  3:     OBAMA time 3       7241 0.2581580    0.11662178
+    ##  4:    ROMNEY time 1       4085 0.2671649    0.12640525
+    ##  5:    ROMNEY time 2       7534 0.2274118    0.09269152
+    ##  6:    ROMNEY time 3       8302 0.2857863    0.10789839
+    ##  7:   CROWLEY time 2       1672 0.1871791    0.18028946
+    ##  8:    LEHRER time 1        765 0.2887583    0.19570031
+    ##  9:  QUESTION time 2        583 0.1970215    0.06057189
+    ## 10: SCHIEFFER time 3       1445 0.2516834    0.08803431
 
 Plotting
 --------
@@ -882,7 +905,7 @@ dictionary does well at discriminating (like Stanford's coreNLP) but
 lacks accuracy. We can deduce two things from this observation:
 
 1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,100\] vs. Hu & Lu \[n = 6,875\])
+    20,099\] vs. Hu & Lu \[n = 6,874\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
