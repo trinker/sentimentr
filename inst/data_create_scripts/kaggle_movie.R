@@ -19,5 +19,4 @@ kaggle_movie_reviews <- read.csv(
 
 pax::new_data(kaggle_movie_reviews)
 
-4054
 pp7 <- with(kaggle_movie_reviews, check_text(Text))
