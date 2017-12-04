@@ -24,6 +24,9 @@ sentimentr 2.1.0 -
 
 **NEW FEATURES**
 
+* Four new sentiment scored data sets added: `kaggle_movie_reviews`, `nyt_articles`
+  `hotel_reviews`, & `course_evaluations` for testing nd exploration.
+
 **MINOR FEATURES**
 
 * `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the

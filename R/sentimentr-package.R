@@ -124,15 +124,118 @@ NULL
 #' 
 #' @details 
 #' \itemize{ 
-#'   \item Polarity. 
-#'   \item Sentiment. 
-#'   \item Text. 
+#'   \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
+#'   \item sentiment. A numeric score matching \code{polarity}
+#'   \item text. The text from the review 
 #' } 
 #' 
 #' @docType data 
 #' @keywords datasets 
 #' @name kaggle_movie_reviews 
 #' @usage data(kaggle_movie_reviews) 
-#' @format A data frame with 7086 rows and 3 variables 
+#' @format A data frame with 7,086 rows and 3 variables 
 #' @references \url{https://www.kaggle.com/c/si650winter11/data}
+NULL 
+
+
+#' Sentiment Scored New York Times Articles
+#' 
+#' A dataset containing Hutto & Gilbert's (2014) sentiment scored New York Times 
+#' articles.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item element_id. The article id number
+#'   \item sentence_id. The sentence id number
+#'   \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
+#'   \item sentiment. A numeric score matching \code{polarity}
+#'   \item text. The text from the article
+#' } 
+#' 
+#' Vadar's Liscense:
+#'
+#' The MIT License (MIT)
+#'
+#' Copyright (c) 2016 C.J. Hutto
+#'
+#' Permission is hereby granted, free of charge, to any person obtaining a copy
+#' of this software and associated documentation files (the "Software"), to deal
+#' in the Software without restriction, including without limitation the rights
+#' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#' copies of the Software, and to permit persons to whom the Software is
+#' furnished to do so, subject to the following conditions:
+#'
+#' The above copyright notice and this permission notice shall be included in all
+#' copies or substantial portions of the Software.
+#'
+#' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#' SOFTWARE.
+#' @docType data 
+#' @keywords datasets 
+#' @name nyt_articles 
+#' @usage data(nyt_articles) 
+#' @format A data frame with 5,179 rows and 5 variables 
+#' @references
+#' Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model
+#' for Sentiment Analysis of Social Media Text. Eighth International Conference
+#' on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.
+#'
+#' \url{https://github.com/cjhutto/vaderSentiment}
+NULL 
+
+
+#' Student Course Evaluation Comments
+#' 
+#' A dataset containing a subset of comments and rating from Welch & Mihalcea's 
+#' (2017) data set filtered to include comments with a one or more unambiguous 
+#' sentiment rating.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item polarity. A character string of either 'negative' or 'positive'
+#'   \item sentiment. A numeric score matching \code{polarity}
+#'   \item text. The text from the evaluation
+#' } 
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name course_evaluations 
+#' @usage data(course_evaluations) 
+#' @format A data frame with 566 rows and 3 variables 
+#' @references Welch, C. and Mihalcea, R. (2017). Targeted sentiment to 
+#' understand student comments. In Proceedings of the International Conference 
+#' on Computational Linguistics (COLING 2016). \cr \cr
+#' \url{http://web.eecs.umich.edu/~mihalcea/downloads.html#GroundedEmotions}
+NULL 
+
+
+#' Hotel Reviews
+#' 
+#' A dataset containing a random sample (n = 5000 of 1,621,956) of Wang, Lu, & 
+#' Zhai's (2011) hotel reviews data set scraped by the authors from 
+#' \url{http://www.tripadvisor.com}.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item review_id. The identifier associated with the review
+#'   \item author. The user name of the author of the review
+#'   \item date. The data of the review
+#'   \item rating. The overall rating for the experience
+#'   \item text. The text review of the hotel
+#' } 
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name hotel_reviews 
+#' @usage data(hotel_reviews) 
+#' @format A data frame with 5000 rows and 5 variables 
+#' @references Wang, H., Lu, Y., and Zhai, C. (2011). Latent aspect rating 
+#' analysis without aspect keyword supervision. In Proceedings of the 17th ACM 
+#' SIGKDD Conference on Knowledge Discovery and Data Mining (KDD'2011), 618-626. \cr \cr
+#' \url{http://sifaka.cs.uiuc.edu/~wang296/Data/index.html}
 NULL 

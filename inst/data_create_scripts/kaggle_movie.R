@@ -15,7 +15,12 @@ kaggle_movie_reviews <- read.csv(
         Polarity = ifelse(Sentiment == -1, 'Negative', 'Positive'),
         Text = gsub("(\\s+'\\s+s\\s+)", "'s ", textclean::replace_non_ascii(Text), perl = TRUE)
     ) %>%
-    select(Polarity, Sentiment, Text)
+    select(Polarity, Sentiment, Text) %>%
+    setNames(tolower(names(.)))
+
+kaggle_movie_reviews <- sentimentr::kaggle_movie_reviews %>%
+    setNames(tolower(names(.)))
+
 
 pax::new_data(kaggle_movie_reviews)
 

@@ -4,7 +4,7 @@
 \name{kaggle_movie_reviews}
 \alias{kaggle_movie_reviews}
 \title{Movie Reviews}
-\format{A data frame with 7086 rows and 3 variables}
+\format{A data frame with 7,086 rows and 3 variables}
 \usage{
 data(kaggle_movie_reviews)
 }
@@ -15,9 +15,9 @@ from opinmind.com.
 }
 \details{
 \itemize{ 
-  \item Polarity. 
-  \item Sentiment. 
-  \item Text. 
+  \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
+  \item sentiment. A numeric score matching \code{polarity}
+  \item text. The text from the review 
 }
 }
 \references{
