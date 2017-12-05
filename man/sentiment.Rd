@@ -4,7 +4,7 @@
 \alias{sentiment}
 \title{Polarity Score (Sentiment Analysis)}
 \usage{
-sentiment(text.var, polarity_dt = hash_sentiment_jockers_rinker,
+sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
   question.weight = 1, adversative.weight = 0.85,

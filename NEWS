@@ -27,7 +27,7 @@ NEW FEATURES
 * The default sentiment sentiment lookup table used within **sentimentr** is now
   `lexicon::hash_sentiment_jockers_rinker`, a combined and augmented version of
   `lexicon::hash_sentiment_jockers` (Jockers, 2017) & Rinker's augmeted 
-  `lexicon::hash_sentiment_hiliu` (Hu & Liu, 2004) sentiment lookup tables.
+  `lexicon::hash_sentiment_huliu` (Hu & Liu, 2004) sentiment lookup tables.
 
 * Four new sentiment scored data sets added: `kaggle_movie_reviews`, `nyt_articles`
   `hotel_reviews`, & `course_evaluations` for testing nd exploration.

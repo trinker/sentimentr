@@ -101,7 +101,7 @@ There are two main functions (top 2 in table below) in **sentimentr** with sever
 
 The equation below describes the augmented dictionary method of **sentimentr** that may give better results than a simple lookup dictionary approach that does not consider valence shifters.  The equation used by the algorithm to assign value to polarity of each sentence fist utilizes a sentiment dictionary (e.g., Jockers, [(2017)](https://github.com/mjockers/syuzhet)) to tag polarized words.  Each paragraph ($p_i = \{s_1, s_2, ..., s_n\}$) composed of sentences, is broken into element sentences ($s_i,j = \{w_1, w_2, ..., w_n\}$) where $w$ are the words within sentences.  Each sentence ($s_j$) is broken into a an ordered bag of words.  Punctuation is removed with the exception of pause punctuations (commas, colons, semicolons) which are considered a word within the sentence.  I will denote pause words as $cw$ (comma words) for convenience.  We can represent these words as an i,j,k notation as $w_{i,j,k}$.  For example $w_{3,2,5}$ would be the fifth word of the second sentence of the third paragraph.  While I use the term paragraph this merely represent a complete turn of talk.  For example it may be a cell level response in a questionnaire composed of sentences.
 
-The words in each sentence ($w_{i,j,k}$) are searched and compared to a dictionary of polarized words (e.g., a combined and augmented version of Jocker's (2017) \[originally exported by the [**syuzhet**](https://github.com/mjockers/syuzhet) package\] & Rinker's augmented Hu & Liu (2004) dictionaries in the [**lexicon**](https://cran.r-project.org/package=lexicon) package). Positive ($w_{i,j,k}^{+}$) and negative ($w_{i,j,k}^{-}$) words are tagged with a $+1$ and $-1$ respectively (or other positive/negative weighting if the user provides the sentiment dictionary).  I will denote polarized words as $pw$ for convenience. These will form a polar cluster ($c_{i,j,l}$) which is a subset of the a sentence ($c_{i,j,l} \subseteq s_i,j$).
+The words in each sentence ($w_{i,j,k}$) are searched and compared to a dictionary of polarized words (e.g., a combined and augmented version of Jocker's (2017) [originally exported by the [**syuzhet**](https://github.com/mjockers/syuzhet) package] & Rinker's augmented Hu & Liu (2004) dictionaries in the [**lexicon**](https://cran.r-project.org/package=lexicon) package). Positive ($w_{i,j,k}^{+}$) and negative ($w_{i,j,k}^{-}$) words are tagged with a $+1$ and $-1$ respectively (or other positive/negative weighting if the user provides the sentiment dictionary).  I will denote polarized words as $pw$ for convenience. These will form a polar cluster ($c_{i,j,l}$) which is a subset of the a sentence ($c_{i,j,l} \subseteq s_i,j$).
 
 The polarized context cluster ($c_{i,j,l}$) of words is pulled from around the polarized word ($pw$) and defaults to 4 words before and two words after $pw$ to be considered as valence shifters.  The cluster can be represented as ($c_{i,j,l} = \{pw_{i,j,k - nb}, ..., pw_{i,j,k} , ..., pw_{i,j,k - na}\}$), where $nb$ & $na$ are the parameters `n.before` and `n.after` set by the user.  The words in this polarized context cluster are tagged as neutral ($w_{i,j,k}^{0}$), negator ($w_{i,j,k}^{n}$),
 amplifier [intensifier] ($w_{i,j,k}^{a}$), or de-amplifier [downtoner] ($w_{i,j,k}^{d}$). Neutral words hold no value in the equation but do affect word count ($n$).  Each polarized word is then weighted ($w$) based on the weights from the `polarity_dt` argument and then further weighted by the function and number of the valence shifters directly surrounding the positive or negative word ($pw$).  Pause ($cw$) locations (punctuation that denotes a pause including commas, colons, and semicolons) are indexed and considered in calculating the upper and lower bounds in the polarized context cluster. This is because these marks indicate a change in thought and words prior are not necessarily connected with words after these punctuation marks.  The lower bound of the polarized context cluster is constrained to $\max \{pw_{i,j,k - nb}, 1, \max \{cw_{i,j,k} < pw_{i,j,k}\}\}$ and the upper bound is constrained to $\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,j,k}\}\}$ where $w_{i,jn}$ is the number of words in the sentence.
@@ -315,7 +315,7 @@ ase <- c(
 )
 
 syuzhet <- setNames(as.data.frame(lapply(c("syuzhet", "bing", "afinn", "nrc"),
-    function(x) get_sentiment(ase, method=x))), c("syuzhet", "bing", "afinn", "nrc"))
+    function(x) get_sentiment(ase, method=x))), c("jockers", "bing", "afinn", "nrc"))
 
 SentimentAnalysis <- apply(analyzeSentiment(ase)[c('SentimentGI', 'SentimentLM', 'SentimentQDAP') ], 2, round, 2)
 colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnalysis))
@@ -355,19 +355,20 @@ SentimentAnalysis <- function() analyzeSentiment(ase_100)
 
 meanr <- function() score(ase_100)
 
-syuzhet_syuzhet <- function() get_sentiment(ase_100, method="syuzhet")
+syuzhet_jockers <- function() get_sentiment(ase_100, method="syuzhet")
 syuzhet_binn <- function() get_sentiment(ase_100, method="bing")
 syuzhet_nrc <- function() get_sentiment(ase_100, method="nrc")
 syuzhet_afinn <- function() get_sentiment(ase_100, method="afinn")
      
 microbenchmark(
     stanford(),
+    sentimentr_jockers_rinker(),
     sentimentr_jockers(),
     sentimentr_huliu(),
     sentimentr_sentiword(),
     #RSentiment(), 
     SentimentAnalysis(),
-    syuzhet_syuzhet(),
+    syuzhet_jockers(),
     syuzhet_binn(), 
     syuzhet_nrc(),
     syuzhet_afinn(),

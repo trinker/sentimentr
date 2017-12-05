@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_current_gh(file.path("trinker", c("sentimentr", "stansent", "textshape", "textreadr")))
+pacman::p_load_current_gh(file.path("trinker", c('lexicon', "sentimentr", "stansent", "textshape", "textreadr")))
 pacman::p_load(syuzhet, dplyr, tidyr, ggplot2, RColorBrewer, gridExtra, RSentiment)
 
 loc <- "sentiment_data"

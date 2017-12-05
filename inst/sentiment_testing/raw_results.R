@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load_current_gh("trinker/sentimentr", "trinker/coreNLPsetup", "trinker/stansent", 
+pacman::p_load_current_gh("trinker/lexicon", "trinker/sentimentr", "trinker/coreNLPsetup", "trinker/stansent", 
     "trinker/textshape", "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
 
 pacman::p_load(syuzhet, dplyr, tidyr, textreadr, ggplot2, RSentiment)

@@ -4,7 +4,8 @@
 \alias{sentiment_attributes}
 \title{Extract Sentiment Attributes from Text}
 \usage{
-sentiment_attributes(text.var, polarity_dt = hash_sentiment_jockers_rinker,
+sentiment_attributes(text.var,
+  polarity_dt = lexicon::hash_sentiment_jockers_rinker,
   valence_shifters_dt = lexicon::hash_valence_shifters, ...)
 }
 \arguments{

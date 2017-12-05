@@ -83,6 +83,7 @@ pres_dat <- get_sentences(presidential_debates_2012)
 with(presidential_debates_2012, sentiment_by(dialogue, person))
 }
 
+\dontrun{
 sentiment_by(pres_dat, 'person')
 
 (out <- sentiment_by(pres_dat, c('person', 'time')))
@@ -91,6 +92,7 @@ plot(uncombine(out))
 
 sentiment_by(out, presidential_debates_2012$person)
 with(presidential_debates_2012, sentiment_by(out, time))
+}
 
 with(cannon_reviews, sentiment_by(review, number))[order(as.numeric(number))]
 \dontrun{
