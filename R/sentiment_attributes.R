@@ -28,7 +28,7 @@
 #' \dontrun{
 #' sentiment_attributes(presidential_debates_2012$dialogue)
 #' }
-sentiment_attributes <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers, 
+sentiment_attributes <- function(text.var, polarity_dt = hash_sentiment_jockers_rinker, 
     valence_shifters_dt = lexicon::hash_valence_shifters, ...) {
     
         fun <- source(system.file("sfp/sfp", package = "sentimentr"))[["value"]]

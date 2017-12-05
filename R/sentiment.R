@@ -13,9 +13,19 @@
 #' \code{sentiment} is run.
 #' @param polarity_dt A \pkg{data.table} of positive/negative words and
 #' weights with x and y as column names.  The \pkg{lexicon} package has 4 
-#' dictionaries that can be used here: \code{lexicon::hash_sentiment_huliu}, 
-#' \code{lexicon::hash_sentiment_jockers}, \code{lexicon::hash_sentiment_nrc}, 
-#' and \code{lexicon::hash_sentiment_sentiword}.  Additionally, the 
+#' dictionaries that can be used here: 
+#' \itemize{
+#'   \item \code{lexicon::hash_sentiment_jockers_rinker}
+#'   \item \code{lexicon::hash_sentiment_jockers}
+#'   \item \code{lexicon::hash_sentiment_huliu}
+#'   \item \code{lexicon::hash_sentiment_inquirer}
+#'   \item \code{lexicon::hash_sentiment_loughran_mcdonald}
+#'   \item \code{lexicon::hash_sentiment_nrc}
+#'   \item \code{lexicon::hash_sentiment_senticnet}
+#'   \item \code{lexicon::hash_sentiment_sentiword}
+#'   \item \code{lexicon::hash_sentiment_vadar}
+#' }
+#' Additionally, the 
 #' \code{as_key} function can be used to make a sentiment frame suitable for
 #' \code{polarity_dt}.  This takes a 2 column data.frame with the first column
 #' being words and the second column being polarity values.  Note that as of 
@@ -270,7 +280,7 @@
 #'    mutate(review_split = get_sentences(review)) %$%
 #'    sentiment(review_split)
 #' }
-sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+sentiment <- function(text.var, polarity_dt = hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
@@ -284,7 +294,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
 
 #' @export
 #' @method sentiment get_sentences_character
-sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+sentiment.get_sentences_character <- function(text.var, polarity_dt = hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
@@ -429,7 +439,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 
 #' @export
 #' @method sentiment character
-sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+sentiment.character <- function(text.var, polarity_dt = hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
@@ -450,7 +460,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 
 #' @export
 #' @method sentiment get_sentences_data_frame
-sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 

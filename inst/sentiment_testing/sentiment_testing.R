@@ -64,7 +64,8 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
         sentimentr_hu_liu = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_huliu, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_sentiword = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_sentiword, question.weight = 0)[["ave_sentiment"]], 2),
-        sentimentr_syuzhet_dict = round(sentiment_by(dat$text2, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_jockers = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_jockers, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_jockers_rinker = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_jockers_rinker, question.weight = 0)[["ave_sentiment"]], 2),        
         sentimentr_bing = round(sentiment_by(dat$text2, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text2, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_nrc = round(sentiment_by(dat$text2, polarity_dt = nrc, question.weight = 0)[["ave_sentiment"]], 2),
@@ -79,10 +80,10 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
     data_frame(
             Method =  c("stanford", "sentimentr_hu_liu", "sentimentr_bing", "sentimentr_afinn",
-                "sentimentr_nrc", "sentimentr_sentiword", "sentimentr_syuzhet_dict",
+                "sentimentr_nrc", "sentimentr_sentiword", "sentimentr_jockers", "sentimentr_jockers_rinker",
                 "meanr", "syuzhet_bing", "syuzhet_afinn", "syuzhet_nrc",
                 "syuzhet_syuzhet"),
-            package = c('java', rep('sentimentr', 6), "meanr", rep('syuzhet', 4))
+            package = c('java', rep('sentimentr', 7), "meanr", rep('syuzhet', 4))
         ) %>%
         {suppressWarnings(left_join(.,
             out %>%

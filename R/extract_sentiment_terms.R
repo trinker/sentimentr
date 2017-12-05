@@ -27,7 +27,7 @@
 #' 
 #' attributes(extract_sentiment_terms(x))$counts
 #' attributes(extract_sentiment_terms(x))$elements
-extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers,
+extract_sentiment_terms  <- function(text.var, polarity_dt = hash_sentiment_jockers_rinker,
     hyphen = "", ...){
 
     UseMethod('extract_sentiment_terms')   
@@ -36,7 +36,7 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_senti
 #' @export
 #' @method extract_sentiment_terms get_sentences_character
 extract_sentiment_terms.get_sentences_character <- function(text.var, 
-    polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
+    polarity_dt = hash_sentiment_jockers_rinker, hyphen = "", ...){
 
     sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
 
@@ -111,7 +111,7 @@ extract_sentiment_terms.get_sentences_character <- function(text.var,
 #' @export
 #' @method extract_sentiment_terms get_sentences_data_frame
 extract_sentiment_terms.get_sentences_data_frame  <- function(text.var, 
-    polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
+    polarity_dt = hash_sentiment_jockers_rinker, hyphen = "", ...){
     
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], 
         "get_sentences", "get_sentences_character")
@@ -124,7 +124,7 @@ extract_sentiment_terms.get_sentences_data_frame  <- function(text.var,
 #' @export
 #' @method extract_sentiment_terms character
 extract_sentiment_terms.character  <- function(text.var, 
-    polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...){
+    polarity_dt = hash_sentiment_jockers_rinker, hyphen = "", ...){
 
     split_warn(text.var, 'extract_sentiment', ...)
 

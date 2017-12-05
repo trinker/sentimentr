@@ -70,7 +70,10 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
 
         sentimentr_hu_liu = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_huliu, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_sentiword = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_sentiword, question.weight = 0)[["ave_sentiment"]], 2),
-        sentimentr_syuzhet_dict = round(sentiment_by(dat$text2, question.weight = 0)[["ave_sentiment"]], 2),
+        
+        sentimentr_jockers = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_jockers, question.weight = 0)[["ave_sentiment"]], 2),
+        sentimentr_jockers_rinker = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_jockers_rinker, question.weight = 0)[["ave_sentiment"]], 2),    
+        
         sentimentr_bing = round(sentiment_by(dat$text2, polarity_dt = bing, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_afinn = round(sentiment_by(dat$text2, polarity_dt = afinn, question.weight = 0)[["ave_sentiment"]], 2),
         sentimentr_nrc = round(sentiment_by(dat$text2, polarity_dt = lexicon::hash_sentiment_nrc, question.weight = 0)[["ave_sentiment"]], 2),
@@ -119,7 +122,7 @@ results_list %>%
     separate(Context, c("Method", "Context"), "\\.") %>%
     gather(Predicted, n, - c(Method, Context, Actual)) %>% #select(Method) %>% unlist() %>% unique() %>% sort()
     mutate(Method = factor(Method, levels = c("stanford", "sentimentr_afinn", "sentimentr_bing", 
-        "sentimentr_hu_liu", "sentimentr_nrc", "sentimentr_sentiword", "sentimentr_syuzhet_dict",
+        "sentimentr_hu_liu", "sentimentr_nrc", "sentimentr_sentiword", "sentimentr_jockers_rinker", "sentimentr_jockers",
         "meanr", "syuzhet_syuzhet", "syuzhet_afinn", "syuzhet_bing", "syuzhet_nrc"))) %>%
     ggplot(aes(Predicted, Actual, fill =n)) +
         geom_tile() +

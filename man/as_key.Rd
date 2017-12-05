@@ -18,7 +18,7 @@ update_polarity_table(key, drop = NULL, x = NULL,
   comparison = lexicon::hash_valence_shifters, sentiment = FALSE, ...)
 
 update_valence_shifter_table(key, drop = NULL, x = NULL,
-  comparison = lexicon::hash_sentiment_jockers, sentiment = FALSE, ...)
+  comparison = hash_sentiment_jockers_rinker, sentiment = FALSE, ...)
 
 is_key(key, sentiment = TRUE)
 }

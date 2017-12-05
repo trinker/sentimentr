@@ -99,9 +99,9 @@ There are two main functions (top 2 in table below) in **sentimentr** with sever
 
 # The Equation 
 
-The equation below describes the augmented dictionary method of **sentimentr** that may give better results than a simple lookup dictionary approach that does not consider valence shifters.  The equation used by the algorithm to assign value to polarity of each sentence fist utilizes the a sentiment dictionary (e.g., Jockers, [(2017)](https://github.com/mjockers/syuzhet)) to tag polarized words.  Each paragraph ($p_i = \{s_1, s_2, ..., s_n\}$) composed of sentences, is broken into element sentences ($s_i,j = \{w_1, w_2, ..., w_n\}$) where $w$ are the words within sentences.  Each sentence ($s_j$) is broken into a an ordered bag of words.  Punctuation is removed with the exception of pause punctuations (commas, colons, semicolons) which are considered a word within the sentence.  I will denote pause words as $cw$ (comma words) for convenience.  We can represent these words as an i,j,k notation as $w_{i,j,k}$.  For example $w_{3,2,5}$ would be the fifth word of the second sentence of the third paragraph.  While I use the term paragraph this merely represent a complete turn of talk.  For example it may be a cell level response in a questionnaire composed of sentences.
+The equation below describes the augmented dictionary method of **sentimentr** that may give better results than a simple lookup dictionary approach that does not consider valence shifters.  The equation used by the algorithm to assign value to polarity of each sentence fist utilizes a sentiment dictionary (e.g., Jockers, [(2017)](https://github.com/mjockers/syuzhet)) to tag polarized words.  Each paragraph ($p_i = \{s_1, s_2, ..., s_n\}$) composed of sentences, is broken into element sentences ($s_i,j = \{w_1, w_2, ..., w_n\}$) where $w$ are the words within sentences.  Each sentence ($s_j$) is broken into a an ordered bag of words.  Punctuation is removed with the exception of pause punctuations (commas, colons, semicolons) which are considered a word within the sentence.  I will denote pause words as $cw$ (comma words) for convenience.  We can represent these words as an i,j,k notation as $w_{i,j,k}$.  For example $w_{3,2,5}$ would be the fifth word of the second sentence of the third paragraph.  While I use the term paragraph this merely represent a complete turn of talk.  For example it may be a cell level response in a questionnaire composed of sentences.
 
-The words in each sentence ($w_{i,j,k}$) are searched and compared to a dictionary of polarized words (e.g., a slightly modified version of Jocker's (2017) dictionary in the [**lexicon**](https://cran.r-project.org/package=lexicon) package originally exported by the [**syuzhet**](https://github.com/mjockers/syuzhet) package). Positive ($w_{i,j,k}^{+}$) and negative ($w_{i,j,k}^{-}$) words are tagged with a $+1$ and $-1$ respectively (or other positive/negative weighting if the user provides the sentiment dictionary).  I will denote polarized words as $pw$ for convenience. These will form a polar cluster ($c_{i,j,l}$) which is a subset of the a sentence ($c_{i,j,l} \subseteq s_i,j$).
+The words in each sentence ($w_{i,j,k}$) are searched and compared to a dictionary of polarized words (e.g., a combined and augmented version of Jocker's (2017) \[originally exported by the [**syuzhet**](https://github.com/mjockers/syuzhet) package\] & Rinker's augmented Hu & Liu (2004) dictionaries in the [**lexicon**](https://cran.r-project.org/package=lexicon) package). Positive ($w_{i,j,k}^{+}$) and negative ($w_{i,j,k}^{-}$) words are tagged with a $+1$ and $-1$ respectively (or other positive/negative weighting if the user provides the sentiment dictionary).  I will denote polarized words as $pw$ for convenience. These will form a polar cluster ($c_{i,j,l}$) which is a subset of the a sentence ($c_{i,j,l} \subseteq s_i,j$).
 
 The polarized context cluster ($c_{i,j,l}$) of words is pulled from around the polarized word ($pw$) and defaults to 4 words before and two words after $pw$ to be considered as valence shifters.  The cluster can be represented as ($c_{i,j,l} = \{pw_{i,j,k - nb}, ..., pw_{i,j,k} , ..., pw_{i,j,k - na}\}$), where $nb$ & $na$ are the parameters `n.before` and `n.after` set by the user.  The words in this polarized context cluster are tagged as neutral ($w_{i,j,k}^{0}$), negator ($w_{i,j,k}^{n}$),
 amplifier [intensifier] ($w_{i,j,k}^{a}$), or de-amplifier [downtoner] ($w_{i,j,k}^{d}$). Neutral words hold no value in the equation but do affect word count ($n$).  Each polarized word is then weighted ($w$) based on the weights from the `polarity_dt` argument and then further weighted by the function and number of the valence shifters directly surrounding the positive or negative word ($pw$).  Pause ($cw$) locations (punctuation that denotes a pause including commas, colons, and semicolons) are indexed and considered in calculating the upper and lower bounds in the polarized context cluster. This is because these marks indicate a change in thought and words prior are not necessarily connected with words after these punctuation marks.  The lower bound of the polarized context cluster is constrained to $\max \{pw_{i,j,k - nb}, 1, \max \{cw_{i,j,k} < pw_{i,j,k}\}\}$ and the upper bound is constrained to $\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,j,k}\}\}$ where $w_{i,jn}$ is the number of words in the sentence.
@@ -233,7 +233,7 @@ plot(uncombine(out))
 
 ## Making and Updating Dictionaries
 
-It is pretty straight forward to make or update a new dictionary (polarity or valence shifter).  To create a key from scratch the user needs to create a 2 column `data.frame`, with words on the left and values on the right (see `?lexicon::hash_sentiment_huliu` & `?lexicon::hash_valence_shifters` for what the values mean).  Note that the words need to be lower cased.  Here I show an example `data.frame` ready for key conversion:
+It is pretty straight forward to make or update a new dictionary (polarity or valence shifter).  To create a key from scratch the user needs to create a 2 column `data.frame`, with words on the left and values on the right (see `?lexicon::hash_sentiment_jockers_rinker` & `?lexicon::hash_valence_shifters` for what the values mean).  Note that the words need to be lower cased.  Here I show an example `data.frame` ready for key conversion:
 
 ```{r}
 set.seed(10)
@@ -294,7 +294,7 @@ sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 
 ## Annie Swafford's Examples
 
-[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 4 dictionary approaches (syuzhet, Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, the lookup based [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis) package, the [meanr](https://github.com/wrathematics/meanr) package (written in C level code), and my own algorithm with default Jockers (2017) polarity lexicon as well as Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicons available from the [**lexicon**](https://github.com/trinker/lexicon) package.
+[Annie Swafford](https://annieswafford.wordpress.com/2015/03/02/syuzhet/) critiqued Jocker's approach to sentiment and gave the following examples of sentences (`ase` for Annie Swafford example).  Here I test each of Jocker's 4 dictionary approaches (syuzhet, Bing, NRC, Afinn), his Stanford wrapper (note I use my own [GitHub Stanford wrapper package](https://github.com/trinker/stansent) based off of Jocker's approach as it works more reliably on  my own Windows machine), the [RSentiment](https://cran.r-project.org/package=RSentiment) package, the lookup based [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis) package, the [meanr](https://github.com/wrathematics/meanr) package (written in C level code), and my own algorithm with default combined Jockers (2017) & Rinker's Hu & Liue (2004) polarity lexicons as well as Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicons available from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
 
 ```{r, message=FALSE, comment=NA}
@@ -322,7 +322,8 @@ colnames(SentimentAnalysis) <- gsub('^Sentiment', "SA_", colnames(SentimentAnaly
 
 left_just(data.frame(
     stanford = sentiment_stanford(ase)[["sentiment"]],
-    sentimentr_jockers = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
+    sentimentr_jockers_rinker = round(sentiment(ase, question.weight = 0)[["sentiment"]], 2),
+    sentimentr_jockers = round(sentiment(ase, lexicon::hash_sentiment_jockers, question.weight = 0)[["sentiment"]], 2),    
     sentimentr_huliu = round(sentiment(ase, lexicon::hash_sentiment_huliu, question.weight = 0)[["sentiment"]], 2),    
     sentimentr_sentiword = round(sentiment(ase, lexicon::hash_sentiment_sentiword, question.weight = 0)[["sentiment"]], 2),    
     RSentiment = calculate_score(ase), 
@@ -335,17 +336,18 @@ left_just(data.frame(
 
 ```
 
-Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that **RSentiment** and Stanford take the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.  **meanr** is lighting fast.  **SentimentAnalysis** is a bit slower than other methods but is returning 3 scores from 3 different dictionaries. 
+Also of interest is the computational time used by each of these methods. To demonstrate this I increased Annie's examples by 100 replications and **microbenchmark** on a few iterations (Stanford takes so long I didn't extend to more).  Note that if a text needs to be broken into sentence parts **syuzhet** has the `get_sentences` function that uses the **openNLP** package, this is a time expensive task. **sentimentr** uses a much faster regex based approach that is nearly as accurate in parsing sentences with a much lower computational time.  We see that **RSentiment** and Stanford take the longest time while **sentimentr** and **syuzhet** are comparable depending upon lexicon used.  **meanr** is lighting fast.  **SentimentAnalysis** is a bit slower than other methods but is returning 3 scores from 3 different dictionaries.  I do not test **RSentiment** because it causes an out of memory error.
 
 
-```{r, message = FALSE, comment=NA, eval=FALSE}
+```{r, message = FALSE, comment=NA}
 ase_100 <- rep(ase, 100)
  
 stanford <- function() {sentiment_stanford(ase_100)}
 
-sentimentr_jockers <- function() sentiment(ase, lexicon::hash_sentiment_jockers)
-sentimentr_huliu <- function() sentiment(ase, lexicon::hash_sentiment_huliu)
-sentimentr_sentiword <- function() sentiment(ase, lexicon::hash_sentiment_sentiword) 
+sentimentr_jockers_rinker <- function() sentiment(ase_100, lexicon::hash_sentiment_jockers_rinker)
+sentimentr_jockers <- function() sentiment(ase_100, lexicon::hash_sentiment_jockers)
+sentimentr_huliu <- function() sentiment(ase_100, lexicon::hash_sentiment_huliu)
+sentimentr_sentiword <- function() sentiment(ase_100, lexicon::hash_sentiment_sentiword) 
     
 RSentiment <- function() calculate_score(ase_100) 
     
@@ -363,7 +365,7 @@ microbenchmark(
     sentimentr_jockers(),
     sentimentr_huliu(),
     sentimentr_sentiword(),
-    RSentiment(), 
+    #RSentiment(), 
     SentimentAnalysis(),
     syuzhet_syuzhet(),
     syuzhet_binn(), 
@@ -374,33 +376,7 @@ microbenchmark(
 )
 ```
 
-```
-Unit: microseconds
-                   expr           min            lq          mean
-             stanford()  29295281.790  29400023.402  29734984.964
-   sentimentr_jockers()    228599.112    234849.279    241180.734
-     sentimentr_huliu()    266767.251    271540.065    280659.613
- sentimentr_sentiword()   1015145.899   1028339.030   1050132.847
-           RSentiment() 194034175.571 201517746.098 283900476.987
-    SentimentAnalysis()   8380587.287   8703374.491   8815665.514
-      syuzhet_syuzhet()    464279.337    483483.492    492185.992
-         syuzhet_binn()    400259.877    410813.191    417908.880
-          syuzhet_nrc()    765286.614    926356.089    987816.747
-        syuzhet_afinn()    177743.019    185607.456    190791.706
-                meanr()       978.744      1199.208      1358.363
-        median            uq           max neval
-  29504765.013  29954836.552  30404908.090     3
-    241099.445    247471.545    253843.644     3
-    276312.879    287605.794    298898.709     3
-   1041532.162   1067626.321   1093720.480     3
- 209001316.624 328833627.696 448665938.767     3
-   9026161.695   9033204.628   9040247.560     3
-    502687.646    506139.319    509590.993     3
-    421366.506    426733.381    432100.256     3
-   1087425.564   1099081.813   1110738.062     3
-    193471.893    197316.050    201160.206     3
-      1419.672      1548.173      1676.674     3
-```
+
 
 ## Comparing sentimentr, syuzhet, meanr, and Stanford
 

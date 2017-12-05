@@ -4,8 +4,8 @@
 \alias{extract_sentiment_terms}
 \title{Extract Sentiment Words}
 \usage{
-extract_sentiment_terms(text.var,
-  polarity_dt = lexicon::hash_sentiment_jockers, hyphen = "", ...)
+extract_sentiment_terms(text.var, polarity_dt = hash_sentiment_jockers_rinker,
+  hyphen = "", ...)
 }
 \arguments{
 \item{text.var}{The text variable.}
