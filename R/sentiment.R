@@ -325,14 +325,6 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
         ][]
     }
     
-## why high score
-## what is hyphen really doing? if (hyphen != "") x <- gsub("-", hyphen, x) seem confusing
-## is extract_attrbutes getting accurate counts/improve documentation
-    
-## the regex doesn't break correctly
-## fixing this might break a comma loc fix I did a while ago where I think I added space 
- 
-
     # space fill (~~), break into words    
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 
@@ -358,12 +350,15 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     	    lens := ifelse(lens == 0, 1, lens)][]
 
     ## Unlist the pol_loc and P repeating everything else
-    word_dat <- cbind(
-        word_dat[rep(seq_len(nrow(word_dat)), lens), .SD, .SD = c('id', 'id2', 'words', 'comma_loc')],
-        word_dat[, .(pol_loc = unlist(pol_loc),
-    	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')][, id := NULL][, id2 := NULL]
-    )
-  
+    # word_dat <- cbind(
+    #     word_dat[rep(seq_len(nrow(word_dat)), lens), .SD, .SD = c('id', 'id2', 'words', 'comma_loc')],
+    #     word_dat[, .(pol_loc = unlist(pol_loc),
+    # 	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')][, id := NULL][, id2 := NULL]
+    # )
+
+    word_dat <- word_dat[, .(words, comma_loc, pol_loc = unlist(pol_loc),
+	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')]
+
     ## Grab the cluster of non-polarity words (n.before/n.after taking into account comma locs)
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
     word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
