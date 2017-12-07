@@ -1,4 +1,4 @@
-function (text.var, polarity_dt = lexicon::hash_sentiment_huliu, 
+function (text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker, 
     valence_shifters_dt = lexicon::hash_valence_shifters, ...) {
 
     local_packages <- list.files(.libPaths())
@@ -50,7 +50,8 @@ function (text.var, polarity_dt = lexicon::hash_sentiment_huliu,
     tab <- X %*% t(X)
     NT <- sum(mod[['n.tokens']])
     N <- sum(stringi::stri_count_words(x), na.rm =TRUE)
-    Features <- textshape::tidy_vector(colSums(cnts)/N, "Attribute", "Rate")
+    Features <- textshape::tidy_vector(colSums(cnts), "Attribute", "Count")
+    Features[['Rate']] <-  Features[['Count']]/N
     Cooccurrences <- textshape::tidy_vector(tab[-c(5:7), 'polarized']/tab[7, 'polarized'], 'Valence_Shifter', 'Cooccurrence')
 
     list(Meta = data.frame(Stat = c("words", "tokens", "sentences", "questions"), 
