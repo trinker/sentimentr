@@ -8,8 +8,7 @@ sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
   question.weight = 1, adversative.weight = 0.85,
-  neutral.nonverb.like = FALSE, missing_value = 0, clause.breaks = c(";",
-  ":", ",", "but"), ...)
+  neutral.nonverb.like = FALSE, missing_value = 0, ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -99,16 +98,6 @@ results will come from setting this argument to \code{TRUE}.}
 
 \item{missing_value}{A value to replace \code{NA}/\code{NaN} with.  Use
 \code{NULL} to retain missing values.}
-
-\item{clause.breaks}{A vector of tokens that should be seen as clause 
-boundaries for use as the edge of the window around the polarized word.  The 
-default list includes: \code{";"}, \code{":"}, & \code{","}, & \code{"but"}.  
-The user may want to add other tokens such as \code{"and"} to ensure that the 
-statement "Not enough money and poor life" is seen as negative rather than 
-positive (by stopping at 'and' the 'not' negator would be applied to 'poor' 
-if `n.before` were set to >= 4).  Note that this is not an exhaustive list, 
-nor do these tokens always indicate clause boundaries but in practice these
-usually boost accuracy without slowing the algorithm much.}
 
 \item{\ldots}{Ignored.}
 }

@@ -22,6 +22,12 @@ sentimentr 2.1.0 -
 
 **BUG FIXES**
 
+* `sentiment` constained a bug that caused sentences with multiple polarized 
+  words and comma/semicolon/colon breaks to inappropriate replicate rows too many
+  times (a recycling error).  This in turn caused the same polarized word to be
+  counted multiple times resulting in very extreme polarity values.  This was 
+  spotted by Lilly Wang.
+
 **NEW FEATURES**
 
 * The default sentiment sentiment lookup table used within **sentimentr** is now
@@ -37,12 +43,7 @@ sentimentr 2.1.0 -
 * `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the
   user to treat specific non-verb uses of the word 'like' as neutral since 'like' 
   as a verb is the usually when the word is polarized.
-  
-* `sentiment` picks up the `clause.breaks` argument.  This is a vector of tokens
-  that should be seen as clause boundaries, thus using this as the edge of the 
-  window around the polarized word.  This was formerly done internally and only 
-  used: ';', ':', & ','.  The conjunction 'but'has have been added to the list 
-  as it has been shown to improve performance in practice.  
+
 
 **IMPROVEMENTS**
 

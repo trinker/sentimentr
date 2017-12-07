@@ -84,15 +84,6 @@
 #' results will come from setting this argument to \code{TRUE}.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
-#' @param clause.breaks A vector of tokens that should be seen as clause 
-#' boundaries for use as the edge of the window around the polarized word.  The 
-#' default list includes: \code{";"}, \code{":"}, & \code{","}, & \code{"but"}.  
-#' The user may want to add other tokens such as \code{"and"} to ensure that the 
-#' statement "Not enough money and poor life" is seen as negative rather than 
-#' positive (by stopping at 'and' the 'not' negator would be applied to 'poor' 
-#' if `n.before` were set to >= 4).  Note that this is not an exhaustive list, 
-#' nor do these tokens always indicate clause boundaries but in practice these
-#' usually boost accuracy without slowing the algorithm much.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -220,7 +211,7 @@
 #'
 #' \deqn{w_{neg}= \left(\sum{w_{i,j,k}^{n}}\right) \bmod {2}}
 #'
-#' @importFrom data.table := .N
+#' @importFrom data.table := .N .SD
 ## @importFrom lexicon hash_sentiment_jockers_rinker
 #' @examples
 #' mytext <- c(
@@ -283,24 +274,21 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'but'), 
-    ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
     
     UseMethod('sentiment')
     
 }
 
+clause.breaks <- c(';', ':',  ',')
 
 #' @export
 #' @method sentiment get_sentences_character
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'but'), 
-    ...){
-
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
             T_sum <- N <- . <- b <- before <- NULL
@@ -375,11 +363,11 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     )
   
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
-    word_dat2 <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
+    word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
     	list(words, non_pol, lens = sapply(words, length)), by = cols2]
      
 ##
-    
+# browser()    
     # ## stretch by prior polarized word hits
     # word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
     # 	comma_loc = unlist(comma_loc), P = unlist(P),
@@ -387,7 +375,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     # 
     # ## Grab the cluster of non-polarity words (n.before/n.after taking into account comma locs
     # cols2 <- c('id', 'id2', 'pol_loc', 'P')
-    # word_dat2 <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
+    # word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
     # 	list(words, non_pol, lens = sapply(words, length)), by = cols2]
 
     ## save just polarized data for later merge
@@ -467,9 +455,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'but'), 
-    ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -488,9 +474,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, 
-    clause.breaks = c(';', ':',  ',', 'but'), 
-    ...){
+    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 
