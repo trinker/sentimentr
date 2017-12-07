@@ -45,7 +45,8 @@ conjunctions (4) with x and y as column names.}
 
 \item{hyphen}{The character string to replace hyphens with.  Default replaces
 with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
-would result in a space between words (e.g., 'sugar free').}
+would result in a space between words (e.g., 'sugar free').  Typically use 
+either " " or default "".}
 
 \item{amplifier.weight}{The weight to apply to amplifiers/de-amplifiers 
 [intensifiers/downtoners] (values from 0 to 1).  This value will multiply the 
@@ -62,7 +63,11 @@ use \code{n.after = Inf}.}
 \item{question.weight}{The weighting of questions (values from 0 to 1).
 Default is 1.  A 0 corresponds with the belief that questions (pure questions)
 are not polarized.  A weight may be applied based on the evidence that the
-questions function with polarized sentiment.}
+questions function with polarized sentiment.  In an opinion tasks such as a
+course evalaution the questions are more likely polarized, not designed to
+gain information.  On the other hand, in a setting with more natural dialogue,
+the question is less likely polarized and is likely to function as a means
+to gather information.}
 
 \item{adversative.weight}{The weight to give to adversative conjunctions or 
 contrasting conjunctions (e.g., "but") that overrule the previous clause 
