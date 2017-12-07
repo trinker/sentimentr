@@ -331,6 +331,14 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
             )
         ][]
     }
+    
+## why high score
+## what is hyphen really doing? if (hyphen != "") x <- gsub("-", hyphen, x) seem confusing
+## is extract_attrbutes getting accurate counts/improve documentation
+    
+## the regex doesn't break correctly
+## fixing this might break a comma loc fix I did a while ago where I think I added space 
+ 
 
     # space fill (~~), break into words    
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
@@ -342,7 +350,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     word_dat <- sent_dat[, .(words = unlist(words)), by = c('id', 'id2')]
 
     ## 1. add polarity word potential locations (seq along) and the
-    ##    value for polarized word
+    ##    value for polarized word and polarity value = P
     ## 2. add comma locations
     word_dat[, pol_loc:=seq_len(.N), by=c('id', 'id2')]
     word_dat[, comma_loc:=pol_loc]
@@ -352,18 +360,35 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
 
     ## Get position of polarized word (hits = pol_loc)
     ## Get length of words vect
-    word_dat <- word_dat[, .(words=list(words), pol_loc=list(rm_na(pol_loc)),
-    	comma_loc=list(rm_na(comma_loc)), P= list(rm_na(P))), by = c('id', 'id2')]
+    word_dat <- word_dat[, .(words=list(words), lens = sum(!is.na(pol_loc)), pol_loc=list(rm_na(pol_loc)),
+    	comma_loc=list(rm_na(comma_loc)), P= list(rm_na(P))), by = c('id', 'id2')][, 
+    	    lens := ifelse(lens == 0, 1, lens)][]
 
-    ## stretch by prior polarized word hits
-    word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
-    	comma_loc = unlist(comma_loc), P = unlist(P),
-    	lens = sapply(words, length)), by = c('id', 'id2')])
 
-    ## Grab the cluster of non-polarity words (n.before/n.after taking into account [,;:]
+     
+
+##
+    word_dat <- cbind(
+        word_dat[rep(seq_len(nrow(word_dat)), lens), .SD, .SD = c('id', 'id2', 'words', 'comma_loc')],
+        suppressWarnings(word_dat[, .(pol_loc = unlist(pol_loc),
+    	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')])
+    )
+  
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
-    word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
+    word_dat2 <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
     	list(words, non_pol, lens = sapply(words, length)), by = cols2]
+     
+##
+    
+    # ## stretch by prior polarized word hits
+    # word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
+    # 	comma_loc = unlist(comma_loc), P = unlist(P),
+    # 	lens = sapply(words, length)), by = c('id', 'id2')])
+    # 
+    # ## Grab the cluster of non-polarity words (n.before/n.after taking into account comma locs
+    # cols2 <- c('id', 'id2', 'pol_loc', 'P')
+    # word_dat2 <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
+    # 	list(words, non_pol, lens = sapply(words, length)), by = cols2]
 
     ## save just polarized data for later merge
     pol_dat <- word_dat[, c("id", "id2", "pol_loc", "P"), with=FALSE]
