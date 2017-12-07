@@ -280,7 +280,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_ri
     
 }
 
-clause.breaks <- c(';', ':',  ',')
+
 
 #' @export
 #' @method sentiment get_sentences_character
@@ -344,7 +344,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     word_dat[, comma_loc:=pol_loc]
     word_dat[, "P"] <- polarity_dt[word_dat[["words"]]][[2]]
     word_dat[, pol_loc:=ifelse(is.na(P), NA, pol_loc)]
-    word_dat[, comma_loc:=ifelse(words %in% clause.breaks, comma_loc, NA)]
+    word_dat[, comma_loc:=ifelse(words %in% c(';', ':',  ','), comma_loc, NA)]
 
     ## Get position of polarized word (hits = pol_loc)
     ## Get length of words vect
@@ -465,7 +465,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
         amplifier.weight = amplifier.weight, n.before = n.before, 
         n.after = n.after, question.weight = question.weight,
         adversative.weight = adversative.weight, missing_value = missing_value, 
-        neutral.nonverb.like = neutral.nonverb.like, clause.breaks = clause.breaks, ...)
+        neutral.nonverb.like = neutral.nonverb.like, c(';', ':',  ','), ...)
   
 }
 
@@ -483,7 +483,7 @@ sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::
             amplifier.weight = amplifier.weight, n.before = n.before, 
             n.after = n.after, question.weight = question.weight,
             adversative.weight = adversative.weight, missing_value = missing_value, 
-            neutral.nonverb.like = neutral.nonverb.like, clause.breaks = clause.breaks, ...)
+            neutral.nonverb.like = neutral.nonverb.like, ...)
     
     cbind(text.var, sent_out[, c('word_count',  'sentiment')])
   
