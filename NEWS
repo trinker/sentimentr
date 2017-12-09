@@ -22,7 +22,7 @@ sentimentr 2.1.0 -
 
 BUG FIXES
 
-* `sentiment` constained a bug that caused sentences with multiple polarized 
+* `sentiment` contained a bug that caused sentences with multiple polarized 
   words and comma/semicolon/colon breaks to inappropriate replicate rows too many
   times (a recycling error).  This in turn caused the same polarized word to be
   counted multiple times resulting in very extreme polarity values.  This was 
@@ -38,6 +38,11 @@ NEW FEATURES
 * Four new sentiment scored data sets added: `kaggle_movie_reviews`, `nyt_articles`
   `hotel_reviews`, & `course_evaluations` for testing nd exploration.
 
+*  `replace_emoji` and `replace_emoji_identifier` rexported from the **textclean**
+  package for replacing emojis with word equivalents or an identifier token
+  that can be detected by the `lexicon::hash_sentiment_emoji` polarity table 
+  within the `sentiment` family of functions.
+  
 MINOR FEATURES
 
 * `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the
