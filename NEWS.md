@@ -27,6 +27,9 @@ sentimentr 2.1.0 -
   times (a recycling error).  This in turn caused the same polarized word to be
   counted multiple times resulting in very extreme polarity values.  This was 
   spotted by Lilly Wang.
+  
+* `validate_sentiment` contained an error in the documentation; the predicted
+  and actual data were put into the wrong arguments for the first example.
 
 **NEW FEATURES**
 
@@ -48,6 +51,9 @@ sentimentr 2.1.0 -
 * `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the
   user to treat specific non-verb uses of the word 'like' as neutral since 'like' 
   as a verb is the usually when the word is polarized.
+  
+* `combine_data` added to easily combine trusted **sentimentr** sentiment 
+  scored data sets.
 
 **IMPROVEMENTS**
 

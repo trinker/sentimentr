@@ -27,6 +27,9 @@ BUG FIXES
   times (a recycling error).  This in turn caused the same polarized word to be
   counted multiple times resulting in very extreme polarity values.  This was 
   spotted by Lilly Wang.
+  
+* `validate_sentiment` contained an error in the documentation; the predicted
+  and actual data were put into the wrong arguments for the first example.
 
 NEW FEATURES
 

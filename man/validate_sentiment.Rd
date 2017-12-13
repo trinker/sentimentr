@@ -45,7 +45,7 @@ for random guessing.  This measure is related to
 \examples{
 actual <- c(1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1,-1)
 predicted <- c(1, 0, 1, -1, 1, 0, -1, -1, -1, -1, 0, 1,-1)
-validate_sentiment(actual, predicted)
+validate_sentiment(predicted, actual)
 
 scores <- cannon_reviews$sentiment
 mod <- sentiment_by(get_sentences(cannon_reviews$text))
