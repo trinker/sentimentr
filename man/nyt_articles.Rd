@@ -14,10 +14,7 @@ articles.
 }
 \details{
 \itemize{ 
-  \item element_id. The article id number
-  \item sentence_id. The sentence id number
-  \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
-  \item sentiment. A numeric score matching \code{polarity}
+  \item sentiment. A numeric sentiment score
   \item text. The text from the article
 } 
 

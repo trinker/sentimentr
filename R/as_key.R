@@ -170,6 +170,8 @@ update_key <- function(key, drop = NULL, x = NULL,
 
     stopifnot(is_key(key, sentiment = sentiment))
 
+    if (!is.null(x)) x <- as.data.frame(x, stringsAsFactors = FALSE)
+    
     if (any(grepl("[A-Z]", x[[1]]))) {
         culprits2 <- grep("[A-Z]", x[[1]], value=TRUE)
         culprits2 <- paste(paste0("   * ", culprits2), collapse = "\n")

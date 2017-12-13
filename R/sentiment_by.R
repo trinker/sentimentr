@@ -78,11 +78,8 @@
 #' 
 #' sentiment_by(out, presidential_debates_2012$person)
 #' with(presidential_debates_2012, sentiment_by(out, time))
-#' }
 #' 
-#' with(cannon_reviews, sentiment_by(review, number))[order(as.numeric(number))]
-#' \dontrun{
-#' highlight(with(cannon_reviews, sentiment_by(review, number)))
+#' highlight(with(presidential_debates_2012, sentiment_by(out, list(person, time))))
 #' }
 #' 
 #' \dontrun{
@@ -91,8 +88,8 @@
 #' library(magrittr)
 #' 
 #' cannon_reviews %>%
-#'    mutate(review_split = get_sentences(review)) %$%
-#'    sentiment_by(review_split, number)
+#'    mutate(review_split = get_sentences(text)) %$%
+#'    sentiment_by(review_split)
 #' }
 sentiment_by <- function(text.var, by = NULL, 
     averaging.function = sentimentr::average_downweighted_zero, group.names, ...){

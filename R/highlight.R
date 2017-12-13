@@ -32,7 +32,7 @@
 #' library(magrittr)
 #' 
 #' cannon_reviews %>%
-#'    mutate(review_split = get_sentences(review)) %$%
+#'    mutate(review_split = get_sentences(text)) %$%
 #'    sentiment_by(review_split, number) %>%
 #'    highlight()
 #' }

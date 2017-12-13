@@ -15,11 +15,10 @@ than one opinion score and average of all scores is used.
 }
 \details{
 \itemize{
-  \item number. The review number.
-  \item opinion.score. Hu and Liu (2004)'s average opinion rating for a
+  \item sentiment. Hu and Liu (2004)'s average opinion rating for a
   sentence.   Negative and positive reflects direction, a negative or positive
   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
-  \item review. The text from the review.
+  \item text. The text from the review.
 }
 }
 \references{

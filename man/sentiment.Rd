@@ -29,6 +29,7 @@ dictionaries that can be used here:
   \item \code{lexicon::hash_sentiment_senticnet}
   \item \code{lexicon::hash_sentiment_sentiword}
   \item \code{lexicon::hash_sentiment_vadar}
+  \item \code{lexicon::hash_sentiment_emoji}
 }
 Additionally, the 
 \code{as_key} function can be used to make a sentiment frame suitable for
@@ -125,8 +126,8 @@ control of the algorithm that may boost performance in different contexts.
 }
 \details{
 The equation used by the algorithm to assign value to polarity of
-each sentence fist utilizes the sentiment dictionary (e.g., Jockers, 2017) 
-to tag polarized words.  Each paragraph
+each sentence fist utilizes the sentiment dictionary to tag polarized words.  
+Each paragraph
 (\eqn{p_i = \{s_1, s_2, ..., s_n\}}{p_i = \{s_1, s_2, ... s_n\}}) composed of
 sentences, is broken into element sentences
 (\eqn{s_i,j = \{w_1, w_2, ..., w_n\}}{s_i,j = \{w_1, w_2, ... w_n\}}) where \eqn{w}
@@ -172,7 +173,7 @@ context cluster is constrained to
 constrained to \eqn{\min \{pw_{i,j,k + na}, w_{i,jn}, \min \{cw_{i,j,k} > pw_{i,j,k}\}\}}
 where \eqn{w_{i,jn}} is the number of words in the sentence.
 
-The core value in the cluster, the polarized word is acted uppon by valence
+The core value in the cluster, the polarized word is acted upon by valence
 shifters. Amplifiers (intensifiers) increase the polarity by 1.8 (.8 is the default weight
 (\eqn{z})).  Amplifiers (\eqn{w_{i,j,k}^{a}}) become de-amplifiers if the context
 cluster contains an odd number of negators (\eqn{w_{i,j,k}^{n}}).  De-amplifiers
@@ -222,8 +223,9 @@ Where:
 }
 \note{
 The polarity score is dependent upon the polarity dictionary used.
-This function defaults to a slightly modified vaersion of the polarity word  
-dictionary used by Jockers (2017), however, this may not be appropriate, for 
+This function defaults to a combined and augmented version of Jocker's (2017) 
+[originally exported by the \pkg{syuzhet} package] & Rinker's augmented Hu & Liu (2004) 
+dictionaries in the \pkg{lexicon} package, however, this may not be appropriate, for 
 example, in the context of children in a classroom.  The user may (is 
 encouraged) to provide/augment the dictionary (see the \code{as_key} 
 function).  For instance the word "sick" in a high school setting may mean 
@@ -285,8 +287,36 @@ library(dplyr)
 library(magrittr)
 
 cannon_reviews \%>\%
-   mutate(review_split = get_sentences(review)) \%$\%
+   mutate(review_split = get_sentences(text)) \%$\%
    sentiment(review_split)
+}
+
+## Emojis
+\dontrun{
+## Load R twitter data
+x <- read.delim(system.file("docs/r_tweets.txt", package = "textclean"), 
+    stringsAsFactors = FALSE)
+
+x
+
+library(dplyr); library(magrittr)
+
+## There are 2 approaches
+## Approach 1: Replace with words
+x \%>\%
+    mutate(Tweet = replace_emoji(Tweet)) \%$\%
+    sentiment(Tweet)
+
+## Approach 2: Replace with identifier token
+combined_emoji <- update_polarity_table(
+    lexicon::hash_sentiment_jockers_rinker,
+    x = lexicon::hash_sentiment_emojis
+)
+
+x \%>\%
+    mutate(Tweet = replace_emoji_identifier(Tweet)) \%$\%
+    sentiment(Tweet, polarity_dt = combined_emoji)
+
 }
 }
 \references{

@@ -15,10 +15,7 @@ Zhai's (2011) hotel reviews data set scraped by the authors from
 }
 \details{
 \itemize{ 
-  \item review_id. The identifier associated with the review
-  \item author. The user name of the author of the review
-  \item date. The data of the review
-  \item rating. The overall rating for the experience
+  \item sentiment. The overall rating for the experience
   \item text. The text review of the hotel
 }
 }

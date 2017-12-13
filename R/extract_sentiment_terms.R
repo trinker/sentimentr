@@ -16,7 +16,7 @@
 #' @examples
 #' library(data.table)
 #' set.seed(10)
-#' x <- get_sentences(sample(cannon_reviews[[3]], 1000, TRUE))
+#' x <- get_sentences(sample(cannon_reviews[[2]], 1000, TRUE))
 #' sentiment(x)
 #' 
 #' pol_words <- extract_sentiment_terms(x)

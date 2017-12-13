@@ -32,7 +32,7 @@ sentimentr 2.1.0 -
 
 * The default sentiment sentiment lookup table used within **sentimentr** is now
   `lexicon::hash_sentiment_jockers_rinker`, a combined and augmented version of
-  `lexicon::hash_sentiment_jockers` (Jockers, 2017) & Rinker's augmeted 
+  `lexicon::hash_sentiment_jockers` (Jockers, 2017) & Rinker's augmented 
   `lexicon::hash_sentiment_huliu` (Hu & Liu, 2004) sentiment lookup tables.
 
 * Four new sentiment scored data sets added: `kaggle_movie_reviews`, `nyt_articles`
@@ -49,11 +49,18 @@ sentimentr 2.1.0 -
   user to treat specific non-verb uses of the word 'like' as neutral since 'like' 
   as a verb is the usually when the word is polarized.
 
-
 **IMPROVEMENTS**
 
 **CHANGES**
 
+* The sentiment data sets have been reformatted to conform to one another.  This
+  means columns have been renamed, ratings have been rescales to be zero as neutral,
+  and columns other than `sentiment` score and `text` have been removed.  This
+  makes it easier to compare and combine data sets.
+
+* `update_key` now allows a **data.table** object for `x` meaning **lexicon**
+  `hash_sentiment_xxx` polarity tables can be combined.  This is particularly 
+  useful for combining `hash_sentiment_emojis` with other polarity tables.
 
 
 sentimentr 2.0.1

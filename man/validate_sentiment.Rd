@@ -25,7 +25,7 @@ microaveraged model validation scores.  Additionally, the
 \item{mare}{Mean Absolute Rescaled Error}
 }
 \description{
-Provides a miulticlass macroaverage/microaverage of precision, recall, 
+Provides a multiclass macroaverage/microaverage of precision, recall, 
 accuracy, and F-score for the sign of the predicted sentiment against known 
 sentiment scores.  There are three classes sentiment analysis generally 
 predicts: positive (> 0), negative (< 0) and neutral (= 0).  In assessing 
@@ -36,9 +36,9 @@ larger say to larger classes.
 \note{
 Mean Absolute Rescaled Error (MARE) is defined as: 
 \eqn{\frac{\sum{|actual - predicted|}}{2n}} and gives a sense of, on average, 
-how far off were the recaled predicted values (-1 to 1) from the recaled 
+how far off were the rescaled predicted values (-1 to 1) from the rescaled 
 actual values (-1 to 1).  A value of 0 means perfect accuracy.  A value of
-1 means perfectly wrong everytime.  A value of .5 represents expected value
+1 means perfectly wrong every time.  A value of .5 represents expected value
 for random guessing.  This measure is related to 
 \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{Mean Absolute Error}.
 }
@@ -47,8 +47,8 @@ actual <- c(1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1,-1)
 predicted <- c(1, 0, 1, -1, 1, 0, -1, -1, -1, -1, 0, 1,-1)
 validate_sentiment(actual, predicted)
 
-scores <- cannon_reviews$opinion.score
-mod <- sentiment_by(get_sentences(cannon_reviews$review))
+scores <- cannon_reviews$sentiment
+mod <- sentiment_by(get_sentences(cannon_reviews$text))
 
 validate_sentiment(mod$ave_sentiment, scores)
 validate_sentiment(mod, scores)

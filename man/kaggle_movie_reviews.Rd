@@ -15,8 +15,7 @@ from opinmind.com.
 }
 \details{
 \itemize{ 
-  \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
-  \item sentiment. A numeric score matching \code{polarity}
+  \item sentiment. A numeric sentiment score
   \item text. The text from the review 
 }
 }

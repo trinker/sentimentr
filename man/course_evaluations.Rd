@@ -15,8 +15,7 @@ sentiment rating.
 }
 \details{
 \itemize{ 
-  \item polarity. A character string of either 'negative' or 'positive'
-  \item sentiment. A numeric score matching \code{polarity}
+  \item sentiment. A numeric sentiment score
   \item text. The text from the evaluation
 }
 }

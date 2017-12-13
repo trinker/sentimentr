@@ -52,11 +52,10 @@ NULL
 #'
 #' @details
 #' \itemize{
-#'   \item number. The review number.
-#'   \item opinion.score. Hu and Liu (2004)'s average opinion rating for a
+#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
 #'   sentence.   Negative and positive reflects direction, a negative or positive
 #'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
-#'   \item review. The text from the review.
+#'   \item text. The text from the review.
 #' }
 #'
 #' @docType data
@@ -77,44 +76,6 @@ NULL
 NULL
 
 
-#' Kotzias Reviews
-#'
-#' A dataset containing a list of 4 review data sets.  Each data set contains
-#' sentences with a positive (1) or negative review (-1) taken from reviews of
-#' products, movies, & restaurants.  The data, compiled by Kotzias, Denil, De Freitas,
-#' & Smyth (2015), was originally taken from amazon.com, imdb.com, & yelp.com.
-#' Kotzias et al. (2015) provide the following description in the README:
-#' "For each website, there exist 500 positive and
-#' 500 negative sentences. Those were selected randomly for larger datasets of
-#' reviews. We attempted to select sentences that have a clearly positive or
-#' negative connotaton [sic], the goal was for no neutral sentences to be selected.
-#' This data set has been manipulated from the original to be split apart by
-#' element (sentence split).  The original 0/1 metric has also been converted
-#' to -1/1.  Please cite Kotzias et al. (2015) if you reuse the data here.
-#'
-#' @details Each data set contains a dataframe of:
-#' \itemize{
-#'   \item text. The sentences from the review.
-#'   \item rating. A human scoring of the text.
-#'   \item element_id. An index for the original text element (row number).
-#'   \item sentence_id. A sentence number from 1-n within each \code{element_id}.
-#' }
-#'
-#'
-#' @docType data
-#' @keywords datasets
-#' @name kotzias_reviews
-#' @usage data(kotzias_reviews)
-#' @format A list with 3 elements
-#' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
-#' group to individual labels using deep features. Proceedings of the 21th ACM
-#' SIGKDD International Conference on Knowledge Discovery and Data Mining.
-#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
-NULL
-
-
-
-
 
 #' Movie Reviews 
 #' 
@@ -124,8 +85,7 @@ NULL
 #' 
 #' @details 
 #' \itemize{ 
-#'   \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
-#'   \item sentiment. A numeric score matching \code{polarity}
+#'   \item sentiment. A numeric sentiment score
 #'   \item text. The text from the review 
 #' } 
 #' 
@@ -145,10 +105,7 @@ NULL
 #' 
 #' @details 
 #' \itemize{ 
-#'   \item element_id. The article id number
-#'   \item sentence_id. The sentence id number
-#'   \item polarity. A character string of either 'Negative', 'Neutral', or 'Positive'
-#'   \item sentiment. A numeric score matching \code{polarity}
+#'   \item sentiment. A numeric sentiment score
 #'   \item text. The text from the article
 #' } 
 #' 
@@ -197,8 +154,7 @@ NULL
 #' 
 #' @details 
 #' \itemize{ 
-#'   \item polarity. A character string of either 'negative' or 'positive'
-#'   \item sentiment. A numeric score matching \code{polarity}
+#'   \item sentiment. A numeric sentiment score
 #'   \item text. The text from the evaluation
 #' } 
 #' 
@@ -222,10 +178,7 @@ NULL
 #' 
 #' @details 
 #' \itemize{ 
-#'   \item review_id. The identifier associated with the review
-#'   \item author. The user name of the author of the review
-#'   \item date. The data of the review
-#'   \item rating. The overall rating for the experience
+#'   \item sentiment. The overall rating for the experience
 #'   \item text. The text review of the hotel
 #' } 
 #' 
@@ -239,3 +192,107 @@ NULL
 #' SIGKDD Conference on Knowledge Discovery and Data Mining (KDD'2011), 618-626. \cr \cr
 #' \url{http://sifaka.cs.uiuc.edu/~wang296/Data/index.html}
 NULL 
+
+
+
+
+#' Kotzias Reviews: Amazon Cells
+#'
+#' A dataset containing a list of 4 review data sets.  Each data set contains
+#' sentences with a positive (1) or negative review (-1) taken from reviews of
+#' products, movies, & restaurants.  The data, compiled by Kotzias, Denil, De Freitas,
+#' & Smyth (2015), was originally taken from amazon.com, imdb.com, & yelp.com.
+#' Kotzias et al. (2015) provide the following description in the README:
+#' "For each website, there exist 500 positive and
+#' 500 negative sentences. Those were selected randomly for larger datasets of
+#' reviews. We attempted to select sentences that have a clearly positive or
+#' negative connotation [sic], the goal was for no neutral sentences to be selected.
+#' This data set has been manipulated from the original to be split apart by
+#' element (sentence split).  The original 0/1 metric has also been converted
+#' to -1/1.  Please cite Kotzias et al. (2015) if you reuse the data here.
+#'
+#' @details
+#' \itemize{
+#'   \item sentiment. A human scoring of the text.#' 
+#'   \item text. The sentences from the review.
+#' }
+#'
+#' @docType data 
+#' @keywords datasets 
+#' @name kotzias_reviews_amazon_cells 
+#' @usage data(kotzias_reviews_amazon_cells) 
+#' @format A data frame with 1,067 rows and 2 variables 
+#' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
+#' group to individual labels using deep features. Proceedings of the 21th ACM
+#' SIGKDD International Conference on Knowledge Discovery and Data Mining.
+#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
+NULL
+
+
+
+#' Kotzias Reviews: IMBD
+#'
+#' A dataset containing a list of 4 review data sets.  Each data set contains
+#' sentences with a positive (1) or negative review (-1) taken from reviews of
+#' products, movies, & restaurants.  The data, compiled by Kotzias, Denil, De Freitas,
+#' & Smyth (2015), was originally taken from amazon.com, imdb.com, & yelp.com.
+#' Kotzias et al. (2015) provide the following description in the README:
+#' "For each website, there exist 500 positive and
+#' 500 negative sentences. Those were selected randomly for larger datasets of
+#' reviews. We attempted to select sentences that have a clearly positive or
+#' negative connotation [sic], the goal was for no neutral sentences to be selected.
+#' This data set has been manipulated from the original to be split apart by
+#' element (sentence split).  The original 0/1 metric has also been converted
+#' to -1/1.  Please cite Kotzias et al. (2015) if you reuse the data here.
+#'
+#' @details
+#' \itemize{
+#'   \item sentiment. A human scoring of the text.#' 
+#'   \item text. The sentences from the review.
+#' }
+#'
+#' @docType data 
+#' @keywords datasets 
+#' @name kotzias_reviews_imdb 
+#' @usage data(kotzias_reviews_imdb) 
+#' @format A data frame with 1,041 rows and 2 variables 
+#' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
+#' group to individual labels using deep features. Proceedings of the 21th ACM
+#' SIGKDD International Conference on Knowledge Discovery and Data Mining.
+#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
+NULL
+
+
+
+#' Kotzias Reviews: Yelp
+#'
+#' A dataset containing a list of 4 review data sets.  Each data set contains
+#' sentences with a positive (1) or negative review (-1) taken from reviews of
+#' products, movies, & restaurants.  The data, compiled by Kotzias, Denil, De Freitas,
+#' & Smyth (2015), was originally taken from amazon.com, imdb.com, & yelp.com.
+#' Kotzias et al. (2015) provide the following description in the README:
+#' "For each website, there exist 500 positive and
+#' 500 negative sentences. Those were selected randomly for larger datasets of
+#' reviews. We attempted to select sentences that have a clearly positive or
+#' negative connotation [sic], the goal was for no neutral sentences to be selected.
+#' This data set has been manipulated from the original to be split apart by
+#' element (sentence split).  The original 0/1 metric has also been converted
+#' to -1/1.  Please cite Kotzias et al. (2015) if you reuse the data here.
+#'
+#' @details
+#' \itemize{
+#'   \item sentiment. A human scoring of the text.#' 
+#'   \item text. The sentences from the review.
+#' }
+#'
+#' @docType data 
+#' @keywords datasets 
+#' @name kotzias_reviews_yelp 
+#' @usage data(kotzias_reviews_yelp) 
+#' @format A data frame with 1,040 rows and 2 variables 
+#' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
+#' group to individual labels using deep features. Proceedings of the 21th ACM
+#' SIGKDD International Conference on Knowledge Discovery and Data Mining.
+#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
+NULL
+
