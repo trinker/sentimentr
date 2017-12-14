@@ -24,7 +24,7 @@ to -1/1.  Please cite Kotzias et al. (2015) if you reuse the data here.
 }
 \details{
 \itemize{
-  \item sentiment. A human scoring of the text.#' 
+  \item sentiment. A human scoring of the text. 
   \item text. The sentences from the review.
 }
 }

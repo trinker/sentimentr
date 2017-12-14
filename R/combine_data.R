@@ -13,7 +13,9 @@
 #'     "kotzias_reviews_yelp"))
 combine_data <- function(data = c("course_evaluations", 
     "hotel_reviews", "kaggle_movie_reviews", "kotzias_reviews_amazon_cells", 
-    "kotzias_reviews_imdb", "kotzias_reviews_yelp", "nyt_articles"), ...){
+    "kotzias_reviews_imdb", "kotzias_reviews_yelp", "nyt_articles",
+    "crowdflower_self_driving_cars", "crowdflower_weather", 
+    "crowdflower_deflategate", "crowdflower_products"), ...){
 
     dats <- lapply(data, function(x) eval(parse(text = paste0('sentimentr::', x))))
 

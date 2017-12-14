@@ -213,7 +213,7 @@ NULL
 #'
 #' @details
 #' \itemize{
-#'   \item sentiment. A human scoring of the text.#' 
+#'   \item sentiment. A human scoring of the text. 
 #'   \item text. The sentences from the review.
 #' }
 #'
@@ -247,7 +247,7 @@ NULL
 #'
 #' @details
 #' \itemize{
-#'   \item sentiment. A human scoring of the text.#' 
+#'   \item sentiment. A human scoring of the text.
 #'   \item text. The sentences from the review.
 #' }
 #'
@@ -281,7 +281,7 @@ NULL
 #'
 #' @details
 #' \itemize{
-#'   \item sentiment. A human scoring of the text.#' 
+#'   \item sentiment. A human scoring of the text.
 #'   \item text. The sentences from the review.
 #' }
 #'
@@ -296,3 +296,85 @@ NULL
 #' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
 NULL
 
+
+
+#' Twitter Tweets About Self Driving Cars
+#' 
+#' A dataset containing Twitter tweets about self driving cars, taken from
+#' Crowdflower.
+#' 
+#' @details
+#' \itemize{
+#'   \item sentiment. A human scoring of the text.
+#'   \item text. The sentences from the tweet.
+#' }
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name crowdflower_self_driving_cars 
+#' @usage data(crowdflower_self_driving_cars) 
+#' @format A data frame with 6,943 rows and 2 variables 
+#' @references \url{https://www.crowdflower.com/data-for-everyone}
+NULL 
+
+
+#' Twitter Tweets About the Weather
+#' 
+#' A dataset containing Twitter tweets about the weather, taken from
+#' Crowdflower.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item sentiment. A human scoring of the text.
+#'   \item text. The sentences from the tweet. 
+#' } 
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name crowdflower_weather 
+#' @usage data(crowdflower_weather) 
+#' @format A data frame with 763 rows and 2 variables 
+#' @references \url{https://www.crowdflower.com/data-for-everyone}
+NULL 
+
+
+#' Twitter Tweets About the Deflategate
+#' 
+#' A dataset containing Twitter tweets about Tom Brady's deflated ball scandal, 
+#' taken from Crowdflower.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item sentiment. A human scoring of the text.
+#'   \item text. The sentences from the tweet.
+#' } 
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name crowdflower_deflategate 
+#' @usage data(crowdflower_deflategate) 
+#' @format A data frame with 11,786 rows and 2 variables 
+#' @references \url{https://www.crowdflower.com/data-for-everyone}
+NULL 
+
+
+
+#' Twitter Tweets About the Products
+#' 
+#' A dataset containing Twitter tweets about various products, taken from 
+#' Crowdflower.
+#' 
+#' @details 
+#' \itemize{ 
+#'   \item sentiment. A human scoring of the text.
+#'   \item text. The sentences from the tweet.
+#' }
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name crowdflower_products 
+#' @usage data(crowdflower_products) 
+#' @format A data frame with 3,548 rows and 2 variables 
+#' @references Cavender-Bares, K., (2013). Judge emotion about brands & products. \cr \cr
+#' \url{https://www.crowdflower.com/data-for-everyone}
+NULL 

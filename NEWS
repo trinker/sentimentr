@@ -38,8 +38,10 @@ NEW FEATURES
   `lexicon::hash_sentiment_jockers` (Jockers, 2017) & Rinker's augmented 
   `lexicon::hash_sentiment_huliu` (Hu & Liu, 2004) sentiment lookup tables.
 
-* Four new sentiment scored data sets added: `kaggle_movie_reviews`, `nyt_articles`
-  `hotel_reviews`, & `course_evaluations` for testing nd exploration.
+* Five new sentiment scored data sets added: `kaggle_movie_reviews`, `nyt_articles`
+  `hotel_reviews`, `crowdflower_self_driving_cars`, `crowdflower_products`,
+  `crowdflower_deflategate`, `crowdflower_weather`, & `course_evaluations` for 
+  testing nd exploration.
 
 *  `replace_emoji` and `replace_emoji_identifier` rexported from the **textclean**
   package for replacing emojis with word equivalents or an identifier token
