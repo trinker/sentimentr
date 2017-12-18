@@ -52,7 +52,7 @@ MINOR FEATURES
 
 * `sentiment` picks up the `neutral.nonverb.like` argument.  This allows the
   user to treat specific non-verb uses of the word 'like' as neutral since 'like' 
-  as a verb is the usually when the word is polarized.
+  as a verb is usually when the word is polarized.
   
 * `combine_data` added to easily combine trusted **sentimentr** sentiment 
   scored data sets.
