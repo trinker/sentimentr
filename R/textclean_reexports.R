@@ -19,3 +19,8 @@ textclean::replace_emoji
 #' @importFrom textclean replace_emoji_identifier
 #' @export
 textclean::replace_emoji_identifier
+
+#' @importFrom textclean replace_internet_slang
+#' @export
+textclean::replace_internet_slang
+

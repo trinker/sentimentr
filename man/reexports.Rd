@@ -12,6 +12,8 @@
 \alias{replace_emoji}
 \alias{reexports}
 \alias{replace_emoji_identifier}
+\alias{reexports}
+\alias{replace_internet_slang}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -19,6 +21,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{textclean}{\code{\link[textclean]{replace_grade}}, \code{\link[textclean]{replace_rating}}, \code{\link[textclean]{replace_emoticon}}, \code{\link[textclean]{replace_emoji}}, \code{\link[textclean]{replace_emoji_identifier}}}
+  \item{textclean}{\code{\link[textclean]{replace_grade}}, \code{\link[textclean]{replace_rating}}, \code{\link[textclean]{replace_emoticon}}, \code{\link[textclean]{replace_emoji}}, \code{\link[textclean]{replace_emoji_identifier}}, \code{\link[textclean]{replace_internet_slang}}}
 }}
 
