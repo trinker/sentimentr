@@ -20,8 +20,8 @@ function (text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
         if (ans == "2") {
             stop("'sentiment_feature_profile' aborted.  Install 'termco' before using.")
         } else {
-            if(!'ghit' %in% local_packages) utils::install.packages('ghit')
-            ghit::install_github('trinker/termco')
+            if(!'devtools' %in% local_packages) utils::install.packages('devtools')
+            devtools::install_github('trinker/termco')
             gf <- require('termco', quietly = TRUE)
             if(!gf) stop('Could not install \'termco\'.')
         }
