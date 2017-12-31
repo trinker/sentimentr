@@ -24,3 +24,6 @@ textclean::replace_emoji_identifier
 #' @export
 textclean::replace_internet_slang
 
+#' @importFrom textclean replace_word_elongation
+#' @export
+textclean::replace_word_elongation
