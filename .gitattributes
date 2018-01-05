@@ -1,0 +1,3 @@
+inst/staticdocs/* linguist-documentation
+inst/web/* linguist-documentation
+inst/sentimentr_logo linguist-documentation
