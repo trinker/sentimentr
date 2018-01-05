@@ -31,3 +31,4 @@ Thumbs.db
 hotel_reviews.rds
 inst/deprecated_data
 inst/articles
+.gitattributes
