@@ -225,8 +225,11 @@ comma_reducer <- function(wrds, cl, pl, len, nb, na){
         ind <- lower:upper
 
 	    ind <- ind[!ind %in% pl2]
-	    if(identical(integer(0), ind)) return(c("", wrds2[-pl2]))
+	    
+	    if(identical(integer(0), ind)) return(c('')) #return(c("", wrds2[-pl2])) ## replaced return on 1/12/2018 bc https://github.com/trinker/sentimentr/issues/72 not sure why words were return b4
+	    
         wrds2[ind]
+        
 	}, wrds, cl, pl, len)
 }
 
