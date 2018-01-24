@@ -35,6 +35,54 @@
 #' @keywords sentiment, polarity, group
 #' @export
 #' @family sentiment functions
+#' @section Chaining:
+#' \pkg{sentimentr} uses non-standard evaluation when you use \code{with()} OR 
+#' \code{\%$\%} (\pkg{magrittr}) and looks for the vectors within the data set 
+#' passed to it. There is one exception to this...when you pass a 
+#' \code{get_sentences()} object to \code{sentiment_by()} to the first argument 
+#' which is \code{text.var} it calls the \code{sentiment_by.get_sentences_data_frame} 
+#' method which requires \code{text.var} to be a \code{get_sentences_data_frame} 
+#' object. Because this object is a \code{data.frame} its method knows this and 
+#' knows it can access the columns of the \code{get_sentences_data_frame} object 
+#' directly (usually \code{text.var} is an atomic vector), it just needs the 
+#' names of the columns to grab.
+#' 
+#' To illustrate this point understand that all three of these approaches 
+#' result in exactly the same output:
+#' 
+#' \preformatted{
+#' ## method 1
+#' presidential_debates_2012 \%>\%
+#'     get_sentences() \%>\%
+#'     sentiment_by(by = c('person', 'time'))
+#' 
+#' ## method 2
+#' presidential_debates_2012 \%>\%
+#'     get_sentences() \%$\%
+#'     sentiment_by(., by = c('person', 'time'))
+#' 
+#' ## method 3
+#' presidential_debates_2012 \%>\%
+#'     get_sentences() \%$\%
+#'     sentiment_by(dialogue, by = list(person, time))
+#' }
+#' 
+#' Also realize that a \code{get_sentences_data_frame} object also has a column
+#' with a \code{get_sentences_character} class column which also has a method in
+#' \pkg{sentimentr}.
+#' 
+#' When you use \code{with()} OR \code{\%$\%} then you're not actually passing
+#' the \code{get_sentences_data_frame} object to \pkg{sentimentr} and hence the
+#' \code{sentiment_by.get_sentences_data_frame} method isn't called rather
+#' \code{sentiment_by} is evaluated in the environment/data of the
+#' \code{get_sentences_data_frame object}. You can force the object passed this
+#' way to be evaluated as a \code{get_sentences_data_frame} object and thus
+#' calling the \code{sentiment_by.get_sentences_data_frame} method by using the
+#' \code{.} operator as I've done in method 2 above. Otherwise you pass the name
+#' of the text column which is actually a \code{get_sentences_character class}
+#' and it calls its own method. In this case the by argument expects vectors or
+#' a list of vectors and since it's being evaluated within the data set you can
+#' use \code{list()}.
 #' @examples
 #' mytext <- c(
 #'    'do you like it?  It is red. But I hate really bad dogs',
