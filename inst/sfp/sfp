@@ -43,7 +43,7 @@ function (text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     x <- unlist(textshape::split_sentence(text.var))
     mod <- termco::token_count(x, TRUE, trms)
 
-    cnts <- termco::term_cols(mod)
+    cnts <- termco::tag_cols(mod)
     cnts['polarized'] <- rowSums(cnts[c('negative', 'positive')])
     X <- t(as.matrix(cnts)) > 0
   
