@@ -23,7 +23,7 @@ that were not addressed by the current **R** tools. My own `polarity`
 function in the **qdap** package is slower on larger data sets. It is a
 dictionary lookup approach that tries to incorporate weighting for
 valence shifters (negation and amplifiers/deamplifiers). Matthew
-Jocker's created the
+Jockers created the
 [**syuzhet**](http://www.matthewjockers.net/2015/02/02/syuzhet/) package
 that utilizes dictionary lookups for the Bing, NRC, and Afinn methods as
 well as a custom dictionary. He also utilizes a wrapper for the
