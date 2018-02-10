@@ -1,0 +1,50 @@
+---
+author:
+  - name: Tyler W Rinker
+    email: \email{tyler.rinker@gmail.com}
+    url: https://github.com/trinker
+title:
+  formatted: "A Capitalized Title: Something about a Package \\pkg{sentimentr}"
+  # If you use tex in the formatted title, also supply version without
+  plain:     "A Capitalized Title: Something about a Package sentimentr"
+  # For running headers, if needed
+  short:     "\\pkg{sentimentr}: Pressing Speed and Accuracy"
+abstract: >
+  The abstract of the article.
+keywords:
+  # at least one keyword must be supplied
+  formatted: [sentiment, hedonometrics, "\\proglang{R}"]
+  plain:     [sentiment, hedonometrics, R]
+preamble: >
+  \usepackage{amsmath}
+output: 
+  rticles::jss_article:
+    citation_package: natbib
+bibliography: sentimentr.bib
+---
+
+# Introduction
+
+> Sentiment  analysis,  also  called  opinion  mining,  is  the  field  of  study  that analyzes  people's  opinions,  sentiments,  evaluations,  appraisals,  attitudes, and  emotions  towards  entities  such  as  products,  services,  organizations, individuals, issues, events, topics, and their attributes. [@Liu2012, p. 1]
+
+
+Blah blah [see @Rinker2017, pp. 33-35; also @Rinker2017b, ch. 1]. This template demonstrates some of the basic latex you'll need to know to create a JSS article.
+
+## Code formatting
+
+Don't use markdown, instead use the more precise latex commands:
+
+* \proglang{Java}
+* \pkg{plyr}
+* \code{print("abc")}
+
+# R code
+
+Can be inserted in regular R markdown blocks.
+
+```{r}
+x <- 1:10
+x
+```
+
+

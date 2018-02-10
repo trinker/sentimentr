@@ -32,3 +32,4 @@ hotel_reviews.rds
 inst/deprecated_data
 inst/articles
 .gitattributes
+inst/sentimentr_jss

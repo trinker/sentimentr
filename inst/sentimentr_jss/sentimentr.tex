@@ -1,0 +1,87 @@
+\documentclass[article]{jss}
+\usepackage[utf8]{inputenc}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\author{
+Tyler W Rinker\\
+}
+\title{A Capitalized Title: Something about a Package \pkg{sentimentr}}
+
+\Plainauthor{Tyler W Rinker}
+\Plaintitle{A Capitalized Title: Something about a Package sentimentr}
+\Shorttitle{\pkg{sentimentr}: Pressing Speed and Accuracy}
+
+\Abstract{
+The abstract of the article.
+}
+
+\Keywords{sentiment, hedonometrics, \proglang{R}}
+\Plainkeywords{sentiment, hedonometrics, R}
+
+%% publication information
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{}
+%% \Acceptdate{2012-06-04}
+
+\Address{
+  }
+
+\usepackage{amsmath}
+
+\begin{document}
+
+\section{Introduction}\label{introduction}
+
+\begin{quote}
+Sentiment analysis, also called opinion mining, is the field of study
+that analyzes people's opinions, sentiments, evaluations, appraisals,
+attitudes, and emotions towards entities such as products, services,
+organizations, individuals, issues, events, topics, and their
+attributes. \citep[p.~1]{Liu2012}
+\end{quote}
+
+Blah blah
+\citetext{\citealp[see][pp.~33-35]{Rinker2017}; \citealp[also][ch.~1]{Rinker2017b}}.
+This template demonstrates some of the basic latex you'll need to know
+to create a JSS article.
+
+\subsection{Code formatting}\label{code-formatting}
+
+Don't use markdown, instead use the more precise latex commands:
+
+\begin{itemize}
+\tightlist
+\item
+  \proglang{Java}
+\item
+  \pkg{plyr}
+\item
+  \code{print("abc")}
+\end{itemize}
+
+\section{R code}\label{r-code}
+
+Can be inserted in regular R markdown blocks.
+
+\begin{CodeChunk}
+
+\begin{CodeInput}
+R> x <- 1:10
+R> x
+\end{CodeInput}
+
+\begin{CodeOutput}
+ [1]  1  2  3  4  5  6  7  8  9 10
+\end{CodeOutput}
+\end{CodeChunk}
+
+\bibliography{sentimentr.bib}
+
+
+\end{document}
+
