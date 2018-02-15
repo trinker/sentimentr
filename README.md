@@ -652,7 +652,7 @@ lookup based
 [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis)
 package, the [meanr](https://github.com/wrathematics/meanr) package
 (written in C level code), and my own algorithm with default combined
-Jockers (2017) & Rinker's Hu & Liue (2004) polarity lexicons as well as
+Jockers (2017) & Rinker's augmented Hu & Liu (2004) polarity lexicons as well as
 Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicons available
 from the [**lexicon**](https://github.com/trinker/lexicon) package.
