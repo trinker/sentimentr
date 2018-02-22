@@ -53,8 +53,9 @@ NULL
 #' @details
 #' \itemize{
 #'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
-#'   sentence.   Negative and positive reflects direction, a negative or positive
+#'   sentence.  Negative and positive reflects direction, a negative or positive
 #'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   number.  The review number.
 #'   \item text. The text from the review.
 #' }
 #'
@@ -62,7 +63,7 @@ NULL
 #' @keywords datasets
 #' @name cannon_reviews
 #' @usage data(cannon_reviews)
-#' @format A data frame with 45 rows and 2 variables
+#' @format A data frame with 597 rows and 3 variables
 #' @references
 #' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
 #'    Proceedings of the ACM SIGKDD International Conference on
@@ -93,7 +94,7 @@ NULL
 #' @keywords datasets 
 #' @name kaggle_movie_reviews 
 #' @usage data(kaggle_movie_reviews) 
-#' @format A data frame with 7,086 rows and 3 variables 
+#' @format A data frame with 7,086 rows and 2 variables 
 #' @references \url{https://www.kaggle.com/c/si650winter11/data}
 NULL 
 
@@ -136,7 +137,7 @@ NULL
 #' @keywords datasets 
 #' @name nyt_articles 
 #' @usage data(nyt_articles) 
-#' @format A data frame with 5,179 rows and 5 variables 
+#' @format A data frame with 5,179 rows and 2 variables 
 #' @references
 #' Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model
 #' for Sentiment Analysis of Social Media Text. Eighth International Conference
@@ -162,7 +163,7 @@ NULL
 #' @keywords datasets 
 #' @name course_evaluations 
 #' @usage data(course_evaluations) 
-#' @format A data frame with 566 rows and 3 variables 
+#' @format A data frame with 566 rows and 2 variables 
 #' @references Welch, C. and Mihalcea, R. (2017). Targeted sentiment to 
 #' understand student comments. In Proceedings of the International Conference 
 #' on Computational Linguistics (COLING 2016). \cr \cr
@@ -186,7 +187,7 @@ NULL
 #' @keywords datasets 
 #' @name hotel_reviews 
 #' @usage data(hotel_reviews) 
-#' @format A data frame with 5000 rows and 5 variables 
+#' @format A data frame with 5000 rows and 2 variables 
 #' @references Wang, H., Lu, Y., and Zhai, C. (2011). Latent aspect rating 
 #' analysis without aspect keyword supervision. In Proceedings of the 17th ACM 
 #' SIGKDD Conference on Knowledge Discovery and Data Mining (KDD'2011), 618-626. \cr \cr

@@ -4,7 +4,7 @@
 \name{course_evaluations}
 \alias{course_evaluations}
 \title{Student Course Evaluation Comments}
-\format{A data frame with 566 rows and 3 variables}
+\format{A data frame with 566 rows and 2 variables}
 \usage{
 data(course_evaluations)
 }

@@ -4,7 +4,7 @@
 \name{hotel_reviews}
 \alias{hotel_reviews}
 \title{Hotel Reviews}
-\format{A data frame with 5000 rows and 5 variables}
+\format{A data frame with 5000 rows and 2 variables}
 \usage{
 data(hotel_reviews)
 }

@@ -4,7 +4,7 @@
 \name{cannon_reviews}
 \alias{cannon_reviews}
 \title{Cannon G3 Camera Product Reviews From Amazon}
-\format{A data frame with 45 rows and 2 variables}
+\format{A data frame with 597 rows and 3 variables}
 \usage{
 data(cannon_reviews)
 }
@@ -16,8 +16,9 @@ than one opinion score and average of all scores is used.
 \details{
 \itemize{
   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
-  sentence.   Negative and positive reflects direction, a negative or positive
+  sentence.  Negative and positive reflects direction, a negative or positive
   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+  number.  The review number.
   \item text. The text from the review.
 }
 }

@@ -922,7 +922,7 @@ reviews.
 
     cannon_reviews %>%
         filter(number %in% sample(unique(number), 3)) %>%
-        mutate(review = get_sentences(review)) %$%
+        mutate(review = get_sentences(text)) %$%
         sentiment_by(review, number) %>%
         highlight()
 

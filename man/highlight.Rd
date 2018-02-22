@@ -46,8 +46,9 @@ library(dplyr)
 library(magrittr)
 
 cannon_reviews \%>\%
-   mutate(review_split = get_sentences(text)) \%$\%
-   sentiment_by(review_split, number) \%>\%
-   highlight()
+    filter(number \%in\% sample(unique(number), 3)) \%>\%
+    mutate(review = get_sentences(text)) \%$\%
+    sentiment_by(review, number) \%>\%
+    highlight()
 }
 }

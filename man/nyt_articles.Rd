@@ -4,7 +4,7 @@
 \name{nyt_articles}
 \alias{nyt_articles}
 \title{Sentiment Scored New York Times Articles}
-\format{A data frame with 5,179 rows and 5 variables}
+\format{A data frame with 5,179 rows and 2 variables}
 \usage{
 data(nyt_articles)
 }

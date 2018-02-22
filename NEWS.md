@@ -23,6 +23,13 @@ sentimentr 2.3.0 -
 
 **BUG FIXES**
 
+* The README and `highlight` function documentation both contained code that 
+  produced an error.  This is because all the data sets within **sentimentr**
+  have been normalized to include the same columns, including `cannon_reviews`.
+  The code that caused the error referred to a column `number` which no longer 
+  existed in the data set.  This column now exists in `cannon_reviews` again.  
+  Spotted thanks to Tim Fisher.
+
 **NEW FEATURES**
 
 **MINOR FEATURES**
