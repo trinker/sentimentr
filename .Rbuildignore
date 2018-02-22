@@ -34,3 +34,4 @@ inst/articles
 .gitattributes
 inst/sentimentr_jss
 polarity.html
+highlight_deprecated.png
