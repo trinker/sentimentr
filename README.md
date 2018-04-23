@@ -10,7 +10,7 @@ Status](https://travis-ci.org/trinker/sentimentr.svg?branch=master)](https://tra
 [![Coverage
 Status](https://coveralls.io/repos/trinker/sentimentr/badge.svg?branch=master)](https://coveralls.io/r/trinker/sentimentr?branch=master)
 [![DOI](https://zenodo.org/badge/5398/trinker/sentimentr.svg)](https://zenodo.org/badge/latestdoi/5398/trinker/sentimentr)
-[![](http://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
+[![](https://cranlogs.r-pkg.org/badges/sentimentr)](https://cran.r-project.org/package=sentimentr)
 
 ![](tools/sentimentr_logo/r_sentimentr.png)
 
@@ -22,8 +22,8 @@ variable(s).
 that were not addressed by the current **R** tools. My own `polarity`
 function in the **qdap** package is slower on larger data sets. It is a
 dictionary lookup approach that tries to incorporate weighting for
-valence shifters (negation and amplifiers/deamplifiers). Matthew
-Jockers created the
+valence shifters (negation and amplifiers/deamplifiers). Matthew Jockers
+created the
 [**syuzhet**](http://www.matthewjockers.net/2015/02/02/syuzhet/) package
 that utilizes dictionary lookups for the Bing, NRC, and Afinn methods as
 well as a custom dictionary. He also utilizes a wrapper for the
@@ -40,29 +40,8 @@ optimizes speed which the Stanford's parser does not. This leads to a
 trade off of speed vs. accuracy. Simply, **sentimentr** attempts to
 balance accuracy and speed.
 
-
-Table of Contents
-============
-
--   [Why sentimentr](#why-sentimentr)
--   [Functions](#functions)
--   [The Equation](#the-equation)
--   [Installation](#installation)
--   [Examples](#examples)
-    -   [Preferred Workflow](#preferred-workflow)
-    -   [Tidy Approach](#tidy-approach)
-    -   [Plotting](#plotting)
-        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
-        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
-    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
-    -   [Annie Swafford's Examples](#annie-swaffords-examples)
-    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
-    -   [Text Highlighting](#text-highlighting)
--   [Contact](#contact)
-
 Why sentimentr
-============
-
+==============
 
 ***So what does*** **sentimentr** ***do that other packages don't and
 why does it matter?***
@@ -174,8 +153,29 @@ shown in the table above, can be accessed via:
     val_shift_freq <- system.file("the_case_for_sentimentr/valence_shifter_cooccurrence_rate.R", package = "sentimentr")
     file.copy(val_shift_freq, getwd())
 
+
+Table of Contents
+============
+
+-   [Why sentimentr](#why-sentimentr)
+-   [Functions](#functions)
+-   [The Equation](#the-equation)
+-   [Installation](#installation)
+-   [Examples](#examples)
+    -   [Preferred Workflow](#preferred-workflow)
+    -   [Tidy Approach](#tidy-approach)
+    -   [Plotting](#plotting)
+        -   [Plotting at Aggregated Sentiment](#plotting-at-aggregated-sentiment)
+        -   [Plotting at the Sentence Level](#plotting-at-the-sentence-level)
+    -   [Making and Updating Dictionaries](#making-and-updating-dictionaries)
+    -   [Annie Swafford's Examples](#annie-swaffords-examples)
+    -   [Comparing sentimentr, syuzhet, meanr, and Stanford](#comparing-sentimentr-syuzhet-meanr-and-stanford)
+    -   [Text Highlighting](#text-highlighting)
+-   [Contact](#contact)
+
 Functions
-=========
+============
+
 
 There are two main functions (top 2 in table below) in **sentimentr**
 with several helper functions summarized in the table below:
@@ -652,8 +652,8 @@ lookup based
 [SentimentAnalysis](https://github.com/sfeuerriegel/SentimentAnalysis)
 package, the [meanr](https://github.com/wrathematics/meanr) package
 (written in C level code), and my own algorithm with default combined
-Jockers (2017) & Rinker's augmented Hu & Liu (2004) polarity lexicons as well as
-Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's
+Jockers (2017) & Rinker's augmented Hu & Liu (2004) polarity lexicons as
+well as Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's
 (2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicons available
 from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
@@ -785,31 +785,31 @@ memory error.
         times = 3
     )
 
-    Unit: microseconds
-                            expr          min           lq        mean
-                      stanford() 23834040.227 24883661.764 25640358.57
-     sentimentr_jockers_rinker()   258749.057   263011.763   266611.98
-            sentimentr_jockers()   206486.472   210409.451   213580.99
-              sentimentr_huliu()   252850.323   252984.367   269545.06
-          sentimentr_sentiword()   988829.437   999653.499  1004093.01
-             SentimentAnalysis()  4658910.895  4695431.684  4734446.13
-               syuzhet_jockers()   440518.981   447106.407   450037.37
-                  syuzhet_binn()   338523.190   359897.684   402229.21
-                   syuzhet_nrc()  2941456.875  3103821.286  3190389.21
-                 syuzhet_afinn()   140849.101   146067.149   150954.71
-                         meanr()      843.673      903.613     1626.86
+    Unit: milliseconds
+                            expr         min           lq         mean
+                      stanford() 23449.24813 24162.267858 24425.989280
+     sentimentr_jockers_rinker()   293.04629   299.389208   307.678153
+            sentimentr_jockers()   257.55676   258.385733   262.253061
+              sentimentr_huliu()   270.83572   277.968694   283.180440
+          sentimentr_sentiword()  1073.91222  1094.976942  1105.878175
+             SentimentAnalysis()  5334.22638  5412.814592  5502.669306
+               syuzhet_jockers()   431.81212   445.250587   492.168698
+                  syuzhet_binn()   347.35738   348.169247   357.819786
+                   syuzhet_nrc()   971.26284   990.514173  1097.218255
+                 syuzhet_afinn()   173.59637   174.591052   177.288866
+                         meanr()     1.12725     1.274357     1.869056
            median           uq          max neval
-     25933283.302 26543517.737 27153752.171     3
-       267274.468   270543.446   273812.423     3
-       214332.429   217128.252   219924.074     3
-       253118.410   277892.435   302666.460     3
-      1010477.561  1011724.802  1012972.042     3
-      4731952.474  4772213.754  4812475.034     3
-       453693.832   454796.560   455899.288     3
-       381272.177   434082.226   486892.274     3
-      3266185.698  3314855.383  3363525.069     3
-       151285.196   156007.508   160729.821     3
-          963.553     2018.453     3073.353     3
+     24875.287586 24914.359855 24953.432124     3
+       305.732123   314.994082   324.256042     3
+       259.214706   264.601212   269.987718     3
+       285.101667   289.352799   293.603930     3
+      1116.041663  1121.861151  1127.680639     3
+      5491.402802  5586.890769  5682.378736     3
+       458.689056   522.346988   586.004920     3
+       348.981115   363.050989   377.120863     3
+      1009.765502  1160.195960  1310.626419     3
+       175.585734   179.135114   182.684495     3
+         1.421463     2.239959     3.058455     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------
@@ -893,8 +893,8 @@ accuracy rate above is its inability to discriminate. The Sentiword
 dictionary does well at discriminating (like Stanford's coreNLP) but
 lacks accuracy. We can deduce two things from this observation:
 
-1.  Larger dictionaries discriminate better (Sentiword \[n =
-    20,094\] vs. Hu & Lu \[n = 6,874\])
+1.  Larger dictionaries discriminate better (Sentiword \[n = 20,093\]
+    vs. Hu & Lu \[n = 6,874\])
 2.  The Sentiword dictionary may have words with reversed polarities
 
 A reworking of the Sentiword dictionary may yield better results for a
