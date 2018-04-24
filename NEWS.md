@@ -18,7 +18,7 @@ And constructed with the following guidelines:
 
 
 
-sentimentr 2.3.0 - 
+sentimentr 2.3.0 - 2.3.2
 ----------------------------------------------------------------
 
 **BUG FIXES**
@@ -30,13 +30,10 @@ sentimentr 2.3.0 -
   existed in the data set.  This column now exists in `cannon_reviews` again.  
   Spotted thanks to Tim Fisher.
 
-**NEW FEATURES**
-
-**MINOR FEATURES**
-
-**IMPROVEMENTS**
 
 **CHANGES**
+
+Maintenance release to bring package up to date with the lexicon package API changes.
 
 
 sentimentr 2.1.0 - 2.2.3

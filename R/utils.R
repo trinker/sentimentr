@@ -1,3 +1,5 @@
+#' @importFrom lexicon available_data
+
 make_class <- function(x, ...) {
     class(x) <- unique(c(..., class(x)))    
     x
