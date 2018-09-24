@@ -15,6 +15,6 @@ Date: 2018-04-24
 License: MIT + file LICENSE
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 URL: http://github.com/trinker/sentimentr
 BugReports: http://github.com/trinker/sentimentr/issues

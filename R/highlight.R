@@ -37,7 +37,7 @@
 #'     sentiment_by(review, number) %>%
 #'     highlight()
 #' }
-highlight <- function(x, file = "polarity.html",
+highlight <- function(x, file = file.path(tempdir(), "polarity.html"),
     open = TRUE, digits = 3, ...){
 
     polarity <- grouping.var <- NULL

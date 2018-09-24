@@ -4,7 +4,8 @@
 \alias{highlight}
 \title{Polarity Text Highlighting}
 \usage{
-highlight(x, file = "polarity.html", open = TRUE, digits = 3, ...)
+highlight(x, file = file.path(tempdir(), "polarity.html"), open = TRUE,
+  digits = 3, ...)
 }
 \arguments{
 \item{x}{A \code{sentiment_by} object.}

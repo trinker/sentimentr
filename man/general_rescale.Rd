@@ -4,8 +4,8 @@
 \alias{general_rescale}
 \title{Rescale a Numeric Vector}
 \usage{
-general_rescale(x, lower = -1, upper = 1, mute = NULL, keep.zero = lower
-  < 0, sign = FALSE, ...)
+general_rescale(x, lower = -1, upper = 1, mute = NULL,
+  keep.zero = lower < 0, sign = FALSE, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}

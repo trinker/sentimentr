@@ -347,7 +347,7 @@ up-weights the cluster by 1 +
 *z*<sub>2</sub> \* {|*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|,...,*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>}
 (.85 is the default weight (*z*<sub>2</sub>) where
 |*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|
-are the number of adversative conjunctions before the polarized word). A
+are the number of adversative conjunctions before the polarized word). An
 adversative conjunction after the polarized word down-weights the
 cluster by 1 +
 {*w*<sub>*i*, *j*, *k*</sub><sup>*p*</sup>, ..., |*w*<sub>*a**d**v**e**r**s**a**t**i**v**e* *c**o**n**j**u**n**c**t**i**o**n*</sub>|\* − 1}\**z*<sub>2</sub>.
@@ -469,14 +469,14 @@ argument.
     ))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3599 0.2560745    0.12127513
-    ##  2:     OBAMA time 2       7477 0.2537932    0.11701963
-    ##  3:     OBAMA time 3       7243 0.2464540    0.08144186
-    ##  4:    ROMNEY time 1       4085 0.2536124    0.10468550
-    ##  5:    ROMNEY time 2       7536 0.2203095    0.08949117
-    ##  6:    ROMNEY time 3       8303 0.2646393    0.09666790
-    ##  7:   CROWLEY time 2       1672 0.2190129    0.19649118
-    ##  8:    LEHRER time 1        765 0.2984782    0.15494585
+    ##  1:     OBAMA time 1       3599 0.2639992    0.12674258
+    ##  2:     OBAMA time 2       7477 0.2624157    0.12120007
+    ##  3:     OBAMA time 3       7243 0.2564321    0.08527263
+    ##  4:    ROMNEY time 1       4085 0.2657393    0.11175781
+    ##  5:    ROMNEY time 2       7536 0.2205228    0.08782738
+    ##  6:    ROMNEY time 3       8303 0.2731035    0.09907716
+    ##  7:   CROWLEY time 2       1672 0.2215016    0.19837339
+    ##  8:    LEHRER time 1        765 0.3159019    0.16049513
     ##  9:  QUESTION time 2        583 0.1753812    0.03156748
     ## 10: SCHIEFFER time 3       1445 0.2345879    0.08864622
 
@@ -493,14 +493,14 @@ Or if you prefer a more tidy approach:
         sentiment_by(dialogue_split, list(person, time))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3599 0.2560745    0.12127513
-    ##  2:     OBAMA time 2       7477 0.2537932    0.11701963
-    ##  3:     OBAMA time 3       7243 0.2464540    0.08144186
-    ##  4:    ROMNEY time 1       4085 0.2536124    0.10468550
-    ##  5:    ROMNEY time 2       7536 0.2203095    0.08949117
-    ##  6:    ROMNEY time 3       8303 0.2646393    0.09666790
-    ##  7:   CROWLEY time 2       1672 0.2190129    0.19649118
-    ##  8:    LEHRER time 1        765 0.2984782    0.15494585
+    ##  1:     OBAMA time 1       3599 0.2639992    0.12674258
+    ##  2:     OBAMA time 2       7477 0.2624157    0.12120007
+    ##  3:     OBAMA time 3       7243 0.2564321    0.08527263
+    ##  4:    ROMNEY time 1       4085 0.2657393    0.11175781
+    ##  5:    ROMNEY time 2       7536 0.2205228    0.08782738
+    ##  6:    ROMNEY time 3       8303 0.2731035    0.09907716
+    ##  7:   CROWLEY time 2       1672 0.2215016    0.19837339
+    ##  8:    LEHRER time 1        765 0.3159019    0.16049513
     ##  9:  QUESTION time 2        583 0.1753812    0.03156748
     ## 10: SCHIEFFER time 3       1445 0.2345879    0.08864622
 
@@ -512,14 +512,14 @@ on a `data.frame` as seen below:
         sentiment_by(dialogue, list(person, time))
 
     ##        person   time word_count        sd ave_sentiment
-    ##  1:     OBAMA time 1       3599 0.2560745    0.12127513
-    ##  2:     OBAMA time 2       7477 0.2537932    0.11701963
-    ##  3:     OBAMA time 3       7243 0.2464540    0.08144186
-    ##  4:    ROMNEY time 1       4085 0.2536124    0.10468550
-    ##  5:    ROMNEY time 2       7536 0.2203095    0.08949117
-    ##  6:    ROMNEY time 3       8303 0.2646393    0.09666790
-    ##  7:   CROWLEY time 2       1672 0.2190129    0.19649118
-    ##  8:    LEHRER time 1        765 0.2984782    0.15494585
+    ##  1:     OBAMA time 1       3599 0.2639992    0.12674258
+    ##  2:     OBAMA time 2       7477 0.2624157    0.12120007
+    ##  3:     OBAMA time 3       7243 0.2564321    0.08527263
+    ##  4:    ROMNEY time 1       4085 0.2657393    0.11175781
+    ##  5:    ROMNEY time 2       7536 0.2205228    0.08782738
+    ##  6:    ROMNEY time 3       8303 0.2731035    0.09907716
+    ##  7:   CROWLEY time 2       1672 0.2215016    0.19837339
+    ##  8:    LEHRER time 1        765 0.3159019    0.16049513
     ##  9:  QUESTION time 2        583 0.1753812    0.03156748
     ## 10: SCHIEFFER time 3       1445 0.2345879    0.08864622
 
@@ -659,6 +659,7 @@ from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load_gh("trinker/sentimentr", "trinker/stansent", "sfeuerriegel/SentimentAnalysis", "wrathematics/meanr")
+
     pacman::p_load(syuzhet, qdap, microbenchmark, RSentiment)
 
     ase <- c(
@@ -707,7 +708,7 @@ from the [**lexicon**](https://github.com/trinker/lexicon) package.
     1     -0.5                      0.18               0.18             0.35
     2        1                       0.6                0.6              0.8
     3      0.5                      0.38               0.38              0.5
-    4     -0.5                         0                  0                0
+    4     -0.5                      0.39               0.39             0.52
     5     -0.5                     -0.31              -0.31            -0.41
     6     -0.5                      0.04               0.04             0.06
     7     -0.5                     -0.28              -0.28            -0.38
@@ -717,7 +718,7 @@ from the [**lexicon**](https://github.com/trinker/lexicon) package.
     1                 0.18          1 -0.25     0   -0.25    -1    -0.5   -1
     2                 0.65          1  0.33  0.33       0     1    0.75    1
     3                 0.32          1   0.5   0.5     0.5     1    0.75    1
-    4                    0          0     0  0.25    0.25     1    0.75    1
+    4                 0.26          0     0  0.25    0.25     1    0.75    1
     5                -0.56         -1     1     1       1     1    0.75    1
     6                 0.11          1  0.17  0.17    0.33     1    0.75    1
     7                -0.05          1   0.5   0.5     0.5     1    0.75    1
@@ -786,30 +787,30 @@ memory error.
     )
 
     Unit: milliseconds
-                            expr         min           lq         mean
-                      stanford() 23449.24813 24162.267858 24425.989280
-     sentimentr_jockers_rinker()   293.04629   299.389208   307.678153
-            sentimentr_jockers()   257.55676   258.385733   262.253061
-              sentimentr_huliu()   270.83572   277.968694   283.180440
-          sentimentr_sentiword()  1073.91222  1094.976942  1105.878175
-             SentimentAnalysis()  5334.22638  5412.814592  5502.669306
-               syuzhet_jockers()   431.81212   445.250587   492.168698
-                  syuzhet_binn()   347.35738   348.169247   357.819786
-                   syuzhet_nrc()   971.26284   990.514173  1097.218255
-                 syuzhet_afinn()   173.59637   174.591052   177.288866
-                         meanr()     1.12725     1.274357     1.869056
+                            expr          min           lq         mean
+                      stanford() 21790.925824 22010.969075 22095.255181
+     sentimentr_jockers_rinker()   293.284236   295.718767   302.906043
+            sentimentr_jockers()   227.812754   229.455089   239.026507
+              sentimentr_huliu()   282.959395   283.611326   288.474757
+          sentimentr_sentiword()  1061.882762  1062.681372  1070.371477
+             SentimentAnalysis()  4344.009121  4434.078218  4500.975010
+               syuzhet_jockers()   360.154941   369.985649   381.633096
+                  syuzhet_binn()   275.813599   280.035007   286.380482
+                   syuzhet_nrc()   661.710938   668.395742   682.598527
+                 syuzhet_afinn()   128.830014   129.817639   136.898221
+                         meanr()     1.285902     1.352186     1.872903
            median           uq          max neval
-     24875.287586 24914.359855 24953.432124     3
-       305.732123   314.994082   324.256042     3
-       259.214706   264.601212   269.987718     3
-       285.101667   289.352799   293.603930     3
-      1116.041663  1121.861151  1127.680639     3
-      5491.402802  5586.890769  5682.378736     3
-       458.689056   522.346988   586.004920     3
-       348.981115   363.050989   377.120863     3
-      1009.765502  1160.195960  1310.626419     3
-       175.585734   179.135114   182.684495     3
-         1.421463     2.239959     3.058455     3
+     22231.012326 22247.419860 22263.827394     3
+       298.153298   307.716947   317.280595     3
+       231.097425   244.633383   258.169342     3
+       284.263256   291.232439   298.201621     3
+      1063.479982  1074.615834  1085.751687     3
+      4524.147316  4579.457955  4634.768594     3
+       379.816356   392.372174   404.927991     3
+       284.256415   291.663924   299.071432     3
+       675.080546   693.042322   711.004098     3
+       130.805265   140.932324   151.059383     3
+         1.418469     2.166404     2.914339     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------

@@ -17,6 +17,42 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
+sentimentr 2.4.0 -
+----------------------------------------------------------------
+
+**BUG FIXES**
+
+* In `sentiment` when there was a larger de-amplifier, negator, & polarized word 
+  all in the same chunk the sentiment would equal 0.  This occurred because the 
+  de-amplifier weights below -1 are capped at -1 lower bound.  To compute the 
+  weight for de-amplifiers this was added with 1 and then multiplied by the
+  polity score.  Adding 1 and -1 resulted in 0 * polarity = 0.  This was spotted 
+  thanks to Ashley Wysocki (see #80).  In the case Ashley's example was with an
+  adversative conjunction which is treated as an extreme amplifier, which when 
+  combined with a negator, is treated as a de-amplifier.  This resulted in a -1 
+  De-amplifier score.  De-amplifiers are now capped at -.999 rather than -1 to 
+  avoid this.
+
+* Chunks containing adversative conjunctions are supposed to act in the following 
+  way: "An adversative conjunction before the polarized word...up-weights the 
+  cluster...An adversative conjunction after the polarized word down-weights the 
+  cluster...".  This was up-weighting the first as well.  A comma stop has been
+  used to block the first clause from being up-weighted but is not yet 
+  down-weighted per the documentation.  Either a true fix will be seen in the next
+  version or the documentation will be corrected to address this issue. See #85.
+
+
+**NEW FEATURES**
+
+**MINOR FEATURES**
+
+**IMPROVEMENTS**
+
+**CHANGES**
+
+* `highlight` now writes the .html file to the temp directory rather than the 
+  working directory by default.
+
 
 sentimentr 2.3.0 - 2.3.2
 ----------------------------------------------------------------
@@ -29,8 +65,7 @@ sentimentr 2.3.0 - 2.3.2
   The code that caused the error referred to a column `number` which no longer 
   existed in the data set.  This column now exists in `cannon_reviews` again.  
   Spotted thanks to Tim Fisher.
-
-
+  
 **CHANGES**
 
 Maintenance release to bring package up to date with the lexicon package API changes.

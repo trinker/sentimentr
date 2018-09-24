@@ -343,6 +343,12 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
+    buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
+    
+    if (length(buts) > 0){
+        buts <- paste0('(', paste(buts, collapse = '|'), ')')
+        sent_dat[, sentences := gsub(buts, ', \\1', sentences, ignore.case = TRUE, perl = TRUE)][]
+    }
 
     ## replace like when preposition
     if (neutral.nonverb.like && 'like' %in% polarity_dt[[1]]) {
@@ -385,7 +391,6 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     #     word_dat[, .(pol_loc = unlist(pol_loc),
     # 	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')][, id := NULL][, id2 := NULL]
     # )
-
     word_dat <- word_dat[, .(words, comma_loc, pol_loc = unlist(pol_loc),
 	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')]
 
@@ -393,7 +398,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
     word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
     	list(words, non_pol, lens = sapply(words, length)), by = cols2]
-     
+   
     # ## stretch by prior polarized word hits ## removed 2017-12-06 [improper recycling]
     # word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
     # 	comma_loc = unlist(comma_loc), P = unlist(P),
@@ -441,7 +446,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
 
     ## add the amplifier/deamplifier & total raw sentiment scores
     sent_dat[, A :=  ((1  - w_neg) * a)* amplifier.weight][,
-    	D := ((-w_neg)*a - d) * amplifier.weight][, D := ifelse(D < -1, -1, D)][,
+    	D := ((-w_neg)*a - d) * amplifier.weight][, D := ifelse(D <= -1, -.999, D)][,
     		T := (1 + c(A + D))*(P*((-1)^(2 + w_neg)))]
 
      ## Aggregate (sum) at the sentence level
