@@ -413,11 +413,14 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     ## save just polarized data for later merge
     pol_dat <- word_dat[, c("id", "id2", "pol_loc", "P"), with=FALSE]
 
-    ## grab just desired columns needed for valence shifters and stretch by words
+    # ## grab just desired columns needed for valence shifters and stretch by words
+    # word_dat <- word_dat[, .(non_pol = unlist(non_pol)), by = c("id", "id2", "pol_loc")][, 
+    #     before:=grepl('<B>$', non_pol)][, ## slower regex vs fixed solution
+    #     non_pol:=gsub('<B>$', '', non_pol)]
     word_dat <- word_dat[, .(non_pol = unlist(non_pol)), by = c("id", "id2", "pol_loc")][, 
-        before:=grepl('<B>$', non_pol)][,
-        non_pol:=gsub('<B>$', '', non_pol)]
-
+        before:=grepl('<B>', non_pol, fixed = TRUE)][,
+        non_pol:=sub_str(non_pol, before)]    
+  
     ## tag nonpol cluster as negator (1) , amplifier (2), or deamplifier (3)
     word_dat[, "cluster_tag"] <- valence_shifters_dt[word_dat[["non_pol"]]][[2]]
     
@@ -489,6 +492,11 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     out[]
 }
 
+sub_str <- function(x, locs) {
+    #locs <- grepl('<B>', x, fixed = TRUE)
+    x[locs] <- substring(x[locs], 1, nchar(x[locs]) - 3)
+    x
+}
 
 like_preverbs <- c("'s", 'was', 'is', 'has', 'am', 'are', "'re", 'had', 'been')
 like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\\s+)(like\\b)')

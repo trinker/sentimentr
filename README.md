@@ -434,6 +434,9 @@ any sentiment analysis is done.
     mytext <- get_sentences(mytext)
     sentiment(mytext)
 
+    ## Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    ## object length is not a multiple of shorter object length
+
     ##    element_id sentence_id word_count  sentiment
     ## 1:          1           1          4  0.2500000
     ## 2:          1           2          6 -1.8677359
@@ -530,7 +533,7 @@ Plotting
 
     plot(out)
 
-![](tools/figure/unnamed-chunk-13-1.png)
+![](tools/figure/unnamed-chunk-11-1.png)
 
 ### Plotting at the Sentence Level
 
@@ -543,7 +546,7 @@ overall shape of the text's sentiment. The user can see
 
     plot(uncombine(out))
 
-![](tools/figure/unnamed-chunk-14-1.png)
+![](tools/figure/unnamed-chunk-12-1.png)
 
 Making and Updating Dictionaries
 --------------------------------
@@ -631,6 +634,9 @@ values:
 
     sentiment("I am a human. The dog.  The cat", polarity_dt = mykey_added)
 
+    ## Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    ## object length is not a multiple of shorter object length
+
     ##    element_id sentence_id word_count  sentiment
     ## 1:          1           1          4 -0.7594893
     ## 2:          1           2          2  0.7071068
@@ -692,6 +698,18 @@ from the [**lexicon**](https://github.com/trinker/lexicon) package.
         sentences = ase,
         stringsAsFactors = FALSE
     ), "sentences")
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
 
     [1] "Processing sentence: i have not been sad in a long time"
     [1] "Processing sentence: i am extremely happy today"
@@ -785,31 +803,67 @@ memory error.
         times = 3
     )
 
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
+    Warning in head(key(i), length(leftcols)) == names(i)[leftcols]: longer
+    object length is not a multiple of shorter object length
+
     Unit: milliseconds
                             expr          min           lq         mean
-                      stanford() 20902.012797 21111.839827 21191.468836
-     sentimentr_jockers_rinker()   306.304893   308.178152   313.876471
-            sentimentr_jockers()   263.128636   268.272454   276.522762
-              sentimentr_huliu()   301.361850   304.402555   310.535923
-          sentimentr_sentiword()  1077.136962  1089.379964  1103.833700
-             SentimentAnalysis()  4368.904372  4411.999165  4455.988286
-               syuzhet_jockers()   350.350534   354.332893   359.148002
-                  syuzhet_binn()   265.091057   266.770383   271.353785
-                   syuzhet_nrc()   651.090173   675.581522   687.557393
-                 syuzhet_afinn()   127.812241   135.620873   140.426787
-                         meanr()     1.361166     1.457384     1.978672
+                      stanford() 20963.724504 21237.461717 21538.085965
+     sentimentr_jockers_rinker()   309.880357   312.767968   318.331725
+            sentimentr_jockers()   268.026350   271.421351   278.895999
+              sentimentr_huliu()   307.571978   313.760511   324.044940
+          sentimentr_sentiword()  1076.112774  1097.692564  1109.377286
+             SentimentAnalysis()  4556.465470  4605.613876  4682.987961
+               syuzhet_jockers()   390.994759   395.178107   397.491261
+                  syuzhet_binn()   289.317913   290.959607   296.676529
+                   syuzhet_nrc()   696.955831   706.837427   722.069462
+                 syuzhet_afinn()   133.291967   135.946517   142.702523
+                         meanr()     1.119979     1.258961     1.804339
            median           uq          max neval
-     21321.666857 21336.196855 21350.726854     3
-       310.051411   317.662261   325.273110     3
-       273.416273   283.219825   293.023378     3
-       307.443260   315.122959   322.802658     3
-      1101.622965  1117.182069  1132.741172     3
-      4455.093957  4499.530243  4543.966529     3
-       358.315252   363.546735   368.778219     3
-       268.449710   274.485149   280.520588     3
-       700.072870   705.791003   711.509136     3
-       143.429504   146.734060   150.038616     3
-         1.553602     2.287425     3.021248     3
+     21511.198929 21825.266696 22139.334463     3
+       315.655579   322.557409   329.459238     3
+       274.816352   284.330823   293.845294     3
+       319.949044   332.281421   344.613798     3
+      1119.272353  1126.009542  1132.746731     3
+      4654.762282  4746.249206  4837.736131     3
+       399.361455   400.739511   402.117568     3
+       292.601302   300.355837   308.110372     3
+       716.719024   734.626277   752.533530     3
+       138.601067   147.407801   156.214534     3
+         1.397942     2.146519     2.895096     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------
