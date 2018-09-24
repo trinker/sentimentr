@@ -203,6 +203,38 @@ space_fill <- function(x, doubles){
 
 }
 
+## before pol loc location was not tracked : tracking version with <B> used on 2018-09-24
+# comma_reducer <- function(wrds, cl, pl, len, nb, na){
+# 
+# 	Map(function(wrds2, cl2, pl2, len2){
+# 
+# 	    ## just retun the words if no pol location
+#         if (is.na(pl2)) return(wrds2[-pl2])
+# 
+#         # Find the upper and lower bound using words n.before and n. after
+#         lb <- pl2 - nb
+#         lb[lb < 1] <- 1
+#         ub <- pl2 + na
+#         ub[ub > len2] <- len2
+# 
+#         max_cl_lower <- any(cl2 < pl2)
+#         min_cl_upper <- any(cl2 > pl2)
+# 
+#         # take into account upper and lower looking for [,:;]
+# 		lower <- ifelse(!is.na(max_cl_lower) && max_cl_lower, max(cl2[cl2 < pl2]) + 1, lb)
+# 	    upper <- ifelse(!is.na(min_cl_upper) && min_cl_upper, min(cl2[cl2 > pl2]) - 1, ub)
+# 
+# 	    ## grab these words in the upper and lower w/o the polarized word
+#         ind <- lower:upper
+# 
+# 	    ind <- ind[!ind %in% pl2]
+# 	    
+# 	    if(identical(integer(0), ind)) return(c('')) #return(c("", wrds2[-pl2])) ## replaced return on 1/12/2018 bc https://github.com/trinker/sentimentr/issues/72 not sure why words were return b4
+# 	    
+#         wrds2[ind]
+#         
+# 	}, wrds, cl, pl, len)
+# }
 comma_reducer <- function(wrds, cl, pl, len, nb, na){
 
 	Map(function(wrds2, cl2, pl2, len2){
@@ -226,15 +258,16 @@ comma_reducer <- function(wrds, cl, pl, len, nb, na){
 	    ## grab these words in the upper and lower w/o the polarized word
         ind <- lower:upper
 
+        before <- ind[ind < pl2]
 	    ind <- ind[!ind %in% pl2]
-	    
+
 	    if(identical(integer(0), ind)) return(c('')) #return(c("", wrds2[-pl2])) ## replaced return on 1/12/2018 bc https://github.com/trinker/sentimentr/issues/72 not sure why words were return b4
 	    
-        wrds2[ind]
+	    suffix <- ifelse(ind %in% before, '<B>', '') 
+        paste0(wrds2[ind], suffix)
         
 	}, wrds, cl, pl, len)
 }
-
 
 
 

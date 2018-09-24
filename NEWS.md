@@ -33,14 +33,14 @@ sentimentr 2.4.0 -
   De-amplifier score.  De-amplifiers are now capped at -.999 rather than -1 to 
   avoid this.
 
-* Chunks containing adversative conjunctions are supposed to act in the following 
+* Chunks containing adversative conjunctions were supposed to act in the following 
   way: "An adversative conjunction before the polarized word...up-weights the 
   cluster...An adversative conjunction after the polarized word down-weights the 
-  cluster...".  This was up-weighting the first as well.  A comma stop has been
-  used to block the first clause from being up-weighted but is not yet 
-  down-weighted per the documentation.  Either a true fix will be seen in the next
-  version or the documentation will be corrected to address this issue. See #85.
+  cluster...".  A bug was introduced in which up-weighting happened to the first 
+  clause as well.  This bug has been reversed.  See #85.
 
+* The **README** contained a reference to the **magritrr** rather than the 
+  **magrittr** package.
 
 **NEW FEATURES**
 

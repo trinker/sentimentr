@@ -35,3 +35,5 @@ inst/articles
 inst/sentimentr_jss
 polarity.html
 highlight_deprecated.png
+inst/sentiment_testing/results_list.rds
+sentiment_data

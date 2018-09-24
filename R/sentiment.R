@@ -309,7 +309,7 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
     
     UseMethod('sentiment')
     
@@ -322,7 +322,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_ri
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
     
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -343,12 +343,12 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
-    buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
-    
-    if (length(buts) > 0){
-        buts <- paste0('(', paste(buts, collapse = '|'), ')')
-        sent_dat[, sentences := gsub(buts, ', \\1', sentences, ignore.case = TRUE, perl = TRUE)][]
-    }
+    # buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
+    # 
+    # if (length(buts) > 0){
+    #     buts <- paste0('(', paste(buts, collapse = '|'), ')')
+    #     sent_dat[, sentences := gsub(buts, ', \\1', sentences, ignore.case = TRUE, perl = TRUE)][]
+    # }
 
     ## replace like when preposition
     if (neutral.nonverb.like && 'like' %in% polarity_dt[[1]]) {
@@ -373,11 +373,11 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     ## 1. add polarity word potential locations (seq along) and the
     ##    value for polarized word and polarity value = P
     ## 2. add comma locations
-    word_dat[, pol_loc:=seq_len(.N), by=c('id', 'id2')]
-    word_dat[, comma_loc:=pol_loc]
+    word_dat[, pol_loc := seq_len(.N), by=c('id', 'id2')]
+    word_dat[, comma_loc := pol_loc]
     word_dat[, "P"] <- polarity_dt[word_dat[["words"]]][[2]]
-    word_dat[, pol_loc:=ifelse(is.na(P), NA, pol_loc)]
-    word_dat[, comma_loc:=ifelse(words %in% c(';', ':',  ','), comma_loc, NA)]
+    word_dat[, pol_loc := ifelse(is.na(P), NA, pol_loc)]
+    word_dat[, comma_loc := ifelse(words %in% c(';', ':',  ','), comma_loc, NA)]
 
     ## Get position of polarized word (hits = pol_loc)
     ## Get length of words vect
@@ -391,6 +391,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     #     word_dat[, .(pol_loc = unlist(pol_loc),
     # 	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')][, id := NULL][, id2 := NULL]
     # )
+    
     word_dat <- word_dat[, .(words, comma_loc, pol_loc = unlist(pol_loc),
 	    P = unlist(P), lens = sapply(words, length)), by = c('id', 'id2')]
 
@@ -398,7 +399,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     cols2 <- c('id', 'id2', 'pol_loc', 'P')
     word_dat <- word_dat[, non_pol :=  list(comma_reducer(words, comma_loc, pol_loc, lens, n.before, n.after))][,
     	list(words, non_pol, lens = sapply(words, length)), by = cols2]
-   
+  
     # ## stretch by prior polarized word hits ## removed 2017-12-06 [improper recycling]
     # word_dat <- suppressWarnings(word_dat[, .(words, pol_loc = unlist(pol_loc),
     # 	comma_loc = unlist(comma_loc), P = unlist(P),
@@ -413,17 +414,25 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     pol_dat <- word_dat[, c("id", "id2", "pol_loc", "P"), with=FALSE]
 
     ## grab just desired columns needed for valence shifters and stretch by words
-    word_dat <- word_dat[, .(non_pol = unlist(non_pol)), by = c("id", "id2", "pol_loc")]
+    word_dat <- word_dat[, .(non_pol = unlist(non_pol)), by = c("id", "id2", "pol_loc")][, 
+        before:=grepl('<B>$', non_pol)][,
+        non_pol:=gsub('<B>$', '', non_pol)]
 
     ## tag nonpol cluster as negator (1) , amplifier (2), or deamplifier (3)
     word_dat[, "cluster_tag"] <- valence_shifters_dt[word_dat[["non_pol"]]][[2]]
-    word_dat[, before := 1 - 2*cumsum(non_pol == "*"), .(id, id2, pol_loc)]
+    
+    # ## determine what words come before the polarized word
+    # word_dat[, before := 1 - 2*cumsum(before), .(id, id2, pol_loc)]
 
     but_dat <- word_dat[cluster_tag == "4", list(
     	b =  before*sum2(cluster_tag %in% "4")),
         by = c("id", "id2", "pol_loc", "before")][, before := NULL][,
             list(b = 1 + adversative.weight*sum2(b)), by = c("id", "id2", "pol_loc")]
-
+    
+## Note that an imrpovement to accuracy could be gained by dropping all words 
+##   before adv. conj that comes before pol word or all words after a adv. 
+##   conj. that comes after a pol word.  The trade off is speed....
+    
     ## Get counts of negators (neg), amplifiers (a), and deamplifiers (d)
     ## neg is changed to a simple 0/1 if it flips the sign or not
     word_dat <- word_dat[, list(
@@ -440,42 +449,46 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     sent_dat <- merge(merge(pol_dat, sent_dat[,  c("id", "id2", "wc"), with=FALSE],
         by = c("id", "id2")),	word_dat, by = c("id", "id2", "pol_loc"))
 
-    ## add in the adversative weights
-    sent_dat[, a := a + ifelse(!is.na(b) & b > 1, b, 0)]
-    sent_dat[, d := d + ifelse(!is.na(b) & b < 1, b, 0)]
-
     ## add the amplifier/deamplifier & total raw sentiment scores
-    sent_dat[, A :=  ((1  - w_neg) * a)* amplifier.weight][,
-    	D := ((-w_neg)*a - d) * amplifier.weight][, D := ifelse(D <= -1, -.999, D)][,
-    		T := (1 + c(A + D))*(P*((-1)^(2 + w_neg)))]
+    sent_dat[, 
+        A :=  ((1  - w_neg) * a)* amplifier.weight][,
+    	D := ((-w_neg)*a - d) * amplifier.weight][, 
+    	    
+        A := A + ifelse(!is.na(b) & b > 1, b, 0)][,
+    	D := D - ifelse(!is.na(b) & b == 1, b, 0)][,     	    
+    	    
+    	D := ifelse(D <= -1, -.999, D)][,
+        T := (1 + c(A + D))*(P*((-1)^(2 + w_neg)))
+    ]
 
-     ## Aggregate (sum) at the sentence level
-     sent_dat <- sent_dat[, list(T_sum=sum(T), N = unique(wc)), by=list(id, id2)]
+    ## Aggregate (sum) at the sentence level
+    sent_dat <- sent_dat[, list(T_sum=sum(T), N = unique(wc)), by=list(id, id2)]
 
-     ## Finish by dividing sentiment raw score by sqrt of word count
-     sent_dat[, sentiment := T_sum/sqrt(N)][, sentiment := ifelse(is.na(sentiment) & N > 0, 0, sentiment)]
+    ## Finish by dividing sentiment raw score by sqrt of word count
+    sent_dat[, sentiment := T_sum/sqrt(N)][, sentiment := ifelse(is.na(sentiment) & N > 0, 0, sentiment)]
 
-     ## weight questions if weight not set to 1
-     if (question.weight != 1) {
-         q_locs <- stringi::stri_detect_regex(unlist(sents), "\\?\\s*$")
-         q_locs[is.na(q_locs)] <- FALSE
-         sent_dat[q_locs, "sentiment" := sentiment*question.weight]
-     }
+    ## weight questions if weight not set to 1
+    if (question.weight != 1) {
+        q_locs <- stringi::stri_detect_regex(unlist(sents), "\\?\\s*$")
+        q_locs[is.na(q_locs)] <- FALSE
+        sent_dat[q_locs, "sentiment" := sentiment*question.weight]
+    }
 
-     # By sentence
-     out <- stats::setNames(sent_dat[, c("id", "id2", "N", "sentiment"), with = FALSE],
-         c("element_id", "sentence_id", "word_count", "sentiment"))
+    # By sentence
+    out <- stats::setNames(sent_dat[, c("id", "id2", "N", "sentiment"), with = FALSE],
+        c("element_id", "sentence_id", "word_count", "sentiment"))
 
-     if (!is.null(missing_value)){
-         out[, 'sentiment' := replace_na(sentiment, y = missing_value)]
-     }
+    if (!is.null(missing_value)){
+        out[, 'sentiment' := replace_na(sentiment, y = missing_value)]
+    }
 
-     class(out) <- unique(c("sentiment", class(out)))
-     sentences <- new.env(FALSE)
-     sentences[["sentences"]] <- sents
-     attributes(out)[["sentences"]] <- sentences
-     out[]
+    class(out) <- unique(c("sentiment", class(out)))
+    sentences <- new.env(FALSE)
+    sentences[["sentences"]] <- sents
+    attributes(out)[["sentences"]] <- sentences
+    out[]
 }
+
 
 like_preverbs <- c("'s", 'was', 'is', 'has', 'am', 'are', "'re", 'had', 'been')
 like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\\s+)(like\\b)')
@@ -486,7 +499,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -505,7 +518,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .85, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 

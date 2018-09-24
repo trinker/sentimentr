@@ -7,7 +7,7 @@
 sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
-  question.weight = 1, adversative.weight = 0.85,
+  question.weight = 1, adversative.weight = 0.25,
   neutral.nonverb.like = FALSE, missing_value = 0, ...)
 }
 \arguments{

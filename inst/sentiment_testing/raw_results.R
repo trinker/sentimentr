@@ -27,12 +27,7 @@ replace_emograte <- function(text.var, ...){
 ## Make syuzhet dictionaries into sentimentr keys
 bing <- as_key(syuzhet:::bing)
 afinn <- as_key(syuzhet:::afinn)
-nrc <- data.frame(
-    words = rownames(syuzhet:::nrc),
-    polarity = syuzhet:::nrc[, "positive"] - syuzhet:::nrc[, "negative"],
-    stringsAsFactors = FALSE
-) %>%
-    {as_key(.[.[["polarity"]] != 0, ])}
+nrc <- lexicon::hash_sentiment_nrc
 
 syuzhet_dict <- as_key(syuzhet:::syuzhet_dict)
 
@@ -91,8 +86,8 @@ results_list <- file.path(loc, "sentiment labelled sentences") %>%
         gsub("_[^_]+$", "", .)
     )
 
-#saveRDS(results_list, file = "results_list.rds")
-#results_list <- readRDS("inst/sentiment_testing/results_list.rds")
+# saveRDS(results_list, file = "results_list.rds")
+# results_list <- readRDS("inst/sentiment_testing/results_list.rds")
 
 
 results_list %>%
