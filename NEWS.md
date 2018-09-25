@@ -17,7 +17,7 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 2.4.0 -
+sentimentr 2.4.0 - 2.4.2
 ----------------------------------------------------------------
 
 **BUG FIXES**
@@ -42,11 +42,6 @@ sentimentr 2.4.0 -
 * The **README** contained a reference to the **magritrr** rather than the 
   **magrittr** package.
 
-**NEW FEATURES**
-
-**MINOR FEATURES**
-
-**IMPROVEMENTS**
 
 **CHANGES**
 
