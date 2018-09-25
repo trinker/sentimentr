@@ -72,11 +72,35 @@
 #' ## Using syuzhet's sentiment lexicons
 #' \dontrun{
 #' library(syuzhet)
-#' as_key(syuzhet:::bing)
+#' (bing_key <- as_key(syuzhet:::bing))
 #' as_key(syuzhet:::afinn)
 #' as_key(syuzhet:::syuzhet_dict)
-#'
-#' sentiment(gsub("Sam-I-am", "Sam I am", sam_i_am), as_key(syuzhet:::bing))
+#' 
+#' sam <- gsub("Sam-I-am", "Sam I am", sam_i_am)
+#' sentiment(sam, , polarity_dt = bing_key)
+#' 
+#' ## The nrc dictionary in syuzhet requires a bit of data wrangling before it 
+#' ## is in the correct shape to convert to a key.  
+#' 
+#' library(syuzhet)
+#' library(tidyverse)
+#' 
+#' nrc_key <- syuzhet:::nrc %>% 
+#'     dplyr::filter(
+#'         sentiment %in% c('positive', 'negative'),
+#'         lang == 'english'
+#'     ) %>%
+#'     dplyr::select(-lang) %>% 
+#'     mutate(value = ifelse(sentiment == 'negative', value * -1, value)) %>%
+#'     dplyr::group_by(word) %>%
+#'     dplyr::summarize(y = mean(value)) %>%
+#'     sentimentr::as_key()
+#'     
+#' sentiment(sam, polarity_dt = nrc_key)
+#' 
+#' ## The lexicon package contains a preformatted nrc sentiment hash table that 
+#' ## can be used instead.
+#' sentiment(sam, polarity_dt = lexicon::hash_sentiment_nrc)
 #' }
 #'
 #' ## Using 2 vectors of words
