@@ -23,6 +23,6 @@ Zhai's (2011) hotel reviews data set scraped by the authors from
 Wang, H., Lu, Y., and Zhai, C. (2011). Latent aspect rating 
 analysis without aspect keyword supervision. In Proceedings of the 17th ACM 
 SIGKDD Conference on Knowledge Discovery and Data Mining (KDD'2011), 618-626. \cr \cr
-\url{http://sifaka.cs.uiuc.edu/~wang296/Data/index.html}
+Original URL: 'http://sifaka.cs.uiuc.edu/~wang296/Data/index.html'
 }
 \keyword{datasets}
