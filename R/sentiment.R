@@ -197,8 +197,8 @@
 #' The researcher may provide a weight \eqn{z} to be utilized with
 #' amplifiers/de-amplifiers (default is .8; de-amplifier weight is constrained
 #' to -1 lower bound).  Last, these weighted context clusters (\eqn{c_{i,j,l}}{c_i,j,l}) are
-#' summed (\eqn{c'_{i,j}}{c'_i,j}) and divided by the square root of the word count (\eqn{\sqrt{w_{i,jn}}}{\sqrtn w_i,jn}) yielding an unbounded
-#' polarity score (\eqn{\delta}{C}) for each sentence.
+#' summed (\eqn{c'_{i,j}}{c'_i,j}) and divided by the square root of the word count (\eqn{\sqrt{w_{i,jn}}}{\sqrtn w_i,jn}) yielding an \strong{unbounded
+#' polarity score} (\eqn{\delta}{C}) for each sentence.
 #'
 #' \deqn{\delta=\frac{c'_{i,j}}{\sqrt{w_{i,jn}}}}{C=c'_i,j,l/\sqrt(w_i,jn)}
 #'

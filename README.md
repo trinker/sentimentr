@@ -360,7 +360,7 @@ amplifiers/de-amplifiers (default is .8; de-amplifier weight is
 constrained to −1 lower bound). Last, these weighted context clusters
 (*c*<sub>*i*, *j*, *l*</sub>) are summed (*c*′<sub>*i*, *j*</sub>) and
 divided by the square root of the word count
-(√*w*<sub>*i*, *j**n*</sub>) yielding an unbounded polarity score
+(√*w*<sub>*i*, *j**n*</sub>) yielding an **unbounded polarity score**
 (*δ*<sub>*i*, *j*</sub>) for each sentence.
 
 *δ*<sub>*i**j*</sub> =
@@ -787,29 +787,29 @@ memory error.
 
     Unit: milliseconds
                             expr          min           lq         mean
-                      stanford() 21076.345835 21376.795110 21748.863701
-     sentimentr_jockers_rinker()   287.685626   298.851627   307.227446
-            sentimentr_jockers()   243.859791   249.304879   254.813114
-              sentimentr_huliu()   279.420708   289.093617   294.838407
-          sentimentr_sentiword()  1076.080700  1082.389185  1089.577174
-             SentimentAnalysis()  4387.043403  4448.238954  4482.237859
-               syuzhet_jockers()   344.215242   355.053246   359.951102
-                  syuzhet_binn()   288.353594   297.593736   304.538757
-                   syuzhet_nrc()   662.430221   675.442325   685.724403
-                 syuzhet_afinn()   130.730000   136.566589   139.523477
-                         meanr()     1.032314     1.143713     1.708406
-           median           uq          max neval
-     21677.244384 22085.122634 22493.000884     3
-       310.017627   316.998356   323.979084     3
-       254.749966   260.289775   265.829584     3
-       298.766527   302.547257   306.327986     3
-      1088.697670  1096.325411  1103.953153     3
-      4509.434504  4529.835087  4550.235671     3
-       365.891250   367.819033   369.746815     3
-       306.833879   312.631338   318.428798     3
-       688.454430   697.371494   706.288558     3
-       142.403178   143.920216   145.437254     3
-         1.255112     2.046453     2.837793     3
+                      stanford() 22139.242212 22152.340283 22517.753890
+     sentimentr_jockers_rinker()   286.929384   292.763839   295.314476
+            sentimentr_jockers()   239.117941   240.197508   246.063039
+              sentimentr_huliu()   293.119419   294.614649   298.738132
+          sentimentr_sentiword()  1087.748820  1092.871261  1095.652821
+             SentimentAnalysis()  4643.423640  4770.723681  4852.089888
+               syuzhet_jockers()   410.686032   410.938551   415.714891
+                  syuzhet_binn()   334.199013   336.042766   340.570365
+                   syuzhet_nrc()   718.691468   722.086472   736.270454
+                 syuzhet_afinn()   151.321654   162.658291   167.701548
+                         meanr()     1.166164     1.298945     1.895854
+           median         uq          max neval
+     22165.438354 22707.0097 23248.581104     3
+       298.598294   299.5070   300.415749     3
+       241.277076   249.5356   257.794099     3
+       296.109880   301.5475   306.985097     3
+      1097.993703  1099.6048  1101.215941     3
+      4898.023723  4956.4230  5014.822301     3
+       411.191070   418.2293   425.267572     3
+       337.886520   343.7560   349.625562     3
+       725.481476   745.0599   764.638417     3
+       173.994928   175.8915   177.788061     3
+         1.431727     2.2607     3.089672     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------
@@ -817,10 +817,12 @@ Comparing sentimentr, syuzhet, meanr, and Stanford
 The accuracy of an algorithm weighs heavily into the decision as to what
 approach to take in sentiment detection. I have selected
 algorithms/packages that stand out as fast and/or accurate to perform
-benchmarking on actual data. Both **syuzhet** and **sentimentr** provide
-multiple dictionaries with a general algorithm to compute sentiment
-scores. **syuzhet** provides 4 approaches while **sentimentr** provides
-2, but can be extended easily using the 4 dictionaries from the
+benchmarking on actual data. The **syuzhet** package provides multiple
+dictionaries with a general algorithm to compute sentiment scores.
+Likewise, **sentimentr** uses a general algorithm but uses the
+**lexicon** package's dictionaries. **syuzhet** provides 4 dictionaries
+while **sentimentr** uses **lexicon**'s 9 dictionaries and can be
+extended easily other dictionaries including the 4 dictionaries from the
 **syuzhet** package. **meanr** is a very fast algorithm. The follow
 visualization provides the accuracy of these approaches in comparison to
 Stanford's **Java** based implementation of sentiment detection. The

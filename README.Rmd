@@ -113,7 +113,7 @@ The core value in the cluster, the polarized word is acted upon by valence shift
 
 The adversative conjunctions (i.e., 'but', 'however', and 'although') also weight the context cluster.  An adversative conjunction before the polarized word ($w_{adversative\,conjunction}, ..., w_{i, j, k}^{p}$) up-weights the cluster by 1 + $z_2 * \{|w_{adversative\,conjunction}|, ..., w_{i, j, k}^{p}\}$ (.85 is the default weight ($z_2$) where $|w_{adversative\,conjunction}|$ are the number of adversative conjunctions before the polarized word).  An adversative conjunction after the polarized word down-weights the cluster by 1 + $\{w_{i, j, k}^{p}, ..., |w_{adversative\,conjunction}| * -1\} * z_2$.  This corresponds to the belief that an adversative conjunction makes the next clause of greater values while lowering the value placed on the prior clause.
 
-The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{i,j,l}$) are summed ($c'_{i,j}$) and divided by the square root of the word count (&radic;$w_{i,jn}$) yielding an unbounded polarity score ($\delta_{i,j}$) for each sentence.
+The researcher may provide a weight ($z$) to be utilized with amplifiers/de-amplifiers (default is $.8$; de-amplifier weight is constrained to $-1$ lower bound).  Last, these weighted context clusters ($c_{i,j,l}$) are summed ($c'_{i,j}$) and divided by the square root of the word count (&radic;$w_{i,jn}$) yielding an **unbounded polarity score** ($\delta_{i,j}$) for each sentence.
 
 
 $\delta$<sub>*i**j*</sub> = <em>c</em>'<sub>*i**j*</sub>/&radic;*w*<sub>*i**j**n*</sub>
