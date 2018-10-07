@@ -32,6 +32,8 @@ sentimentr 2.5.0 -
 
 * `profanity` added as a means to assess the use of profanity in text.
 
+* `extract_profanity_terms` added to extract profanity terms from text.
+
 **MINOR FEATURES**
 
 **IMPROVEMENTS**
