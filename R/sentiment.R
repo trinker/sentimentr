@@ -543,8 +543,13 @@ sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::
             adversative.weight = adversative.weight, missing_value = missing_value, 
             neutral.nonverb.like = neutral.nonverb.like, ...)
     
-    cbind(text.var, sent_out[, c('word_count',  'sentiment')])
-  
+    out <- cbind(text.var, sent_out[, c('word_count',  'sentiment')])
+
+    class(out) <- unique(c("sentiment", class(out)))
+    sentences <- new.env(FALSE)
+    sentences[["sentences"]] <- x
+    attributes(out)[["sentences"]] <- sentences
+    out[]      
 }
 
 replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}
