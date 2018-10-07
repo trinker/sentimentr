@@ -12,19 +12,20 @@
 #' the repeated cost of doing sentence boundary disambiguation every time
 #' \code{sentiment} is run.
 #' @param polarity_dt A \pkg{data.table} of positive/negative words and
-#' weights with x and y as column names.  The \pkg{lexicon} package has 4 
-#' dictionaries that can be used here: 
+#' weights with x and y as column names.  The \pkg{lexicon} package has several 
+#' dictionaries that can be used, including: 
 #' \itemize{
 #'   \item \code{lexicon::hash_sentiment_jockers_rinker}
 #'   \item \code{lexicon::hash_sentiment_jockers}
+#'   \item \code{lexicon::emojis_sentiment}
+#'   \item \code{lexicon::hash_sentiment_emojis}
 #'   \item \code{lexicon::hash_sentiment_huliu}
-#'   \item \code{lexicon::hash_sentiment_inquirer}
 #'   \item \code{lexicon::hash_sentiment_loughran_mcdonald}
 #'   \item \code{lexicon::hash_sentiment_nrc}
 #'   \item \code{lexicon::hash_sentiment_senticnet}
 #'   \item \code{lexicon::hash_sentiment_sentiword}
-#'   \item \code{lexicon::hash_sentiment_vadar}
-#'   \item \code{lexicon::hash_sentiment_emoji}
+#'   \item \code{lexicon::hash_sentiment_slangsd}
+#'   \item \code{lexicon::hash_sentiment_socal_google}
 #' }
 #' Additionally, the 
 #' \code{as_key} function can be used to make a sentiment frame suitable for

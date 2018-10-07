@@ -51,3 +51,18 @@ uncombine.sentiment_by <- function(x, ...){
     out
 }
 
+
+#' @export
+#' @method uncombine profanity_by
+uncombine.profanity_by <- function(x, ...){
+    out <- attributes(x)[["uncombine"]][["uncombine"]]
+
+    class(out) <- unique(c("profanity", class(out)))
+
+    attributes(x)
+
+    sentences <- new.env(FALSE)
+    sentences[["sentences"]] <- get_sentences(x)
+    attributes(out)[["sentences"]] <- sentences
+    out
+}

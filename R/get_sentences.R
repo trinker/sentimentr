@@ -93,5 +93,16 @@ get_sentences.sentiment_by <- function(x, ...) {
 
 
 
+#' @export
+#' @method get_sentences profanity
+get_sentences.profanity <- function(x, ...) {
+	  attributes(x)[["sentences"]][["sentences"]]
+}
 
+#' @export
+#' @method get_sentences profanity_by
+get_sentences.profanity_by <- function(x, ...) {
+	  y <- attributes(x)[["profanity"]][["profanity"]]
+	  attributes(y)[["sentences"]][["sentences"]]
+}
 

@@ -22,7 +22,15 @@ sentimentr 2.5.0 -
 
 **BUG FIXES**
 
+* `plot` returned an error for `sentiment` objects created by 
+  `sentiment.get_sentences.data.frame` due to the class assignments of the 
+  output ('sentiment' was not assigned as a class) and thus `plot.sentiment`
+  was not called.
+  
+
 **NEW FEATURES**
+
+* `profanity` added as a means to assess the use of profanity in text.
 
 **MINOR FEATURES**
 

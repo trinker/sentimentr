@@ -84,6 +84,8 @@ There are two main functions (top 2 in table below) in **sentimentr** with sever
 |------------------|-------------------------------------------------------|
 | `sentiment`      | Sentiment at the sentence level                       |
 | `sentiment_by`   | Aggregated sentiment by group(s)                      |
+| `profanity`      | Profanity at the sentence level                       |
+| `profanity_by`   | Aggregated profanity by group(s)                      |
 | `uncombine`      | Extract sentence level sentiment from  `sentiment_by` |
 | `get_sentences`  | Regex based string to sentence parser (or get sentences from `sentiment`/`sentiment_by`)|
 | `replace_emoji`           | repalcement | Replace emojis with word equivalent or unique identifier |
