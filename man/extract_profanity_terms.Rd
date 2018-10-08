@@ -4,8 +4,8 @@
 \alias{extract_profanity_terms}
 \title{Extract Profanity Words}
 \usage{
-extract_profanity_terms(text.var,
-  profanity_list = lexicon::profanity_alvarez, ...)
+extract_profanity_terms(text.var, profanity_list = lexicon::profanity_alvarez,
+  ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -19,6 +19,7 @@ the repeated cost of doing sentence boundary disambiguation every time
   \item \code{lexicon::profanity_alvarez}
   \item \code{lexicon::profanity_arr_bad}
   \item \code{lexicon::profanity_banned}
+  \item \code{lexicon::profanity_zac_anger}
 }}
 
 \item{\ldots}{Ignored.}

@@ -13,6 +13,7 @@
 #'   \item \code{lexicon::profanity_alvarez}
 #'   \item \code{lexicon::profanity_arr_bad}
 #'   \item \code{lexicon::profanity_banned}
+#'   \item \code{lexicon::profanity_zac_anger}
 #' }
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} with a columns of profane terms.

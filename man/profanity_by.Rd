@@ -88,7 +88,6 @@ prof_bel <- with(bt, profanity_by(text, by = list(source, belichick)))
 plot(prof_bel)
 }
 }
-\concept{profanity functions}
 \keyword{bad-words}
 \keyword{cursing,}
 \keyword{cussing,}

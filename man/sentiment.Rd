@@ -338,6 +338,5 @@ Halliday, M. A. K. & Hasan, R. (2013). Cohesion in English. New York, NY: Routle
 
 Other sentiment functions: \code{\link{sentiment_by}}
 }
-\concept{sentiment functions}
 \keyword{polarity}
 \keyword{sentiment,}
