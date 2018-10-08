@@ -358,3 +358,26 @@ log_loss <- function(a, p){
     mean(o)
 }
 
+
+
+fix_profanity_list <- function(x, warn = TRUE, ...){
+    if(!is.atomic(x)) stop('A `profanity_list` must be an atomic character vector.')
+    if(!is.character(x)) stop('A `profanity_list` must be a character vector.')  
+    if (any(grepl('[A-Z]', x), na.rm = TRUE)) {
+        if (warn) warning('Upper case characters found in `profanity_list`...\nConverting to lower', call. = FALSE)
+        x <- tolower(x)
+    }
+    if (anyNA(x)) {
+        if (warn) warning('missing values found in `profanity_list`...\nRemoving all `NA` values', call. = FALSE)
+        x <- x[!is.na(x)]
+    }    
+    if (anyDuplicate(x) > 0) {
+        if (warn) warning('duplicate values found in `profanity_list`...\nRemoving all duplicates', call. = FALSE)
+        x <- unique(x)
+    }   
+    x
+}
+
+
+
+
