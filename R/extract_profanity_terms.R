@@ -66,9 +66,12 @@ extract_profanity_terms.get_sentences_character <- function(text.var,
     hit <- profanity_count <- word_count <- NULL
     token <- word_coun <- NULL
 
+
+    ## Ensure profanity_list conforms to standards
+    profanity_list <- fix_profanity_list(profanity_list)
+        
     ## Add "~~" holder for any words `polarity_frame` & `valence_shifters_dt`
     ## that have spaces
-    profanity_list <- tolower(profanity_list)
     profanes <- data.table::data.table(token = profanity_list, profanity = TRUE)
     space_words <-  profanity_list[grep("\\s", profanity_list)]
 

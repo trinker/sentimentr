@@ -371,7 +371,7 @@ fix_profanity_list <- function(x, warn = TRUE, ...){
         if (warn) warning('missing values found in `profanity_list`...\nRemoving all `NA` values', call. = FALSE)
         x <- x[!is.na(x)]
     }    
-    if (anyDuplicate(x) > 0) {
+    if (anyDuplicated(x) > 0) {
         if (warn) warning('duplicate values found in `profanity_list`...\nRemoving all duplicates', call. = FALSE)
         x <- unique(x)
     }   

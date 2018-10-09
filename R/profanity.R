@@ -73,21 +73,26 @@ profanity <- function(text.var, profanity_list = lexicon::profanity_alvarez, ...
 profanity.get_sentences_character <- function(text.var, profanity_list = lexicon::profanity_alvarez, ...) {
 
 
+    ## Ensure profanity_list conforms to standards
+    profanity_list <- fix_profanity_list(profanity_list)
+    
     hit <- profanity_count <- word_count <- NULL
     
     token <- word_coun <- NULL
     lens <- lengths(text.var)
 
+    ## make table of elements, sentence id, and sentences
     element_map <- data.table::data.table(
         element_id = rep(seq_along(lens), lens),
         sentence_id = unlist(lapply(lens, seq_len)),
         token = unlist(text.var)
     )
 
-    profanity_list <- tolower(profanity_list)
+    ## Chack for spaces in the profanity list to ensure the tokenizer keeps them
     profanes <- data.table::data.table(token = profanity_list, hit = TRUE)
     space_words <-  profanity_list[grep("\\s", profanity_list)]
 
+    ## count words, tokenize
     tidied <- element_map[, list(token = tolower(unlist(token))), by = c('element_id', 'sentence_id')][,
         word_count := count_words(token)][,
         token := space_fill(token, space_words)][,
@@ -97,6 +102,7 @@ profanity.get_sentences_character <- function(text.var, profanity_list = lexicon
         list(token = stringi::stri_replace_all_regex(unlist(token), '~~', ' ')), 
             by =c('element_id', 'sentence_id', 'word_count')][]
 
+    ## merge to find the profane words and count them (profanity is % of words that are profane)
     out <- merge(tidied, profanes, all.x=TRUE)[, 
         hit := !is.na(hit)][,
         list(profanity_count = sum(hit)), 
