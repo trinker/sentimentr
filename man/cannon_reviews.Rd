@@ -20,6 +20,7 @@ than one opinion score and average of all scores is used.
   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
   number.  The review number.
   \item text. The text from the review.
+  \item number. The review number.
 }
 }
 \references{

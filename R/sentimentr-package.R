@@ -57,6 +57,7 @@ NULL
 #'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
 #'   number.  The review number.
 #'   \item text. The text from the review.
+#'   \item number. The review number.
 #' }
 #'
 #' @docType data
