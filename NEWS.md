@@ -27,7 +27,9 @@ sentimentr 2.5.0 -
   output ('sentiment' was not assigned as a class) and thus `plot.sentiment`
   was not called.
   
-
+* `combine_data contained a bug in which data sets with extra columns were not 
+  combined and resulted in an error (see #94).
+  
 **NEW FEATURES**
 
 * `profanity` added as a means to assess the use of profanity in text.

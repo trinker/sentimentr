@@ -23,6 +23,6 @@ combine_data <- function(data = c("course_evaluations",
         data.table::setcolorder(x, c("source", "sentiment", "text"))
     }, dats, data)
 
-    data.table::rbindlist(dats)
+    data.table::rbindlist(dats, fill = TRUE)
 }
 
