@@ -47,7 +47,7 @@ NULL
 #' Cannon G3 Camera Product Reviews From Amazon
 #'
 #' A dataset containing Amazon product reviews for the Cannon G3 Camera.  This
-#' data set was compiled by Hu and Liu (2004).  Where a sentence contains for
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
 #' than one opinion score and average of all scores is used.
 #'
 #' @details
