@@ -46,10 +46,10 @@ highlight(sent_dat)
 library(dplyr)
 library(magrittr)
 
-cannon_reviews \%>\%
-    filter(number \%in\% sample(unique(number), 3)) \%>\%
+hu_liu_cannon_reviews \%>\%
+    filter(review_id \%in\% sample(unique(review_id), 3)) \%>\%
     mutate(review = get_sentences(text)) \%$\%
-    sentiment_by(review, number) \%>\%
+    sentiment_by(review, review_id) \%>\%
     highlight()
 }
 }

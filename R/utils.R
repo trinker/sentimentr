@@ -113,6 +113,7 @@ count_words <- function(x){
 
 make_words <- function(x, hyphen = ""){
     if (hyphen != "") x <- gsub("-", hyphen, x)
+  
     lapply(stringi::stri_split_regex(gsub('([^[[:space:]]])([,;:][[:space:]])', '\\1 \\2', gsub("^\\s+|\\s+$", "", x)), "[[:space:]]+"), function(y) gsub('~{2,}', ' ', y))
 }
 

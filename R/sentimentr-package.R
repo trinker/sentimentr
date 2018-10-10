@@ -44,38 +44,7 @@ NULL
 
 
 
-#' Cannon G3 Camera Product Reviews From Amazon
-#'
-#' A dataset containing Amazon product reviews for the Cannon G3 Camera.  This
-#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
-#' than one opinion score and average of all scores is used.
-#'
-#' @details
-#' \itemize{
-#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
-#'   sentence.  Negative and positive reflects direction, a negative or positive
-#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
-#'   number.  The review number.
-#'   \item text. The text from the review.
-#'   \item number. The review number.
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name cannon_reviews
-#' @usage data(cannon_reviews)
-#' @format A data frame with 597 rows and 3 variables
-#' @references
-#' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
-#'    Proceedings of the ACM SIGKDD International Conference on
-#'    Knowledge Discovery & Data Mining (KDD-04).
-#'
-#' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
-#'    Reviews. Proceedings of Nineteeth National Conference on
-#'    Artificial Intelligence (AAAI-2004).
-#'
-#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
-NULL
+
 
 
 
@@ -380,3 +349,179 @@ NULL
 #' @references Cavender-Bares, K., (2013). Judge emotion about brands & products. \cr \cr
 #' \url{https://www.crowdflower.com/data-for-everyone}
 NULL 
+
+
+#' Apex AD2600 Progressive-scan DVD player Product Reviews From Amazon
+#' 
+#' A dataset containing Amazon product reviews for the Apex AD2600 Progressive-scan DVD player.  This
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
+#' than one opinion score and average of all scores is used.
+#' 
+#' @details
+#' \itemize{
+#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
+#'   sentence.  Negative and positive reflects direction, a negative or positive
+#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   number.  The review number.
+#'   \item text. The text from the review.
+#'   \item review_id. The review number.
+#' }
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name hu_liu_apex_reviews 
+#' @usage data(hu_liu_apex_reviews) 
+#' @format A data frame with 740 rows and 3 variables 
+#' @references 
+#' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
+#'    Proceedings of the ACM SIGKDD International Conference on
+#'    Knowledge Discovery & Data Mining (KDD-04).
+#'
+#' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
+#'    Reviews. Proceedings of Nineteeth National Conference on
+#'    Artificial Intelligence (AAAI-2004).
+#'
+#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+NULL
+
+
+
+
+#' Cannon G3 Camera Product Reviews From Amazon
+#'
+#' A dataset containing Amazon product reviews for the Cannon G3 Camera.  This
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
+#' than one opinion score and average of all scores is used.
+#'
+#' @details
+#' \itemize{
+#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
+#'   sentence.  Negative and positive reflects direction, a negative or positive
+#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   number.  The review number.
+#'   \item text. The text from the review.
+#'   \item review_id. The review number.
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name hu_liu_cannon_reviews
+#' @usage data(hu_liu_cannon_reviews)
+#' @format A data frame with 597 rows and 3 variables
+#' @references
+#' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
+#'    Proceedings of the ACM SIGKDD International Conference on
+#'    Knowledge Discovery & Data Mining (KDD-04).
+#'
+#' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
+#'    Reviews. Proceedings of Nineteeth National Conference on
+#'    Artificial Intelligence (AAAI-2004).
+#'
+#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+NULL
+
+
+
+
+#' Creative Labs Nomad Jukebox Zen Xtra 40GB Product Reviews From Amazon
+#' 
+#' A dataset containing Amazon product reviews for the Creative Labs Nomad Jukebox Zen Xtra 40GB.  This
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
+#' than one opinion score and average of all scores is used. 
+#' 
+#' @details
+#' \itemize{
+#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
+#'   sentence.  Negative and positive reflects direction, a negative or positive
+#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   number.  The review number.
+#'   \item text. The text from the review.
+#'   \item review_id. The review number.
+#' }
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name hu_liu_jukebox_reviews 
+#' @usage data(hu_liu_jukebox_reviews) 
+#' @format A data frame with 1716 rows and 3 variables 
+#' @references 
+#' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
+#'    Proceedings of the ACM SIGKDD International Conference on
+#'    Knowledge Discovery & Data Mining (KDD-04).
+#'
+#' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
+#'    Reviews. Proceedings of Nineteeth National Conference on
+#'    Artificial Intelligence (AAAI-2004).
+#'
+#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+NULL
+
+
+#' Nikon Coolpix 4300 Product Reviews From Amazon
+#' 
+#' A dataset containing Amazon product reviews for the Nikon Coolpix 4300.  This
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
+#' than one opinion score and average of all scores is used.
+#' 
+#' @details
+#' \itemize{
+#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
+#'   sentence.  Negative and positive reflects direction, a negative or positive
+#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   number.  The review number.
+#'   \item text. The text from the review.
+#'   \item review_id. The review number.
+#' }
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name hu_liu_nikon_reviews 
+#' @usage data(hu_liu_nikon_reviews) 
+#' @format A data frame with 346 rows and 3 variables 
+#' @references 
+#' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
+#'    Proceedings of the ACM SIGKDD International Conference on
+#'    Knowledge Discovery & Data Mining (KDD-04).
+#'
+#' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
+#'    Reviews. Proceedings of Nineteeth National Conference on
+#'    Artificial Intelligence (AAAI-2004).
+#'
+#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+NULL
+ 
+
+
+#' Nokia 6610 Product Reviews From Amazon
+#' 
+#' A dataset containing Amazon product reviews for the Nokia 6610.  This
+#' data set was compiled by Hu and Liu (2004).  Where a sentence contains more
+#' than one opinion score and average of all scores is used.
+#' 
+#' @details
+#' \itemize{
+#'   \item sentiment. Hu and Liu (2004)'s average opinion rating for a
+#'   sentence.  Negative and positive reflects direction, a negative or positive
+#'   sentiment.  Opinion strength varies between 3 (strongest), and 1 (weakest).
+#'   number.  The review number.
+#'   \item text. The text from the review.
+#'   \item review_id. The review number.
+#' }
+#' 
+#' @docType data 
+#' @keywords datasets 
+#' @name hu_liu_nokia_reviews 
+#' @usage data(hu_liu_nokia_reviews) 
+#' @format A data frame with 546 rows and 3 variables 
+#' @references 
+#' Minqing Hu and Bing Liu. (2004). Mining and summarizing customer reviews.
+#'    Proceedings of the ACM SIGKDD International Conference on
+#'    Knowledge Discovery & Data Mining (KDD-04).
+#'
+#' Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
+#'    Reviews. Proceedings of Nineteeth National Conference on
+#'    Artificial Intelligence (AAAI-2004).
+#'
+#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+NULL
+

@@ -36,11 +36,24 @@ sentimentr 2.5.0 -
 
 * `extract_profanity_terms` added to extract profanity terms from text.
 
+* The remaining four Hu & Liu data sets (see 
+  http://www.cs.uic.edu/~liub/FBS/CustomerReviewData.zip) have been added in 
+  addition to the Cannon reviews data set.  The family of sentiment tagged data
+  from Hu & Liu now includes: "hu_liu_apex_reviews", "hu_liu_cannon_reviews",
+  "hu_liu_jukebox_reviews", "hu_liu_nikon_reviews", & "hu_liu_nokia_reviews".
+
 **MINOR FEATURES**
 
 **IMPROVEMENTS**
 
 **CHANGES**
+
+* The `cannon_reviews` data set has been renamed to `hu_liu_cannon_reviews` to be
+  consistent with the other `hu_liu_` data sets that have been added.  This data
+  set is also now cleaner, excludes Hu & Liu's original categories that were some
+  times still visible.  Cleaning includes better capitalization and removal of 
+  spaces before punctuation to look less normalized.  Additionally, the `number`
+  column is now called `reviewer_id` to convey what the data actually is.
 
 
 sentimentr 2.4.0 - 2.4.2

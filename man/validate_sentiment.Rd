@@ -47,8 +47,8 @@ actual <- c(1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1,-1)
 predicted <- c(1, 0, 1, -1, 1, 0, -1, -1, -1, -1, 0, 1,-1)
 validate_sentiment(predicted, actual)
 
-scores <- cannon_reviews$sentiment
-mod <- sentiment_by(get_sentences(cannon_reviews$text))
+scores <- hu_liu_cannon_reviews$sentiment
+mod <- sentiment_by(get_sentences(hu_liu_cannon_reviews$text))
 
 validate_sentiment(mod$ave_sentiment, scores)
 validate_sentiment(mod, scores)

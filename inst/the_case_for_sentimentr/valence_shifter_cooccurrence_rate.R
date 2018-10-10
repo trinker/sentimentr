@@ -24,7 +24,7 @@ trump_tweets <- 'https://raw.githubusercontent.com/sashaperigo/Trump-Tweets/mast
 dylan <- textcorpus::dylan_songs$corpus$text
 
 attributes_rate <- list(
-    sentiment_attributes(cannon_reviews$review),
+    sentiment_attributes(hu_liu_cannon_reviews$review_id),
     sentiment_attributes(presidential_debates_2012$dialogue),
     sentiment_attributes(trump_speeches$content),
     sentiment_attributes(trump_tweets$Text),

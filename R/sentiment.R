@@ -275,7 +275,7 @@
 #' library(dplyr)
 #' library(magrittr)
 #' 
-#' cannon_reviews %>%
+#' hu_liu_cannon_reviews %>%
 #'    mutate(review_split = get_sentences(text)) %$%
 #'    sentiment(review_split)
 #' }
@@ -350,9 +350,10 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     #     buts <- paste0('(', paste(buts, collapse = '|'), ')')
     #     sent_dat[, sentences := gsub(buts, ', \\1', sentences, ignore.case = TRUE, perl = TRUE)][]
     # }
-
+# browser() 
     ## replace like when preposition
     if (neutral.nonverb.like && 'like' %in% polarity_dt[[1]]) {
+       
         sent_dat[, 'sentences' := stringi::stri_replace_all_regex(
                 sentences,
                 like_preverbs_regex,
@@ -361,7 +362,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
             )
         ][]
     }
-    
+# browser()    
     # space fill (~~), break into words    
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 

@@ -135,7 +135,7 @@
 #' library(dplyr)
 #' library(magrittr)
 #' 
-#' cannon_reviews %>%
+#' hu_liu_cannon_reviews %>%
 #'    mutate(review_split = get_sentences(text)) %$%
 #'    sentiment_by(review_split)
 #' }
