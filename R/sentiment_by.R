@@ -216,13 +216,12 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
     x <- make_class(unname(split(text.var[[attributes(text.var)[['text.var']]]], 
         unlist(text.var[['element_id']]))), "get_sentences", "get_sentences_character")
 
-	word_count <- ave_sentiment <- NULL
+	word_count <- ave_sentiment <- sentiment_sentimentr_package <- NULL
     out <- sentiment(text.var = x, ...)
     data.table::setnames(out, old = 'sentiment', new = 'sentiment_sentimentr_package')
     
     if (is.null(by)){
         by <- "element_id"
-
     }
     
     uncombined <- out2 <- cbind(text.var, out[, c('word_count', 'sentiment_sentimentr_package')])
