@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, textreadr, textshape)
+pacman::p_load(tidyverse, textreadr, textshape, data.table)
 
 dl_loc <- 'http://www.cs.uic.edu/~liub/FBS/CustomerReviewData.zip'  %>%
     download() %>%
@@ -45,7 +45,7 @@ hu_liu <- lapply(reviews[i], function(x){
     
     txt <- x %>%
         readLines() 
-    
+# browser()    
     # txt %>%
     # {grep('\\[t\\]', ., value = TRUE)}
 # browser()    
@@ -82,7 +82,8 @@ hu_liu <- lapply(reviews[i], function(x){
             sentiment = ifelse(is.na(sentiment), 0, sentiment)/3
         ) %>%
         ungroup() %>%
-        select(sentiment, text, review_id) 
+        select(sentiment, text, review_id) %>%
+        data.table::as.data.table()
         
 }) %>%
     setNames(paste0('hu_liu_', c('apex', 'cannon', 'jukebox', 'nikon', 'nokia'), '_reviews')[i] )

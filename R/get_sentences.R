@@ -40,7 +40,7 @@ get_sentences.character <- function(x, ...) {
 get_sentences.data.frame <- function(x, ...) {
     
     dots <- list(...)
-    
+
     ## detect text variable
     if (is.null(dots[['text.var.name']])) {
         

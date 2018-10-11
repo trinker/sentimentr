@@ -30,6 +30,11 @@ sentimentr 2.5.0 -
 * `combine_data contained a bug in which data sets with extra columns were not 
   combined and resulted in an error (see #94).
   
+* If a dataset was passed to `get_sentences()` that had a column named 
+  `sentiment` was then passed to `sentiment_by()` the `sentiment` from the 
+  original data set was returned as `ave_sentiment` not the **sentimentr** 
+  computed value.
+  
 **NEW FEATURES**
 
 * `profanity` added as a means to assess the use of profanity in text.

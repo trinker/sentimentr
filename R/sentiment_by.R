@@ -215,23 +215,25 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
 
     x <- make_class(unname(split(text.var[[attributes(text.var)[['text.var']]]], 
         unlist(text.var[['element_id']]))), "get_sentences", "get_sentences_character")
-    
+
 	word_count <- ave_sentiment <- NULL
     out <- sentiment(text.var = x, ...)
-
+    data.table::setnames(out, old = 'sentiment', new = 'sentiment_sentimentr_package')
+    
     if (is.null(by)){
         by <- "element_id"
 
     }
     
-    uncombined <- out2 <- cbind(text.var, out[, c('word_count', 'sentiment')])
+    uncombined <- out2 <- cbind(text.var, out[, c('word_count', 'sentiment_sentimentr_package')])
 
     out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
-        'sd' = stats::sd(sentiment, na.rm = TRUE),
-        'ave_sentiment' = averaging.function(sentiment)), keyby = by]
+        'sd' = stats::sd(sentiment_sentimentr_package, na.rm = TRUE),
+        'ave_sentiment' = averaging.function(sentiment_sentimentr_package)), keyby = by]
     
     class(out2) <- unique(c("sentiment_by", class(out)))
     sentiment <- new.env(FALSE)
+    data.table::setnames(out, new = 'sentiment', old = 'sentiment_sentimentr_package')
     sentiment[["sentiment"]] <- out
     attributes(out2)[["sentiment"]] <- sentiment
     attributes(out2)[["groups"]] <- by
@@ -239,6 +241,7 @@ sentiment_by.get_sentences_data_frame <- function(text.var, by = NULL,
     attributes(attributes(out2)[["sentiment"]][["sentiment"]])[['sentences']][['sentences']] <- x
 
     uncombine <- new.env(FALSE)
+    data.table::setnames(uncombined, new = 'sentiment', old = 'sentiment_sentimentr_package')     
     uncombine[["uncombine"]] <- uncombined
     attributes(out2)[["uncombine"]] <- uncombine
     out2
