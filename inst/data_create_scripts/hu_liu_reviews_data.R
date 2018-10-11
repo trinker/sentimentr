@@ -63,7 +63,7 @@ hu_liu <- lapply(reviews[i], function(x){
             text = trimws(gsub('^[^#]*##', '', text)) %>%
                 {gsub('\\bi\\b', 'I', ., perl = TRUE)} %>%
                 {gsub('(^.)', '\\U\\1', ., perl = TRUE)} %>%
-                {gsub('(\\s+)([.?!;,:])', '\\2', ., perl = TRUE)} %>%
+                {gsub('(\\s+)([.?!;,:]|n\'t|\'[a-z])', '\\2', ., perl = TRUE)} %>%
                 {gsub('(\\s+)(\'s\\b)', '\\2', ., perl = TRUE)}
         ) %>%
         filter(!grepl('^\\s*$', text)) %>%
