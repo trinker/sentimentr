@@ -4,17 +4,11 @@
 \name{reexports}
 \alias{reexports}
 \alias{replace_grade}
-\alias{reexports}
 \alias{replace_rating}
-\alias{reexports}
 \alias{replace_emoticon}
-\alias{reexports}
 \alias{replace_emoji}
-\alias{reexports}
 \alias{replace_emoji_identifier}
-\alias{reexports}
 \alias{replace_internet_slang}
-\alias{reexports}
 \alias{replace_word_elongation}
 \title{Objects exported from other packages}
 \keyword{internal}

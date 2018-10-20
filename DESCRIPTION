@@ -14,6 +14,6 @@ Imports: data.table, ggplot2, graphics, grid, lexicon (>= 1.0.0), methods,
 License: MIT + file LICENSE
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.0.9000
 URL: http://github.com/trinker/sentimentr
 BugReports: http://github.com/trinker/sentimentr/issues

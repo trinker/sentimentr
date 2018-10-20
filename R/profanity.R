@@ -18,6 +18,7 @@
 #'   \item \code{lexicon::profanity_arr_bad}
 #'   \item \code{lexicon::profanity_banned}
 #'   \item \code{lexicon::profanity_zac_anger}
+#'   \item \code{lexicon::profanity_racist}
 #' }
 #' @param \ldots ignored.
 #' @return Returns a \pkg{data.table} of:

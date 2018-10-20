@@ -4,8 +4,8 @@
 \alias{extract_profanity_terms}
 \title{Extract Profanity Words}
 \usage{
-extract_profanity_terms(text.var, profanity_list = lexicon::profanity_alvarez,
-  ...)
+extract_profanity_terms(text.var,
+  profanity_list = lexicon::profanity_alvarez, ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or

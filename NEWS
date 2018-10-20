@@ -17,7 +17,7 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
-sentimentr 2.5.0 - 
+sentimentr 2.5.0 - 2.6.1
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -27,11 +27,11 @@ BUG FIXES
   output ('sentiment' was not assigned as a class) and thus `plot.sentiment`
   was not called.
   
-* `combine_data contained a bug in which data sets with extra columns were not 
+* `combine_data` contained a bug in which data sets with extra columns were not 
   combined and resulted in an error (see #94).
   
 * If a dataset was passed to `get_sentences()` that had a column named 
-  `sentiment` was then passed to `sentiment_by()` the `sentiment` from the 
+  `sentiment` and was then passed to `sentiment_by()`, the `sentiment` from the 
   original data set was returned as `ave_sentiment` not the **sentimentr** 
   computed value.
   
@@ -46,10 +46,7 @@ NEW FEATURES
   addition to the Cannon reviews data set.  The family of sentiment tagged data
   from Hu & Liu now includes: "hu_liu_apex_reviews", "hu_liu_cannon_reviews",
   "hu_liu_jukebox_reviews", "hu_liu_nikon_reviews", & "hu_liu_nokia_reviews".
-
-MINOR FEATURES
-
-IMPROVEMENTS
+  
 
 CHANGES
 

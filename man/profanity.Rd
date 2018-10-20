@@ -19,6 +19,7 @@ the repeated cost of doing sentence boundary disambiguation every time
   \item \code{lexicon::profanity_arr_bad}
   \item \code{lexicon::profanity_banned}
   \item \code{lexicon::profanity_zac_anger}
+  \item \code{lexicon::profanity_racist}
 }}
 
 \item{\ldots}{ignored.}
@@ -71,6 +72,7 @@ sum(brady_swears$profanity > 0)
 hist(brady_swears$profanity[brady_swears$profanity > 0])
 }
 }
+\concept{polarity functions}
 \keyword{bad-words}
 \keyword{cursing,}
 \keyword{cussing,}
