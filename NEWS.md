@@ -17,6 +17,27 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bumps the patch
 
 
+
+sentimentr 2.7.0 - 
+----------------------------------------------------------------
+
+
+**BUG FIXES**
+
+**NEW FEATURES**
+
+**MINOR FEATURES**
+
+**IMPROVEMENTS**
+
+* The default profanity list in `profanity` was no lower cased or unique which
+  resulted in a warning everytime it was run.  This list is now passed as
+  `unique(tolower(lexicon::profanity_alvarez))` to avoid the warnings.
+
+**CHANGES**
+
+
+
 sentimentr 2.5.0 - 2.6.1
 ----------------------------------------------------------------
 

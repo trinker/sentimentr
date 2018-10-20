@@ -30,6 +30,10 @@ MINOR FEATURES
 
 IMPROVEMENTS
 
+* The default profanity list in `profanity` was no lower cased or unique which
+  resulted in a warning everytime it was run.  This list is now passed as
+  `unique(tolower(lexicon::profanity_alvarez))` to avoid the warnings.
+
 CHANGES
 
 

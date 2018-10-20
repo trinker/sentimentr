@@ -4,7 +4,9 @@
 \alias{profanity}
 \title{Compute Profanity Rate}
 \usage{
-profanity(text.var, profanity_list = lexicon::profanity_alvarez, ...)
+profanity(text.var,
+  profanity_list = unique(tolower(unique(tolower(lexicon::profanity_alvarez)))),
+  ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -15,7 +17,7 @@ the repeated cost of doing sentence boundary disambiguation every time
 \item{profanity_list}{A atomic character vector of profane words.  The 
 \pkg{lexicon} package has lists that can be used, including: 
 \itemize{
-  \item \code{lexicon::profanity_alvarez}
+  \item \code{unique(tolower(lexicon::profanity_alvarez))}
   \item \code{lexicon::profanity_arr_bad}
   \item \code{lexicon::profanity_banned}
   \item \code{lexicon::profanity_zac_anger}
@@ -44,7 +46,7 @@ the \code{word_count} column.
 }
 \examples{
 \dontrun{
-bw <- sample(lexicon::profanity_alvarez, 4)
+bw <- sample(unique(tolower(lexicon::profanity_alvarez)), 4)
 mytext <- c(
    sprintf('do you like this \%s?  It is \%s. But I hate really bad dogs', bw[1], bw[2]),
    'I am the best friend.',
@@ -67,9 +69,34 @@ plot(profanity(mytext2))
 brady <- get_sentences(crowdflower_deflategate)
 brady_swears <- profanity(brady)
 brady_swears
+
+## Distribution of profanity proportion for all comments
 hist(brady_swears$profanity)
 sum(brady_swears$profanity > 0)
+
+## Distribution of proportions for those profane comments
 hist(brady_swears$profanity[brady_swears$profanity > 0])
+
+combo <- combine_data()
+combo_sentences <- get_sentences(crowdflower_deflategate)
+racist <- profanity(combo_sentences, profanity_list = lexicon::profanity_racist)
+combo_sentences[racist$profanity > 0, ]$text
+extract_profanity_terms(
+    combo_sentences[racist$profanity > 0, ]$text, 
+    profanity_list = lexicon::profanity_racist
+)
+
+## Remove jerry, que, and illegal from the list
+library(textclean)
+
+racist2 <- profanity(
+    combo_sentences, 
+    profanity_list = textclean::drop_element_fixed(
+        lexicon::profanity_racist, 
+        c('jerry', 'illegal', 'que')
+    )
+)
+combo_sentences[racist2$profanity > 0, ]$text
 }
 }
 \concept{polarity functions}
