@@ -24,3 +24,6 @@ env:
    global:
      - DISPLAY=:99.0
      - BOOTSTRAP_LATEX=1
+     - NOT_CRAN=true
+     - secure: "nhzZdgVEOmRO/pCpkb6vBgTbLU2igXmb5gbX+QWaV5YzDT5pqMnT+AtE5/+GMH7QxfFE1SKeA/r2w8XomNMpDvhIIpedwHpGywRGK3rtav2u108oQ73m2k2D3AQZ/YTAx7xPgVwCMveUqZ3xDyGkt220J3Hwfkpe341B2xQH0JQ="
+ 
