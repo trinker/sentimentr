@@ -21,8 +21,20 @@
 #' amplifiers [intensifiers] (2), de-amplifiers [downtoners] (3) and adversative 
 #' conjunctions (4) with x and y as column names.  For this purpose only 
 #' negators is required/used.
-#' @param un.as.negation
-#' @param un.as.negation.warn
+#' @param un.as.negation logical.  If \code{TRUE} then emotion words prefixed
+#' with an 'un-' are treated as a negation.  For example,\code{"unhappy"} would 
+#' be treated as \code{"not happy"}.  If an emotion word has an unversion in the
+#' \code{emotion_dt} then no substitution is performed and an optional warning
+#' will be given. 
+#' @param un.as.negation.warn logical.  If \code{TRUE} and if 
+#' \code{un.as.negation} id \code{TRUE}, then a warning will be given if the 
+#' -un version of an emotion term is already found within the \code{emotion_dt}.
+#' Note that the default \code{emotion_dt}, \code{lexicon::hash_nrc_emotions}, 
+#' will not give a warning unless it is explicitly set to do so.  There are
+#' a number of emotion words in \code{lexicon::hash_nrc_emotions} that contain
+#' un- prefixed versions already in the dictionary. Use:
+#' \code{emotion(text.var, un.as.negation.warn = TRUE)} to see these un- prefixed
+#' emotion words that are contained within \code{lexicon::hash_nrc_emotions}.
 #' @param n.before The number of words to consider as negated before
 #' the emotion word.  To consider the entire beginning portion of a sentence
 #' use \code{n.before = Inf}.  Note that a comma, colon, or semicolon acts as a 
@@ -36,11 +48,11 @@
 #' @param \ldots ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
-#'   \item  element_id - The id number of the original vector passed to \code{emotion}
-#'   \item  sentence_id - The id number of the sentences within each \code{element_id}
-#'   \item  word_count - Word count
-#'   \item  emotion_type - Type designation from the \code{emotion} column of the \code{emotion_dt} table
-#'   \item  emotion_count - Count of the number of emotion words of that \code{emotion_type}
+#'   \item element_id - The id number of the original vector passed to \code{emotion}
+#'   \item sentence_id - The id number of the sentences within each \code{element_id}
+#'   \item word_count - Word count
+#'   \item emotion_type - Type designation from the \code{emotion} column of the \code{emotion_dt} table
+#'   \item emotion_count - Count of the number of emotion words of that \code{emotion_type}
 #'   \item emotion - A score of the percentage of emotion words of that \code{emotion_type}
 #' }
 #' @keywords emotion, cursing, vulgarity, cussing, bad-words
@@ -49,13 +61,14 @@
 #' @importFrom data.table :=
 #' @examples
 #' text.var <- c(
+#'     "I am not afraid of you",
+#'     NA,
+#'     "",
 #'     "I love it [not really]", 
 #'     "I'm not angry with you", 
 #'     "I hate it when you lie to me.  It's so humiliating",
 #'     "I'm not happpy anymore.  It's time to end it",
 #'     "She's a darn good friend to me",
-#'     NA,
-#'     "", 
 #'     "I went to the terrible store",
 #'     "There is hate and love in each of us",
 #'     "I'm no longer angry!  I'm really experiencing peace but not true joy.",
@@ -125,12 +138,12 @@ emotion.get_sentences_character <- function(text.var,
         element_id = rep(seq_along(lens), lens),
         sentence_id = unlist(lapply(lens, seq_len)),
         token = unlist(text.var)
-    )
+    )[, list(token = tolower(unlist(token))), by = c('element_id', 'sentence_id')][,
+        word_count := count_words(token)]
 
     ## Chack for spaces in the emotion list to ensure the tokenizer keeps them
     space_words <-  emotion_dt[['token']][grep("\\s", emotion_dt[['token']])]
 
-    
     ## Convert un prefix to not
     if (isTRUE(un.as.negation)){
         
@@ -155,8 +168,7 @@ emotion.get_sentences_character <- function(text.var,
     }
     
     ## count words, tokenize
-    tidied <- element_map[, list(token = tolower(unlist(token))), by = c('element_id', 'sentence_id')][,
-        word_count := count_words(token)][,
+    tidied <- element_map[,
         token := space_fill(token, space_words)][,
         token := stringi::stri_replace_all_regex(
                 stringi::stri_replace_all_regex(
