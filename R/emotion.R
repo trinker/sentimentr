@@ -33,7 +33,7 @@
 #' will not give a warning unless it is explicitly set to do so.  There are
 #' a number of emotion words in \code{lexicon::hash_nrc_emotions} that contain
 #' un- prefixed versions already in the dictionary. Use:
-#' \code{emotion(text.var, un.as.negation.warn = TRUE)} to see these un- prefixed
+#' \code{emotion('', un.as.negation.warn = TRUE)} to see these un- prefixed
 #' emotion words that are contained within \code{lexicon::hash_nrc_emotions}.
 #' @param n.before The number of words to consider as negated before
 #' the emotion word.  To consider the entire beginning portion of a sentence
@@ -151,7 +151,7 @@ emotion.get_sentences_character <- function(text.var,
         tokens <- unique(emotion_dt[['token']])
         uns <- paste0('un', tokens) 
         keeps <- tokens[tokens %in% uns]
-        
+       
         if (length(keeps) > 0 && un.as.negation.warn) {
             warning(
                 paste0(
@@ -163,10 +163,10 @@ emotion.get_sentences_character <- function(text.var,
         }
         
         regex <- paste0('\\b(un)(', paste(keeps, collapse = '|'), ')\\b')
-        text.var <- stringi::stri_replace_all_regex(unlist(text.var), regex, 'not $2')
+        element_map <- element_map[, token := stringi::stri_replace_all_regex(token, regex, 'not $2')][]
         
     }
-    
+  
     ## count words, tokenize
     tidied <- element_map[,
         token := space_fill(token, space_words)][,
@@ -174,17 +174,18 @@ emotion.get_sentences_character <- function(text.var,
                 stringi::stri_replace_all_regex(
                     stringi::stri_replace_all_regex(token, '[!.;:?]$', ''), 
                     '[^a-zA-z;:,\']', ' '), 
-                '[;:,]\\s+', ' [;:,] ')][,
-        token := stringi::stri_split_regex(token, '\\s+')][,
+                '[;:,]\\s+', ' [;:,] ')]
+
+
+    tidied[['token']] <- as.list(stringi::stri_split_regex(tidied[['token']], '\\s+'))
+    
+    tidied <- tidied[,
             list(token = stringi::stri_replace_all_regex(unlist(token), '~~', ' ')), 
                 by =c('element_id', 'sentence_id', 'word_count')][, 
             emo_loc := seq_len(.N), by=c('element_id', 'sentence_id')][, 
             comma_loc := emo_loc][, 
             negator_loc := emo_loc][]
 
-    
-
-    
     data.table::setkey(tidied, 'token')
 
     ## merge to find the profane words and count them (emotion is n of words that are emotional)
@@ -203,36 +204,51 @@ emotion.get_sentences_character <- function(text.var,
     ## grab only rows
     emo_dat <- out[is_emo == TRUE,]
     #non_emo_dat <- out[is_emo != TRUE,]
-    
-    valence_shifters_dt <- valence_shifters_dt[y == 1,]
-    emo_dat[['is_negator']] <- valence_shifters_dt[emo_dat[['token']]][['y']] %in% '1'
 
-    
-    emo_dat <- emo_dat[, negator_loc := ifelse(is_negator, negator_loc, NA)][, 
-        list(
-            #emotion = list(rm_na(emotion)),  
-            emo_loc = list(rm_na(unique(emo_loc))),            
-            comma_loc = list(rm_na(unique(comma_loc)))  ,
-            negator_loc = list(rm_na(unique(negator_loc)))   
-        ), by = c('element_id', 'sentence_id')][
-            !is.na(negator_loc),
-        ][, 
-            list(emo_loc = unlist(emo_loc), comma_loc, negator_loc), by = c('element_id', 'sentence_id')][, 
-            is_negated := negated_emotion(emo_loc, comma_loc, negator_loc, n.before, n.after)][,
-            c('element_id', 'sentence_id',  'emo_loc', 'is_negated')][]
+    if (nrow(emo_dat) > 0){
+        
+        valence_shifters_dt <- valence_shifters_dt[y == 1,]
+        emo_dat[['is_negator']] <- valence_shifters_dt[emo_dat[['token']]][['y']] %in% '1'
 
-     out <- merge(
-         out[,c('element_id', 'sentence_id', 'word_count', 'emotion', 'emo_loc')],
-         emo_dat, 
-         all.x=TRUE, 
-         by = c('element_id', 'sentence_id', 'emo_loc')
-     )[, 
-        emotion := ifelse(is_negated %in% TRUE, paste0(emotion, '_negated'), emotion)][,
-             c('element_id', 'sentence_id', 'word_count', 'emotion')][, 
-        hit := !is.na(emotion)][,
-        list(emotion_count = sum(hit)), 
-            by = c('element_id', 'sentence_id', 'word_count', 'emotion')][]
-     
+ # browser()
+        if (sum(emo_dat[['is_negator']]) > 0) {
+            emo_dat <- emo_dat[, negator_loc := ifelse(is_negator, negator_loc, NA)][, 
+                list(
+                    #emotion = list(rm_na(emotion)),  
+                    emo_loc = list(rm_na(unique(emo_loc))),            
+                    comma_loc = list(rm_na(unique(comma_loc)))  ,
+                    negator_loc = list(rm_na(unique(negator_loc)))   
+                ), by = c('element_id', 'sentence_id')][
+                    !is.na(negator_loc),
+                ][, 
+                    list(emo_loc = unlist(emo_loc), comma_loc, negator_loc), by = c('element_id', 'sentence_id')][, 
+                    is_negated := negated_emotion(emo_loc, comma_loc, negator_loc, n.before, n.after)][,
+                    c('element_id', 'sentence_id',  'emo_loc', 'is_negated')][]
+        
+        } else {
+            emo_dat <- emo_dat[,c('element_id', 'sentence_id', 'emo_loc')][, is_negated := FALSE][]
+        }
+
+        out <- merge(
+            out[,c('element_id', 'sentence_id', 'word_count', 'emotion', 'emo_loc')],
+            emo_dat, 
+            all.x=TRUE, 
+            by = c('element_id', 'sentence_id', 'emo_loc'),
+            allow.cartesian = TRUE
+        )[, 
+            emotion := ifelse(is_negated %in% TRUE, paste0(emotion, '_negated'), emotion)][,
+                 c('element_id', 'sentence_id', 'word_count', 'emotion')][, 
+            hit := !is.na(emotion)][,
+            list(emotion_count = sum(hit)), 
+                by = c('element_id', 'sentence_id', 'word_count', 'emotion')][]
+            
+
+ 
+    } else {
+        out <- out[,c('element_id', 'sentence_id', 'word_count', 'emotion')][,
+            emotion_count := 0][]
+    }
+
     ##-------------------------------------END----------------------------------
 
     ## Spread wide to fill in missing cells with zero; fill in missing columns
@@ -369,7 +385,15 @@ emotion.character <- function(text.var,
     split_warn(text.var, 'emotion', ...)
     
     sents <- get_sentences(text.var)
-    emotion(text.var = sents, emotion_dt = emotion_dt, ...)
+    emotion(
+        text.var = sents, emotion_dt = emotion_dt, 
+        valence_shifters_dt = valence_shifters_dt, 
+        un.as.negation = un.as.negation, 
+        un.as.negation.warn = un.as.negation.warn, 
+        n.before = n.before, 
+        n.after = n.after,
+        ...
+    )
   
 }
 
@@ -385,7 +409,15 @@ emotion.get_sentences_data_frame <- function(text.var,
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 
-    sent_out <- emotion(text.var = x, emotion_dt = emotion_dt, ...)
+    sent_out <- emotion(
+        text.var = x, emotion_dt = emotion_dt, 
+        valence_shifters_dt = valence_shifters_dt, 
+        un.as.negation = un.as.negation, 
+        un.as.negation.warn = un.as.negation.warn, 
+        n.before = n.before, 
+        n.after = n.after,
+        ...
+    )
     
     out <- cbind(text.var, sent_out[, c('word_count',  'emotion_type', 'emotion_count', 'emotion')])
 
