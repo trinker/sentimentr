@@ -102,9 +102,8 @@ profanity.get_sentences_character <- function(text.var, profanity_list = unique(
     ## Ensure profanity_list conforms to standards
     profanity_list <- fix_profanity_list(profanity_list)
     
-    hit <- profanity_count <- word_count <- NULL
+    token <- hit <- profanity_count <- word_count <- NULL
     
-    token <- word_coun <- NULL
     lens <- lengths(text.var)
 
     ## make table of elements, sentence id, and sentences
