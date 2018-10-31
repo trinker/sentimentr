@@ -1,6 +1,6 @@
 #' Profanity Rate By Groups
 #'
-#' Approximate the profanity (polarity) of text by grouping variable(s).  For a
+#' Approximate the profanity of text by grouping variable(s).  For a
 #' full description of the profanity detection algorithm see 
 #' \code{\link[sentimentr]{profanity}}.  See \code{\link[sentimentr]{profanity}}
 #' for more details about the algorithm, the profanity/valence shifter keys
@@ -123,7 +123,7 @@ profanity_by.get_sentences_character <- function(text.var, by = NULL, group.name
 
         uncombined <- out2 <- cbind(group_dat, out)
 
-        out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),
+        out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
               'profanity_count' = sum(profanity_count, na.rm = TRUE),
         	  'sd' = stats::sd(profanity, na.rm = TRUE)), keyby = G][, 
               ave_profanity := replace_infinite(profanity_count/word_count)][]
@@ -421,7 +421,8 @@ plot.profanity_by <- function(x, ordered = TRUE, ...){
             colour = "red", shape=18, size=4) +
         ggplot2::ylab("Profanity Rate") +
         ggplot2::xlab("Groups") +
-        ggplot2::coord_flip()
+        ggplot2::coord_flip() +
+        ggplot2::scale_y_continuous(labels = function(x) paste0(round(x*100, digits = 0), '%'))
 
 }
 

@@ -30,7 +30,7 @@
 #'   \item profanity - A score of the percentage of profane words
 #' }
 #' @keywords profanity, cursing, vulgarity, cussing, bad-words
-#' @family polarity functions
+#' @family profanity functions
 #' @export
 #' @importFrom data.table :=
 #' @examples

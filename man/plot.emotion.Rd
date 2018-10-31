@@ -17,8 +17,10 @@ scores.}
 \item{drop.unused.emotions}{logical.  If \code{TRUE} unused/unfound emotion
 levels will not be included in the output.}
 
-\item{facet}{logical.  If \code{TRUE} the plot will be facetted by Emotion 
-Type, otherwise all types will be plotted in the same window.}
+\item{facet}{logical or one of \code{c('emotion', 'negated')}.  If \code{TRUE} 
+or \code{'emotion'} the plot will be facetted by Emotion Type.  If \code{FALSE} 
+all types will be plotted in the same window.  If \code{"negated"} the emotions
+will be in the same plot window but broken out by negated or non-negated types.}
 
 \item{\ldots}{Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.}
 }

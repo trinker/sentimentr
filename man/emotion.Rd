@@ -2,7 +2,7 @@
 % Please edit documentation in R/emotion.R
 \name{emotion}
 \alias{emotion}
-\title{Compute Profanity Rate}
+\title{Compute Emotion Rate}
 \usage{
 emotion(text.var, emotion_dt = lexicon::hash_nrc_emotions,
   valence_shifters_dt = lexicon::hash_valence_shifters,
@@ -74,14 +74,14 @@ Returns a \pkg{data.table} of:
 }
 \description{
 Detect the rate of emotion at the sentence level.  This method uses a simple
-dictionary lookup to find profane words and then compute the rate per sentence.
+dictionary lookup to find emotion words and then compute the rate per sentence.
 The \code{emotion} score ranges between 0 (no emotion used) and 1 (all
-words used were profane).  Note that a single profane phrase would count as 
+words used were emotional).  Note that a single emotion phrase would count as 
 just one in the \code{emotion_count} column but would count as two words in
 the \code{word_count} column.
 }
 \examples{
-text.var <- c(
+mytext <- c(
     "I am not afraid of you",
     NA,
     "",
@@ -109,12 +109,21 @@ text.var <- c(
     
 )
 
-split_text <- get_sentences(text.var)
+## works on a character vector but not the preferred method avoiding the 
+## repeated cost of doing sentence boundary disambiguation every time 
+## `emotion` is run
+emotion(mytext)
+
+## preferred method avoiding paying the cost 
+split_text <- get_sentences(mytext)
 (emo <- emotion(split_text))
 emotion(split_text, drop.unused.emotions = TRUE)
 
+\dontrun{
 plot(emo)
 plot(emo, drop.unused.emotions = FALSE)
+plot(emo, facet = FALSE)
+plot(emo, facet = 'negated')
 
 library(data.table)
 fear <- emo[
@@ -123,16 +132,22 @@ fear <- emo[
     
 fear[emotion > 0,]
 
-\dontrun{
 brady <- get_sentences(crowdflower_deflategate)
 brady_emotion <- emotion(brady)
 brady_emotion
 }
 }
-\seealso{
-Other polarity functions: \code{\link{profanity}}
+\references{
+Plutchik, R. (1962). The emotions: Facts and theories, and a new 
+model. Random House studies in psychology. Random House.\cr\cr
+Plutchik, R. (2001). The nature of emotions: Human emotions have deep 
+evolutionary roots, a fact that may explain their complexity and provide tools 
+for clinical practice. American Scientist , 89 (4), 344-350.
 }
-\concept{polarity functions}
+\seealso{
+Other emotion functions: \code{\link{emotion_by}}
+}
+\concept{emotion functions}
 \keyword{bad-words}
 \keyword{cursing,}
 \keyword{cussing,}

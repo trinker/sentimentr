@@ -209,6 +209,14 @@ with several helper functions summarized in the table below:
 <td>Aggregated profanity by group(s)</td>
 </tr>
 <tr class="odd">
+<td><code>emotion</code></td>
+<td>Emotion at the sentence level</td>
+</tr>
+<tr class="even">
+<td><code>emotion_by</code></td>
+<td>Aggregated emotion by group(s)</td>
+</tr>
+<tr class="odd">
 <td><code>uncombine</code></td>
 <td>Extract sentence level sentiment from <code>sentiment_by</code></td>
 </tr>
@@ -795,29 +803,29 @@ memory error.
 
     Unit: milliseconds
                             expr          min           lq         mean
-                      stanford() 21129.635308 21135.106698 21204.353022
-     sentimentr_jockers_rinker()   294.493716   297.499142   299.550797
-            sentimentr_jockers()   225.074270   238.143897   244.637194
-              sentimentr_huliu()   257.327010   276.066878   283.798253
-          sentimentr_sentiword()  1062.815890  1086.208225  1097.019078
-             SentimentAnalysis()  4592.922110  4611.353225  4643.200851
-               syuzhet_jockers()   423.456780   427.140223   430.693237
-                  syuzhet_binn()   305.993705   306.470733   329.838264
-                   syuzhet_nrc()   699.505268   700.699656   707.431075
-                 syuzhet_afinn()   133.837260   134.549488   145.267687
-                         meanr()     1.374423     1.416973     1.832849
-           median           uq        max neval
-     21140.578088 21241.711879 21342.8457     3
-       300.504568   302.079338   303.6541     3
-       251.213524   254.418656   257.6238     3
-       294.806746   297.033875   299.2610     3
-      1109.600559  1114.120672  1118.6408     3
-      4629.784340  4668.340221  4706.8961     3
-       430.823667   434.311466   437.7993     3
-       306.947761   341.760544   376.5733     3
-       701.894044   711.393979   720.8939     3
-       135.261716   150.982901   166.7041     3
-         1.459523     2.062061     2.6646     3
+                      stanford() 20225.158418 20609.912899 23748.607689
+     sentimentr_jockers_rinker()   283.271569   283.391307   285.273047
+            sentimentr_jockers()   224.436569   228.487136   235.022980
+              sentimentr_huliu()   255.438460   260.156352   261.994973
+          sentimentr_sentiword()  1048.496476  1060.058681  1064.804513
+             SentimentAnalysis()  4267.380620  4335.857740  4369.068442
+               syuzhet_jockers()   342.764273   346.408800   349.115379
+                  syuzhet_binn()   258.453721   267.449255   271.441450
+                   syuzhet_nrc()   642.814135   648.150176   653.361347
+                 syuzhet_afinn()   118.191289   120.576642   122.294740
+                         meanr()     1.172578     1.317333     1.795786
+           median          uq          max neval
+     20994.667381 25510.33232 30025.997269     3
+       283.511045   286.27379   289.036528     3
+       232.537703   240.31619   248.094669     3
+       264.874245   265.27323   265.672214     3
+      1071.620886  1072.95853  1074.296176     3
+      4404.334860  4419.91235  4435.489845     3
+       350.053327   352.29093   354.528537     3
+       276.444790   277.93532   279.425840     3
+       653.486217   658.63495   663.783689     3
+       122.961995   124.34647   125.730937     3
+         1.462088     2.10739     2.752692     3
 
 Comparing sentimentr, syuzhet, meanr, and Stanford
 --------------------------------------------------

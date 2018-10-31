@@ -32,7 +32,7 @@ Returns a \pkg{data.table} with grouping variables plus:
 }
 }
 \description{
-Approximate the profanity (polarity) of text by grouping variable(s).  For a
+Approximate the profanity of text by grouping variable(s).  For a
 full description of the profanity detection algorithm see 
 \code{\link[sentimentr]{profanity}}.  See \code{\link[sentimentr]{profanity}}
 for more details about the algorithm, the profanity/valence shifter keys
@@ -87,6 +87,9 @@ prof_bel <- with(bt, profanity_by(text, by = list(source, belichick)))
 
 plot(prof_bel)
 }
+}
+\seealso{
+Other profanity functions: \code{\link{profanity}}
 }
 \concept{profanity functions}
 \keyword{bad-words}

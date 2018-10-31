@@ -106,3 +106,20 @@ get_sentences.profanity_by <- function(x, ...) {
 	  attributes(y)[["sentences"]][["sentences"]]
 }
 
+
+
+
+#' @export
+#' @method get_sentences emotion
+get_sentences.emotion <- function(x, ...) {
+	  attributes(x)[["sentences"]][["sentences"]]
+}
+
+#' @export
+#' @method get_sentences emotion_by
+get_sentences.emotion_by <- function(x, ...) {
+	  y <- attributes(x)[["emotion"]][["emotion"]]
+	  attributes(y)[["sentences"]][["sentences"]]
+}
+
+

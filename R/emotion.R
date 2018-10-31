@@ -1,9 +1,9 @@
-#' Compute Profanity Rate
+#' Compute Emotion Rate
 #' 
 #' Detect the rate of emotion at the sentence level.  This method uses a simple
-#' dictionary lookup to find profane words and then compute the rate per sentence.
+#' dictionary lookup to find emotion words and then compute the rate per sentence.
 #' The \code{emotion} score ranges between 0 (no emotion used) and 1 (all
-#' words used were profane).  Note that a single profane phrase would count as 
+#' words used were emotional).  Note that a single emotion phrase would count as 
 #' just one in the \code{emotion_count} column but would count as two words in
 #' the \code{word_count} column.
 #' 
@@ -58,11 +58,16 @@
 #'   \item emotion - A score of the percentage of emotion words of that \code{emotion_type}
 #' }
 #' @keywords emotion, cursing, vulgarity, cussing, bad-words
-#' @family polarity functions
+#' @family emotion functions
 #' @export
+#' @references Plutchik, R. (1962). The emotions: Facts and theories, and a new 
+#' model. Random House studies in psychology. Random House.\cr\cr
+#' Plutchik, R. (2001). The nature of emotions: Human emotions have deep 
+#' evolutionary roots, a fact that may explain their complexity and provide tools 
+#' for clinical practice. American Scientist , 89 (4), 344-350. 
 #' @importFrom data.table :=
 #' @examples
-#' text.var <- c(
+#' mytext <- c(
 #'     "I am not afraid of you",
 #'     NA,
 #'     "",
@@ -90,12 +95,21 @@
 #'     
 #' )
 #' 
-#' split_text <- get_sentences(text.var)
+#' ## works on a character vector but not the preferred method avoiding the 
+#' ## repeated cost of doing sentence boundary disambiguation every time 
+#' ## `emotion` is run
+#' emotion(mytext)
+#' 
+#' ## preferred method avoiding paying the cost 
+#' split_text <- get_sentences(mytext)
 #' (emo <- emotion(split_text))
 #' emotion(split_text, drop.unused.emotions = TRUE)
 #' 
+#' \dontrun{
 #' plot(emo)
 #' plot(emo, drop.unused.emotions = FALSE)
+#' plot(emo, facet = FALSE)
+#' plot(emo, facet = 'negated')
 #' 
 #' library(data.table)
 #' fear <- emo[
@@ -104,7 +118,6 @@
 #'     
 #' fear[emotion > 0,]
 #' 
-#' \dontrun{
 #' brady <- get_sentences(crowdflower_deflategate)
 #' brady_emotion <- emotion(brady)
 #' brady_emotion
@@ -194,7 +207,7 @@ emotion.get_sentences_character <- function(text.var,
 
     data.table::setkey(tidied, 'token')
 
-    ## merge to find the profane words and count them (emotion is n of words that are emotional)
+    ## merge to find the emotion words and count them (emotion is n of words that are emotional)
     out <- merge(tidied, emotion_dt, all.x=TRUE, allow.cartesian=TRUE)[, 
             emo_loc := ifelse(is.na(emotion), NA, emo_loc)][, 
             comma_loc := ifelse(token == '[;:,]', comma_loc, NA)][, 
@@ -273,7 +286,7 @@ emotion.get_sentences_character <- function(text.var,
     possible_cols <- sort(possible_cols)
     
     missed_columns <- possible_cols[! possible_cols %in% colnames(out)]
-    
+# browser()
     if (length(missed_columns) > 0 && !drop.unused.emotions){
         missed <- as.data.frame(lapply(missed_columns, function(x) rep(0L, nrow(out))))
         colnames(missed) <- missed_columns
@@ -449,8 +462,10 @@ emotion.get_sentences_data_frame <- function(text.var,
 #' scores.
 #' @param drop.unused.emotions  logical.  If \code{TRUE} unused/unfound emotion
 #' levels will not be included in the output.
-#' @param facet logical.  If \code{TRUE} the plot will be facetted by Emotion 
-#' Type, otherwise all types will be plotted in the same window.
+#' @param facet logical or one of \code{c('emotion', 'negated')}.  If \code{TRUE} 
+#' or \code{'emotion'} the plot will be facetted by Emotion Type.  If \code{FALSE} 
+#' all types will be plotted in the same window.  If \code{"negated"} the emotions
+#' will be in the same plot window but broken out by negated or non-negated types.
 #' @param \ldots Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.
 #' @details Utilizes Matthew Jocker's \pkg{syuzhet} package to calculate smoothed
 #' emotion across the duration of the text.
@@ -462,7 +477,7 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
     drop.unused.emotions = TRUE, facet = TRUE, ...){
 
     
-    emotion_type <- NULL
+    Negated <- Emotion <- emotion_type <- NULL
     
     atts <- attributes(x)
     
@@ -470,12 +485,12 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
         x <- x[!emotion_type %in% atts[['zero_emotion_type']],]        
     }
 
-
+    
     x <- droplevels(x)
     
     m <- lapply(split(x[['emotion']], x[['emotion_type']]), function(y){
 
-        if (length(y) < 100) {
+        if (length(y) < 100 && isTRUE(all.equal(syuzhet::get_dct_transform, transformation.function))) {
             y <- stats::approx(x = seq_along(y), y = y, n = 100)[['y']]
         }
         
@@ -488,21 +503,31 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
     })
     
     dat <- textshape::tidy_list(m, 'Emotion')
-    
+
+    if (facet == 'negated'){
+        dat <- data.table::as.data.table(dat)[, 
+            Negated := ifelse(grepl('_negated', Emotion, fixed = TRUE), 'Negated Emotion', 'Emotion')][, 
+            Emotion := gsub('_negated', '', Emotion, fixed = TRUE)][]
+    }
 
     out <- ggplot2::ggplot(dat, ggplot2::aes_string('Duration', 'Emotional_Valence')) +
         ggplot2::geom_path(size=1, ggplot2::aes_string(color= 'Emotion')) +
         ggplot2::theme_bw() +
         ggplot2::theme(plot.margin = grid::unit(c(5.1, 15.1, 4.1, 2.1), "pt")) +
-        ggplot2::ylab("Profanity Propensity") +
+        ggplot2::ylab("Emotional Propensity") +
         ggplot2::theme(panel.grid = ggplot2::element_blank()) +
         ggplot2::scale_x_continuous(label=function(x) paste0(x, "%"),
             expand = c(0,0), limits = c(0,100)) 
     
-    if (facet){
+    if (isTRUE(facet) | facet == 'emotion'){
         out <- out +
             ggplot2::facet_wrap(.~Emotion) +
             ggplot2::theme(legend.position = 'none')
+    }
+
+    if (facet == 'negated'){
+        out <- out +
+            ggplot2::facet_wrap(.~Negated, ncol = 1) 
     }
     
     out

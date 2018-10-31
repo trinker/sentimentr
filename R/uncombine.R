@@ -43,8 +43,6 @@ uncombine.sentiment_by <- function(x, ...){
 
     class(out) <- unique(c("sentiment", class(out)))
 
-    attributes(x)
-
     sentences <- new.env(FALSE)
     sentences[["sentences"]] <- get_sentences(x)
     attributes(out)[["sentences"]] <- sentences
@@ -59,10 +57,24 @@ uncombine.profanity_by <- function(x, ...){
 
     class(out) <- unique(c("profanity", class(out)))
 
-    attributes(x)
+    sentences <- new.env(FALSE)
+    sentences[["sentences"]] <- get_sentences(x)
+    attributes(out)[["sentences"]] <- sentences
+    out
+}
+
+
+#' @export
+#' @method uncombine emotion_by
+uncombine.emotion_by <- function(x, ...){
+    out <- attributes(x)[["uncombine"]][["uncombine"]]
+
+    class(out) <- unique(c("emotion", class(out)))
 
     sentences <- new.env(FALSE)
     sentences[["sentences"]] <- get_sentences(x)
     attributes(out)[["sentences"]] <- sentences
     out
 }
+
+

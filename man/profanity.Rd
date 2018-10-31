@@ -100,9 +100,9 @@ combo_sentences[racist2$profanity > 0, ]$text
 }
 }
 \seealso{
-Other polarity functions: \code{\link{emotion}}
+Other profanity functions: \code{\link{profanity_by}}
 }
-\concept{polarity functions}
+\concept{profanity functions}
 \keyword{bad-words}
 \keyword{cursing,}
 \keyword{cussing,}
