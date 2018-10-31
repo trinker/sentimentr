@@ -21,9 +21,11 @@
 #' amplifiers [intensifiers] (2), de-amplifiers [downtoners] (3) and adversative 
 #' conjunctions (4) with x and y as column names.  For this purpose only 
 #' negators is required/used.
+#' @param drop.unused.emotions logical.  If \code{TRUE} unused/unfound emotion
+#' levels will not be included in the output.
 #' @param un.as.negation logical.  If \code{TRUE} then emotion words prefixed
 #' with an 'un-' are treated as a negation.  For example,\code{"unhappy"} would 
-#' be treated as \code{"not happy"}.  If an emotion word has an unversion in the
+#' be treated as \code{"not happy"}.  If an emotion word has an un- version in the
 #' \code{emotion_dt} then no substitution is performed and an optional warning
 #' will be given. 
 #' @param un.as.negation.warn logical.  If \code{TRUE} and if 
@@ -89,7 +91,11 @@
 #' )
 #' 
 #' split_text <- get_sentences(text.var)
-#' emo <- emotion(split_text)
+#' (emo <- emotion(split_text))
+#' emotion(split_text, drop.unused.emotions = TRUE)
+#' 
+#' plot(emo)
+#' plot(emo, drop.unused.emotions = FALSE)
 #' 
 #' library(data.table)
 #' fear <- emo[
@@ -106,7 +112,7 @@
 emotion <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
     valence_shifters_dt = lexicon::hash_valence_shifters, 
-    un.as.negation = TRUE,
+    drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
     n.before = 5, n.after = 2, ...) {
     
@@ -121,7 +127,7 @@ emotion <- function(text.var,
 emotion.get_sentences_character <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
     valence_shifters_dt = lexicon::hash_valence_shifters, 
-    un.as.negation = TRUE,
+    drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
     n.before = 5, n.after = 2, ...) {
     
@@ -268,7 +274,7 @@ emotion.get_sentences_character <- function(text.var,
     
     missed_columns <- possible_cols[! possible_cols %in% colnames(out)]
     
-    if (length(missed_columns) > 0){
+    if (length(missed_columns) > 0 && !drop.unused.emotions){
         missed <- as.data.frame(lapply(missed_columns, function(x) rep(0L, nrow(out))))
         colnames(missed) <- missed_columns
         out <- data.table::data.table(out, missed)
@@ -378,7 +384,7 @@ negated_emotion <- function(emoloc, commaloc, negatorloc, leftwindow, rightwindo
 emotion.character <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
     valence_shifters_dt = lexicon::hash_valence_shifters, 
-    un.as.negation = TRUE,
+    drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
     n.before = 5, n.after = 2, ...) {
 
@@ -388,6 +394,7 @@ emotion.character <- function(text.var,
     emotion(
         text.var = sents, emotion_dt = emotion_dt, 
         valence_shifters_dt = valence_shifters_dt, 
+        drop.unused.emotions = drop.unused.emotions,
         un.as.negation = un.as.negation, 
         un.as.negation.warn = un.as.negation.warn, 
         n.before = n.before, 
@@ -403,7 +410,7 @@ emotion.character <- function(text.var,
 emotion.get_sentences_data_frame <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
     valence_shifters_dt = lexicon::hash_valence_shifters, 
-    un.as.negation = TRUE,
+    drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
     n.before = 5, n.after = 2, ...) {
  
@@ -412,6 +419,7 @@ emotion.get_sentences_data_frame <- function(text.var,
     sent_out <- emotion(
         text.var = x, emotion_dt = emotion_dt, 
         valence_shifters_dt = valence_shifters_dt, 
+        drop.unused.emotions = drop.unused.emotions, 
         un.as.negation = un.as.negation, 
         un.as.negation.warn = un.as.negation.warn, 
         n.before = n.before, 
@@ -432,36 +440,70 @@ emotion.get_sentences_data_frame <- function(text.var,
 
 
 
-#' #' Plots a emotion object
-#' #'
-#' #' Plots a emotion object.
-#' #'
-#' #' @param x The emotion object.
-#' #' @param transformation.function A transformation function to smooth the emotion
-#' #' scores.
-#' #' @param \ldots Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.
-#' #' @details Utilizes Matthew Jocker's \pkg{syuzhet} package to calculate smoothed
-#' #' emotion across the duration of the text.
-#' #' @return Returns a \pkg{ggplot2} object.
-#' #' @method plot emotion
-#' #' @importFrom syuzhet get_dct_transform
-#' #' @export
-#' plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform, ...){
-#' 
-#'     m <- transformation.function(stats::na.omit(x[["emotion"]]), ...)
-#' 
-#'     dat <- data.frame(
-#'         Emotional_Valence = m,
-#'         Duration = seq_along(m)
-#'     )
-#' 
-#'     ggplot2::ggplot(dat, ggplot2::aes_string('Duration', 'Emotional_Valence')) +
-#'         ggplot2::geom_path(size=1, color="blue") +
-#'         ggplot2::theme_bw() +
-#'         ggplot2::theme(plot.margin = grid::unit(c(5.1, 15.1, 4.1, 2.1), "pt")) +
-#'         ggplot2::ylab("Profanity Propensity") +
-#'         ggplot2::theme(panel.grid = ggplot2::element_blank()) +
-#'         ggplot2::scale_x_continuous(label=function(x) paste0(x, "%"),
-#'             expand = c(0,0), limits = c(0,100))
-#' 
-#' }
+#' Plots a emotion object
+#'
+#' Plots a emotion object.
+#'
+#' @param x The emotion object.
+#' @param transformation.function A transformation function to smooth the emotion
+#' scores.
+#' @param drop.unused.emotions  logical.  If \code{TRUE} unused/unfound emotion
+#' levels will not be included in the output.
+#' @param facet logical.  If \code{TRUE} the plot will be facetted by Emotion 
+#' Type, otherwise all types will be plotted in the same window.
+#' @param \ldots Other arguments passed to \code{\link[syuzhet]{get_transformed_values}}.
+#' @details Utilizes Matthew Jocker's \pkg{syuzhet} package to calculate smoothed
+#' emotion across the duration of the text.
+#' @return Returns a \pkg{ggplot2} object.
+#' @method plot emotion
+#' @importFrom syuzhet get_dct_transform
+#' @export
+plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform, 
+    drop.unused.emotions = TRUE, facet = TRUE, ...){
+
+    atts <- attributes(x)
+    
+    if (isTRUE(drop.unused.emotions)){
+        x <- x[!emotion_type %in% atts[['zero_emotion_type']],]        
+    }
+
+
+    x <- droplevels(x)
+    
+    m <- lapply(split(x[['emotion']], x[['emotion_type']]), function(y){
+
+        if (length(y) < 100) {
+            y <- approx(x = seq_along(y), y = y, n=100)[['y']]
+        }
+        
+        trans <- transformation.function(stats::na.omit(y), ...)
+        
+        trans 
+        
+        data.frame(
+            Emotional_Valence = trans,
+            Duration = seq_along(trans)
+        )
+    })
+    
+    dat <- textshape::tidy_list(m, 'Emotion')
+    
+
+    out <- ggplot2::ggplot(dat, ggplot2::aes_string('Duration', 'Emotional_Valence')) +
+        ggplot2::geom_path(size=1, ggplot2::aes(color= Emotion)) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(plot.margin = grid::unit(c(5.1, 15.1, 4.1, 2.1), "pt")) +
+        ggplot2::ylab("Profanity Propensity") +
+        ggplot2::theme(panel.grid = ggplot2::element_blank()) +
+        ggplot2::scale_x_continuous(label=function(x) paste0(x, "%"),
+            expand = c(0,0), limits = c(0,100)) 
+    
+    if (facet){
+        out <- out +
+            facet_wrap(.~Emotion) +
+            theme(legend.position = 'none')
+    }
+    
+    out
+
+}

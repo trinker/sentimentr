@@ -99,6 +99,9 @@ racist2 <- profanity(
 combo_sentences[racist2$profanity > 0, ]$text
 }
 }
+\seealso{
+Other polarity functions: \code{\link{emotion}}
+}
 \concept{polarity functions}
 \keyword{bad-words}
 \keyword{cursing,}
