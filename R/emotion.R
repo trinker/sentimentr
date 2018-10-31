@@ -132,7 +132,7 @@ emotion.get_sentences_character <- function(text.var,
     n.before = 5, n.after = 2, ...) {
     
     
-    emotion <- token <- hit <- word_count <- NULL
+    emotion <- emo_loc <- comma_loc <- negator_loc <- is_emo <- y <- is_negator <- is_negated <- emotion_count <- token <- hit <- word_count <- NULL
     
     ## Ensure emotion_dt conforms to standards
     is_emotion(emotion_dt)
@@ -461,6 +461,9 @@ emotion.get_sentences_data_frame <- function(text.var,
 plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform, 
     drop.unused.emotions = TRUE, facet = TRUE, ...){
 
+    
+    emotion_type <- NULL
+    
     atts <- attributes(x)
     
     if (isTRUE(drop.unused.emotions)){
@@ -473,12 +476,10 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
     m <- lapply(split(x[['emotion']], x[['emotion_type']]), function(y){
 
         if (length(y) < 100) {
-            y <- approx(x = seq_along(y), y = y, n=100)[['y']]
+            y <- stats::approx(x = seq_along(y), y = y, n = 100)[['y']]
         }
         
         trans <- transformation.function(stats::na.omit(y), ...)
-        
-        trans 
         
         data.frame(
             Emotional_Valence = trans,
@@ -490,7 +491,7 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
     
 
     out <- ggplot2::ggplot(dat, ggplot2::aes_string('Duration', 'Emotional_Valence')) +
-        ggplot2::geom_path(size=1, ggplot2::aes(color= Emotion)) +
+        ggplot2::geom_path(size=1, ggplot2::aes_string(color= 'Emotion')) +
         ggplot2::theme_bw() +
         ggplot2::theme(plot.margin = grid::unit(c(5.1, 15.1, 4.1, 2.1), "pt")) +
         ggplot2::ylab("Profanity Propensity") +
@@ -500,8 +501,8 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
     
     if (facet){
         out <- out +
-            facet_wrap(.~Emotion) +
-            theme(legend.position = 'none')
+            ggplot2::facet_wrap(.~Emotion) +
+            ggplot2::theme(legend.position = 'none')
     }
     
     out
