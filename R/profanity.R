@@ -87,7 +87,7 @@
 #' )
 #' combo_sentences[racist2$profanity > 0, ]$text
 #' }
-profanity <- function(text.var, profanity_list = unique(tolower(unique(tolower(lexicon::profanity_alvarez)))), ...) {
+profanity <- function(text.var, profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...) {
     
     UseMethod('profanity')
     

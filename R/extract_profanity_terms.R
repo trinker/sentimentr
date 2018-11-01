@@ -23,7 +23,7 @@
 #' \dontrun{
 #' bw <- sample(lexicon::profanity_alvarez, 4)
 #' mytext <- c(
-#'    sprintf('do you like this %s?  It is %s. But I hate really bad dogs', bw[1], bw[2]),
+#'    sprintf('do you %s like this %s?  It is %s. But I hate really bad dogs', bw[1], bw[2], bw[3]),
 #'    'I am the best friend.',
 #'    NA,
 #'    sprintf('I %s hate this %s', bw[3], bw[4]),
@@ -51,7 +51,8 @@
 #' attributes(extract_profanity_terms(brady))$counts
 #' attributes(extract_profanity_terms(brady))$elements
 #' }
-extract_profanity_terms  <- function(text.var, profanity_list = lexicon::profanity_alvarez,
+extract_profanity_terms  <- function(text.var, 
+    profanity_list = unique(tolower(lexicon::profanity_alvarez)),
     ...){
 
     UseMethod('extract_profanity_terms')   
@@ -60,11 +61,10 @@ extract_profanity_terms  <- function(text.var, profanity_list = lexicon::profani
 #' @export
 #' @method extract_profanity_terms get_sentences_character
 extract_profanity_terms.get_sentences_character <- function(text.var, 
-    profanity_list = lexicon::profanity_alvarez, ...){
+    profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...){
 
     sentences <- sentence <- sentence_id <- n <- words <- N <- . <- NULL
-    hit <- profanity_count <- word_count <- NULL
-    token <- word_coun <- NULL
+    token <- hit <- profanity_count <- word_count <- NULL
 
 
     ## Ensure profanity_list conforms to standards
@@ -145,7 +145,7 @@ extract_profanity_terms.get_sentences_character <- function(text.var,
 #' @export
 #' @method extract_profanity_terms get_sentences_data_frame
 extract_profanity_terms.get_sentences_data_frame  <- function(text.var, 
-    profanity_list = lexicon::profanity_alvarez, ...){
+    profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...){
     
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], 
         "get_sentences", "get_sentences_character")
@@ -158,7 +158,7 @@ extract_profanity_terms.get_sentences_data_frame  <- function(text.var,
 #' @export
 #' @method extract_profanity_terms character
 extract_profanity_terms.character  <- function(text.var, 
-    profanity_list = lexicon::profanity_alvarez, ...){
+    profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...){
 
     split_warn(text.var, 'extract_profanity', ...)
 

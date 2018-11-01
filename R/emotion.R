@@ -145,7 +145,8 @@ emotion.get_sentences_character <- function(text.var,
     n.before = 5, n.after = 2, ...) {
     
     
-    emotion <- emo_loc <- comma_loc <- negator_loc <- is_emo <- y <- is_negator <- is_negated <- emotion_count <- token <- hit <- word_count <- NULL
+    emotion <- emo_loc <- comma_loc <- negator_loc <- is_emo <- y <- NULL
+    is_negator <- is_negated <- emotion_count <- token <- hit <- word_count <- NULL
     
     ## Ensure emotion_dt conforms to standards
     is_emotion(emotion_dt)
@@ -192,7 +193,7 @@ emotion.get_sentences_character <- function(text.var,
         token := stringi::stri_replace_all_regex(
                 stringi::stri_replace_all_regex(
                     stringi::stri_replace_all_regex(token, '[!.;:?]$', ''), 
-                    '[^a-zA-z;:,\']', ' '), 
+                    '[^a-zA-Z;:,\']', ' '), 
                 '[;:,]\\s+', ' [;:,] ')]
 
 

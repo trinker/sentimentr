@@ -5,8 +5,7 @@
 \title{Compute Profanity Rate}
 \usage{
 profanity(text.var,
-  profanity_list = unique(tolower(unique(tolower(lexicon::profanity_alvarez)))),
-  ...)
+  profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or

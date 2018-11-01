@@ -5,7 +5,7 @@
 \title{Extract Profanity Words}
 \usage{
 extract_profanity_terms(text.var,
-  profanity_list = lexicon::profanity_alvarez, ...)
+  profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -34,7 +34,7 @@ Extract the profanity words from a text.
 \dontrun{
 bw <- sample(lexicon::profanity_alvarez, 4)
 mytext <- c(
-   sprintf('do you like this \%s?  It is \%s. But I hate really bad dogs', bw[1], bw[2]),
+   sprintf('do you \%s like this \%s?  It is \%s. But I hate really bad dogs', bw[1], bw[2], bw[3]),
    'I am the best friend.',
    NA,
    sprintf('I \%s hate this \%s', bw[3], bw[4]),
