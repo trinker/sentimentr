@@ -230,7 +230,6 @@ emotion.get_sentences_character <- function(text.var,
         valence_shifters_dt <- valence_shifters_dt[y == 1,]
         emo_dat[['is_negator']] <- valence_shifters_dt[emo_dat[['token']]][['y']] %in% '1'
 
- # browser()
         if (sum(emo_dat[['is_negator']]) > 0) {
             emo_dat <- emo_dat[, negator_loc := ifelse(is_negator, negator_loc, NA)][, 
                 list(

@@ -151,7 +151,7 @@ emotion_by.get_sentences_character <- function(text.var, by = NULL, group.names,
         group_dat <- group_dat[out[["element_id"]], ]
 
         uncombined <- out2 <- cbind(group_dat, out)
-# browser()
+
         out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
               'emotion_count' = sum(emotion_count, na.rm = TRUE),
         	  'sd' = stats::sd(emotion, na.rm = TRUE)), keyby = c(G, 'emotion_type')][, 
@@ -177,17 +177,23 @@ emotion_by.get_sentences_character <- function(text.var, by = NULL, group.names,
 #' @method emotion_by get_sentences_data_frame    
 emotion_by.get_sentences_data_frame <- function(text.var, by = NULL, group.names, ...){
 
+    emotion_sentimentr2 <- emotion_count_sentimentr2 <- NULL
+    
     x <- make_class(unname(split(text.var[[attributes(text.var)[['text.var']]]], 
         unlist(text.var[['element_id']]))), "get_sentences", "get_sentences_character")
     
     word_count <- ave_emotion <- emotion_count <- NULL
     out <- emotion(text.var = x, ...)
-
+    data.table::setnames(out, c('emotion_type', 'emotion_count', 'emotion'), 
+        c('emotion_type_sentimentr2', 'emotion_count_sentimentr2', 'emotion_sentimentr2'))
+    
     if (is.null(by)){
         by <- "element_id"
 
     }
-## right here the other vars are not given    
+    
+## right here the other vars are not given 
+
     uncombined <- out2 <- merge(
         text.var, 
         out,
@@ -197,11 +203,21 @@ emotion_by.get_sentences_data_frame <- function(text.var, by = NULL, group.names
     )
 
     out2 <- out2[, list('word_count' = sum(word_count, na.rm = TRUE),
-        'emotion_count' = sum(emotion_count, na.rm = TRUE),
-        'sd' = stats::sd(emotion, na.rm = TRUE)), keyby = c(by, 'emotion_type')][, 
-        ave_emotion := replace_infinite(emotion_count/word_count)][]
+        'emotion_count_sentimentr2' = sum(emotion_count_sentimentr2, na.rm = TRUE),
+        'sd' = stats::sd(emotion_sentimentr2, na.rm = TRUE)), keyby = c(by, 'emotion_type_sentimentr2')][, 
+        ave_emotion := replace_infinite(emotion_count_sentimentr2/word_count)][]
 
+    data.table::setnames(out, 
+        c('emotion_type_sentimentr2', 'emotion_count_sentimentr2', 'emotion_sentimentr2'),
+        c('emotion_type', 'emotion_count', 'emotion')
+    )
     
+    data.table::setnames(out2, 
+        c('emotion_type_sentimentr2', 'emotion_count_sentimentr2'),
+        c('emotion_type', 'emotion_count')
+    )
+    
+        
     class(out2) <- unique(c("emotion_by", class(out)))
     emotion <- new.env(FALSE)
     emotion[["emotion"]] <- out
@@ -227,7 +243,7 @@ emotion_by.character <- function(text.var, by = NULL, group.names, ...){
     
     emotion_count <- word_count <- ave_emotion <- NULL
     out <- suppressWarnings(emotion(text.var = text.var, ...))
-# browser()
+
     if (is.null(by)){
 
         out2 <- out[, list('word_count' = sum(word_count, na.rm = TRUE),

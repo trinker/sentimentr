@@ -26,13 +26,19 @@ BUG FIXES
 
 NEW FEATURES
 
+* `emotion` added as a means to assess the use of emotion in text.
+
+* `extract_emotion_terms` added to extract emotion terms from text.
+
+
 MINOR FEATURES
 
 IMPROVEMENTS
 
-* The default profanity list in `profanity` was no lower cased or unique which
-  resulted in a warning everytime it was run.  This list is now passed as
-  `unique(tolower(lexicon::profanity_alvarez))` to avoid the warnings.
+* The default profanity list in `profanity` & `extract_profanity_terms was not 
+  lower cased or unique which resulted in a warning every time it was run.  This 
+  list is now passed as `unique(tolower(lexicon::profanity_alvarez))` to avoid 
+  the warnings.
 
 CHANGES
 
