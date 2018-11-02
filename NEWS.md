@@ -24,6 +24,10 @@ sentimentr 2.7.0 -
 
 **BUG FIXES**
 
+* The `plot` method for `sentiment` and `profanity` failed for n &lt; 100 observations.
+  Interpolation via `stats::approx` provides a means to fill in the gaps in cases
+  of n &lt; 100.
+
 **NEW FEATURES**
 
 * `emotion` added as a means to assess the use of emotion in text.

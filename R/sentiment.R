@@ -572,7 +572,15 @@ replace_na <- function(x, y = 0) {x[is.na(x)] <- y; x}
 #' @export
 plot.sentiment <- function(x, transformation.function = syuzhet::get_dct_transform, ...){
 
-    m <- transformation.function(stats::na.omit(x[["sentiment"]]), ...)
+    x <- stats::na.omit(x[["sentiment"]])
+    
+    if (length(x) < 3) stop('Output contains less than 3 observations.  Cannot plot n < 3', call. = FALSE)
+    
+    if (length(x) < 100 && isTRUE(all.equal(syuzhet::get_dct_transform, transformation.function))) {
+        x <- stats::approx(x = seq_along(x), y = x, n = 100)[['y']]
+    }    
+    
+    m <- transformation.function(x, ...)
 
     dat <- data.frame(
         Emotional_Valence = m,

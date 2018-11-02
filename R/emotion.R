@@ -490,11 +490,15 @@ plot.emotion <- function(x, transformation.function = syuzhet::get_dct_transform
     
     m <- lapply(split(x[['emotion']], x[['emotion_type']]), function(y){
 
+        y <- rm_na(y)
+        
+        if (length(y) < 3) stop('Output contains less than 3 observations.  Cannot plot n < 3', call. = FALSE)
+        
         if (length(y) < 100 && isTRUE(all.equal(syuzhet::get_dct_transform, transformation.function))) {
             y <- stats::approx(x = seq_along(y), y = y, n = 100)[['y']]
         }
         
-        trans <- transformation.function(stats::na.omit(y), ...)
+        trans <- transformation.function(y, ...)
         
         data.frame(
             Emotional_Valence = trans,
