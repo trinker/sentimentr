@@ -358,8 +358,6 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     if(any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
         stop('`polarity_dt` & `valence_shifters_dt` not mutually exclusive')
     }
-	
-	if(neutral.nonverb.like) text.var <- run_preprocess(text.var)
 
     ## Add "~~" holder for any words `polarity_frame` & `valence_shifters_dt`
     ## that have spaces
@@ -371,6 +369,9 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
+	
+    if(neutral.nonverb.like) sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
+	
     # buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
     # 
     # if (length(buts) > 0){
