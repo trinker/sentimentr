@@ -88,8 +88,7 @@
 #' useful in literary works, where like is often used in non-verb form, than 
 #' product comments.  Use of this parameter will add compute time, this must be 
 #' weighed against the need for accuracy and the likeliness that more accurate 
-#' results will come from setting this argument to \code{TRUE}. + removing commas before
-#' valence shifters.
+#' results will come from setting this argument to \code{TRUE}. + removing commas before valence shifters.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
 #' @param \ldots Ignored.
