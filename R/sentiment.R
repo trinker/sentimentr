@@ -88,7 +88,8 @@
 #' useful in literary works, where like is often used in non-verb form, than 
 #' product comments.  Use of this parameter will add compute time, this must be 
 #' weighed against the need for accuracy and the likeliness that more accurate 
-#' results will come from setting this argument to \code{TRUE}.
+#' results will come from setting this argument to \code{TRUE}. + removing commas before
+#' valence shifters.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
 #' @param \ldots Ignored.
@@ -316,6 +317,31 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_ri
     
 }
 
+run_preprocess <- function(sentence) {
+sentence <- as.character(sentence)
+u <- unlist(strsplit(sentence,split = ' '))
+w <- u[u %like any% c(",%","%,")]
+index <- which(u %like any% c(",%","%,"))
+if(length(index)==0) 
+{
+  t1 <- u[which(sapply(strsplit(u,","),length)>1)]
+  if(length(t1)==0) {
+    u <- paste(u,collapse = ' ')
+    return(u)
+    }
+  t_final <- gsub(',',' ',t1)
+  index_2 <- which(sapply(strsplit(u,","),length)>1)
+  u[index_2] <- t_final
+  u <- paste(u,collapse = ' ')
+  return(u)
+  }
+ v <- gsub(',',' ',w)
+v <- gsub(' ','',v)
+suppressWarnings(u[index[(u[index+1] %in% hash_valence_shifters$x) & !(u[index] %in% hash_valence_shifters$x)]] <- v[(u[index+1] %in% hash_valence_shifters$x) & !(u[index] %in% hash_valence_shifters$x)])
+u <- paste(u,collapse = ' ')
+return(u)
+
+}
 
 
 #' @export
@@ -333,6 +359,8 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     if(any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
         stop('`polarity_dt` & `valence_shifters_dt` not mutually exclusive')
     }
+	
+	if(neutral.nonverb.like) text.var <- run_preprocess(text.var)
 
     ## Add "~~" holder for any words `polarity_frame` & `valence_shifters_dt`
     ## that have spaces
