@@ -11,6 +11,7 @@
 #' a raw character vector though \code{get_sentences} is preferred as it avoids
 #' the repeated cost of doing sentence boundary disambiguation every time
 #' \code{sentiment} is run.
+#' @param comma
 #' @param polarity_dt A \pkg{data.table} of positive/negative words and
 #' weights with x and y as column names.  The \pkg{lexicon} package has several 
 #' dictionaries that can be used, including: 
@@ -307,7 +308,7 @@
 #'     sentiment(Tweet, polarity_dt = combined_emoji)
 #' 
 #' }
-sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment <- function(text.var, comma = TRUE, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
@@ -349,7 +350,7 @@ return(u)
 
 #' @export
 #' @method sentiment get_sentences_character
-sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment.get_sentences_character <- function(text.var, comma = FALSE ,polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
@@ -358,7 +359,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
             T_sum <- N <- . <- b <- before <- NULL
 
-    ## check to ake sure valence_shifters_dt polarity_dt are mutually exclusive
+    ## check to make sure valence_shifters_dt polarity_dt are mutually exclusive
     if(any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
         stop('`polarity_dt` & `valence_shifters_dt` not mutually exclusive')
     }
@@ -374,7 +375,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
 	
-    if(neutral.nonverb.like) sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
+    if(comma) sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
 	
     # buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
     # 
@@ -544,7 +545,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 
 #' @export
 #' @method sentiment character
-sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment.character <- function(text.var, comma = FALSE, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
@@ -563,7 +564,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 
 #' @export
 #' @method sentiment get_sentences_data_frame
-sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment.get_sentences_data_frame <- function(text.var, comma = FALSE, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
