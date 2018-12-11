@@ -307,7 +307,7 @@
 #'     sentiment(Tweet, polarity_dt = combined_emoji)
 #' 
 #' }
-sentiment <- function(text.var, comma = TRUE, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
@@ -349,7 +349,7 @@ return(u)
 
 #' @export
 #' @method sentiment get_sentences_character
-sentiment.get_sentences_character <- function(text.var, comma = FALSE ,polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
@@ -544,7 +544,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 
 #' @export
 #' @method sentiment character
-sentiment.character <- function(text.var, comma = FALSE, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
@@ -563,7 +563,7 @@ sentiment.character <- function(text.var, comma = FALSE, polarity_dt = lexicon::
 
 #' @export
 #' @method sentiment get_sentences_data_frame
-sentiment.get_sentences_data_frame <- function(text.var, comma = FALSE, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
+sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
