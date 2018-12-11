@@ -106,5 +106,4 @@ importFrom(textclean,replace_internet_slang)
 importFrom(textclean,replace_rating)
 importFrom(textclean,replace_word_elongation)
 importFrom(DescTools,"%like any%")
-importFrom(lexicon,hash_valence_shifters)
 
