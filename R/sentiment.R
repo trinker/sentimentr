@@ -374,7 +374,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
 	
-    if(comma) sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
+    if(neutral.nonverb.like) sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
 	
     # buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
     # 
