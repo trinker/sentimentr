@@ -8,6 +8,7 @@
 #'
 #' @param text.var The text variable.  Also takes a \code{sentimentr} or
 #' \code{sentiment_by} object.
+#' @param comma
 #' @param by The grouping variable(s).  Default \code{NULL} uses the original
 #' row/element indices; if you used a column of 12 rows for \code{text.var}
 #' these 12 rows will be used as the grouping variable.  Also takes a single
