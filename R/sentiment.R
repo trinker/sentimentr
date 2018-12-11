@@ -337,9 +337,9 @@ if(length(index)==0)
 
 v <- gsub(',','',w)
 	
-suppressWarnings(if(v %in% hash_valence_shifters$x) u[index[which(v %in% hash_valence_shifters$x)]] <- v[which(v %in% hash_valence_shifters$x)])
+suppressWarnings(if(v %in% lexicon::hash_valence_shifters$x) u[index[which(v %in% lexicon::hash_valence_shifters$x)]] <- v[which(v %in% lexicon::hash_valence_shifters$x)])
 		 
-suppressWarnings(u[index[(u[index+1] %in% hash_valence_shifters$x) & !(u[index] %in% hash_valence_shifters$x)]] <- v[(u[index+1] %in% hash_valence_shifters$x) & !(u[index] %in% hash_valence_shifters$x)])
+suppressWarnings(u[index[(u[index+1] %in% lexicon::hash_valence_shifters$x) & !(u[index] %in% lexicon::hash_valence_shifters$x)]] <- v[(u[index+1] %in% lexicon::hash_valence_shifters$x) & !(u[index] %in% lexicon::hash_valence_shifters$x)])
 
 u <- paste(u,collapse = ' ')
 return(u)
