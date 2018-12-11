@@ -317,36 +317,39 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_ri
 }
 
 run_preprocess <- function(sentence) {
-sentence <- as.character(sentence)
-u <- unlist(strsplit(sentence,split = ' '))
-w <- u[u %like any% c(",%","%,")]
-index <- which(u %like any% c(",%","%,"))
-if(length(index)==0) 
-{
-  t1 <- u[which(sapply(strsplit(u,","),length)>1)]
-  if(length(t1)==0) {
-    u <- paste(u,collapse = ' ')
-    return(u)
+  sentence <- as.character(sentence) # Parsing to character
+  split_spaces <- unlist(strsplit(sentence,split = ' ')) # Splitting the sentence on spaces to get all words in the sentence.
+  comma_words <- split_spaces[split_spaces %like any% c(",%","%,")] # Store all words that either end with a comma or begin with a comma.
+  index <- which(split_spaces %like any% c(",%","%,")) # Find indices of all those words from above.
+  # If there is no word with commas, there is an edge case that the comma could be between the two words without spaces. Checking for that in this condition. 
+  if(length(index)==0) 
+  {
+    t1 <- split_spaces[which(sapply(strsplit(split_spaces,","),length)>1)] 
+    # If splitting by commas breaks any one word into two, the condition was true and we replace that comma with a space. If not, we return the sentence as is.
+    if(length(t1)==0) {
+      split_spaces <- paste(split_spaces,collapse = ' ')
+      return(split_spaces)
     }
-  t_final <- gsub(',',' ',t1)
-  index_2 <- which(sapply(strsplit(u,","),length)>1)
-  u[index_2] <- t_final
-  u <- paste(u,collapse = ' ')
-  return(u)
+    t_final <- gsub(',',' ',t1) #Replace comma between two words by space.
+    index_2 <- which(sapply(strsplit(split_spaces,","),length)>1)
+    split_spaces[index_2] <- t_final
+    split_spaces <- paste(split_spaces,collapse = ' ')
+    return(split_spaces)
   }
-
-v <- gsub(',','',w)
-	
-suppressWarnings(if(v %in% lexicon::hash_valence_shifters$x) u[index[which(v %in% lexicon::hash_valence_shifters$x)]] <- v[which(v %in% lexicon::hash_valence_shifters$x)])
-		 
-suppressWarnings(u[index[(u[index+1] %in% lexicon::hash_valence_shifters$x) & !(u[index] %in% lexicon::hash_valence_shifters$x)]] <- v[(u[index+1] %in% lexicon::hash_valence_shifters$x) & !(u[index] %in% lexicon::hash_valence_shifters$x)])
-
-u <- paste(u,collapse = ' ')
-return(u)
-
+  
+  replaced_words <- gsub(',','',comma_words)
+  
+  # If the word is a valence shifter, put it back into the original sentence.
+  suppressWarnings(if(replaced_words %in% hash_valence_shifters$x) split_spaces[index[which(replaced_words %in% hash_valence_shifters$x)]] <- replaced_words[which(replaced_words %in% hash_valence_shifters$x)])
+  
+  # If the word after is a valence shifter, replace into original sentence and return.
+  suppressWarnings(split_spaces[index[(split_spaces[index+1] %in% hash_valence_shifters$x) & !(split_spaces[index] %in% hash_valence_shifters$x)]] <- replaced_words[(split_spaces[index+1] %in% hash_valence_shifters$x) & !(split_spaces[index] %in% hash_valence_shifters$x)])
+  
+  split_spaces <- paste(split_spaces,collapse = ' ')
+  return(split_spaces)
+  
 }
-
-
+		   
 #' @export
 #' @method sentiment get_sentences_character
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
