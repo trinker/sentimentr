@@ -11,7 +11,6 @@
 #' a raw character vector though \code{get_sentences} is preferred as it avoids
 #' the repeated cost of doing sentence boundary disambiguation every time
 #' \code{sentiment} is run.
-#' @param comma
 #' @param polarity_dt A \pkg{data.table} of positive/negative words and
 #' weights with x and y as column names.  The \pkg{lexicon} package has several 
 #' dictionaries that can be used, including: 
