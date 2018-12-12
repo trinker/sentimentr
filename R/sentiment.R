@@ -88,9 +88,10 @@
 #' useful in literary works, where like is often used in non-verb form, than 
 #' product comments.  Use of this parameter will add compute time, this must be 
 #' weighed against the need for accuracy and the likeliness that more accurate 
-#' results will come from setting this argument to \code{TRUE}. + removing commas before valence shifters.
+#' results will come from setting this argument to \code{TRUE}.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
+#' @param comma_handler logical. If \code{TRUE}, removes commas before valence shifters.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -310,7 +311,7 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
     
     UseMethod('sentiment')
     
@@ -355,7 +356,7 @@ run_preprocess <- function(sentence) {
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
     
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -550,7 +551,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -560,7 +561,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
         amplifier.weight = amplifier.weight, n.before = n.before, 
         n.after = n.after, question.weight = question.weight,
         adversative.weight = adversative.weight, missing_value = missing_value, 
-        neutral.nonverb.like = neutral.nonverb.like, c(';', ':',  ','), ...)
+        neutral.nonverb.like = neutral.nonverb.like, c(';', ':',  ','), comma_handler = comma_handler, ...)
   
 }
 
@@ -569,7 +570,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 
