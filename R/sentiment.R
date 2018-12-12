@@ -341,10 +341,10 @@ run_preprocess <- function(sentence) {
   replaced_words <- gsub(',','',comma_words)
   
   # If the word is a valence shifter, put it back into the original sentence.
-  suppressWarnings(if(replaced_words %in% hash_valence_shifters$x) split_spaces[index[which(replaced_words %in% hash_valence_shifters$x)]] <- replaced_words[which(replaced_words %in% hash_valence_shifters$x)])
+  suppressWarnings(if(replaced_words %in% lexicon::hash_valence_shifters$x) split_spaces[index[which(replaced_words %in% lexicon::hash_valence_shifters$x)]] <- replaced_words[which(replaced_words %in% lexicon::hash_valence_shifters$x)])
   
   # If the word after is a valence shifter, replace into original sentence and return.
-  suppressWarnings(split_spaces[index[(split_spaces[index+1] %in% hash_valence_shifters$x) & !(split_spaces[index] %in% hash_valence_shifters$x)]] <- replaced_words[(split_spaces[index+1] %in% hash_valence_shifters$x) & !(split_spaces[index] %in% hash_valence_shifters$x)])
+  suppressWarnings(split_spaces[index[(split_spaces[index+1] %in% lexicon::hash_valence_shifters$x) & !(split_spaces[index] %in% lexicon::hash_valence_shifters$x)]] <- replaced_words[(split_spaces[index+1] %in% lexicon::hash_valence_shifters$x) & !(split_spaces[index] %in% lexicon::hash_valence_shifters$x)])
   
   split_spaces <- paste(split_spaces,collapse = ' ')
   return(split_spaces)
