@@ -8,7 +8,7 @@ sentiment(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
   valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
   amplifier.weight = 0.8, n.before = 5, n.after = 2,
   question.weight = 1, adversative.weight = 0.25,
-  neutral.nonverb.like = FALSE, missing_value = 0, ...)
+  neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -106,6 +106,9 @@ results will come from setting this argument to \code{TRUE}. Currently also remo
 \item{missing_value}{A value to replace \code{NA}/\code{NaN} with.  Use
 \code{NULL} to retain missing values.}
 
+\item{comma_handler}{If \code{TRUE}, removes commas before valence shifters.}
+  
+  
 \item{\ldots}{Ignored.}
 }
 \value{
