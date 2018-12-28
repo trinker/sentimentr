@@ -10,7 +10,9 @@
 #' would result in a space between words (e.g., 'sugar free').
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} with columns of positive and 
-#' negative terms.
+#' negative terms.  In addition, the attributes \code{$counts} and \code{$elements}
+#' return an aggregated count of the usage of the words and a detailed sentiment
+#' score of each word use.  See the examples for more.
 #' @export
 #' @importFrom data.table .N :=
 #' @examples
@@ -27,6 +29,55 @@
 #' 
 #' attributes(extract_sentiment_terms(x))$counts
 #' attributes(extract_sentiment_terms(x))$elements
+#' 
+#' \dontrun{
+#' library(sentimentr)
+#' library(wordcloud)
+#' library(data.table)
+#' 
+#' set.seed(10)
+#' x <- get_sentences(sample(hu_liu_cannon_reviews[[2]], 1000, TRUE))
+#' sentiment_words <- extract_sentiment_terms(x)
+#' 
+#' sentiment_counts <- attributes(sentiment_words)$counts
+#' sentiment_counts[polarity > 0,]
+#' 
+#' par(mfrow = c(1, 3), mar = c(0, 0, 0, 0))
+#' ## Positive Words
+#' with(
+#'     sentiment_counts[polarity > 0,],
+#'     wordcloud(words = words, freq = n, min.freq = 1,
+#'           max.words = 200, random.order = FALSE, rot.per = 0.35,
+#'           colors = brewer.pal(8, "Dark2"), scale = c(4.5, .75)
+#'     )
+#' )
+#' mtext("Positive Words", side = 3, padj = 5)
+#' 
+#' ## Negative Words
+#' with(
+#'     sentiment_counts[polarity < 0,],
+#'     wordcloud(words = words, freq = n, min.freq = 1,
+#'           max.words = 200, random.order = FALSE, rot.per = 0.35,
+#'           colors = brewer.pal(8, "Dark2"), scale = c(4.5, 1)
+#'     )
+#' )
+#' mtext("Negative Words", side = 3, padj = 5)
+#' 
+#' sentiment_counts[, 
+#'     color := ifelse(polarity > 0, 'red', 
+#'         ifelse(polarity < 0, 'blue', 'gray70')
+#'     )]
+#' 
+#' ## Positive & Negative Together
+#' with(
+#'     sentiment_counts[polarity != 0,],
+#'     wordcloud(words = words, freq = n, min.freq = 1,
+#'           max.words = 200, random.order = FALSE, rot.per = 0.35,
+#'           colors = color, ordered.colors = TRUE, scale = c(5, .75)
+#'     )
+#' )
+#' mtext("Positive (red) & Negative (blue) Words", side = 3, padj = 5)
+#' }
 extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     hyphen = "", ...){
 
