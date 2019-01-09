@@ -1,4 +1,12 @@
 pacman::p_load(tidyverse, textshape, textclean)
+
+safe_replace <- function(text) {
+    
+    text2 <- gsub('[^ -~]', ' ', stringi::stri_enc_toascii(text))
+    out <- try(replace_non_ascii(text2)) 
+    out
+}
+
 crowdflower_self_driving_cars <- 'https://www.crowdflower.com/wp-content/uploads/2016/03/Twitter-sentiment-self-drive-DFE.csv' %>%
     read_csv() %>%
     filter(sentiment %in% 1:5) %>%
@@ -13,13 +21,6 @@ crowdflower_self_driving_cars$sentiment %>% table()
 sum(grepl('[^ -~]', crowdflower_self_driving_cars$text))
 
 
-safe_replace <- function(text) {
-    out <- try(replace_non_ascii(text)) 
-    out[sapply(out, inherits, 'try-error')] <- gsub('[^ -~]', ' ', 
-        stringi::stri_enc_toascii(text)[sapply(out, inherits, 'try-error')]
-        )
-    out
-}
 
 pax::new_data(crowdflower_self_driving_cars)
 # 
