@@ -27,6 +27,10 @@ sentimentr 2.7.0 -
 * The `plot` method for `sentiment` and `profanity` failed for n &lt; 100 observations.
   Interpolation via `stats::approx` provides a means to fill in the gaps in cases
   of n &lt; 100.
+  
+* The `crowdflower_self_driving_cars` dataset contained text that read as 
+  `"Error in gsub(replaces[i], c("'", "'", "\\"", "\\"")[i], x, fixed = TRUE): 
+  input string 12 is invalid UTF-8"`.  Spotted thanks to Shantanu Kumar.
 
 **NEW FEATURES**
 
