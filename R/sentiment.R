@@ -352,7 +352,7 @@ run_preprocess <- function(sentence) {
 }
 # Check whether sentence is question tag.
 is_question_tag <- function(text){ 
-  splitted <- str_split((stringi::stri_extract_first(text, regex="[A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* ?\\?\\s*")),' ') 
+  splitted <- stringr::str_split((stringi::stri_extract_first(text, regex="[A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* ?\\?\\s*")),' ') 
   unlisted <- lapply(splitted, function (x) gsub("[',?]",'',x)) 
   log <- lapply(unlisted,function (x) any(x %in% lexicon::hash_valence_shifters$x[lexicon::hash_valence_shifters$y==1])) 
   return(unlist(log)) 
