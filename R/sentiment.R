@@ -358,9 +358,9 @@ is_question_tag <- function(text){
   return(unlist(log)) 
 } 
 # Check whether negators are used to emphasise "lack of something" rather than negating.
-is_negator_adv_condition <- function(cond_2) {
-  cond_2 <- tolower(cond_2)
-  unlisted <- unlist(stringr::str_split(cond_2,pattern=' '))
+is_negator_adv_condition <- function(text) {
+  text <- tolower(text)
+  unlisted <- unlist(stringr::str_split(text,pattern=' '))
   index_t <- which(unlisted %like any% c("%,","%;"))
   unlisted <- gsub("[?;.!,]",'',unlisted)
   negators <- unlist(lexicon::hash_valence_shifters[lexicon::hash_valence_shifters$y==1,1])
