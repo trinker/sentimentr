@@ -350,6 +350,35 @@ run_preprocess <- function(sentence) {
   return(split_spaces)
   
 }
+# Check whether sentence is question tag.
+is_question_tag <- function(text){ 
+  splitted <- str_split((stringi::stri_extract_first(text, regex="[A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* ?\\?\\s*")),' ') 
+  unlisted <- lapply(splitted, function (x) gsub("[',?]",'',x)) 
+  log <- lapply(unlisted,function (x) any(x %in% lexicon::hash_valence_shifters$x[lexicon::hash_valence_shifters$y==1])) 
+  return(unlist(log)) 
+} 
+# Check whether negators are used to emphasise "lack of something" rather than negating.
+is_negator_adv_condition <- function(cond_2) {
+  cond_2 <- tolower(cond_2)
+  unlisted <- unlist(stringr::str_split(cond_2,pattern=' '))
+  index_t <- which(unlisted %like any% c("%,","%;"))
+  unlisted <- gsub("[?;.!,]",'',unlisted)
+  negators <- unlist(lexicon::hash_valence_shifters[lexicon::hash_valence_shifters$y==1,1])
+  adv_conj <- unlist(lexicon::hash_valence_shifters[lexicon::hash_valence_shifters$y==4,1])
+  if(is.null(index) || length(index) == 0 || is.na(index)) return(F)
+  for(index in index_t){
+    before_l <- index-2
+    if(before_l < 0) before_l <- 0
+    before <- unlisted[before_l:index]
+    after_l <- index+1
+    after_r <- index+2
+    after <- unlisted[after_l:after_r]
+    after <- after[which(!is.na(after))]
+    if(any(before %in% negators) && (any(after %in% negators) || any(after %in% adv_conj))) return(T)
+  }
+  return(F)
+}
+		   
 		   
 #' @export
 #' @method sentiment get_sentences_character
@@ -378,7 +407,10 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
 	
-   if(comma_handler) sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
+   if(comma_handler) {
+	   indices_to_skip <- c(which(unlist(lapply(sent_dat$sentences,is_negator_adv_condition))),which(unlist(lapply(sent_dat$sentences,is_question_tag))))
+	   sent_dat$sentences[-(indices_to_skip)] <- unlist(lapply(sent_dat$sentences[-(indices_to_skip)], run_preprocess))
+	   }
     # buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
     # 
     # if (length(buts) > 0){
