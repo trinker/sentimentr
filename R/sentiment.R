@@ -91,6 +91,7 @@
 #' results will come from setting this argument to \code{TRUE}.
 #' @param missing_value A value to replace \code{NA}/\code{NaN} with.  Use
 #' \code{NULL} to retain missing values.
+#' @param comma_handler logical. If \code{TRUE}, removes commas before valence shifters.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -310,26 +311,87 @@
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
     
     UseMethod('sentiment')
     
 }
 
-
-
+run_preprocess <- function(sentence) {
+  sentence <- as.character(sentence) # Parsing to character
+  split_spaces <- unlist(strsplit(sentence,split = ' ')) # Splitting the sentence on spaces to get all words in the sentence.
+  comma_words <- split_spaces[split_spaces %like any% c(",%","%,")] # Store all words that either end with a comma or begin with a comma.
+  index <- which(split_spaces %like any% c(",%","%,")) # Find indices of all those words from above.
+  # If there is no word with commas, there is an edge case that the comma could be between the two words without spaces. Checking for that in this condition. 
+  if(length(index)==0) 
+  {
+    t1 <- split_spaces[which(sapply(strsplit(split_spaces,","),length)>1)] 
+    # If splitting by commas breaks any one word into two, the condition was true and we replace that comma with a space. If not, we return the sentence as is.
+    if(length(t1)==0) {
+      split_spaces <- paste(split_spaces,collapse = ' ')
+      return(split_spaces)
+    }
+    t_final <- gsub(',',' ',t1) #Replace comma between two words by space.
+    index_2 <- which(sapply(strsplit(split_spaces,","),length)>1)
+    split_spaces[index_2] <- t_final
+    split_spaces <- paste(split_spaces,collapse = ' ')
+    return(split_spaces)
+  }
+  
+  replaced_words <- gsub(',','',comma_words)
+  
+  # If the word is a valence shifter, put it back into the original sentence.
+  suppressWarnings(if(replaced_words %in% lexicon::hash_valence_shifters$x) split_spaces[index[which(replaced_words %in% lexicon::hash_valence_shifters$x)]] <- replaced_words[which(replaced_words %in% lexicon::hash_valence_shifters$x)])
+  
+  # If the word after is a valence shifter, replace into original sentence and return.
+  suppressWarnings(split_spaces[index[(split_spaces[index+1] %in% lexicon::hash_valence_shifters$x) & !(split_spaces[index] %in% lexicon::hash_valence_shifters$x)]] <- replaced_words[(split_spaces[index+1] %in% lexicon::hash_valence_shifters$x) & !(split_spaces[index] %in% lexicon::hash_valence_shifters$x)])
+  
+  split_spaces <- paste(split_spaces,collapse = ' ')
+  return(split_spaces)
+  
+}
+# Check whether sentence is question tag.
+is_question_tag <- function(text){ 
+  splitted <- stringr::str_split((stringi::stri_extract_first(text, regex="[A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* [A-Za-z'a-zA-Z,]* ?\\?\\s*")),' ') 
+  unlisted <- lapply(splitted, function (x) gsub("[',?]",'',x)) 
+  log <- lapply(unlisted,function (x) any(x %in% lexicon::hash_valence_shifters$x[lexicon::hash_valence_shifters$y==1])) 
+  return(unlist(log)) 
+} 
+# Check whether negators are used to emphasise "lack of something" rather than negating.
+is_negator_adv_condition <- function(text) {
+  text <- tolower(text)
+  unlisted <- unlist(stringr::str_split(text,pattern=' '))
+  index_t <- which(unlisted %like any% c("%,","%;"))
+  unlisted <- gsub("[?;.!,]",'',unlisted)
+  negators <- unlist(lexicon::hash_valence_shifters[lexicon::hash_valence_shifters$y==1,1])
+  adv_conj <- unlist(lexicon::hash_valence_shifters[lexicon::hash_valence_shifters$y==4,1])
+  if(is.null(index) || length(index) == 0 || is.na(index)) return(F)
+  for(index in index_t){
+    before_l <- index-2
+    if(before_l < 0) before_l <- 0
+    before <- unlisted[before_l:index]
+    after_l <- index+1
+    after_r <- index+2
+    after <- unlisted[after_l:after_r]
+    after <- after[which(!is.na(after))]
+    if(any(before %in% negators) && (any(after %in% negators) || any(after %in% adv_conj))) return(T)
+  }
+  return(F)
+}
+		   
+		   
 #' @export
 #' @method sentiment get_sentences_character
 sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
     
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
             T_sum <- N <- . <- b <- before <- NULL
 
-    ## check to ake sure valence_shifters_dt polarity_dt are mutually exclusive
+    ## check to make sure valence_shifters_dt polarity_dt are mutually exclusive
     if(any(valence_shifters_dt[[1]] %in% polarity_dt[[1]])) {
         stop('`polarity_dt` & `valence_shifters_dt` not mutually exclusive')
     }
@@ -344,6 +406,16 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     
     # break rows into count words
     sent_dat <- make_sentence_df2(sents)
+	
+   if(comma_handler) {
+	   
+   indices_to_skip <- c(which(unlist(lapply(sent_dat$sentences,is_negator_adv_condition))),which(unlist(lapply(sent_dat$sentences,is_question_tag))))
+  if(length(indices_to_skip)!=0) {
+    sent_dat$sentences[-(indices_to_skip)] <- unlist(lapply(sent_dat$sentences[-(indices_to_skip)], run_preprocess))
+  }
+  else sent_dat$sentences <- unlist(lapply(sent_dat$sentences, run_preprocess))
+   
+   }
     # buts <- valence_shifters_dt[valence_shifters_dt[[2]] == 4,][['x']]
     # 
     # if (length(buts) > 0){
@@ -515,7 +587,7 @@ like_preverbs_regex <- paste0('\\b(', paste(like_preverbs, collapse = '|'), ')(\
 sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -525,7 +597,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
         amplifier.weight = amplifier.weight, n.before = n.before, 
         n.after = n.after, question.weight = question.weight,
         adversative.weight = adversative.weight, missing_value = missing_value, 
-        neutral.nonverb.like = neutral.nonverb.like, c(';', ':',  ','), ...)
+        neutral.nonverb.like = neutral.nonverb.like, c(';', ':',  ','), comma_handler = comma_handler, ...)
   
 }
 
@@ -534,7 +606,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
 sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
-    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
+    adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, comma_handler = FALSE, ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 
