@@ -18,7 +18,7 @@ And constructed with the following guidelines:
 
 
 
-sentimentr 2.7.0 - 
+sentimentr 2.7.0 - 2.7.1 
 ----------------------------------------------------------------
 
 
@@ -37,8 +37,12 @@ sentimentr 2.7.0 -
   both the bigram chunk "gave time" and "time honored"  this results in word 
   chunking that created the tokens {'he', 'gave time honored', 'then'}.  The
   token 'gave time honored' was not matched by either "gave time" or "time honored"
-  resulting in a zero polarity score.  Spotted thanks to GitHub user @swlazlowski.
+  resulting in a zero polarity score.  Spotted thanks to GitHub user @swlazlowski
   (see #102).
+  
+* `highlight()` used `mean()` as the averaging function regardless of the 
+  `averaging.function` argument supplied to `sentiment_by()`.  THis behavior has
+  been corrected.  Spotted thanks to Kelvin Lam (see #103).
 
 **NEW FEATURES**
 
@@ -47,16 +51,12 @@ sentimentr 2.7.0 -
 * `extract_emotion_terms` added to extract emotion terms from text.
 
 
-**MINOR FEATURES**
-
 **IMPROVEMENTS**
 
 * The default profanity list in `profanity` & `extract_profanity_terms was not 
   lower cased or unique which resulted in a warning every time it was run.  This 
   list is now passed as `unique(tolower(lexicon::profanity_alvarez))` to avoid 
   the warnings.
-
-**CHANGES**
 
 
 

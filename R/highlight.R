@@ -63,7 +63,7 @@ highlight <- function(x, file = file.path(tempdir(), "polarity.html"),
     mygrps_2 <- parse(text=sprintf("paste(%s, sep=\", \")", paste(grps, collapse=", ")))
     suppressWarnings(y[, gr:={gr= eval(mygrps_2); cumsum(c(TRUE, gr[-1]!= gr[-.N]))}])
 
-    y <- y[, list(sentiment = mean(sentiment, na.rm = TRUE),
+    y <- y[, list(sentiment = attributes(x)[['averaging.function']](sentiment),
              txt=paste(txt, collapse=' ')) , by = c(grps, "gr")]
 
     mygrps <- parse(text=sprintf("paste(%s, sep=\"_\")", paste(grps, collapse=", ")))

@@ -203,6 +203,9 @@ sentiment_by.get_sentences_character <- function(text.var, by = NULL,
     uncombine <- new.env(FALSE)
     uncombine[["uncombine"]] <- uncombined
     attributes(out2)[["uncombine"]] <- uncombine
+    
+    attributes(out2)[["averaging.function"]] <- averaging.function
+    
     out2
 
 }
