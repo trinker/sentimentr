@@ -324,7 +324,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, ...){
-    
+
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
             T_sum <- N <- . <- b <- before <- NULL
@@ -350,7 +350,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     #     buts <- paste0('(', paste(buts, collapse = '|'), ')')
     #     sent_dat[, sentences := gsub(buts, ', \\1', sentences, ignore.case = TRUE, perl = TRUE)][]
     # }
-# browser() 
+
     ## replace like when preposition
     if (neutral.nonverb.like && 'like' %in% polarity_dt[[1]]) {
        
@@ -362,7 +362,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
             )
         ][]
     }
-# browser()    
+ 
     # space fill (~~), break into words    
     sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
 

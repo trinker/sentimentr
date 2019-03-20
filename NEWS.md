@@ -31,6 +31,14 @@ sentimentr 2.7.0 -
 * The `crowdflower_self_driving_cars` dataset contained text that read as 
   `"Error in gsub(replaces[i], c("'", "'", "\\"", "\\"")[i], x, fixed = TRUE): 
   input string 12 is invalid UTF-8"`.  Spotted thanks to Shantanu Kumar.
+  
+* Sequential bigram polarized word chunks resulted in a concatenation that rendered
+  the trigram chunk as non-polar.  For example, "he gave time honored then" contains
+  both the bigram chunk "gave time" and "time honored"  this results in word 
+  chunking that created the tokens {'he', 'gave time honored', 'then'}.  The
+  token 'gave time honored' was not matched by either "gave time" or "time honored"
+  resulting in a zero polarity score.  Spotted thanks to GitHub user @swlazlowski.
+  (see #102).
 
 **NEW FEATURES**
 

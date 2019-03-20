@@ -200,7 +200,7 @@ make_sentence_df2 <- function(sents){
 
 space_fill <- function(x, doubles){
 
-  .mgsub(doubles, gsub("\\s+", "~~", doubles), x)
+  .mgsub(paste0('(?<!~~)', doubles), gsub("\\s+", "~~", doubles), x, fixed = FALSE, perl = TRUE)
 
 }
 
