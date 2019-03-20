@@ -20,6 +20,6 @@ from opinmind.com.
 }
 }
 \references{
-\url{https://www.kaggle.com/c/si650winter11/data}
+Original URL: https://www.kaggle.com/c/si650winter11/data
 }
 \keyword{datasets}

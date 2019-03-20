@@ -23,6 +23,6 @@ sentiment rating.
 Welch, C. and Mihalcea, R. (2017). Targeted sentiment to 
 understand student comments. In Proceedings of the International Conference 
 on Computational Linguistics (COLING 2016). \cr \cr
-\url{http://web.eecs.umich.edu/~mihalcea/downloads.html#GroundedEmotions}
+Original URL: http://web.eecs.umich.edu/~mihalcea/downloads.html#GroundedEmotions
 }
 \keyword{datasets}

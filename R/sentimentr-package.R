@@ -65,7 +65,7 @@ NULL
 #' @name kaggle_movie_reviews 
 #' @usage data(kaggle_movie_reviews) 
 #' @format A data frame with 7,086 rows and 2 variables 
-#' @references \url{https://www.kaggle.com/c/si650winter11/data}
+#' @references Original URL: https://www.kaggle.com/c/si650winter11/data
 NULL 
 
 
@@ -113,7 +113,7 @@ NULL
 #' for Sentiment Analysis of Social Media Text. Eighth International Conference
 #' on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.
 #'
-#' \url{https://github.com/cjhutto/vaderSentiment}
+#' Original URL: https://github.com/cjhutto/vaderSentiment
 NULL 
 
 
@@ -137,7 +137,7 @@ NULL
 #' @references Welch, C. and Mihalcea, R. (2017). Targeted sentiment to 
 #' understand student comments. In Proceedings of the International Conference 
 #' on Computational Linguistics (COLING 2016). \cr \cr
-#' \url{http://web.eecs.umich.edu/~mihalcea/downloads.html#GroundedEmotions}
+#' Original URL: http://web.eecs.umich.edu/~mihalcea/downloads.html#GroundedEmotions
 NULL 
 
 
