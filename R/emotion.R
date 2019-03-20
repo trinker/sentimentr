@@ -144,7 +144,6 @@ emotion.get_sentences_character <- function(text.var,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
     n.before = 5, n.after = 2, ...) {
     
-    
     emotion <- emo_loc <- comma_loc <- negator_loc <- is_emo <- y <- NULL
     is_negator <- is_negated <- emotion_count <- token <- hit <- word_count <- NULL
     

@@ -247,9 +247,11 @@
 #' plot(sam, scale_range = TRUE, low_pass_size = 5)
 #' plot(sam, scale_range = TRUE, low_pass_size = 10)
 #'     
+#' \dontrun{## legacy transform functions from suuzhet
 #' plot(sam, transformation.function = syuzhet::get_transformed_values)
 #' plot(sam, transformation.function = syuzhet::get_transformed_values,  
 #'     scale_range = TRUE, low_pass_size = 5)
+#' }
 #' 
 #' y <- get_sentences(
 #'     "He was not the sort of man that one would describe as especially handsome."
@@ -364,7 +366,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     }
  
     # space fill (~~), break into words    
-    sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
+    sent_dat[, 'words' := list(make_words(space_fill_senti(sentences, space_words), hyphen = hyphen))]
 
     # make sentence id for each row id
     sent_dat[, id2:=seq_len(.N), by='id']

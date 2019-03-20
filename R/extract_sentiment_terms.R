@@ -31,7 +31,6 @@
 #' attributes(extract_sentiment_terms(x))$elements
 #' 
 #' \dontrun{
-#' library(sentimentr)
 #' library(wordcloud)
 #' library(data.table)
 #' 
@@ -102,7 +101,7 @@ extract_sentiment_terms.get_sentences_character <- function(text.var,
     sents <- text.var
    
     sent_dat <- make_sentence_df2(sents)
-    sent_dat[, 'words' := list(make_words(space_fill(sentences, space_words), hyphen = hyphen))]
+    sent_dat[, 'words' := list(make_words(space_fill_senti(sentences, space_words), hyphen = hyphen))]
 
     # make sentence id for each row id
     sent_dat[, sentence_id:=seq_len(.N), by='id']

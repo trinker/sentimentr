@@ -259,9 +259,11 @@ plot(sam)
 plot(sam, scale_range = TRUE, low_pass_size = 5)
 plot(sam, scale_range = TRUE, low_pass_size = 10)
     
+\dontrun{## legacy transform functions from suuzhet
 plot(sam, transformation.function = syuzhet::get_transformed_values)
 plot(sam, transformation.function = syuzhet::get_transformed_values,  
     scale_range = TRUE, low_pass_size = 5)
+}
 
 y <- get_sentences(
     "He was not the sort of man that one would describe as especially handsome."

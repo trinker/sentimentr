@@ -45,7 +45,6 @@ attributes(extract_sentiment_terms(x))$counts
 attributes(extract_sentiment_terms(x))$elements
 
 \dontrun{
-library(sentimentr)
 library(wordcloud)
 library(data.table)
 
