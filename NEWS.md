@@ -18,6 +18,22 @@ And constructed with the following guidelines:
 
 
 
+
+sentimentr 2.8.0 - 
+---------------------------------------------------------------
+
+**BUG FIXES**
+
+**NEW FEATURES**
+
+**MINOR FEATURES**
+
+**IMPROVEMENTS**
+
+**CHANGES**
+
+
+
 sentimentr 2.7.0 - 2.7.1 
 ----------------------------------------------------------------
 
@@ -41,7 +57,7 @@ sentimentr 2.7.0 - 2.7.1
   (see #102).
   
 * `highlight()` used `mean()` as the averaging function regardless of the 
-  `averaging.function` argument supplied to `sentiment_by()`.  THis behavior has
+  `averaging.function` argument supplied to `sentiment_by()`.  This behavior has
   been corrected.  Spotted thanks to Kelvin Lam (see #103).
 
 **NEW FEATURES**
@@ -53,7 +69,7 @@ sentimentr 2.7.0 - 2.7.1
 
 **IMPROVEMENTS**
 
-* The default profanity list in `profanity` & `extract_profanity_terms was not 
+* The default profanity list in `profanity` & `extract_profanity_terms` was not 
   lower cased or unique which resulted in a warning every time it was run.  This 
   list is now passed as `unique(tolower(lexicon::profanity_alvarez))` to avoid 
   the warnings.
