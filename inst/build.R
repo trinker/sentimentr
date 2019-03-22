@@ -6,7 +6,7 @@ pdf <- FALSE
 
 unlink(paste0(pack, ".pdf"), recursive = TRUE, force = TRUE)
 devtools::document()
-devtools::install(quick = quick, build_vignettes = FALSE, dependencies = TRUE)
+devtools::install(quick = quick, build_vignettes = FALSE, dependencies = TRUE, upgrade = 'never')
 
 if(pdf){
     path <- find.package(pack)
