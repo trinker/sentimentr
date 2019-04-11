@@ -24,6 +24,10 @@ sentimentr 2.8.0 -
 
 **BUG FIXES**
 
+* `sentiment_by` did not capture `averaging.function` for some data types (e.g.,
+  'character' vectors) and was not able to be used by `highlight`.  Spotted by
+  Ken McGarry, see #104 for details.
+
 **NEW FEATURES**
 
 **MINOR FEATURES**
