@@ -42,7 +42,7 @@ get_sentences.data.frame <- function(x, ...) {
     dots <- list(...)
 
     ## detect text variable
-    if (is.null(dots[['text.var.name']])) {
+    if (is.null(dots[['text.var']])) {
         
         z <- data.table::data.table(data.frame(x, stringsAsFactors = FALSE)) 
         
