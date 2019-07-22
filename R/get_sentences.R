@@ -42,11 +42,11 @@ get_sentences.data.frame <- function(x, ...) {
     dots <- list(...)
 
     ## detect text variable
-    if (is.null(dots[['text.var']])) {
+    if (is.null(dots[['text.var.name']])) {
         
         z <- data.table::data.table(data.frame(x, stringsAsFactors = FALSE)) 
         
-        text.var <- names(which.max(sapply(as.data.frame(z), function(y) {
+        text.var.name <- names(which.max(sapply(as.data.frame(z), function(y) {
                 if (!is.character(y) && !is.factor(y)) return(0)
                 mean(nchar(as.character(y)), na.rm = TRUE)
         }))[1])
@@ -55,13 +55,14 @@ get_sentences.data.frame <- function(x, ...) {
             stop("Could not detect `text.var`.  Please supply `text.var` explicitly via\n    ellipsis (...) argument (e.g. `text.var.name = \'my_text_column\'` ).")
         }
     } else {
-        text.var <- dots[['text.var']]
+        text.var.name <- dots[['text.var.name']]
     }
-    
-    out <- textshape::split_sentence(x, text.var = text.var, ...)
-    class(out[[text.var]]) <- unique(c("get_sentences", "get_sentences_character", class(out[[text.var]])))   
+  
+    out <- textshape::split_sentence(x, text.var = text.var.name, ...)
+
+    class(out[[text.var.name]]) <- unique(c("get_sentences", "get_sentences_character", class(out[[text.var.name]])))   
     out <- make_class(out, "get_sentences", "get_sentences_data_frame")
-    attributes(out)   [['text.var']] <- text.var
+    attributes(out)   [['text.var']] <- text.var.name
         
     out
 }
