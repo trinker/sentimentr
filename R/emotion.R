@@ -57,7 +57,6 @@
 #'   \item emotion_count - Count of the number of emotion words of that \code{emotion_type}
 #'   \item emotion - A score of the percentage of emotion words of that \code{emotion_type}
 #' }
-#' @keywords emotion, cursing, vulgarity, cussing, bad-words
 #' @family emotion functions
 #' @export
 #' @references Plutchik, R. (1962). The emotions: Facts and theories, and a new 

@@ -4,14 +4,16 @@
 \name{hotel_reviews}
 \alias{hotel_reviews}
 \title{Hotel Reviews}
-\format{A data frame with 5000 rows and 2 variables}
+\format{
+A data frame with 5000 rows and 2 variables
+}
 \usage{
 data(hotel_reviews)
 }
 \description{
 A dataset containing a random sample (n = 5000 of 1,621,956) of Wang, Lu, & 
 Zhai's (2011) hotel reviews data set scraped by the authors from 
-\url{http://www.tripadvisor.com}.
+Original URL: http://www.tripadvisor.com.
 }
 \details{
 \itemize{ 

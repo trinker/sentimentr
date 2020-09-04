@@ -4,7 +4,9 @@
 \name{hu_liu_cannon_reviews}
 \alias{hu_liu_cannon_reviews}
 \title{Cannon G3 Camera Product Reviews From Amazon}
-\format{A data frame with 597 rows and 3 variables}
+\format{
+A data frame with 597 rows and 3 variables
+}
 \usage{
 data(hu_liu_cannon_reviews)
 }
@@ -32,6 +34,6 @@ Minqing Hu and Bing Liu. (2004)."Mining Opinion Features in Customer
    Reviews. Proceedings of Nineteeth National Conference on
    Artificial Intelligence (AAAI-2004).
 
-\file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+Original URL:  \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 }
 \keyword{datasets}

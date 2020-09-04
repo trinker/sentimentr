@@ -4,9 +4,13 @@
 \alias{sentiment_by}
 \title{Polarity Score (Sentiment Analysis) By Groups}
 \usage{
-sentiment_by(text.var, by = NULL,
+sentiment_by(
+  text.var,
+  by = NULL,
   averaging.function = sentimentr::average_downweighted_zero,
-  group.names, ...)
+  group.names,
+  ...
+)
 }
 \arguments{
 \item{text.var}{The text variable.  Also takes a \code{sentimentr} or
@@ -158,9 +162,7 @@ hu_liu_cannon_reviews \%>\%
 }
 }
 \seealso{
-Other sentiment functions: \code{\link{sentiment}}
+Other sentiment functions: 
+\code{\link{sentiment}()}
 }
 \concept{sentiment functions}
-\keyword{group}
-\keyword{polarity,}
-\keyword{sentiment,}

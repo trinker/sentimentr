@@ -4,8 +4,7 @@
 \alias{plot.profanity}
 \title{Plots a profanity object}
 \usage{
-\method{plot}{profanity}(x,
-  transformation.function = syuzhet::get_dct_transform, ...)
+\method{plot}{profanity}(x, transformation.function = syuzhet::get_dct_transform, ...)
 }
 \arguments{
 \item{x}{The profanity object.}

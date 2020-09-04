@@ -4,7 +4,9 @@
 \name{kotzias_reviews_yelp}
 \alias{kotzias_reviews_yelp}
 \title{Kotzias Reviews: Yelp}
-\format{A data frame with 1,040 rows and 2 variables}
+\format{
+A data frame with 1,040 rows and 2 variables
+}
 \usage{
 data(kotzias_reviews_yelp)
 }
@@ -32,6 +34,6 @@ to -1/1.  Please cite Kotzias et al. (2015) if you reuse the data here.
 Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
 group to individual labels using deep features. Proceedings of the 21th ACM
 SIGKDD International Conference on Knowledge Discovery and Data Mining.
-597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf}
+597-606. Original URL: http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 }
 \keyword{datasets}

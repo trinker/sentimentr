@@ -4,7 +4,9 @@
 \name{hu_liu_nikon_reviews}
 \alias{hu_liu_nikon_reviews}
 \title{Nikon Coolpix 4300 Product Reviews From Amazon}
-\format{A data frame with 346 rows and 3 variables}
+\format{
+A data frame with 346 rows and 3 variables
+}
 \usage{
 data(hu_liu_nikon_reviews)
 }

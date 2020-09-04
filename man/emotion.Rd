@@ -4,11 +4,18 @@
 \alias{emotion}
 \title{Compute Emotion Rate}
 \usage{
-emotion(text.var, emotion_dt = lexicon::hash_nrc_emotions,
+emotion(
+  text.var,
+  emotion_dt = lexicon::hash_nrc_emotions,
   valence_shifters_dt = lexicon::hash_valence_shifters,
-  drop.unused.emotions = FALSE, un.as.negation = TRUE,
+  drop.unused.emotions = FALSE,
+  un.as.negation = TRUE,
   un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt,
-  lexicon::hash_nrc_emotions)), n.before = 5, n.after = 2, ...)
+    lexicon::hash_nrc_emotions)),
+  n.before = 5,
+  n.after = 2,
+  ...
+)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -145,11 +152,7 @@ evolutionary roots, a fact that may explain their complexity and provide tools
 for clinical practice. American Scientist , 89 (4), 344-350.
 }
 \seealso{
-Other emotion functions: \code{\link{emotion_by}}
+Other emotion functions: 
+\code{\link{emotion_by}()}
 }
 \concept{emotion functions}
-\keyword{bad-words}
-\keyword{cursing,}
-\keyword{cussing,}
-\keyword{emotion,}
-\keyword{vulgarity,}

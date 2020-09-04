@@ -89,11 +89,7 @@ plot(prof_bel)
 }
 }
 \seealso{
-Other profanity functions: \code{\link{profanity}}
+Other profanity functions: 
+\code{\link{profanity}()}
 }
 \concept{profanity functions}
-\keyword{bad-words}
-\keyword{cursing,}
-\keyword{cussing,}
-\keyword{profanity,}
-\keyword{vulgarity,}

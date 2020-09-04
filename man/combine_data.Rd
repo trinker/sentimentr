@@ -4,9 +4,12 @@
 \alias{combine_data}
 \title{Combine \pkg{sentimentr}'s Sentiment Data Sets}
 \usage{
-combine_data(data = c("course_evaluations", "hotel_reviews",
-  "kaggle_movie_reviews", "kotzias_reviews_amazon_cells",
-  "kotzias_reviews_imdb", "kotzias_reviews_yelp", "nyt_articles"), ...)
+combine_data(
+  data = c("course_evaluations", "hotel_reviews", "kaggle_movie_reviews",
+    "kotzias_reviews_amazon_cells", "kotzias_reviews_imdb", "kotzias_reviews_yelp",
+    "nyt_articles"),
+  ...
+)
 }
 \arguments{
 \item{data}{A character vector of \pkg{sentimentr} data sets.}

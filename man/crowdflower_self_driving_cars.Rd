@@ -4,7 +4,9 @@
 \name{crowdflower_self_driving_cars}
 \alias{crowdflower_self_driving_cars}
 \title{Twitter Tweets About Self Driving Cars}
-\format{A data frame with 6,943 rows and 2 variables}
+\format{
+A data frame with 6,943 rows and 2 variables
+}
 \usage{
 data(crowdflower_self_driving_cars)
 }
@@ -19,6 +21,6 @@ Crowdflower.
 }
 }
 \references{
-\url{https://www.crowdflower.com/data-for-everyone}
+Original URL: https://www.crowdflower.com/data-for-everyone
 }
 \keyword{datasets}

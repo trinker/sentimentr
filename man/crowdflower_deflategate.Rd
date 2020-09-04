@@ -4,7 +4,9 @@
 \name{crowdflower_deflategate}
 \alias{crowdflower_deflategate}
 \title{Twitter Tweets About the Deflategate}
-\format{A data frame with 11,786 rows and 2 variables}
+\format{
+A data frame with 11,786 rows and 2 variables
+}
 \usage{
 data(crowdflower_deflategate)
 }
@@ -19,6 +21,6 @@ taken from Crowdflower.
 }
 }
 \references{
-\url{https://www.crowdflower.com/data-for-everyone}
+Original URL: https://www.crowdflower.com/data-for-everyone
 }
 \keyword{datasets}

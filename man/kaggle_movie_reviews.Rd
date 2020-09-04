@@ -4,7 +4,9 @@
 \name{kaggle_movie_reviews}
 \alias{kaggle_movie_reviews}
 \title{Movie Reviews}
-\format{A data frame with 7,086 rows and 2 variables}
+\format{
+A data frame with 7,086 rows and 2 variables
+}
 \usage{
 data(kaggle_movie_reviews)
 }

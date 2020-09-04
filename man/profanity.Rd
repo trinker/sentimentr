@@ -4,8 +4,11 @@
 \alias{profanity}
 \title{Compute Profanity Rate}
 \usage{
-profanity(text.var,
-  profanity_list = unique(tolower(lexicon::profanity_alvarez)), ...)
+profanity(
+  text.var,
+  profanity_list = unique(tolower(lexicon::profanity_alvarez)),
+  ...
+)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or
@@ -99,7 +102,8 @@ combo_sentences[racist2$profanity > 0, ]$text
 }
 }
 \seealso{
-Other profanity functions: \code{\link{profanity_by}}
+Other profanity functions: 
+\code{\link{profanity_by}()}
 }
 \concept{profanity functions}
 \keyword{bad-words}

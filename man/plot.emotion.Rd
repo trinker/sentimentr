@@ -4,9 +4,13 @@
 \alias{plot.emotion}
 \title{Plots a emotion object}
 \usage{
-\method{plot}{emotion}(x,
+\method{plot}{emotion}(
+  x,
   transformation.function = syuzhet::get_dct_transform,
-  drop.unused.emotions = TRUE, facet = TRUE, ...)
+  drop.unused.emotions = TRUE,
+  facet = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{The emotion object.}

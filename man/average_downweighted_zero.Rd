@@ -8,8 +8,12 @@
 \usage{
 average_downweighted_zero(x, na.rm = TRUE, ...)
 
-average_weighted_mixed_sentiment(x, mixed.less.than.zero.weight = 4,
-  na.rm = TRUE, ...)
+average_weighted_mixed_sentiment(
+  x,
+  mixed.less.than.zero.weight = 4,
+  na.rm = TRUE,
+  ...
+)
 
 average_mean(x, na.rm = TRUE, ...)
 }

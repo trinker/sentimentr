@@ -4,8 +4,12 @@
 \alias{extract_emotion_terms}
 \title{Extract Emotion Words}
 \usage{
-extract_emotion_terms(text.var, emotion_dt = lexicon::hash_nrc_emotions,
-  un.as.negation = TRUE, ...)
+extract_emotion_terms(
+  text.var,
+  emotion_dt = lexicon::hash_nrc_emotions,
+  un.as.negation = TRUE,
+  ...
+)
 }
 \arguments{
 \item{text.var}{The text variable.  Can be a \code{get_sentences} object or

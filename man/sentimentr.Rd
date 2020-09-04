@@ -4,7 +4,6 @@
 \name{sentimentr}
 \alias{sentimentr}
 \alias{package-sentiment}
-\alias{sentimentr-package}
 \title{Calculate Text Polarity Sentiment}
 \description{
 Calculate text polarity sentiment at the sentence level and optionally

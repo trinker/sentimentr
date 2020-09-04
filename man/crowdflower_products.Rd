@@ -4,7 +4,9 @@
 \name{crowdflower_products}
 \alias{crowdflower_products}
 \title{Twitter Tweets About the Products}
-\format{A data frame with 3,548 rows and 2 variables}
+\format{
+A data frame with 3,548 rows and 2 variables
+}
 \usage{
 data(crowdflower_products)
 }
@@ -20,6 +22,6 @@ Crowdflower.
 }
 \references{
 Cavender-Bares, K., (2013). Judge emotion about brands & products. \cr \cr
-\url{https://www.crowdflower.com/data-for-everyone}
+Original URL: https://www.crowdflower.com/data-for-everyone
 }
 \keyword{datasets}

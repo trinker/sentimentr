@@ -145,7 +145,7 @@ NULL
 #' 
 #' A dataset containing a random sample (n = 5000 of 1,621,956) of Wang, Lu, & 
 #' Zhai's (2011) hotel reviews data set scraped by the authors from 
-#' \url{http://www.tripadvisor.com}.
+#' Original URL: http://www.tripadvisor.com.
 #' 
 #' @details 
 #' \itemize{ 
@@ -196,7 +196,7 @@ NULL
 #' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
 #' group to individual labels using deep features. Proceedings of the 21th ACM
 #' SIGKDD International Conference on Knowledge Discovery and Data Mining.
-#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
+#' 597-606. Original URL: http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 NULL
 
 
@@ -230,7 +230,7 @@ NULL
 #' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
 #' group to individual labels using deep features. Proceedings of the 21th ACM
 #' SIGKDD International Conference on Knowledge Discovery and Data Mining.
-#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
+#' 597-606. Original URL: http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 NULL
 
 
@@ -264,7 +264,7 @@ NULL
 #' @references Kotzias, D., Denil, M., De Freitas, N. & Smyth,P. (2015). From
 #' group to individual labels using deep features. Proceedings of the 21th ACM
 #' SIGKDD International Conference on Knowledge Discovery and Data Mining.
-#' 597-606. \url{http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf} 
+#' 597-606. Original URL: http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 NULL
 
 
@@ -285,7 +285,7 @@ NULL
 #' @name crowdflower_self_driving_cars 
 #' @usage data(crowdflower_self_driving_cars) 
 #' @format A data frame with 6,943 rows and 2 variables 
-#' @references \url{https://www.crowdflower.com/data-for-everyone}
+#' @references Original URL: https://www.crowdflower.com/data-for-everyone
 NULL 
 
 
@@ -305,7 +305,7 @@ NULL
 #' @name crowdflower_weather 
 #' @usage data(crowdflower_weather) 
 #' @format A data frame with 763 rows and 2 variables 
-#' @references \url{https://www.crowdflower.com/data-for-everyone}
+#' @references Original URL: https://www.crowdflower.com/data-for-everyone
 NULL 
 
 
@@ -325,7 +325,7 @@ NULL
 #' @name crowdflower_deflategate 
 #' @usage data(crowdflower_deflategate) 
 #' @format A data frame with 11,786 rows and 2 variables 
-#' @references \url{https://www.crowdflower.com/data-for-everyone}
+#' @references Original URL: https://www.crowdflower.com/data-for-everyone
 NULL 
 
 
@@ -347,7 +347,7 @@ NULL
 #' @usage data(crowdflower_products) 
 #' @format A data frame with 3,548 rows and 2 variables 
 #' @references Cavender-Bares, K., (2013). Judge emotion about brands & products. \cr \cr
-#' \url{https://www.crowdflower.com/data-for-everyone}
+#' Original URL: https://www.crowdflower.com/data-for-everyone
 NULL 
 
 
@@ -381,7 +381,7 @@ NULL
 #'    Reviews. Proceedings of Nineteeth National Conference on
 #'    Artificial Intelligence (AAAI-2004).
 #'
-#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+#' Original URL: \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 NULL
 
 
@@ -417,7 +417,7 @@ NULL
 #'    Reviews. Proceedings of Nineteeth National Conference on
 #'    Artificial Intelligence (AAAI-2004).
 #'
-#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+#' Original URL:  \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 NULL
 
 
@@ -453,7 +453,7 @@ NULL
 #'    Reviews. Proceedings of Nineteeth National Conference on
 #'    Artificial Intelligence (AAAI-2004).
 #'
-#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+#' Original URL: \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 NULL
 
 
@@ -522,6 +522,6 @@ NULL
 #'    Reviews. Proceedings of Nineteeth National Conference on
 #'    Artificial Intelligence (AAAI-2004).
 #'
-#' \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
+#' Original URL: \file{https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html}
 NULL
 

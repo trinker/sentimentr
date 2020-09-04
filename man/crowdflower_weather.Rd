@@ -4,7 +4,9 @@
 \name{crowdflower_weather}
 \alias{crowdflower_weather}
 \title{Twitter Tweets About the Weather}
-\format{A data frame with 763 rows and 2 variables}
+\format{
+A data frame with 763 rows and 2 variables
+}
 \usage{
 data(crowdflower_weather)
 }
@@ -19,6 +21,6 @@ Crowdflower.
 }
 }
 \references{
-\url{https://www.crowdflower.com/data-for-everyone}
+Original URL: https://www.crowdflower.com/data-for-everyone
 }
 \keyword{datasets}

@@ -118,7 +118,8 @@ plot(pres_emo_per_time)
 }
 }
 \seealso{
-Other emotion functions: \code{\link{emotion}}
+Other emotion functions: 
+\code{\link{emotion}()}
 }
 \concept{emotion functions}
 \keyword{emotion}

@@ -24,7 +24,6 @@
 #'   \item  sd - Standard deviation (\code{\link[stats]{sd}}) of the sentence level profanity rate by grouping variable
 #'   \item  ave_profanity - Profanity rate
 #' }
-#' @keywords profanity, cursing, vulgarity, cussing, bad-words
 #' @export
 #' @family profanity functions
 #' @section Chaining:

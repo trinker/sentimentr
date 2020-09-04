@@ -32,7 +32,6 @@
 #'   \item  sd - Standard deviation (\code{\link[stats]{sd}}) of the sentiment/polarity score by grouping variable
 #'   \item  ave_sentiment - Sentiment/polarity score \code{\link[base]{mean}} average by grouping variable
 #' }
-#' @keywords sentiment, polarity, group
 #' @export
 #' @family sentiment functions
 #' @section Chaining:

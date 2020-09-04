@@ -4,7 +4,9 @@
 \name{sam_i_am}
 \alias{sam_i_am}
 \title{Sam I Am Text}
-\format{A character vector with 169 elements}
+\format{
+A character vector with 169 elements
+}
 \usage{
 data(sam_i_am)
 }
