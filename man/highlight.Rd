@@ -33,6 +33,7 @@ Highlight sentences within elements (row IDs) by sentiment polarity
 (positive = green; negative = pink) as an html file.
 }
 \examples{
+\dontrun{
 library(data.table)
 dat <- presidential_debates_2012
 setDT(dat)
@@ -44,7 +45,6 @@ dat <- dat[, list(person=person[1L], time=time[1L], dialogue=paste(dialogue,
 
 (sent_dat <- with(dat, sentiment_by(dialogue_split, list(person, time))))
 
-\dontrun{
 highlight(sent_dat)
 
 ## tidy approach

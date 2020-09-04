@@ -860,7 +860,7 @@ to determine accuracy rates.
     group to individual labels using deep features*. Proceedings of the
     21th ACM SIGKDD International Conference on Knowledge Discovery and
     Data Mining. 597-606.
-    <http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf>
+    http&#58;//mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf
 
 ![](tools/figure/comparisons_between_sentiment_detectors_b.png)
 

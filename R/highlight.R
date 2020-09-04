@@ -13,6 +13,7 @@
 #' @return Generates an html document with text highlighting.
 #' @export
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' dat <- presidential_debates_2012
 #' setDT(dat)
@@ -24,7 +25,6 @@
 #'
 #' (sent_dat <- with(dat, sentiment_by(dialogue_split, list(person, time))))
 #'
-#' \dontrun{
 #' highlight(sent_dat)
 #' 
 #' ## tidy approach

@@ -24,6 +24,7 @@
 #' (x <- sentiment_by(mytext))
 #' uncombine(x)
 #'
+#' \dontrun{
 #' (y <- with(
 #'     presidential_debates_2012, 
 #'     sentiment_by(
@@ -32,6 +33,7 @@
 #'     )
 #' ))
 #' uncombine(y)
+#' }
 uncombine <- function(x, ...){
      UseMethod("uncombine")
 }
