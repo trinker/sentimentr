@@ -106,8 +106,3 @@ Other profanity functions:
 \code{\link{profanity_by}()}
 }
 \concept{profanity functions}
-\keyword{bad-words}
-\keyword{cursing,}
-\keyword{cussing,}
-\keyword{profanity,}
-\keyword{vulgarity,}

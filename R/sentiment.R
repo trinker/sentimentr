@@ -112,7 +112,7 @@
 #' \url{http://hedonometer.org/papers.html} Links to papers on hedonometrics
 #' @export
 #' @family sentiment functions
-#' @seealso \url{https://github.com/trestletech/Sermon-Sentiment-Analysis}
+#' @seealso Original URL: https://github.com/trestletech/Sermon-Sentiment-Analysis
 #' @note The polarity score is dependent upon the polarity dictionary used.
 #' This function defaults to a combined and augmented version of Jocker's (2017) 
 #' [originally exported by the \pkg{syuzhet} package] & Rinker's augmented Hu & Liu (2004) 

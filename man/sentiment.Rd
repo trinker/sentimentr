@@ -345,7 +345,7 @@ Halliday, M. A. K. & Hasan, R. (2013). Cohesion in English. New York, NY: Routle
 \url{http://hedonometer.org/papers.html} Links to papers on hedonometrics
 }
 \seealso{
-\url{https://github.com/trestletech/Sermon-Sentiment-Analysis}
+Original URL: https://github.com/trestletech/Sermon-Sentiment-Analysis
 
 Other sentiment functions: 
 \code{\link{sentiment_by}()}

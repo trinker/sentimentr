@@ -669,8 +669,8 @@ lookup based
 package, the [meanr](https://github.com/wrathematics/meanr) package
 (written in C level code), and my own algorithm with default combined
 Jockers (2017) & Rinker's augmented Hu & Liu (2004) polarity lexicons as
-well as Hu & Liu (2004) and [Baccianella, Esuli and Sebastiani's
-(2010)](http://sentiwordnet.isti.cnr.it/) SentiWord lexicons available
+well as Hu & Liu (2004) and Baccianella, Esuli and Sebastiani's
+(2010) SentiWord lexicons available
 from the [**lexicon**](https://github.com/trinker/lexicon) package.
 
     if (!require("pacman")) install.packages("pacman")
