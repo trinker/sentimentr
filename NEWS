@@ -28,7 +28,9 @@ BUG FIXES
   'character' vectors) and was not able to be used by `highlight`.  Spotted by
   Ken McGarry, see #104 for details.
   
-
+* `sentiment` would not work if the polarity table contained no spaced words.
+  Spotted by GitHub user mrwunderbar666 Ken McGarry, see #117 for details.
+  
 NEW FEATURES
 
 MINOR FEATURES

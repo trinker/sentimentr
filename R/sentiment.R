@@ -364,9 +364,13 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
         ][]
     }
  
-    # space fill (~~), break into words    
-    sent_dat[, 'words' := list(make_words(space_fill_senti(sentences, space_words), hyphen = hyphen))]
-
+    # space fill (~~), break into words 
+    if (length(space_words) == 0){
+        sent_dat[, 'words' := list(make_words(sentences, hyphen = hyphen))]
+    } else {
+        sent_dat[, 'words' := list(make_words(space_fill_senti(sentences, space_words), hyphen = hyphen))]
+    }
+    
     # make sentence id for each row id
     sent_dat[, id2:=seq_len(.N), by='id']
 
