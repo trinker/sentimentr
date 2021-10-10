@@ -1,7 +1,7 @@
 #' Calculate Text Polarity Sentiment
 #'
-#' Calculate text polarity sentiment at the sentence level and optionally
-#' aggregate by rows or grouping variable(s).
+#' Calculate text polarity sentiment in the English language at the sentence 
+#' level and optionally aggregate by rows or grouping variable(s).
 #' @docType package
 #' @name sentimentr
 #' @aliases sentimentr package-sentiment

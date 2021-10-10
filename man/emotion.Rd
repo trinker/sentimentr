@@ -14,6 +14,7 @@ emotion(
     lexicon::hash_nrc_emotions)),
   n.before = 5,
   n.after = 2,
+  retention_regex = "[^\\\\p{L};:,']",
   ...
 )
 }
@@ -65,6 +66,11 @@ the emotion word.  To consider the entire ending portion of a sentence
 use \code{n.after = Inf}.  Note that a comma, colon, or semicolon acts as a 
 boundary for considered words.  Only words between the emotion word and these
 punctuation types will be considered.}
+
+\item{retention_regex}{A regex of what characters to keep.  All other 
+characters will be removed.  Note that when this is used all text is lower 
+case format.  Only adjust this parameter if you really understand how it is 
+used.}
 
 \item{\ldots}{ignored.}
 }

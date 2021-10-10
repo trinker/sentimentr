@@ -27,10 +27,25 @@ sentimentr 2.8.0 -
 * `sentiment_by` did not capture `averaging.function` for some data types (e.g.,
   'character' vectors) and was not able to be used by `highlight`.  Spotted by
   Ken McGarry, see #104 for details.
-
+  
+* `sentiment` would not work if the polarity table contained no spaced words.
+  Spotted by GitHub user mrwunderbar666 Ken McGarry, see #117 for details.
+  
 **NEW FEATURES**
 
 **MINOR FEATURES**
+
+* `sentiment` and `emotion` (`sentiment_by` & `emotion_by` inherit this as well)
+  pick up a `retention_regex` argument.  This regex was previously hard-coded in
+  the function and didn't give users access to change this.  The previous
+  version "\\d:\\d|\\d\\s|[^a-z',;: ]" was switched to 
+  "\\d:\\d|\\d\\s|[^\\p{L}',;: ]" as the later swaps 'a-z' for \p{L} meaning 
+  more alphabetic characters are retained.  While <a href="https://github.com/trinker/sentimentr" target="_blank">sentimentr</a> has not been 
+  tested on other languages, this opens up the possibility for use with other
+  (especially Germanic) languages.  Thank you to johanneswaage and Matthias2018 
+  for raising awareness of this issue and Dominique EMMANUEL for suggesting a 
+  potetial way forward.  This suggestion led to the reworking and current approach.
+  See (see issues #74, #79 & #118 for more).
 
 **IMPROVEMENTS**
 

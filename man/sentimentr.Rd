@@ -6,6 +6,6 @@
 \alias{package-sentiment}
 \title{Calculate Text Polarity Sentiment}
 \description{
-Calculate text polarity sentiment at the sentence level and optionally
-aggregate by rows or grouping variable(s).
+Calculate text polarity sentiment in the English language at the sentence 
+level and optionally aggregate by rows or grouping variable(s).
 }

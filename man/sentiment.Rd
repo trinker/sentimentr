@@ -16,6 +16,7 @@ sentiment(
   adversative.weight = 0.25,
   neutral.nonverb.like = FALSE,
   missing_value = 0,
+  retention_regex = "\\\\d:\\\\d|\\\\d\\\\s|[^\\\\p{L}',;: ]",
   ...
 )
 }
@@ -114,6 +115,11 @@ results will come from setting this argument to \code{TRUE}.}
 
 \item{missing_value}{A value to replace \code{NA}/\code{NaN} with.  Use
 \code{NULL} to retain missing values.}
+
+\item{retention_regex}{A regex of what characters to keep.  All other 
+characters will be removed.  Note that when this is used all text is lower 
+case format.  Only adjust this parameter if you really understand how it is 
+used.}
 
 \item{\ldots}{Ignored.}
 }
@@ -328,7 +334,50 @@ combined_emoji <- update_polarity_table(
 x \%>\%
     mutate(Tweet = replace_emoji_identifier(Tweet)) \%$\%
     sentiment(Tweet, polarity_dt = combined_emoji)
+    
+## Use With Non-ASCII
+## Warning: sentimentr has not been tested with languages other than English.
+## The example below is how one might use sentimentr if you believe the 
+## language you are working with are similar enough in grammar to for
+## sentimentr to be viable (likely Germanic languages)
+## english_sents <- c(
+##     "I hate bad people.",
+##     "I like yummy cookie.",
+##     "I don't love you anymore; sorry."
+## )
 
+## Roughly equivalent to the above English
+danish_sents <- stringi::stri_unescape_unicode(c(
+    "Jeg hader d\\\\u00e5rlige mennesker.", 
+    "Jeg kan godt lide l\\\\u00e6kker is.", 
+    "Jeg elsker dig ikke mere; undskyld."
+))
+
+danish_sents
+
+## Polarity terms
+polterms <- stringi::stri_unescape_unicode(
+    c('hader', 'd\\\\u00e5rlige', 'undskyld', 'l\\\\u00e6kker', 'kan godt', 'elsker')
+)
+
+## Make polarity_dt
+danish_polarity <- as_key(data.frame(
+    x = stringi::stri_unescape_unicode(polterms),
+    y = c(-1, -1, -1, 1, 1, 1)
+))
+
+## Make valence_shifters_dt
+danish_valence_shifters <- as_key(
+    data.frame(x='ikke', y="1"), 
+    sentiment = FALSE, 
+    comparison = NULL
+)
+
+sentiment(
+    danish_sents, 
+    polarity_dt = danish_polarity, 
+    valence_shifters_dt = danish_valence_shifters
+)
 }
 }
 \references{
@@ -340,7 +389,7 @@ reviews. National Conference on Artificial Intelligence.
 
 Halliday, M. A. K. & Hasan, R. (2013). Cohesion in English. New York, NY: Routledge.
 
-\url{http://www.slideshare.net/jeffreybreen/r-by-example-mining-twitter-for}
+\url{https://www.slideshare.net/jeffreybreen/r-by-example-mining-twitter-for}
 
 \url{http://hedonometer.org/papers.html} Links to papers on hedonometrics
 }
