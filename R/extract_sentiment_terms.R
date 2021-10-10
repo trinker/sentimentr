@@ -8,6 +8,10 @@
 #' @param hyphen The character string to replace hyphens with.  Default replaces
 #' with nothing so 'sugar-free' becomes 'sugarfree'.  Setting \code{hyphen = " "}
 #' would result in a space between words (e.g., 'sugar free').
+#' @param retention_regex A regex of what characters to keep.  All other 
+#' characters will be removed.  Note that when this is used all text is lower 
+#' case format.  Only adjust this parameter if you really understand how it is 
+#' used.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} with columns of positive and 
 #' negative terms.  In addition, the attributes \code{$counts} and \code{$elements}
@@ -78,7 +82,7 @@
 #' mtext("Positive (red) & Negative (blue) Words", side = 3, padj = 5)
 #' }
 extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
-    hyphen = "", ...){
+    hyphen = "", retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
 
     UseMethod('extract_sentiment_terms')   
 }
@@ -86,7 +90,8 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_senti
 #' @export
 #' @method extract_sentiment_terms get_sentences_character
 extract_sentiment_terms.get_sentences_character <- function(text.var, 
-    polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", ...){
+    polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", 
+    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
 
     sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
 
@@ -100,7 +105,7 @@ extract_sentiment_terms.get_sentences_character <- function(text.var,
     # space fill (~~), break into words
     sents <- text.var
    
-    sent_dat <- make_sentence_df2(sents)
+    sent_dat <- make_sentence_df2(sents, retention_regex = retention_regex)
     sent_dat[, 'words' := list(make_words(space_fill_senti(sentences, space_words), hyphen = hyphen))]
 
     # make sentence id for each row id
@@ -161,12 +166,14 @@ extract_sentiment_terms.get_sentences_character <- function(text.var,
 #' @export
 #' @method extract_sentiment_terms get_sentences_data_frame
 extract_sentiment_terms.get_sentences_data_frame  <- function(text.var, 
-    polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", ...){
+    polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", 
+    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
     
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], 
         "get_sentences", "get_sentences_character")
 
-    extract_sentiment_terms(x, polarity_dt = polarity_dt, hyphen = hyphen, ...)
+    extract_sentiment_terms(x, polarity_dt = polarity_dt, hyphen = hyphen, 
+        retention_regex = retention_regex, ...)
 
 }
 
@@ -174,12 +181,14 @@ extract_sentiment_terms.get_sentences_data_frame  <- function(text.var,
 #' @export
 #' @method extract_sentiment_terms character
 extract_sentiment_terms.character  <- function(text.var, 
-    polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", ...){
+    polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", 
+    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
 
     split_warn(text.var, 'extract_sentiment', ...)
 
     sents <- get_sentences(text.var)      
-    extract_sentiment_terms(sents, polarity_dt = polarity_dt, hyphen = hyphen, ...)
+    extract_sentiment_terms(sents, polarity_dt = polarity_dt, hyphen = hyphen, 
+        retention_regex = retention_regex, ...)
 
     
 }

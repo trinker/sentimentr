@@ -412,6 +412,7 @@ emotion.character <- function(text.var,
         drop.unused.emotions = drop.unused.emotions,
         un.as.negation = un.as.negation, 
         un.as.negation.warn = un.as.negation.warn, 
+        retention_regex = retention_regex,
         n.before = n.before, 
         n.after = n.after,
         

@@ -35,11 +35,11 @@ sentimentr 2.8.0 -
 
 **MINOR FEATURES**
 
-* `sentiment` and `emotion` (`sentiment_by` & `emotion_by` inherit this as well)
-  pick up a `retention_regex` argument.  This regex was previously hard-coded in
-  the function and didn't give users access to change this.  The previous
-  version "\\d:\\d|\\d\\s|[^a-z',;: ]" was switched to 
-  "\\d:\\d|\\d\\s|[^\\p{L}',;: ]" as the later swaps 'a-z' for \p{L} meaning 
+* `sentiment` and `emotion` (`sentiment_by`, `emotion_by` & their `extract_` 
+  methods inherit this as well) pick up a `retention_regex` argument.  This 
+  regex was previously hard-coded in the function and didn't give users access 
+  to change this.  The previous version "\\d:\\d|\\d\\s|[^a-z',;: ]" was switched 
+  to "\\d:\\d|\\d\\s|[^\\p{L}',;: ]" as the later swaps 'a-z' for \p{L} meaning 
   more alphabetic characters are retained.  While <a href="https://github.com/trinker/sentimentr" target="_blank">sentimentr</a> has not been 
   tested on other languages, this opens up the possibility for use with other
   (especially Germanic) languages.  Thank you to johanneswaage and Matthias2018 

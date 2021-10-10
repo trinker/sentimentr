@@ -8,6 +8,7 @@ extract_emotion_terms(
   text.var,
   emotion_dt = lexicon::hash_nrc_emotions,
   un.as.negation = TRUE,
+  retention_regex = "[^\\\\p{L};:,']",
   ...
 )
 }
@@ -28,6 +29,11 @@ with an 'un-' are treated as a negation.  For example,\code{"unhappy"} would
 be treated as \code{"not happy"}.  If an emotion word has an un- version in the
 \code{emotion_dt} then no substitution is performed and an optional warning
 will be given.}
+
+\item{retention_regex}{A regex of what characters to keep.  All other 
+characters will be removed.  Note that when this is used all text is lower 
+case format.  Only adjust this parameter if you really understand how it is 
+used.}
 
 \item{\ldots}{Ignored.}
 }
