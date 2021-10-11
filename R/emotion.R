@@ -130,7 +130,7 @@ emotion <- function(text.var,
     valence_shifters_dt = lexicon::hash_valence_shifters, 
     drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
-    n.before = 5, n.after = 2, retention_regex = "[^\\p{L};:,\']", ...) {
+    n.before = 5, n.after = 2, retention_regex = "[^[:alpha:];:,\']", ...) {
     
     UseMethod('emotion')
     
@@ -145,7 +145,7 @@ emotion.get_sentences_character <- function(text.var,
     valence_shifters_dt = lexicon::hash_valence_shifters, 
     drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
-    n.before = 5, n.after = 2, retention_regex = "[^\\p{L};:,\']", ...) {
+    n.before = 5, n.after = 2, retention_regex = "[^[:alpha:];:,\']", ...) {
     
     emotion <- emo_loc <- comma_loc <- negator_loc <- is_emo <- y <- NULL
     is_negator <- is_negated <- emotion_count <- token <- hit <- word_count <- NULL
@@ -401,7 +401,7 @@ emotion.character <- function(text.var,
     valence_shifters_dt = lexicon::hash_valence_shifters, 
     drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
-    n.before = 5, n.after = 2, retention_regex = "[^\\p{L};:,\']", ...) {
+    n.before = 5, n.after = 2, retention_regex = "[^[:alpha:];:,\']", ...) {
 
     split_warn(text.var, 'emotion', ...)
     
@@ -429,7 +429,7 @@ emotion.get_sentences_data_frame <- function(text.var,
     valence_shifters_dt = lexicon::hash_valence_shifters, 
     drop.unused.emotions = FALSE, un.as.negation = TRUE,
     un.as.negation.warn = isTRUE(all.equal(valence_shifters_dt, lexicon::hash_nrc_emotions)), 
-    n.before = 5, n.after = 2, retention_regex = "[^\\p{L};:,\']", ...) {
+    n.before = 5, n.after = 2, retention_regex = "[^[:alpha:];:,\']", ...) {
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 

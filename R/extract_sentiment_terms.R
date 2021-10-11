@@ -82,7 +82,7 @@
 #' mtext("Positive (red) & Negative (blue) Words", side = 3, padj = 5)
 #' }
 extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
-    hyphen = "", retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    hyphen = "", retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
 
     UseMethod('extract_sentiment_terms')   
 }
@@ -91,7 +91,7 @@ extract_sentiment_terms  <- function(text.var, polarity_dt = lexicon::hash_senti
 #' @method extract_sentiment_terms get_sentences_character
 extract_sentiment_terms.get_sentences_character <- function(text.var, 
     polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
 
     sentences <- sentence <- sentence_id <- P <- polarity <- n <- words <- N <- . <- NULL
 
@@ -167,7 +167,7 @@ extract_sentiment_terms.get_sentences_character <- function(text.var,
 #' @method extract_sentiment_terms get_sentences_data_frame
 extract_sentiment_terms.get_sentences_data_frame  <- function(text.var, 
     polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
     
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], 
         "get_sentences", "get_sentences_character")
@@ -182,7 +182,7 @@ extract_sentiment_terms.get_sentences_data_frame  <- function(text.var,
 #' @method extract_sentiment_terms character
 extract_sentiment_terms.character  <- function(text.var, 
     polarity_dt = lexicon::hash_sentiment_jockers_rinker, hyphen = "", 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
 
     split_warn(text.var, 'extract_sentiment', ...)
 

@@ -359,7 +359,7 @@ sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_ri
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
     
     UseMethod('sentiment')
     
@@ -373,7 +373,7 @@ sentiment.get_sentences_character <- function(text.var, polarity_dt = lexicon::h
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
 
     sentences <- id2 <- pol_loc <- comma_loc <- P <- non_pol <- lens <-
             cluster_tag <- w_neg <- neg <- A <- a <- D <- d <- wc <- id <-
@@ -570,7 +570,7 @@ sentiment.character <- function(text.var, polarity_dt = lexicon::hash_sentiment_
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
 
     split_warn(text.var, 'sentiment', ...)
     
@@ -591,7 +591,7 @@ sentiment.get_sentences_data_frame <- function(text.var, polarity_dt = lexicon::
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
     amplifier.weight = .8, n.before = 5, n.after = 2, question.weight = 1,
     adversative.weight = .25, neutral.nonverb.like = FALSE, missing_value = 0, 
-    retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]", ...){
+    retention_regex = "\\d:\\d|\\d\\s|[^[:alpha:]',;: ]", ...){
  
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], "get_sentences", "get_sentences_character")
 

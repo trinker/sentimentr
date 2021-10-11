@@ -75,7 +75,7 @@
 #' }
 extract_emotion_terms  <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
-    un.as.negation = TRUE, retention_regex = "[^\\p{L};:,\']",
+    un.as.negation = TRUE, retention_regex = "[^[:alpha:];:,\']",
     ...){
 
     UseMethod('extract_emotion_terms')   
@@ -85,7 +85,7 @@ extract_emotion_terms  <- function(text.var,
 #' @method extract_emotion_terms get_sentences_character
 extract_emotion_terms.get_sentences_character <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
-    un.as.negation = TRUE, retention_regex = "[^\\p{L};:,\']", 
+    un.as.negation = TRUE, retention_regex = "[^[:alpha:];:,\']", 
     ...){
 
     sentences <- sentence <- sentence_id <- n <- words <- N <- . <- NULL
@@ -193,7 +193,7 @@ extract_emotion_terms.get_sentences_character <- function(text.var,
 #' @method extract_emotion_terms get_sentences_data_frame
 extract_emotion_terms.get_sentences_data_frame  <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
-    un.as.negation = TRUE, retention_regex = "[^\\p{L};:,\']", 
+    un.as.negation = TRUE, retention_regex = "[^[:alpha:];:,\']", 
     ...){
     
     x <- make_class(text.var[[attributes(text.var)[['text.var']]]], 
@@ -209,7 +209,7 @@ extract_emotion_terms.get_sentences_data_frame  <- function(text.var,
 #' @method extract_emotion_terms character
 extract_emotion_terms.character  <- function(text.var, 
     emotion_dt = lexicon::hash_nrc_emotions, 
-    un.as.negation = TRUE, retention_regex = "[^\\p{L};:,\']", 
+    un.as.negation = TRUE, retention_regex = "[^[:alpha:];:,\']", 
     ...){
     
     split_warn(text.var, 'extract_emotion', ...)
