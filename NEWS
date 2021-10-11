@@ -26,10 +26,10 @@ BUG FIXES
 
 * `sentiment_by` did not capture `averaging.function` for some data types (e.g.,
   'character' vectors) and was not able to be used by `highlight`.  Spotted by
-  Ken McGarry, see #104 for details.
+  Ken McGarry (see #104 for details).
   
 * `sentiment` would not work if the polarity table contained no spaced words.
-  Spotted by GitHub user mrwunderbar666 Ken McGarry, see #117 for details.
+  Spotted by GitHub user mrwunderbar666 (see #117 for details).
   
 NEW FEATURES
 
@@ -48,6 +48,11 @@ MINOR FEATURES
   See (see issues #74, #79 & #118 for more).
 
 IMPROVEMENTS
+
+* Added description of what the numeric value of `sentiment()` means (see 
+  **Results** in `?sentiment`) and examples of hot to bin the score to a
+  3 category `c('Negative', 'Neutral', 'Positive')` factor output.  These 
+  improvements in documentation came from Sadettin Demirel (see #128).
 
 CHANGES
 

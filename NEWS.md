@@ -26,10 +26,10 @@ sentimentr 2.8.0 -
 
 * `sentiment_by` did not capture `averaging.function` for some data types (e.g.,
   'character' vectors) and was not able to be used by `highlight`.  Spotted by
-  Ken McGarry, see <a href="https://github.com/trinker/sentimentr/issues/104">#104</a> for details.
+  Ken McGarry (see <a href="https://github.com/trinker/sentimentr/issues/104">#104</a> for details).
   
 * `sentiment` would not work if the polarity table contained no spaced words.
-  Spotted by GitHub user mrwunderbar666 Ken McGarry, see <a href="https://github.com/trinker/sentimentr/issues/117">#117</a> for details.
+  Spotted by GitHub user mrwunderbar666 (see <a href="https://github.com/trinker/sentimentr/issues/117">#117</a> for details).
   
 **NEW FEATURES**
 
@@ -48,6 +48,11 @@ sentimentr 2.8.0 -
   See (see issues <a href="https://github.com/trinker/sentimentr/issues/74">#74</a>, <a href="https://github.com/trinker/sentimentr/issues/79">#79</a> & <a href="https://github.com/trinker/sentimentr/issues/118">#118</a> for more).
 
 **IMPROVEMENTS**
+
+* Added description of what the numeric value of `sentiment()` means (see 
+  **Results** in `?sentiment`) and examples of hot to bin the score to a
+  3 category `c('Negative', 'Neutral', 'Positive')` factor output.  These 
+  improvements in documentation came from Sadettin Demirel (see <a href="https://github.com/trinker/sentimentr/issues/128">#128</a>).
 
 **CHANGES**
 

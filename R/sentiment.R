@@ -94,15 +94,16 @@
 #' @param retention_regex A regex of what characters to keep.  All other 
 #' characters will be removed.  Note that when this is used all text is lower 
 #' case format.  Only adjust this parameter if you really understand how it is 
-#' used.  Note that swapping the \code{\\\\{p}} for \code{[^[:alpha:];:,\']} may 
-#' retain more alpha letters but will likely decrease speed.
+#' used.  Note that swapping the \code{\\p{L}} for \code{[^[:alpha:];:,\']} may 
+#' retain more alpha letters but will likely decrease speed.  See examples below 
+#' for how to test the need for \\p{L}.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
 #'   \item  element_id - The id number of the original vector passed to \code{sentiment}
 #'   \item  sentence_id - The id number of the sentences within each \code{element_id}
 #'   \item  word_count - Word count
-#'   \item  sentiment - Sentiment/polarity score
+#'   \item  sentiment - Sentiment/polarity score (note: sentiments less than zero is negative, 0 is neutral, and greater than zero positive polarity)
 #' }
 #' @references Jockers, M. L. (2017). Syuzhet: Extract sentiment and plot arcs 
 #' from text. Retrieved from https://github.com/mjockers/syuzhet
@@ -263,6 +264,27 @@
 #' sentiment(y)
 #' sentiment(y, n.before=Inf)
 #' 
+#' \dontrun{## Categorize the polarity (tidyverse vs. data.table):
+#' library(dplyr)
+#' sentiment(mytext) %>%
+#' as_tibble() %>%
+#'     mutate(category = case_when(
+#'         sentiment < 0 ~ 'Negative', 
+#'         sentiment == 0 ~ 'Neutral', 
+#'         sentiment > 0 ~ 'Positive'
+#'     ) %>%
+#'     factor(levels = c('Negative', 'Neutral', 'Positive'))
+#' )
+#' 
+#' library(data.table)
+#' dt <- sentiment(mytext)[, category := factor(fcase(
+#'         sentiment < 0, 'Negative', 
+#'         sentiment == 0, 'Neutral', 
+#'         sentiment > 0, 'Positive'
+#'     ), levels = c('Negative', 'Neutral', 'Positive'))][]
+#' dt
+#' }
+#' 
 #' dat <- data.frame(
 #'     w = c('Person 1', 'Person 2'),
 #'     x = c(paste0(
@@ -357,10 +379,12 @@
 #'     retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]"
 #' )
 #' 
-#' ## A way to test if you need [:alpha:] vs \\p{L}
-#' ## Does it wreck some of the non-ascii characters by default?
+#' ## A way to test if you need [:alpha:] vs \\p{L} in `retention_regex`:
+#' 
+#' ## 1. Does it wreck some of the non-ascii characters by default?
 #' sentimentr:::make_sentence_df2(danish_sents) 
-#' ## Does this?
+#' 
+#' ## 2.Does this?
 #' sentimentr:::make_sentence_df2(danish_sents, "\\d:\\d|\\d\\s|[^\\p{L}',;: ]")
 #' 
 #' ## If you answer yes to #1 but no to #2 you likely want \\p{L}
