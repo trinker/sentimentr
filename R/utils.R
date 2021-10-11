@@ -160,7 +160,7 @@ make_words <- function(x, hyphen = ""){
 #     dat[, indx:= wc < 1, by=c('id', 'sentences', 'wc')][(indx), c('sentences', 'wc'):=NA][, 
 #         indx:=NULL]
 # }
-make_sentence_df2 <- function(sents, retention_regex = "[^\\p{L}',;: ]|\\d:\\d|\\d "){
+make_sentence_df2 <- function(sents, retention_regex = "[^[:alpha:]',;: ]|\\d:\\d|\\d "){
 
     indx <- wc <- NULL
 

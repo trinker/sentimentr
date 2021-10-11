@@ -356,6 +356,14 @@
 #'     valence_shifters_dt = danish_valence_shifters, 
 #'     retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]"
 #' )
+#' 
+#' ## A way to test if you need [:alpha:] vs \\p{L}
+#' ## Does it wreck some of the non-ascii characters by default?
+#' sentimentr:::make_sentence_df2(danish_sents) 
+#' ## Does this?
+#' sentimentr:::make_sentence_df2(danish_sents, "\\d:\\d|\\d\\s|[^\\p{L}',;: ]")
+#' 
+#' ## If you answer yes to #1 but no to #2 you likely want \\p{L}
 #' }
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
     valence_shifters_dt = lexicon::hash_valence_shifters, hyphen = "",
