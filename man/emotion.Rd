@@ -14,7 +14,7 @@ emotion(
     lexicon::hash_nrc_emotions)),
   n.before = 5,
   n.after = 2,
-  retention_regex = "[^\\\\p{L};:,']",
+  retention_regex = "[^[:alpha:];:,']",
   ...
 )
 }
@@ -70,7 +70,8 @@ punctuation types will be considered.}
 \item{retention_regex}{A regex of what characters to keep.  All other 
 characters will be removed.  Note that when this is used all text is lower 
 case format.  Only adjust this parameter if you really understand how it is 
-used.}
+used.  Note that swapping the \code{\\\\{p}} for \code{[^[:alpha:];:,\']} may 
+retain more alpha letters but will likely decrease speed.}
 
 \item{\ldots}{ignored.}
 }

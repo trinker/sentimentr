@@ -59,6 +59,10 @@ update_news <- function(repo = basename(getwd())) {
     News <- gsub(sprintf(" %s", repo),
         sprintf(" <a href=\"https://github.com/trinker/%s\" target=\"_blank\">%s</a>",
         repo, repo), News)
+    
+    News <- gsub(pattern="(#)([0-9]+)",
+        replacement=sprintf("<a href=\"https://github.com/trinker/%s/issues/\\2\">#\\2</a>", repo),
+        x=News)    
 
     cat(paste(News, collapse = "\n"), file = "NEWS.md")
     message("news.md updated")

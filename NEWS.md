@@ -26,10 +26,10 @@ sentimentr 2.8.0 -
 
 * `sentiment_by` did not capture `averaging.function` for some data types (e.g.,
   'character' vectors) and was not able to be used by `highlight`.  Spotted by
-  Ken McGarry, see #104 for details.
+  Ken McGarry, see <a href="https://github.com/trinker/sentimentr/issues/104">#104</a> for details.
   
 * `sentiment` would not work if the polarity table contained no spaced words.
-  Spotted by GitHub user mrwunderbar666 Ken McGarry, see #117 for details.
+  Spotted by GitHub user mrwunderbar666 Ken McGarry, see <a href="https://github.com/trinker/sentimentr/issues/117">#117</a> for details.
   
 **NEW FEATURES**
 
@@ -38,14 +38,14 @@ sentimentr 2.8.0 -
 * `sentiment` and `emotion` (`sentiment_by`, `emotion_by` & their `extract_` 
   methods inherit this as well) pick up a `retention_regex` argument.  This 
   regex was previously hard-coded in the function and didn't give users access 
-  to change this.  The previous version "\\d:\\d|\\d\\s|[^a-z',;: ]" was switched 
-  to "\\d:\\d|\\d\\s|[^\\p{L}',;: ]" as the later swaps 'a-z' for \p{L} meaning 
+  to change this.  The previous version `"\\d:\\d|\\d\\s|[^a-z',;: ]"` was switched 
+  to `"\\d:\\d|\\d\\s|[^[:alpha:]',;: ]"` as the later swaps `a-z` for `[:alpha:]` meaning 
   more alphabetic characters are retained.  While <a href="https://github.com/trinker/sentimentr" target="_blank">sentimentr</a> has not been 
   tested on other languages, this opens up the possibility for use with other
   (especially Germanic) languages.  Thank you to johanneswaage and Matthias2018 
   for raising awareness of this issue and Dominique EMMANUEL for suggesting a 
   potetial way forward.  This suggestion led to the reworking and current approach.
-  See (see issues #74, #79 & #118 for more).
+  See (see issues <a href="https://github.com/trinker/sentimentr/issues/74">#74</a>, <a href="https://github.com/trinker/sentimentr/issues/79">#79</a> & <a href="https://github.com/trinker/sentimentr/issues/118">#118</a> for more).
 
 **IMPROVEMENTS**
 
@@ -73,11 +73,11 @@ sentimentr 2.7.0 - 2.7.1
   chunking that created the tokens {'he', 'gave time honored', 'then'}.  The
   token 'gave time honored' was not matched by either "gave time" or "time honored"
   resulting in a zero polarity score.  Spotted thanks to GitHub user @swlazlowski
-  (see #102).
+  (see <a href="https://github.com/trinker/sentimentr/issues/102">#102</a>).
   
 * `highlight()` used `mean()` as the averaging function regardless of the 
   `averaging.function` argument supplied to `sentiment_by()`.  This behavior has
-  been corrected.  Spotted thanks to Kelvin Lam (see #103).
+  been corrected.  Spotted thanks to Kelvin Lam (see <a href="https://github.com/trinker/sentimentr/issues/103">#103</a>).
 
 **NEW FEATURES**
 
@@ -106,7 +106,7 @@ sentimentr 2.5.0 - 2.6.1
   was not called.
   
 * `combine_data` contained a bug in which data sets with extra columns were not 
-  combined and resulted in an error (see #94).
+  combined and resulted in an error (see <a href="https://github.com/trinker/sentimentr/issues/94">#94</a>).
   
 * If a dataset was passed to `get_sentences()` that had a column named 
   `sentiment` and was then passed to `sentiment_by()`, the `sentiment` from the 
@@ -146,7 +146,7 @@ sentimentr 2.4.0 - 2.4.2
   de-amplifier weights below -1 are capped at -1 lower bound.  To compute the 
   weight for de-amplifiers this was added with 1 and then multiplied by the
   polity score.  Adding 1 and -1 resulted in 0 * polarity = 0.  This was spotted 
-  thanks to Ashley Wysocki (see #80).  In the case Ashley's example was with an
+  thanks to Ashley Wysocki (see <a href="https://github.com/trinker/sentimentr/issues/80">#80</a>).  In the case Ashley's example was with an
   adversative conjunction which is treated as an extreme amplifier, which when 
   combined with a negator, is treated as a de-amplifier.  This resulted in a -1 
   De-amplifier score.  De-amplifiers are now capped at -.999 rather than -1 to 
@@ -156,7 +156,7 @@ sentimentr 2.4.0 - 2.4.2
   way: "An adversative conjunction before the polarized word...up-weights the 
   cluster...An adversative conjunction after the polarized word down-weights the 
   cluster...".  A bug was introduced in which up-weighting happened to the first 
-  clause as well.  This bug has been reversed.  See #85.
+  clause as well.  This bug has been reversed.  See <a href="https://github.com/trinker/sentimentr/issues/85">#85</a>.
 
 * The **README** contained a reference to the **magritrr** rather than the 
   **magrittr** package.
@@ -245,7 +245,7 @@ sentimentr 2.0.1
 * `get_sentences` assigned the class to the data.frame when a data.frame was 
   passed but not to the text column, meaning the individual column could not be 
   passed to `sentiment` or `sentiment_by` without having sentence boundary 
-  detection re-done.  This has been fixed.  See #53.
+  detection re-done.  This has been fixed.  See <a href="https://github.com/trinker/sentimentr/issues/53">#53</a>.
 
 
 
@@ -256,12 +256,12 @@ sentimentr 1.0.1 - 2.0.0
 
 * `sentiment_attributes` gave an incorrect count of words.  This has been fixed 
   and number of tokens is reported as well now.  Thanks to Siva Kottapalli for
-  catching this (see #42).
+  catching this (see <a href="https://github.com/trinker/sentimentr/issues/42">#42</a>).
   
 * `extract_sentiment_terms` did not return positive, negative, and/or neutral
   columns if these terms didn't exist in the data passed to `text.var` making it 
   difficult to use for programming.  Thanks to Siva Kottapalli for
-  catching this (see #41).
+  catching this (see <a href="https://github.com/trinker/sentimentr/issues/41">#41</a>).
   
 * `rescale_general` would allow `keep.zero` when `lower` &gt;= 0 meaning the 
 original mid values were rescaled lower than the lowest values.
@@ -355,7 +355,7 @@ sentimentr 0.3.0 - 0.4.0
 **BUG FIXES**
 
 * Missing documentation for `but' conjunctions added to the documentation.  
-  Spotted by Richard Watson (see #23).
+  Spotted by Richard Watson (see <a href="https://github.com/trinker/sentimentr/issues/23">#23</a>).
   
 **NEW FEATURES**
 
@@ -373,11 +373,11 @@ sentimentr 0.2.0 - 0.2.3
 
 **BUG FIXES**
 
-* Commas were not handled properly in some cases.  This has been fixed (see #7).
+* Commas were not handled properly in some cases.  This has been fixed (see <a href="https://github.com/trinker/sentimentr/issues/7">#7</a>).
 
 * `highlight` parsed sentences differently than the main `sentiment` function 
   resulting in an error when `original.text` was supplied that contained a colon
-  or semi-colon.  Spotted by Patrick Carlson (see #2).
+  or semi-colon.  Spotted by Patrick Carlson (see <a href="https://github.com/trinker/sentimentr/issues/2">#2</a>).
 
 **MINOR FEATURES**
 

@@ -16,7 +16,7 @@ sentiment(
   adversative.weight = 0.25,
   neutral.nonverb.like = FALSE,
   missing_value = 0,
-  retention_regex = "\\\\d:\\\\d|\\\\d\\\\s|[^\\\\p{L}',;: ]",
+  retention_regex = "\\\\d:\\\\d|\\\\d\\\\s|[^[:alpha:]',;: ]",
   ...
 )
 }
@@ -119,7 +119,8 @@ results will come from setting this argument to \code{TRUE}.}
 \item{retention_regex}{A regex of what characters to keep.  All other 
 characters will be removed.  Note that when this is used all text is lower 
 case format.  Only adjust this parameter if you really understand how it is 
-used.}
+used.  Note that swapping the \code{\\\\{p}} for \code{[^[:alpha:];:,\']} may 
+retain more alpha letters but will likely decrease speed.}
 
 \item{\ldots}{Ignored.}
 }
@@ -376,7 +377,8 @@ danish_valence_shifters <- as_key(
 sentiment(
     danish_sents, 
     polarity_dt = danish_polarity, 
-    valence_shifters_dt = danish_valence_shifters
+    valence_shifters_dt = danish_valence_shifters, 
+    retention_regex = "\\\\d:\\\\d|\\\\d\\\\s|[^\\\\p{L}',;: ]"
 )
 }
 }

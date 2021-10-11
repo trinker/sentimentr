@@ -11,7 +11,8 @@
 #' @param retention_regex A regex of what characters to keep.  All other 
 #' characters will be removed.  Note that when this is used all text is lower 
 #' case format.  Only adjust this parameter if you really understand how it is 
-#' used.
+#' used.  Note that swapping the \code{\\\\{p}} for \code{[^[:alpha:];:,\']} may 
+#' retain more alpha letters but will likely decrease speed.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} with columns of positive and 
 #' negative terms.  In addition, the attributes \code{$counts} and \code{$elements}

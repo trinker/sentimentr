@@ -94,7 +94,8 @@
 #' @param retention_regex A regex of what characters to keep.  All other 
 #' characters will be removed.  Note that when this is used all text is lower 
 #' case format.  Only adjust this parameter if you really understand how it is 
-#' used.
+#' used.  Note that swapping the \code{\\\\{p}} for \code{[^[:alpha:];:,\']} may 
+#' retain more alpha letters but will likely decrease speed.
 #' @param \ldots Ignored.
 #' @return Returns a \pkg{data.table} of:
 #' \itemize{
@@ -352,7 +353,8 @@
 #' sentiment(
 #'     danish_sents, 
 #'     polarity_dt = danish_polarity, 
-#'     valence_shifters_dt = danish_valence_shifters
+#'     valence_shifters_dt = danish_valence_shifters, 
+#'     retention_regex = "\\d:\\d|\\d\\s|[^\\p{L}',;: ]"
 #' )
 #' }
 sentiment <- function(text.var, polarity_dt = lexicon::hash_sentiment_jockers_rinker,
