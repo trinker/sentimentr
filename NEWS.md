@@ -19,7 +19,7 @@ And constructed with the following guidelines:
 
 
 
-sentimentr 2.8.0 - 
+sentimentr 2.8.0 - 2.9.0
 ---------------------------------------------------------------
 
 **BUG FIXES**
@@ -34,7 +34,6 @@ sentimentr 2.8.0 -
 * `emotion` would not give the correct response when the `text.var` contained no
   negated words.  Spotted by git-igor (see <a href="https://github.com/trinker/sentimentr/issues/108">#108</a> for details).
   
-**NEW FEATURES**
 
 **MINOR FEATURES**
 
@@ -56,8 +55,6 @@ sentimentr 2.8.0 -
   **Results** in `?sentiment`) and examples of hot to bin the score to a
   3 category `c('Negative', 'Neutral', 'Positive')` factor output.  These 
   improvements in documentation came from Sadettin Demirel (see <a href="https://github.com/trinker/sentimentr/issues/128">#128</a>).
-
-**CHANGES**
 
 
 
