@@ -155,13 +155,13 @@ emotion.get_sentences_character <- function(text.var,
     is_emotion(emotion_dt)
 
     lens <- lengths(text.var)
-
+# browser()
     ## make table of elements, sentence id, and sentences
     element_map <- data.table::data.table(
         element_id = rep(seq_along(lens), lens),
         sentence_id = unlist(lapply(lens, seq_len)),
         token = unlist(text.var)
-    )[, list(token = tolower(unlist(token))), by = c('element_id', 'sentence_id')][,
+    )[, list(token = trimws(tolower(unlist(token)))), by = c('element_id', 'sentence_id')][,
         word_count := count_words(token)]
 
     ## Chack for spaces in the emotion list to ensure the tokenizer keeps them
@@ -184,8 +184,8 @@ emotion.get_sentences_character <- function(text.var,
                 call. = FALSE
             )
         }
-        
-        regex <- paste0('\\b(un)(', paste(keeps, collapse = '|'), ')\\b')
+
+        regex <- paste0('\\b(un)(', paste(gsub('^un', '', keeps, perl = TRUE), collapse = '|'), ')\\b')
         element_map <- element_map[, token := stringi::stri_replace_all_regex(token, regex, 'not $2')][]
         
     }
@@ -196,12 +196,17 @@ emotion.get_sentences_character <- function(text.var,
         token := stringi::stri_replace_all_regex(
                 stringi::stri_replace_all_regex(
                     stringi::stri_replace_all_regex(token, '[!.;:?]$', ''), 
-                    retention_regex, ' '), 
-                '[;:,]\\s+', ' [;:,] ')]
+                    retention_regex, 
+                    ' '
+                ), 
+                '[;:,]\\s+', 
+                ' [;:,] '
+            )
+        ]
 
 
     tidied[['token']] <- as.list(stringi::stri_split_regex(tidied[['token']], '\\s+'))
-    
+
     tidied <- tidied[,
             list(token = stringi::stri_replace_all_regex(unlist(token), '~~', ' ')), 
                 by =c('element_id', 'sentence_id', 'word_count')][, 
@@ -220,7 +225,7 @@ emotion.get_sentences_character <- function(text.var,
                 emotion = emotion,
                 is_emo = sum(!is.na(emo_loc)) > 0), 
                 by = c('element_id', 'sentence_id')][]
-    
+
     ##-------------------------------------START--------------------------------
     ## IN THIS PORTION WE IDENTIFY EMOTIONS THAT ARE NEGATED
     
@@ -248,7 +253,7 @@ emotion.get_sentences_character <- function(text.var,
                     c('element_id', 'sentence_id',  'emo_loc', 'is_negated')][]
         
         } else {
-            emo_dat <- emo_dat[,c('element_id', 'sentence_id', 'emo_loc')][, is_negated := FALSE][]
+            emo_dat <- unique(emo_dat[,c('element_id', 'sentence_id', 'emo_loc')])[, is_negated := FALSE][]
         }
 
         out <- merge(

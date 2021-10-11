@@ -30,6 +30,9 @@ BUG FIXES
   
 * `sentiment` would not work if the polarity table contained no spaced words.
   Spotted by GitHub user mrwunderbar666 (see #117 for details).
+
+* `emotion` would not give the correct response when the `text.var` contained no
+  negated words.  Spotted by git-igor (see #108 for details).
   
 NEW FEATURES
 

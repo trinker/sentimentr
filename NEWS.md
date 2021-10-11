@@ -30,6 +30,9 @@ sentimentr 2.8.0 -
   
 * `sentiment` would not work if the polarity table contained no spaced words.
   Spotted by GitHub user mrwunderbar666 (see <a href="https://github.com/trinker/sentimentr/issues/117">#117</a> for details).
+
+* `emotion` would not give the correct response when the `text.var` contained no
+  negated words.  Spotted by git-igor (see <a href="https://github.com/trinker/sentimentr/issues/108">#108</a> for details).
   
 **NEW FEATURES**
 

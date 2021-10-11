@@ -119,9 +119,9 @@ results will come from setting this argument to \code{TRUE}.}
 \item{retention_regex}{A regex of what characters to keep.  All other 
 characters will be removed.  Note that when this is used all text is lower 
 case format.  Only adjust this parameter if you really understand how it is 
-used.  Note that swapping the \code{\\p{L}} for \code{[^[:alpha:];:,\']} may 
+used.  Note that swapping the \code{\\\\p{L}} for \code{[^[:alpha:];:,\']} may 
 retain more alpha letters but will likely decrease speed.  See examples below 
-for how to test the need for \\p{L}.}
+for how to test the need for \code{\\\\p{L}}.}
 
 \item{\ldots}{Ignored.}
 }
