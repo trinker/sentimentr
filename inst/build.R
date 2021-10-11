@@ -21,14 +21,7 @@ message("Done!")
 
 
 
-
-
-
-
-
-
-
-
+nh <- function() cat(paste(c("BUG FIXES", "NEW FEATURES", "MINOR FEATURES", "IMPROVEMENTS", "CHANGES"), collapse = "\n\n"), file="clipboard")
 
 
 
