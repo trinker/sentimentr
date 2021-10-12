@@ -65,7 +65,7 @@ sentimentr 2.8.0 - 2.9.0
 **IMPROVEMENTS**
 
 * Added description of what the numeric value of `sentiment()` means (see 
-  **Results** in `?sentiment`) and examples of hot to bin the score to a
+  **Results** in `?sentiment`) and examples of how to bin the score to a
   3 category `c('Negative', 'Neutral', 'Positive')` factor output.  These 
   improvements in documentation came from Sadettin Demirel (see <a href="https://github.com/trinker/sentimentr/issues/128">#128</a>).
 
