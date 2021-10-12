@@ -67,7 +67,8 @@ IMPROVEMENTS
 * Added description of what the numeric value of `sentiment()` means (see 
   **Results** in `?sentiment`) and examples of how to bin the score to a
   3 category `c('Negative', 'Neutral', 'Positive')` factor output.  These 
-  improvements in documentation came from Sadettin Demirel (see #128).
+  improvements in documentation came from an issue raised by Sadettin Demirel 
+  (see #128).
 
 
 
