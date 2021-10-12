@@ -168,8 +168,7 @@ make_sentence_df2 <- function(sents, retention_regex = "[^[:alpha:]',;: ]|\\d:\\
     text.var <- gsub(
         retention_regex, 
         " ", 
-        stringi::stri_trans_tolower(gsub("(\\s*)([;:,]+)", " \\2", unlist(sents))), 
-        perl = TRUE
+        stringi::stri_trans_tolower(gsub("(\\s*)([;:,]+)", " \\2", unlist(sents)))
     )
     dat <- data.frame(
         id = ids,
