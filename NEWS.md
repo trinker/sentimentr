@@ -59,8 +59,8 @@ sentimentr 2.8.0 - 2.9.0
   tested on other languages, this opens up the possibility for use with other
   (especially Germanic) languages.  Thank you to johanneswaage and Matthias2018 
   for raising awareness of this issue and Dominique EMMANUEL for suggesting a 
-  potetial way forward.  This suggestion led to the reworking and current approach.
-  See (see issues <a href="https://github.com/trinker/sentimentr/issues/74">#74</a>, <a href="https://github.com/trinker/sentimentr/issues/79">#79</a> & <a href="https://github.com/trinker/sentimentr/issues/118">#118</a> for more).
+  potetial way forward.  This suggestion led to the reworking and current 
+  approach (see issues <a href="https://github.com/trinker/sentimentr/issues/74">#74</a>, <a href="https://github.com/trinker/sentimentr/issues/79">#79</a> & <a href="https://github.com/trinker/sentimentr/issues/118">#118</a> for more).
 
 **IMPROVEMENTS**
 
