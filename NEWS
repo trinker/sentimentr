@@ -31,6 +31,8 @@ IMPROVEMENTS
 
 CHANGES
 
+* `get_sentences2` has been deprecated for some time not and has been removed.
+
 
 sentimentr 2.8.0 - 2.9.0
 ---------------------------------------------------------------

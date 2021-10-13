@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.gitignore
-NEWS.md
+NEWS$
 FAQ.md
 NEWS.html
 FAQ.html
