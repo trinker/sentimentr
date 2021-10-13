@@ -165,10 +165,10 @@ make_sentence_df2 <- function(sents, retention_regex = "[^[:alpha:]',;: ]|\\d:\\
     indx <- wc <- NULL
 
     ids <- add_row_id(sents)
-    text.var <- gsub(
+    text.var <- stringi::stri_replace_all_regex(
+        stringi::stri_trans_tolower(gsub("(\\s*)([;:,]+)", " \\2", unlist(sents))),        
         retention_regex, 
-        " ", 
-        stringi::stri_trans_tolower(gsub("(\\s*)([;:,]+)", " \\2", unlist(sents)))
+        " "
     )
     dat <- data.frame(
         id = ids,
