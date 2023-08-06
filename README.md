@@ -226,7 +226,7 @@ with several helper functions summarized in the table below:
 </tr>
 <tr class="odd">
 <td><code>replace_emoji</code></td>
-<td>repalcement</td>
+<td>replacement</td>
 </tr>
 <tr class="even">
 <td><code>replace_emoticon</code></td>
